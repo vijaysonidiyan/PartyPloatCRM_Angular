@@ -19,7 +19,23 @@ import { NotifierModule } from 'angular-notifier';
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
-    NotifierModule,
+    NotifierModule.withConfig({
+      // Custom options in here
+      position: {
+          horizontal: {
+              position: 'middle',
+              //distance: 50,
+          },
+          vertical: {
+              position: 'bottom',
+              distance: 50,
+              gap: 10
+          },
+      },
+      //behaviour: {
+      //  autoHide: false
+      //}
+  }),
   ],
   declarations: [
     AppComponent,

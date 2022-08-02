@@ -49,7 +49,7 @@ export class AdminLoginComponent implements OnInit {
         return;
     }
     let loginObj = {
-        c_Email: this.loginForm.value.email,
+        email: this.loginForm.value.email,
         pwd: this.loginForm.value.pwd
     };
     this.loginLayoutService.userLogin(loginObj).subscribe((Response: any) => {
@@ -58,12 +58,12 @@ export class AdminLoginComponent implements OnInit {
             localStorage.setItem('LoginUserData', JSON.stringify(Response.data))
             this.storageService.setValue(StorageKey.myToken, Response.data.myToken);
             this.storageService.setValue(StorageKey.roleId, Response.data.roleId);
-            this.storageService.setValue(StorageKey.contact, Response.data.employeeId);
-            this.storageService.setValue(StorageKey.reference, Response.data.firstName);
-            this.storageService.setValue(StorageKey.aadharcardNo, Response.data.middleName);
-            this.storageService.setValue(StorageKey.lastName, Response.data.lastName);
-            this.storageService.setValue(StorageKey.email, Response.data.c_Email);
-            this.storageService.setValue(StorageKey.full_name, Response.data.p_Email);
+            this.storageService.setValue(StorageKey.contact, Response.data.contact);
+            this.storageService.setValue(StorageKey.reference, Response.data.reference);
+            this.storageService.setValue(StorageKey.aadharcardNo, Response.data.aadharcardNo);
+            this.storageService.setValue(StorageKey.roleName, Response.data.roleName);
+            this.storageService.setValue(StorageKey.email, Response.data.email);
+            this.storageService.setValue(StorageKey.full_name, Response.data.full_name);
             this.storageService.setValue(StorageKey.isUtsavDecoreLogin, 'true');
             this.commonService.notifier.notify('success', Response.meta.message);
             this.router.navigate(['/admin/dashboard']);
