@@ -4,6 +4,7 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from "jquery";
 import { filter, Subscription } from 'rxjs';
+import { StorageKey, StorageService } from 'app/shared/storage.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -15,7 +16,11 @@ export class LoginLayoutComponent implements OnInit {
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
 
-  constructor( public location: Location, private router: Router) {}
+  constructor( public location: Location, private router: Router, public storageService: StorageService) {
+    if (this.storageService.getValue(StorageKey.isUtsavDecoreLogin) === 'true') {
+        this.router.navigate(['/admin/dashboard']);
+    }
+  }
 
   ngOnInit() {
       const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;

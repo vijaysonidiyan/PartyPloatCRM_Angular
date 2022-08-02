@@ -8,6 +8,7 @@ import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
+import { NotifierModule } from 'angular-notifier';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { LoginLayoutComponent } from './layouts/login-layout/login-layout.compon
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
+    NotifierModule,
   ],
   declarations: [
     AppComponent,
