@@ -75,7 +75,8 @@
                                         <div *ngIf="fLoginData.email.errors.required">
                                             <span class="error_msg">Email ID is Required.</span>
                                         </div>
-                                        <div *ngIf="!fLoginData.email.errors.valid && !fLoginData.email.errors.required">
+                                        <div
+                                            *ngIf="!fLoginData.email.errors.valid && !fLoginData.email.errors.required">
                                             <span class="error_msg">Please Enter Valid Email ID.</span>
                                         </div>
                                     </div>
@@ -83,30 +84,36 @@
                                 <div class="mb-3 form-password-toggle">
                                     <div class="d-flex justify-content-between">
                                         <label class="form-label" for="password">Password</label>
-                                        <a href="auth-forgot-password-basic.html">
-                                            <small>Forgot Password?</small>
-                                        </a>
                                     </div>
                                     <div class="input-group input-group-merge">
-                                        <input  [type]="hide1 ? 'text' : 'password'" (keyup.enter)="handleKeyUp($event)" formControlName="pwd" id="password" class="form-control" name="password"
+                                        <input [type]="hide1 ? 'text' : 'password'" (keyup.enter)="handleKeyUp($event)"
+                                            formControlName="pwd" id="password" class="form-control" name="password"
                                             placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                             aria-describedby="password" />
-                                            <span (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1" class="input-group-text cursor-pointer"><i class="bx {{hide1 ? 'bx-show' : 'bx-hide'}}"></i></span>
+                                        <span (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'"
+                                            [attr.aria-pressed]="hide1" class="input-group-text cursor-pointer"><i
+                                                class="bx {{hide1 ? 'bx-show' : 'bx-hide'}}"></i></span>
                                         <div *ngIf="submittedLoginData && fLoginData.pwd.errors" class="text-right">
                                             <div *ngIf="fLoginData.pwd.errors.required">
-                                              <span class="error_msg">Password is Required.</span>
+                                                <span class="error_msg">Password is Required.</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="remember-me" />
-                                        <label class="form-check-label" for="remember-me"> Remember Me </label>
+                                    <div class="d-flex justify-content-between">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="remember-me" />
+                                            <label class="form-check-label" for="remember-me"> Remember Me </label>
+                                        </div>
+                                        <a href="auth-forgot-password-basic.html">
+                                            <small>Forgot Password?</small>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <button class="btn btn-primary d-grid w-100" type="submit" (click)="login()">Sign in</button>
+                                    <button class="btn btn-primary d-grid w-100" type="submit" (click)="login()">Sign
+                                        in</button>
                                 </div>
                             </form>
                         </div>

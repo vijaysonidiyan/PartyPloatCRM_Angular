@@ -33,7 +33,7 @@ input:-webkit-autofill:active {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #ffffffb0;
+  background-color: #ffffffdb;
   background-clip: border-box;
   border: 0 solid #d9dee3;
   border-radius: 0.5rem;
@@ -53,5 +53,5 @@ input:-webkit-autofill:active {
 }
 .input-group-text {
   background: none !important;
-  color: #fff !important;
+  color: #00adef !important;
 }

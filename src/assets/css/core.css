@@ -2232,7 +2232,7 @@ progress {
   color: #697a8d;
   background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid #d9dee3;
+  border: 1px solid #00adef;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -2768,7 +2768,7 @@ textarea.form-control-lg {
   text-align: center;
   white-space: nowrap;
   background-color: #fff;
-  border: 1px solid #d9dee3;
+  border: 1px solid #00adef;
   border-radius: 0.375rem;
 }
 
@@ -2947,7 +2947,7 @@ fieldset:disabled .btn {
   position: absolute;
   z-index: 1000;
   display: none;
-  min-width: 12rem;
+  min-width: 10rem;
   padding: 0.3125rem 0;
   margin: 0;
   font-size: 0.9375rem;
@@ -7414,6 +7414,9 @@ button:focus {
   border-top: 0;
   border-left: 0;
   transform: rotate(45deg);
+  right: 20px;
+  position: absolute;
+  top: 50%;
 }
 
 .dropend .dropdown-toggle::after {
@@ -17234,4 +17237,10 @@ html:not(.layout-footer-fixed) .content-wrapper {
 }
 .footer.bg-light hr {
   border-color: rgba(105, 122, 141, 0.0783835294);
+}
+.ng-select .ng-select-container {
+  border: none !important;
+}
+.ng-select .ng-select-container:hover {
+  box-shadow: none !important;
 }

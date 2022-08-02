@@ -1,0 +1,29 @@
+<div class="container-fluid flex-grow-1 container-p-y">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light">Tables /</span> Basic Tables</h4>
+        <!-- <div>
+            <button type="button" class="btn btn-primary" (click)="addMenu()">
+                Add New
+            </button>
+        </div> -->
+    </div>
+
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+        <div class="card-body">
+            <h4 class="fw-bold pb-3 m-0">Role Wise MenuList</h4>
+            <div class="row">
+                <div class="col-lg-1">
+                    <label class="form-label">Role</label>
+                </div>
+                <div class="col-lg-6">
+                    <ng-select [items]="activeroleList" [(ngModel)]="selectedRole" class="form-control p-0" bindLabel="
+                        roleName" bindValue="_id" placeholder="Select Role">
+                    </ng-select>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="content-backdrop fade"></div>
+</div>
