@@ -59,23 +59,75 @@
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
         <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+            <a routerLink="dashboard" class="menu-link">
+                <strong style="font-size:22px; width:50px">D</strong>
+                <!-- <i class="menu-icon tf-icons bx bx-home-circle"></i> -->
                 <div data-i18n="Analytics">Dashboard</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a routerLink="facility-master" class="menu-link">
+                <strong style="font-size:22px; width:50px">FM</strong>
+                <!-- <i class="menu-icon tf-icons bx bx-home-circle"></i> -->
+                <div data-i18n="Analytics">Facility Mater</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a routerLink="party-plot-master" class="menu-link">
+                <strong style="font-size:22px; width:50px">PP</strong>
+                <!-- <i class="menu-icon tf-icons fa-solid fa-face-party"></i> -->
+                <div data-i18n="Analytics">Party Plot Master</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a routerLink="staff" class="menu-link">
+                <strong style="font-size:22px; width:50px">S</strong>
+                <!-- <i class="menu-icon tf-icons fa-solid fa-user-tie"></i> -->
+                <div data-i18n="Analytics">Staff</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a routerLink="product-master" class="menu-link">
+                <strong style="font-size:22px; width:50px">PM</strong>
+                <!-- <i class="menu-icon tf-icons bx bx-home-circle"></i> -->
+                <div data-i18n="Analytics">Product Mater</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a routerLink="vendor-details" class="menu-link">
+                <strong style="font-size:22px; width:50px">VD</strong>
+                <!-- <i class="menu-icon tf-icons bx bx-home-circle"></i> -->
+                <div data-i18n="Analytics">Vendor Details</div>
             </a>
         </li>
 
         <!-- Layouts -->
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">Layouts</div>
+        <li class="menu-item" [ngClass]="isSettingOpen === true ? 'open' : ''">
+            <a href="javascript:void(0);" (click)="settingMenu()" class="menu-link menu-toggle">
+                <strong style="font-size:22px; width:50px">S</strong>
+                <!-- <i class="menu-icon tf-icons bx bx-layout"></i> -->
+                <div data-i18n="Layouts">Setting</div>
             </a>
 
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link">
-                        <div data-i18n="Blank">Blank</div>
+                    <a routerLink="menu-master" class="menu-link">
+                        <div data-i18n="Blank">Menu Master</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a routerLink="role-master" class="menu-link">
+                        <div data-i18n="Blank">Role Master</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a routerLink="role-wise-menu" class="menu-link">
+                        <div data-i18n="Blank">Role wise Menu</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a routerLink="user-wise-menu" class="menu-link">
+                        <div data-i18n="Blank">User wise Menu</div>
                     </a>
                 </li>
             </ul>
