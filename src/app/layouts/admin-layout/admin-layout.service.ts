@@ -9,7 +9,7 @@ export class AdminLayoutService {
 
   constructor(private commonService: CommonService, private http: HttpClient) { }
 
-  // ============== Role Master ===========
+  // ============== Role Master =========== //
 
   getroleMaster() {
     let headers = new HttpHeaders({
@@ -44,5 +44,49 @@ export class AdminLayoutService {
           'Authorization': `Bearer ${localStorage.getItem('myToken')}`
       })
       return this.http.post(this.commonService.rootData.rootUrl + 'roleMaster/roleStatusupdate', updatestatusroleMasterData, { headers: headers });
+  }
+
+  // ============== Menu Master =========== //
+
+  getPerentList() {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'menuMaster/parentList', { headers: headers });
+  }
+
+  getmenu() {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'menuMaster/menuList', { headers: headers });
+  }
+
+  Savemenu(createroleMasterData: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'menuMaster/menuSave', createroleMasterData, { headers: headers });
+  }
+
+  Updatemenu(updatemenuData: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'menuMaster/menuUpdateById', updatemenuData, { headers: headers });
+  }
+
+  getmenuId(params: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'menuMaster/menugetById', { params: params, headers: headers });
+  }
+
+  Statusmenu(updatestatusmenuData: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'menuMaster/menuStatusupdate', updatestatusmenuData, { headers: headers });
   }
 }
