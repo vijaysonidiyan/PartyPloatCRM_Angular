@@ -17244,3 +17244,20 @@ html:not(.layout-footer-fixed) .content-wrapper {
 .ng-select .ng-select-container:hover {
   box-shadow: none !important;
 }
+.icon-png {
+  width: 20px;
+  margin: 0 20px 0 12px;
+}
+
+.menu-vertical .menu-item .active-icon {
+  display: none;
+}
+.menu-vertical .menu-item .default-icon {
+  display: block;
+}
+.menu-vertical .menu-item.active .active-icon {
+  display: block;
+}
+.menu-vertical .menu-item.active .default-icon {
+  display: none;
+}
