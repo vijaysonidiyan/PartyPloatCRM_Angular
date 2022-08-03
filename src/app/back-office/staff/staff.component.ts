@@ -12,6 +12,7 @@ export class StaffComponent implements OnInit {
 
   ngOnInit(): void {}
   addMenu() {
+    debugger
     $("#add-menu-modal").modal("show");
   }
 }
