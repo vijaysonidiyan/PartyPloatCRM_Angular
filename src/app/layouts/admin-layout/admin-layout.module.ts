@@ -21,6 +21,8 @@ import { StaffComponent } from "app/back-office/staff/staff.component";
 import { FacilityMasterComponent } from "app/back-office/facility-master/facility-master.component";
 import { ProductMasterComponent } from "app/back-office/product-master/product-master.component";
 import { VendorDetailsComponent } from "app/back-office/vendor-details/vendor-details.component";
+import { NgxPaginationModule } from 'ngx-pagination';
+import { DirectivesModule } from "app/shared/directives/directives.module";
 
 @NgModule({
   imports: [
@@ -35,6 +37,8 @@ import { VendorDetailsComponent } from "app/back-office/vendor-details/vendor-de
     MatSelectModule,
     MatTooltipModule,
     NgSelectModule,
+    NgxPaginationModule,
+    DirectivesModule,
   ],
   declarations: [
     DashboardComponent,
