@@ -16,6 +16,11 @@ import { RoleMasterComponent } from "app/back-office/setting/role-master/role-ma
 import { RoleWiseMenuComponent } from "app/back-office/setting/role-wise-menu/role-wise-menu.component";
 import { UserWiseMenuComponent } from "app/back-office/setting/user-wise-menu/user-wise-menu.component";
 import { NgSelectModule } from "@ng-select/ng-select";
+import { PartyPlotMasterComponent } from "app/back-office/party-plot-master/party-plot-master.component";
+import { StaffComponent } from "app/back-office/staff/staff.component";
+import { FacilityMasterComponent } from "app/back-office/facility-master/facility-master.component";
+import { ProductMasterComponent } from "app/back-office/product-master/product-master.component";
+import { VendorDetailsComponent } from "app/back-office/vendor-details/vendor-details.component";
 
 @NgModule({
   imports: [
@@ -38,6 +43,11 @@ import { NgSelectModule } from "@ng-select/ng-select";
     RoleMasterComponent,
     RoleWiseMenuComponent,
     UserWiseMenuComponent,
+    PartyPlotMasterComponent,
+    StaffComponent,
+    FacilityMasterComponent,
+    ProductMasterComponent,
+    VendorDetailsComponent
   ],
 })
 export class AdminLayoutModule {}

@@ -1,8 +1,8 @@
 <div class="container-fluid flex-grow-1 container-p-y">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Role Master</h4>
+        <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Product Master</h4>
         <div>
-            <button type="button" class="btn btn-primary" (click)="addRole()">
+            <button type="button" class="btn btn-primary" (click)="addMenu()">
                 Add New
             </button>
         </div>
@@ -15,16 +15,16 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Role Name</th>
-                        <th>Status</th>
+                        <th>Name</th>
+                        <th>Price</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
                     <tr>
                         <td>1</td>
-                        <td>Admin</td>
-                        <td><span class="badge bg-label-primary me-1">Active</span></td>
+                        <td><strong>Dashboard</strong></td>
+                        <td>10000/-</td>
                         <td>
                             <div class="dropdown">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -47,17 +47,21 @@
     </div>
     <div class="content-backdrop fade"></div>
 </div>
-<div class="modal fade" id="add-role-modal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="add-menu-modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel1"><strong>Add New Role Master</strong></h5>
+                <h5 class="modal-title" id="exampleModalLabel1"><strong>Add Facility</strong></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col mb-3">
-                        <label for="nameBasic" class="form-label">Role Name</label>
+                        <label for="nameBasic" class="form-label">Name</label>
+                        <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name" />
+                    </div>
+                    <div class="col mb-3">
+                        <label for="nameBasic" class="form-label">Price</label>
                         <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name" />
                     </div>
                 </div>

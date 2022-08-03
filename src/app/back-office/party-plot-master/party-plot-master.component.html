@@ -1,8 +1,8 @@
 <div class="container-fluid flex-grow-1 container-p-y">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Role Master</h4>
+        <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Party Plot Master</h4>
         <div>
-            <button type="button" class="btn btn-primary" (click)="addRole()">
+            <button type="button" class="btn btn-primary" (click)="addMenu()">
                 Add New
             </button>
         </div>
@@ -15,16 +15,19 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Role Name</th>
-                        <th>Status</th>
+                        <th>Name</th>
+                        <th>Facility</th>
+                        <th>Address</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
                     <tr>
                         <td>1</td>
-                        <td>Admin</td>
-                        <td><span class="badge bg-label-primary me-1">Active</span></td>
+                        <td><strong>Dashboard</strong></td>
+                        <td>Dashboard</td>
+                        <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit.<br>Atque quidem neque reiciendis
+                            illum totam voluptatem quaerat consequuntur hic quasi impedit.</td>
                         <td>
                             <div class="dropdown">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -47,19 +50,30 @@
     </div>
     <div class="content-backdrop fade"></div>
 </div>
-<div class="modal fade" id="add-role-modal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="add-menu-modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel1"><strong>Add New Role Master</strong></h5>
+                <h5 class="modal-title" id="exampleModalLabel1"><strong>Add Party Plot Details</strong></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col mb-3">
-                        <label for="nameBasic" class="form-label">Role Name</label>
+                    <div class="col-lg-6 mb-3">
+                        <label for="nameBasic" class="form-label">Name</label>
                         <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name" />
                     </div>
+                    <div class="col-lg-6 mb-3">
+                        <label for="nameBasic" class="form-label">Facility Select</label>
+                        <ng-select [items]="facilityList" class="form-control p-0" bindLabel="name" bindValue="value"
+                            placeholder="Select Module" formControlName="module">
+                        </ng-select>
+                    </div>
+                    <div class="col-lg-12 mb-3">
+                        <label for="nameBasic" class="form-label">Address</label>
+                        <textarea id="basic-default-message" class="form-control" placeholder=""></textarea>
+                    </div>
+
                 </div>
             </div>
             <div class="modal-footer">
