@@ -16,6 +16,8 @@ import { RoleMasterComponent } from "app/back-office/setting/role-master/role-ma
 import { RoleWiseMenuComponent } from "app/back-office/setting/role-wise-menu/role-wise-menu.component";
 import { UserWiseMenuComponent } from "app/back-office/setting/user-wise-menu/user-wise-menu.component";
 import { NgSelectModule } from "@ng-select/ng-select";
+import { NgxPaginationModule } from 'ngx-pagination';
+import { DirectivesModule } from "app/shared/directives/directives.module";
 
 @NgModule({
   imports: [
@@ -30,6 +32,8 @@ import { NgSelectModule } from "@ng-select/ng-select";
     MatSelectModule,
     MatTooltipModule,
     NgSelectModule,
+    NgxPaginationModule,
+    DirectivesModule,
   ],
   declarations: [
     DashboardComponent,

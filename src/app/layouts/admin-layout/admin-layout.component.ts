@@ -26,9 +26,9 @@ export class AdminLayoutComponent implements OnInit {
     private router: Router,
     public storageService: StorageService
   ) {
-    // if (this.storageService.getValue(StorageKey.isUtsavDecoreLogin) !== 'true') {
-    //     this.router.navigate(['/admin-login/login']);
-    // }
+    if (this.storageService.getValue(StorageKey.isUtsavDecoreLogin) !== 'true') {
+        this.router.navigate(['/admin-login/login']);
+    }
   }
 
   ngOnInit() {

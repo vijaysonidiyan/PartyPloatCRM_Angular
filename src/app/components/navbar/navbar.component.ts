@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
+import { StorageKey, StorageService } from 'app/shared/storage.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,7 +16,7 @@ export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router) {
+    constructor(location: Location,  private element: ElementRef, public storageService: StorageService, private router: Router) {
       this.location = location;
           this.sidebarVisible = false;
     }
@@ -108,6 +109,19 @@ export class NavbarComponent implements OnInit {
 
         }
     };
+
+    logout() {
+        this.storageService.removeValue(StorageKey.myToken);
+        this.storageService.removeValue(StorageKey.roleId);
+        this.storageService.removeValue(StorageKey.contact);
+        this.storageService.removeValue(StorageKey.reference);
+        this.storageService.removeValue(StorageKey.aadharcardNo);
+        this.storageService.removeValue(StorageKey.lastName);
+        this.storageService.removeValue(StorageKey.email);
+        this.storageService.removeValue(StorageKey.full_name);
+        this.storageService.removeValue(StorageKey.isUtsavDecoreLogin);
+        this.router.navigate(['/admin-login/login']);
+    }
 
     getTitle(){
       var titlee = this.location.prepareExternalUrl(this.location.path());

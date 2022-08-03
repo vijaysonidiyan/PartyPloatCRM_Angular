@@ -26,6 +26,7 @@
               "src/assets/css/theme-default.css",
               "src/assets/css/demo.css",
               "src/assets/css/page-auth.css",
+              "src/assets/css/jquery-confirm.css",
               "node_modules/angular-notifier/styles/core.css",
               "node_modules/angular-notifier/styles/themes/theme-material.css",
               "node_modules/angular-notifier/styles/types/type-default.css",
@@ -46,7 +47,8 @@
               "src/assets/js/helpers.js",
               "src/assets/js/jquery.js",
               "src/assets/js/popper.js",
-              "src/assets/js/bootstrap.js"
+              "src/assets/js/bootstrap.js",
+              "src/assets/js/jquery-confirm.js"
             ],
             "allowedCommonJsDependencies": [
               "rxjs/add/operator/filter",
@@ -135,7 +137,8 @@
               "src/assets/js/helpers.js",
               "src/assets/js/jquery.js",
               "src/assets/js/popper.js",
-              "src/assets/js/bootstrap.js"
+              "src/assets/js/bootstrap.js",
+              "src/assets/js/jquery-confirm.js"
             ],
             "styles": [
               "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
@@ -143,6 +146,7 @@
               "src/assets/css/theme-default.css",
               "src/assets/css/demo.css",
               "src/assets/css/page-auth.css",
+              "src/assets/css/jquery-confirm.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/angular-notifier/styles/core.css",
               "node_modules/angular-notifier/styles/themes/theme-material.css",
