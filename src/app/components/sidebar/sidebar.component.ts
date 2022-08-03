@@ -55,7 +55,11 @@ export const ROUTES: RouteInfo[] = [
 })
 export class SidebarComponent implements OnInit {
   menuItems: any[];
+  activeMenu: any;
+  iconactive: boolean = false;
   isSettingOpen: boolean = false;
+  istoggle: boolean | any = false;
+  isSettingActive: boolean = false;
   constructor() {}
 
   ngOnInit() {
@@ -64,10 +68,21 @@ export class SidebarComponent implements OnInit {
   settingMenu() {
     this.isSettingOpen = !this.isSettingOpen;
   }
+  toggle() {
+    this.istoggle = !this.istoggle;
+  }
   isMobileMenu() {
     if ($(window).width() > 991) {
       return false;
     }
     return true;
+  }
+  isActive(menuName: any) {
+    this.activeMenu = menuName;
+    //this.isSettingActive = false;
+  }
+  isActivesetting(menuName: any) {
+    this.activeMenu = menuName;
+    this.isSettingActive = true;
   }
 }
