@@ -89,4 +89,50 @@ export class AdminLayoutService {
     })
     return this.http.post(this.commonService.rootData.rootUrl + 'menuMaster/menuStatusupdate', updatestatusmenuData, { headers: headers });
   }
+
+  // ============== Role Wise Menu =========== //
+
+  getRoleList() {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'roleMaster/roleActiveList', { headers: headers });
+  }
+
+  // ============== Facility Master Menu =========== //
+
+  getfacilityMaster() {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'facility/facilityList', { headers: headers });
+  }
+
+  SavefacilityMaster(createroleMasterData: any) {
+      let headers = new HttpHeaders({
+          'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+      })
+      return this.http.post(this.commonService.rootData.rootUrl + 'facility/facilityCreate', createroleMasterData, { headers: headers });
+  }
+
+  getfacilityMasterId(params: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'facility/facilityListById', { params: params, headers: headers });
+  }
+
+  UpdatefacilityMaster(updateroleMasterData: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'facility/facilityUpdate', updateroleMasterData, { headers: headers });
+  }
+
+  StatusfacilityMaster(updatestatusroleMasterData: any) {
+      let headers = new HttpHeaders({
+          'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+      })
+      return this.http.post(this.commonService.rootData.rootUrl + 'facility/facilityStatusupdate', updatestatusroleMasterData, { headers: headers });
+  }
 }

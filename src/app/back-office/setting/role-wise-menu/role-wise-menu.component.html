@@ -17,8 +17,9 @@
                     <label class="form-label">Role</label>
                 </div>
                 <div class="col-lg-6">
-                    <ng-select [items]="activeroleList" [(ngModel)]="selectedRole" class="form-control p-0" bindLabel="
-                        roleName" bindValue="_id" placeholder="Select Role">
+                    <!-- <ng-select [items]="activeroleList" [(ngModel)]="selectedRole" class="form-control p-0" bindLabel="roleName" bindValue="_id" placeholder="Select Role"  (ngModelChange)="onRoleChange();">
+                    </ng-select> -->
+                    <ng-select [items]="activeroleList" [(ngModel)]="selectedRole" class="form-control p-0" bindLabel="roleName" bindValue="_id" placeholder="Select Role">
                     </ng-select>
                 </div>
 
