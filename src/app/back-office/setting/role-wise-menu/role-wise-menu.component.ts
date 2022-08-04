@@ -6,28 +6,31 @@ declare const $: any;
   templateUrl: "./role-wise-menu.component.html",
   styleUrls: ["./role-wise-menu.component.css"],
 })
-
 export class RoleWiseMenuComponent implements OnInit {
+  isRoleMenulistOpen: boolean = false;
   activeroleList: any;
   selectedRole;
-  constructor(public adminLayoutService : AdminLayoutService) {}
+  constructor(public adminLayoutService: AdminLayoutService) {}
 
   ngOnInit(): void {
     this.getRoleActiveList();
     this.selectedRole = null;
   }
-
+  rolemenuList() {
+    this.isRoleMenulistOpen = !this.isRoleMenulistOpen;
+  }
   getRoleActiveList() {
-
-    this.adminLayoutService.getRoleList().subscribe((Response: any) => {
-
+    this.adminLayoutService.getRoleList().subscribe(
+      (Response: any) => {
         if (Response.meta.code == 200) {
-            this.activeroleList = Response.data;
+          this.activeroleList = Response.data;
         } else {
         }
         //for select sub industry step
-    }, (error) => {
+      },
+      (error) => {
         console.log(error.error.Message);
-    });
+      }
+    );
   }
 }
