@@ -3161,19 +3161,24 @@ fieldset:disabled .btn {
 .dropdown-item {
   display: block;
   width: 100%;
-  padding: 0.532rem 1.25rem;
+  padding: 5px;
+  margin-right: 5px;
   clear: both;
   font-weight: 400;
-  color: #697a8d;
-  text-align: inherit;
+  color: #00adef;
+  text-align: center;
   white-space: nowrap;
-  background-color: transparent;
+  background-color: #e7e7ff !important;
   border: 0;
+  border-radius: 5px;
+}
+.dropdown-item:hover i {
+  color: #697a8d;
 }
 .dropdown-item:hover,
 .dropdown-item:focus {
   color: #5f6e7f;
-  background-color: rgba(67, 89, 113, 0.04);
+  /* background-color: rgba(67, 89, 113, 0.04); */
 }
 .dropdown-item.active,
 .dropdown-item:active {
@@ -17297,4 +17302,7 @@ html:not(.layout-footer-fixed) .content-wrapper {
 }
 .menu-vertical .menu-item.active .default-icon {
   display: none;
+}
+.ngx-pagination .current {
+  border-radius: 5px;
 }

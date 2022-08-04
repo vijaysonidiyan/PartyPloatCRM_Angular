@@ -38,27 +38,28 @@
                             <span *ngIf="menuData.status == 2" class="badge bg-label-danger">Deactive</span>
                         </td>
                         <td>
-                            <div class="dropdown">
-                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                            <div class="dropdown d-flex">
+                                <!-- <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                     data-bs-toggle="dropdown">
                                     <i class="bx bx-dots-vertical-rounded"></i>
+                                </button> -->
+                                <button class="dropdown-item"
+                                    (click)="editMenumaster({id : menuData._id, index:menuIndex})"><i
+                                        class="bx bx-edit-alt me-1"></i>
                                 </button>
-                                <div class="dropdown-menu">
-                                    <button class="dropdown-item"
-                                        (click)="editMenumaster({id : menuData._id, index:menuIndex})"><i
-                                            class="bx bx-edit-alt me-1"></i>
-                                        Edit</button>
-                                    <button *ngIf="menuData.status == 2" class="dropdown-item"
-                                        (confirm-click)="statusMenu({id :menuData._id,index:menuIndex, status:1})"
-                                        appConfirm [confirmTitle]="'Active'"
-                                        [confirmContent]="'Are you sure to Active this Menu Master?'">
-                                        <i class="fa fa-plus me-1"></i>Active</button>
-                                    <button *ngIf="menuData.status == 1" class="dropdown-item"
-                                        (confirm-click)="statusMenu({id :menuData._id,index:menuIndex, status:2})"
-                                        appConfirm [confirmTitle]="'Deactive'"
-                                        [confirmContent]="'Are you sure to Deactive this Menu Master?'">
-                                        <i class="fa fa-trash me-1"></i>Deactive</button>
-                                </div>
+                                <button *ngIf="menuData.status == 2" class="dropdown-item"
+                                    (confirm-click)="statusMenu({id :menuData._id,index:menuIndex, status:1})"
+                                    appConfirm [confirmTitle]="'Active'"
+                                    [confirmContent]="'Are you sure to Active this Menu Master?'">
+                                    <i class="bx bx-plus me-1"></i></button>
+                                <button *ngIf="menuData.status == 1" class="dropdown-item"
+                                    (confirm-click)="statusMenu({id :menuData._id,index:menuIndex, status:2})"
+                                    appConfirm [confirmTitle]="'Deactive'"
+                                    [confirmContent]="'Are you sure to Deactive this Menu Master?'">
+                                    <i class="bx bx-trash me-1"></i></button>
+                                <!-- <div class="dropdown-menu">
+
+                                </div> -->
                             </div>
                         </td>
                     </tr>
