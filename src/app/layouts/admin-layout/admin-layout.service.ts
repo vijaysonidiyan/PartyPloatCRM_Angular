@@ -135,4 +135,49 @@ export class AdminLayoutService {
       })
       return this.http.post(this.commonService.rootData.rootUrl + 'facility/facilityStatusupdate', updatestatusroleMasterData, { headers: headers });
   }
+
+  // ============== Party Plot Master =========== //
+
+  getpartyplotMaster() {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'partyplot/partyplotList', { headers: headers });
+  }
+
+  SavepartyplotMaster(createroleMasterData: any) {
+      let headers = new HttpHeaders({
+          'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+      })
+      return this.http.post(this.commonService.rootData.rootUrl + 'partyplot/partyplotCreate', createroleMasterData, { headers: headers });
+  }
+
+  getpartyplotMasterId(params: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'partyplot/partyplotListById', { params: params, headers: headers });
+  }
+
+  UpdatepartyplotMaster(updateroleMasterData: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'partyplot/partyplotUpdate', updateroleMasterData, { headers: headers });
+  }
+
+  StatuspartyplotMaster(updatestatusroleMasterData: any) {
+      let headers = new HttpHeaders({
+          'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+      })
+      return this.http.post(this.commonService.rootData.rootUrl + 'partyplot/partyplotStatusupdate', updatestatusroleMasterData, { headers: headers });
+  }
+
+  getfacilityActiveList() {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'facility/ActivefacilityList', { headers: headers });
+  }
+  
 }
