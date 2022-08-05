@@ -193,5 +193,28 @@ export class AdminLayoutService {
     })
     return this.http.get(this.commonService.rootData.rootUrl + 'event/ActiveEventList', { headers: headers });
   }
+
+// ============== Staff =========== //
+
+  getStaff() {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'staff/staff-List', { headers: headers });
+  }
+  
+  saveStaff(createstaffData: any) {
+      let headers = new HttpHeaders({
+          'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+      })
+      return this.http.post(this.commonService.rootData.rootUrl + 'staff/create', createstaffData, { headers: headers });
+  }
+
+  getPartyplotActiveList() {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'event/ActiveEventList', { headers: headers });
+  }
   
 }

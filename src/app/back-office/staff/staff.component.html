@@ -26,17 +26,22 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody class="table-border-bottom-0">
+                <tbody class="table-border-bottom-0" *ngFor="let staffData of staffList | paginate: { itemsPerPage: l, currentPage: p }; let staffIndex = index">
                     <tr>
-                        <td>1</td>
-                        <td><strong>Dashboard</strong></td>
-                        <td>9874563216</td>
-                        <td>Dashboard</td>
-                        <td>7878-8877-9955</td>
-                        <td>Superadmin@gmail.com</td>
-                        <td>Apna Party Plot</td>
-                        <td>Manager</td>
-                        <td><span class="badge bg-label-success me-1">Active</span></td>
+                        <td>{{ l * (p - 1) + staffIndex + 1 }}</td>
+                        <td><strong>{{staffData.name}}</strong></td>
+                        <td>{{staffData.contact}}</td>
+                        <td>{{staffData.reference}}</td>
+                        <td>{{staffData.aadharcardNo}}</td>
+                        <td>{{staffData.email}}</td>
+                        <td>{{staffData.partyplotData}}</td>
+                        <td></td>
+                        <td>
+                            <span *ngIf="staffData.status == 1"
+                                class="badge bg-label-success me-1">Active</span>
+                            <span *ngIf="staffData.status == 2"
+                                class="badge bg-label-danger me-1">Deactive</span>
+                        </td>
                         <td>
                             <div class="d-flex">
 
@@ -50,6 +55,9 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="footer-pagination">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
         </div>
     </div>
     <div class="content-backdrop fade"></div>
@@ -59,7 +67,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel1"><strong>Add Staff Details</strong></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancelMenu()"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
