@@ -99,6 +99,20 @@ export class AdminLayoutService {
     return this.http.get(this.commonService.rootData.rootUrl + 'roleMaster/roleActiveList', { headers: headers });
   }
 
+  getRolewisemenuList(params: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'rolewiseMenu/roleWiseMenuList', { params: params, headers: headers });
+  }
+
+  SaverolewiseMenu(rolewisemenuData: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'rolewiseMenu/roleWiseMenu-Save', rolewisemenuData, { headers: headers });
+  }
+
   // ============== Facility Master Menu =========== //
 
   getfacilityMaster() {
