@@ -128,7 +128,6 @@ export class EventMasterComponent implements OnInit {
   }
 
   statusEventmaster(paramsObj) {
-    debugger;
     let statuseventmasterModelObj = {
       _id: paramsObj.id,
       status: paramsObj.status,

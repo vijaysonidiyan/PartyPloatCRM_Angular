@@ -43,7 +43,7 @@
                                     <i class="bx bx-plus"></i>
                                 </button>
                                 <button *ngIf="eventmasterData.status == 1" title="Deactive Event"
-                                    (confirm-click)="statuseventmaster({id :eventmasterData._id,index:EventMasterIndex, status:2})"
+                                    (confirm-click)="statusEventmaster({id :eventmasterData._id,index:eventMasterIndex, status:2})"
                                     appConfirm [confirmTitle]="'Deactive'"
                                     [confirmContent]="'Are you sure to Deactive this Event Master?'"
                                     class="bg-label-danger btn-bg bg-label-danger">
