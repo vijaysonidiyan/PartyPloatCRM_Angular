@@ -18,11 +18,13 @@ import { UserWiseMenuComponent } from "app/back-office/setting/user-wise-menu/us
 import { NgSelectModule } from "@ng-select/ng-select";
 import { PartyPlotMasterComponent } from "app/back-office/party-plot-master/party-plot-master.component";
 import { StaffComponent } from "app/back-office/staff/staff.component";
-import { FacilityMasterComponent } from "app/back-office/facility-master/facility-master.component";
+import { EventMasterComponent } from "app/back-office/event-master/event-master.component";
 import { ProductMasterComponent } from "app/back-office/product-master/product-master.component";
 import { VendorDetailsComponent } from "app/back-office/vendor-details/vendor-details.component";
-import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxPaginationModule } from "ngx-pagination";
 import { DirectivesModule } from "app/shared/directives/directives.module";
+import { CompanySettingComponent } from "app/back-office/setting/company-setting/company-setting.component";
+import { InquiryComponent } from "app/back-office/inquiry/inquiry.component";
 
 @NgModule({
   imports: [
@@ -49,9 +51,11 @@ import { DirectivesModule } from "app/shared/directives/directives.module";
     UserWiseMenuComponent,
     PartyPlotMasterComponent,
     StaffComponent,
-    FacilityMasterComponent,
+    EventMasterComponent,
     ProductMasterComponent,
-    VendorDetailsComponent
+    VendorDetailsComponent,
+    CompanySettingComponent,
+    InquiryComponent,
   ],
 })
 export class AdminLayoutModule {}

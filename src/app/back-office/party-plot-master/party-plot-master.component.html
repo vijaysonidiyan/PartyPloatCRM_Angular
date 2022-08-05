@@ -16,7 +16,7 @@
                     <tr>
                         <th>No</th>
                         <th>Name</th>
-                        <th>Facility</th>
+                        <th>Event</th>
                         <th>Address</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -27,9 +27,8 @@
                         *ngFor="let partyplotmasterData of partyplotList | paginate: { itemsPerPage: l, currentPage: p }; let partyPlotIndex = index">
                         <td>{{ l * (p - 1) + partyPlotIndex + 1 }}</td>
                         <td><strong>{{ partyplotmasterData.name }}</strong></td>
-                        <td><span
-                                *ngFor="let facilitiesData of partyplotmasterData.facilities; let facilityIndex = index"><span
-                                    *ngIf="facilityIndex > 0">,&nbsp;</span>{{facilitiesData.name}}</span></td>
+                        <td><span *ngFor="let eventsData of partyplotmasterData.events; let eventIndex = index"><span
+                                    *ngIf="eventIndex > 0">,&nbsp;</span>{{eventsData.name}}</span></td>
                         <td>{{ partyplotmasterData.address }}</td>
                         <td>
                             <span *ngIf="partyplotmasterData.status == 1"
@@ -81,7 +80,7 @@
             <div class="modal-body">
                 <form role="form" class="add-employee-form" [formGroup]="partyplotForm" autocomplete="off">
                     <div class="row">
-                        <div class="col-lg-6 mb-3">
+                        <div class="col-lg-12 mb-3">
                             <label for="nameBasic" class="form-label">Name</label>
                             <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
                                 formControlName="name" />
@@ -91,14 +90,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 mb-3">
-                            <label for="nameBasic" class="form-label">Facility Select</label>
-                            <ng-select [items]="activefacilityList" [multiple]="true" class="form-control p-0"
-                                bindLabel="name" bindValue="_id" placeholder="Select Module"
-                                formControlName="facilities" [closeOnSelect]="false">
+                        <div class="col-lg-12 mb-3">
+                            <label for="nameBasic" class="form-label">Event Select</label>
+                            <ng-select [items]="activeeventList" [multiple]="true" class="form-control p-0"
+                                bindLabel="name" bindValue="_id" placeholder="Select Module" formControlName="events"
+                                [closeOnSelect]="false">
                             </ng-select>
-                            <div *ngIf="submittedPartyplotData && facilityInvalid === true">
-                                <span class="error_msg">Facility is Required.</span>
+                            <div *ngIf="submittedPartyplotData && eventInvalid === true">
+                                <span class="error_msg">Event is Required.</span>
                             </div>
                         </div>
                         <div class="col-lg-12 mb-3">

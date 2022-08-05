@@ -9,7 +9,7 @@ declare const $: any;
   styleUrls: ["./party-plot-master.component.css"],
 })
 export class PartyPlotMasterComponent implements OnInit {
-  activefacilityList: any[];
+  activeeventList: any[];
   partyplotForm: FormGroup;
   ISeditPartyplot = false;
   partyplotList: any[];
@@ -22,11 +22,17 @@ export class PartyPlotMasterComponent implements OnInit {
   partyPlotIndex: number;
   partyplotListlength: any;
   noData;
-  get fnameData() { return this.partyplotForm.controls; }
+  get fnameData() {
+    return this.partyplotForm.controls;
+  }
   submittedPartyplotData = false;
-  facilityInvalid = false;
+  eventInvalid = false;
 
-  constructor(public commonService: CommonService, public adminLayoutService: AdminLayoutService,  private fb: FormBuilder) {}
+  constructor(
+    public commonService: CommonService,
+    public adminLayoutService: AdminLayoutService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.noData = false;
@@ -34,18 +40,18 @@ export class PartyPlotMasterComponent implements OnInit {
     this.l = 10;
     this.ISeditPartyplot = false;
     this.getPartyplotList();
-    this.getFacilityActiveList();
+    this.getEventActiveList();
     this.defaultForm();
   }
 
   defaultForm() {
     this.partyplotForm = this.fb.group({
-        _id: ['0'],
-        name: ['', [Validators.required]],
-        address: [''],
-        facilities: [''],
+      _id: ["0"],
+      name: ["", [Validators.required]],
+      address: [""],
+      events: [""],
     });
-}
+  }
 
   addPartyplot() {
     $("#add-menu-modal").modal("show");
@@ -59,153 +65,165 @@ export class PartyPlotMasterComponent implements OnInit {
   }
 
   getPartyplotList() {
-    this.adminLayoutService.getpartyplotMaster().subscribe((Response: any) => {
-
+    this.adminLayoutService.getpartyplotMaster().subscribe(
+      (Response: any) => {
         if (Response.meta.code == 200) {
           this.PartyplotList = Response.data;
-          this.partyplotList = this.PartyplotList
-          this.allpartyplot = this.partyplotList
+          this.partyplotList = this.PartyplotList;
+          this.allpartyplot = this.partyplotList;
           this.partyplotList = this.PartyplotList.slice();
           this.partyplotListlength = Response.data.length;
           this.noData = false;
-      } else {
+        } else {
           this.noData = true;
-      }
+        }
 
         //for select sub industry step
-    }, (error) => {
+      },
+      (error) => {
         console.log(error.error.Message);
-    });
+      }
+    );
   }
 
-  getFacilityActiveList() {
-
-    this.adminLayoutService.getfacilityActiveList().subscribe((Response: any) => {
-
+  getEventActiveList() {
+    this.adminLayoutService.geteventActiveList().subscribe(
+      (Response: any) => {
         if (Response.meta.code == 200) {
-            this.activefacilityList = Response.data;
+          this.activeeventList = Response.data;
         } else {
         }
         //for select sub industry step
-    }, (error) => {
+      },
+      (error) => {
         console.log(error.error.Message);
-    });
+      }
+    );
   }
 
   savePartyplot() {
-
-    if(this.partyplotForm.value.facilities.length === 0){
-      this.facilityInvalid = true
-    }else{
-      this.facilityInvalid = false
+    if (this.partyplotForm.value.events.length === 0) {
+      this.eventInvalid = true;
+    } else {
+      this.eventInvalid = false;
     }
 
-    if (this.partyplotForm.invalid || this.facilityInvalid === true) {
-        this.submittedPartyplotData = true;
-        return;
+    if (this.partyplotForm.invalid || this.eventInvalid === true) {
+      this.submittedPartyplotData = true;
+      return;
     }
 
     let partyplotModelObj = {
-        "name": this.partyplotForm.controls.name.value,
-        "address": this.partyplotForm.controls.address.value,
-        "facilities": this.partyplotForm.controls.facilities.value,
+      name: this.partyplotForm.controls.name.value,
+      address: this.partyplotForm.controls.address.value,
+      events: this.partyplotForm.controls.events.value,
     };
 
-    this.adminLayoutService.SavepartyplotMaster(partyplotModelObj).subscribe((Response: any) => {
-
+    this.adminLayoutService.SavepartyplotMaster(partyplotModelObj).subscribe(
+      (Response: any) => {
         if (Response.meta.code == 200) {
-            this.submittedPartyplotData = false;
-            this.getPartyplotList();
-            this.defaultForm();
-            this.getFacilityActiveList();
-            this.ISeditPartyplot = false;
-            this.commonService.notifier.notify('success', Response.meta.message);
-            $("#add-menu-modal").modal("hide");
+          this.submittedPartyplotData = false;
+          this.getPartyplotList();
+          this.defaultForm();
+          this.getEventActiveList();
+          this.ISeditPartyplot = false;
+          this.commonService.notifier.notify("success", Response.meta.message);
+          $("#add-menu-modal").modal("hide");
+        } else {
+          this.commonService.notifier.notify("error", Response.meta.message);
         }
-        else {
-            this.commonService.notifier.notify('error', Response.meta.message);
-        }
-    }, (error) => {
+      },
+      (error) => {
         console.log(error);
-    });
+      }
+    );
   }
 
   editPartyplotmaster(paramsObj) {
-
     this.ISeditPartyplot = true;
-    let Id: any = { '_id': paramsObj.id }
-    this.adminLayoutService.getpartyplotMasterId(Id).subscribe((Response: any) => {
-
-        this.partyplotForm.controls._id.setValue(Response.data._id)
-        this.partyplotForm.controls.name.setValue(Response.data.name)
-        this.partyplotForm.controls.address.setValue(Response.data.address)
-        this.partyplotForm.controls.facilities.setValue(Response.data.facilities)
+    let Id: any = { _id: paramsObj.id };
+    this.adminLayoutService.getpartyplotMasterId(Id).subscribe(
+      (Response: any) => {
+        this.partyplotForm.controls._id.setValue(Response.data._id);
+        this.partyplotForm.controls.name.setValue(Response.data.name);
+        this.partyplotForm.controls.address.setValue(Response.data.address);
+        this.partyplotForm.controls.events.setValue(Response.data.events);
         $("#add-menu-modal").modal("show");
-    }, (error) => {
-        
-    });
+      },
+      (error) => {}
+    );
   }
 
   updatePartyplot() {
-    if(this.partyplotForm.value.facilities.length === 0){
-      this.facilityInvalid = true
-    }else{
-      this.facilityInvalid = false
+    if (this.partyplotForm.value.events.length === 0) {
+      this.eventInvalid = true;
+    } else {
+      this.eventInvalid = false;
     }
 
-    if (this.partyplotForm.invalid || this.facilityInvalid === true) {
-        this.submittedPartyplotData = true;
-        return;
+    if (this.partyplotForm.invalid || this.eventInvalid === true) {
+      this.submittedPartyplotData = true;
+      return;
     }
 
     let partyplotmasterModelObj = {
-      "_id": this.partyplotForm.controls._id.value,
-      "name": this.partyplotForm.controls.name.value,
-      "address": this.partyplotForm.controls.address.value,
-      "facilities": this.partyplotForm.controls.facilities.value,
+      _id: this.partyplotForm.controls._id.value,
+      name: this.partyplotForm.controls.name.value,
+      address: this.partyplotForm.controls.address.value,
+      events: this.partyplotForm.controls.events.value,
     };
 
-    this.adminLayoutService.UpdatepartyplotMaster(partyplotmasterModelObj).subscribe((Response: any) => {
-      if (Response.meta.code == 200) {
-        this.submittedPartyplotData = false;
-        this.getPartyplotList();
-        this.defaultForm();
-        this.getFacilityActiveList();
-        this.ISeditPartyplot = false;
-        this.commonService.notifier.notify('success', Response.meta.message);
-        $("#add-menu-modal").modal("hide");
-      }
-      else {
-          this.commonService.notifier.notify('error', Response.meta.message);
-      }
-    }, (error) => {
-        console.log(error);
-    });
+    this.adminLayoutService
+      .UpdatepartyplotMaster(partyplotmasterModelObj)
+      .subscribe(
+        (Response: any) => {
+          if (Response.meta.code == 200) {
+            this.submittedPartyplotData = false;
+            this.getPartyplotList();
+            this.defaultForm();
+            this.getEventActiveList();
+            this.ISeditPartyplot = false;
+            this.commonService.notifier.notify(
+              "success",
+              Response.meta.message
+            );
+            $("#add-menu-modal").modal("hide");
+          } else {
+            this.commonService.notifier.notify("error", Response.meta.message);
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 
   statusPartyplot(paramsObj) {
-
-
     let statuspartyplotModelObj = {
-        "_id": paramsObj.id,
-        "status": paramsObj.status
+      _id: paramsObj.id,
+      status: paramsObj.status,
     };
 
-
-    this.adminLayoutService.StatuspartyplotMaster(statuspartyplotModelObj).subscribe((Response: any) => {
-
-        if (Response.meta.code == 200) {
+    this.adminLayoutService
+      .StatuspartyplotMaster(statuspartyplotModelObj)
+      .subscribe(
+        (Response: any) => {
+          if (Response.meta.code == 200) {
             this.submittedPartyplotData = false;
             this.getPartyplotList();
             this.defaultForm();
             this.ISeditPartyplot = false;
-            this.commonService.notifier.notify('success', Response.meta.message);
+            this.commonService.notifier.notify(
+              "success",
+              Response.meta.message
+            );
+          } else {
+            this.commonService.notifier.notify("error", Response.meta.message);
+          }
+        },
+        (error) => {
+          console.log(error);
         }
-        else {
-            this.commonService.notifier.notify('error', Response.meta.message);
-        }
-    }, (error) => {
-        console.log(error);
-    });
+      );
   }
 }

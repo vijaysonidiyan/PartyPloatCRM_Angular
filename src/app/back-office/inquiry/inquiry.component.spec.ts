@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FacilityMasterComponent } from './facility-master.component';
+import { InquiryComponent } from './inquiry.component';
 
-describe('FacilityMasterComponent', () => {
-  let component: FacilityMasterComponent;
-  let fixture: ComponentFixture<FacilityMasterComponent>;
+describe('InquiryComponent', () => {
+  let component: InquiryComponent;
+  let fixture: ComponentFixture<InquiryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FacilityMasterComponent ]
+      declarations: [ InquiryComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FacilityMasterComponent);
+    fixture = TestBed.createComponent(InquiryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

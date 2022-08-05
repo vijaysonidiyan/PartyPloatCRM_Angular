@@ -68,12 +68,12 @@
             </a>
         </li>
         <li class="menu-item" routerLinkActive="active">
-            <a routerLink="facility-master" class="menu-link">
-                <img class="icon-png default-icon" src="../../../assets/img/facility.png" alt="default-icon">
-                <img class="icon-png active-icon" src="../../../assets/img/facility-white.png" alt="active-icon">
+            <a routerLink="event-master" class="menu-link">
+                <img class="icon-png default-icon" src="../../../assets/img/event.png" alt="default-icon">
+                <img class="icon-png active-icon" src="../../../assets/img/event-white.png" alt="active-icon">
                 <!-- <strong style="font-size:22px; width:50px">FM</strong> -->
                 <!-- <i class="menu-icon tf-icons bx bx-home-circle"></i> -->
-                <div data-i18n="Analytics">Facility Mater</div>
+                <div data-i18n="Analytics">Event Mater</div>
             </a>
         </li>
         <li class="menu-item" routerLinkActive="active">
@@ -113,6 +113,15 @@
                 <div data-i18n="Analytics">Vendor Details</div>
             </a>
         </li>
+        <li class="menu-item" routerLinkActive="active">
+            <a routerLink="inquiry" class="menu-link">
+                <img class="icon-png default-icon" src="../../../assets/img/vendor.png" alt="default-icon">
+                <img class="icon-png active-icon" src="../../../assets/img/vendor-white.png" alt="active-icon">
+                <!-- <strong style="font-size:22px; width:50px">VD</strong> -->
+                <!-- <i class="menu-icon tf-icons bx bx-home-circle"></i> -->
+                <div data-i18n="Analytics">Inquiry</div>
+            </a>
+        </li>
 
         <!-- Layouts -->
         <li class="menu-item" routerLinkActive="active open" [ngClass]="{'open':isSettingOpen === true} ">
@@ -143,6 +152,11 @@
                 <li class="menu-item" routerLinkActive="active">
                     <a routerLink="setting/user-wise-menu" class="menu-link">
                         <div data-i18n="Blank">User wise Menu</div>
+                    </a>
+                </li>
+                <li class="menu-item" routerLinkActive="active">
+                    <a routerLink="setting/company-setting" class="menu-link">
+                        <div data-i18n="Blank">Company Setting</div>
                     </a>
                 </li>
             </ul>
