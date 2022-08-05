@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Facility Master</h4>
         <div>
-            <button type="button" class="btn btn-primary" (click)="addMenu()">
+            <button type="button" class="btn btn-primary" (click)="addFacilitymaster()">
                 Add New
             </button>
         </div>
@@ -21,26 +21,15 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    <tr>
-                        <td>1</td>
-                        <td><strong>Dashboard</strong></td>
-                        <td><span class="badge bg-label-success me-1">Active</span></td>
+                    <tr *ngFor="let facilitymasterData of facilitymasterList | paginate: { itemsPerPage: l, currentPage: p }; let facilityMasterIndex = index">
+                        <td>{{ l * (p - 1) + facilityMasterIndex + 1 }}</td>
+                        <td><strong>{{ facilitymasterData.name }}</strong></td>
                         <td>
-                            <div class="dropdown d-flex">
-
-                                <button class="dropdown-item" href="javascript:void(0);"><i
-                                        class="bx bx-edit-alt me-1"></i>
-                                </button>
-                                <button class="dropdown-item" href="javascript:void(0);"><i
-                                        class="bx bx-trash me-1"></i>
-                                </button>
-                            </div>
+                            <span *ngIf="facilitymasterData.status == 1"
+                            class="badge bg-label-success me-1">Active</span>
+                            <span *ngIf="facilitymasterData.status == 2"
+                            class="badge bg-label-danger me-1">Deactive</span>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td><strong>Dashboard</strong></td>
-                        <td><span class="badge bg-label-danger me-1">Deactive</span></td>
                         <td>
                             <div class="dropdown d-flex">
 
@@ -50,11 +39,31 @@
                                 <button class="dropdown-item" href="javascript:void(0);"><i
                                         class="bx bx-trash me-1"></i>
                                 </button>
+                                <div class="dropdown-menu">
+                                    <button class="dropdown-item"  (click)="editFacilitymaster({id : facilitymasterData._id, index : facilityMasterIndex})"><i
+                                            class="bx bx-edit-alt me-1"></i>
+                                        Edit</button>
+                                        <button *ngIf="facilitymasterData.status == 2" title="Active Facility"
+                                        (confirm-click)="statusFacilitymaster({id :facilitymasterData._id,index:facilityMasterIndex, status:1})"
+                                        appConfirm [confirmTitle]="'Active'"
+                                        [confirmContent]="'Are you sure to Active this Facility Master?'" class="dropdown-item">
+                                            <i class="bx bx-plus me-1"></i>Active
+                                        </button>
+                                        <button *ngIf="facilitymasterData.status == 1" title="Deactive Facility"
+                                        (confirm-click)="statusFacilitymaster({id :facilitymasterData._id,index:facilityMasterIndex, status:2})"
+                                        appConfirm [confirmTitle]="'Deactive'"
+                                        [confirmContent]="'Are you sure to Deactive this Facility Master?'" class="dropdown-item">
+                                            <i class="bx bx-trash me-1"></i>Deactive
+                                        </button>
+                                </div>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <div class="footer-pagination">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
         </div>
     </div>
     <div class="content-backdrop fade"></div>
@@ -64,18 +73,26 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel1"><strong>Add Facility</strong></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancelFacilitymaster()"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col mb-3">
-                        <label for="nameBasic" class="form-label">Name</label>
-                        <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name" />
+                <form role="form" class="add-employee-form" [formGroup]="facilitymasterForm" autocomplete="off">
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="nameBasic" class="form-label">Name</label>
+                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name" formControlName="name"/>
+                            <div *ngIf="submittedfacilityMasterData && fnameData.name.errors">
+                                <div *ngIf="fnameData.name.errors.required">
+                                    <span class="error_msg">Name is Required.</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" *ngIf="ISeditFacilityMaster === false" (click)="saveFacilitymaster()">Save</button>
+                <button type="button" class="btn btn-primary" *ngIf="ISeditFacilityMaster === true" (click)="updateFacilitymaster()">Update</button>
             </div>
         </div>
     </div>
