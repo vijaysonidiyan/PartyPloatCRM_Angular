@@ -23,39 +23,41 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    <tr  *ngFor="let partyplotmasterData of partyplotList | paginate: { itemsPerPage: l, currentPage: p }; let partyPlotIndex = index">
+                    <tr
+                        *ngFor="let partyplotmasterData of partyplotList | paginate: { itemsPerPage: l, currentPage: p }; let partyPlotIndex = index">
                         <td>{{ l * (p - 1) + partyPlotIndex + 1 }}</td>
                         <td><strong>{{ partyplotmasterData.name }}</strong></td>
-                        <td><span *ngFor="let facilitiesData of partyplotmasterData.facilities; let facilityIndex = index"><span *ngIf="facilityIndex > 0">,&nbsp;</span>{{facilitiesData.name}}</span></td>
+                        <td><span
+                                *ngFor="let facilitiesData of partyplotmasterData.facilities; let facilityIndex = index"><span
+                                    *ngIf="facilityIndex > 0">,&nbsp;</span>{{facilitiesData.name}}</span></td>
                         <td>{{ partyplotmasterData.address }}</td>
                         <td>
                             <span *ngIf="partyplotmasterData.status == 1"
-                            class="badge bg-label-success me-1">Active</span>
+                                class="badge bg-label-success me-1">Active</span>
                             <span *ngIf="partyplotmasterData.status == 2"
-                            class="badge bg-label-danger me-1">Deactive</span>
+                                class="badge bg-label-danger me-1">Deactive</span>
                         </td>
 
                         <td>
-                            <div class="dropdown d-flex">
-
-                                <button class="dropdown-item" href="javascript:void(0);"><i
-                                        class="bx bx-edit-alt me-1"></i>
+                            <div class="d-flex">
+                                <button class="btn-bg"
+                                    (click)="editPartyplotmaster({id : partyplotmasterData._id, index : partyPlotIndex})">
+                                    <i class="bx bx-edit-alt "></i>
                                 </button>
-                                <button class="dropdown-item" href="javascript:void(0);"><i
-                                        class="bx bx-trash me-1"></i>
+                                <button *ngIf="partyplotmasterData.status == 2" title="Active Party Plot"
+                                    (confirm-click)="statusPartyplot({id :partyplotmasterData._id,index:partyPlotIndex, status:1})"
+                                    appConfirm [confirmTitle]="'Active'"
+                                    [confirmContent]="'Are you sure to Active this Party Plot Master?'"
+                                    class="btn-bg bg-label-success">
+                                    <i class="bx bx-plus bg-label-success"></i>
                                 </button>
-                                <div class="dropdown-menu">
-                                    <button class="dropdown-item" (click)="editPartyplotmaster({id : partyplotmasterData._id, index : partyPlotIndex})">
-                                        <i class="bx bx-edit-alt me-1"></i>
-                                        Edit
-                                    </button>
-                                    <button *ngIf="partyplotmasterData.status == 2" title="Active Party Plot" (confirm-click)="statusPartyplot({id :partyplotmasterData._id,index:partyPlotIndex, status:1})" appConfirm [confirmTitle]="'Active'" [confirmContent]="'Are you sure to Active this Party Plot Master?'" class="dropdown-item">
-                                        <i class="bx bx-plus me-1"></i>Active
-                                    </button>
-                                    <button *ngIf="partyplotmasterData.status == 1" title="Deactive Party Plot" (confirm-click)="statusPartyplot({id :partyplotmasterData._id,index:partyPlotIndex, status:2})" appConfirm [confirmTitle]="'Deactive'" [confirmContent]="'Are you sure to Deactive this Party Plot Master?'" class="dropdown-item">
-                                        <i class="bx bx-trash me-1"></i>Deactive
-                                    </button>
-                                </div>
+                                <button *ngIf="partyplotmasterData.status == 1" title="Deactive Party Plot"
+                                    (confirm-click)="statusPartyplot({id :partyplotmasterData._id,index:partyPlotIndex, status:2})"
+                                    appConfirm [confirmTitle]="'Deactive'"
+                                    [confirmContent]="'Are you sure to Deactive this Party Plot Master?'"
+                                    class="btn-bg bg-label-danger">
+                                    <i class="bx bx-trash bg-label-danger"></i>
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -73,14 +75,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel1"><strong>Add Party Plot Details</strong></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"  (click)="cancelPartyplot()"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="cancelPartyplot()"></button>
             </div>
             <div class="modal-body">
                 <form role="form" class="add-employee-form" [formGroup]="partyplotForm" autocomplete="off">
                     <div class="row">
                         <div class="col-lg-6 mb-3">
                             <label for="nameBasic" class="form-label">Name</label>
-                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name" formControlName="name"/>
+                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
+                                formControlName="name" />
                             <div *ngIf="submittedPartyplotData && fnameData.name.errors">
                                 <div *ngIf="fnameData.name.errors.required">
                                     <span class="error_msg">Name is Required.</span>
@@ -89,22 +93,27 @@
                         </div>
                         <div class="col-lg-6 mb-3">
                             <label for="nameBasic" class="form-label">Facility Select</label>
-                            <ng-select [items]="activefacilityList" [multiple]="true" class="form-control p-0" bindLabel="name" bindValue="_id" placeholder="Select Module" formControlName="facilities" [closeOnSelect]="false">
+                            <ng-select [items]="activefacilityList" [multiple]="true" class="form-control p-0"
+                                bindLabel="name" bindValue="_id" placeholder="Select Module"
+                                formControlName="facilities" [closeOnSelect]="false">
                             </ng-select>
                             <div *ngIf="submittedPartyplotData && facilityInvalid === true">
-                                    <span class="error_msg">Facility is Required.</span>
+                                <span class="error_msg">Facility is Required.</span>
                             </div>
                         </div>
                         <div class="col-lg-12 mb-3">
                             <label for="nameBasic" class="form-label">Address</label>
-                            <textarea id="basic-default-message" class="form-control" placeholder="" formControlName="address"></textarea>
+                            <textarea id="basic-default-message" class="form-control" placeholder=""
+                                formControlName="address"></textarea>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" *ngIf="ISeditPartyplot === false" (click)="savePartyplot()">Save</button>
-                <button type="button" class="btn btn-primary" *ngIf="ISeditPartyplot === true" (click)="updatePartyplot()">Update</button>
+                <button type="button" class="btn btn-primary" *ngIf="ISeditPartyplot === false"
+                    (click)="savePartyplot()">Save</button>
+                <button type="button" class="btn btn-primary" *ngIf="ISeditPartyplot === true"
+                    (click)="updatePartyplot()">Update</button>
             </div>
         </div>
     </div>

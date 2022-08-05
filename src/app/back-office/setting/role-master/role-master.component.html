@@ -30,23 +30,23 @@
                             <span *ngIf="rolemasterData.status == 2" class="badge bg-label-danger me-1">Deactive</span>
                         </td>
                         <td>
-                            <div class="dropdown d-flex" *ngIf="rolemasterData.isEditable === true">
-                                <button class="dropdown-item"
+                            <div class="d-flex" *ngIf="rolemasterData.isEditable === true">
+                                <button class="btn-bg"
                                     (click)="editRolemaster({id : rolemasterData._id, index : roleMasterIndex})"><i
-                                        class="bx bx-edit-alt me-1"></i>
+                                        class="bx bx-edit-alt "></i>
                                 </button>
                                 <button *ngIf="rolemasterData.status == 2" class="dtl-btn btn bg-gradient-dark"
                                     title="Active Role"
                                     (confirm-click)="statusRolemaster({id :rolemasterData._id,index:roleMasterIndex, status:1})"
                                     appConfirm [confirmTitle]="'Active'"
                                     [confirmContent]="'Are you sure to Active this Role Master?'"
-                                    class="dropdown-item"><i class="bx bx-plus me-1"></i></button>
+                                    class="btn-bg bg-label-success"><i class="bx bx-plus"></i></button>
                                 <button *ngIf="rolemasterData.status == 1" class="dtl-btn btn bg-gradient-dark"
                                     title="Deactive Role"
                                     (confirm-click)="statusRolemaster({id :rolemasterData._id,index:roleMasterIndex, status:2})"
                                     appConfirm [confirmTitle]="'Deactive'"
                                     [confirmContent]="'Are you sure to Deactive this Role Master?'"
-                                    class="dropdown-item"><i class="bx bx-trash me-1"></i></button>
+                                    class="btn-bg bg-label-danger"><i class="bx bx-trash"></i></button>
                             </div>
                         </td>
                     </tr>

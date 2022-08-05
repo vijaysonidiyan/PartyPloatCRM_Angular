@@ -38,28 +38,20 @@
                             <span *ngIf="menuData.status == 2" class="badge bg-label-danger">Deactive</span>
                         </td>
                         <td>
-                            <div class="dropdown d-flex">
-                                <!-- <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                    data-bs-toggle="dropdown">
-                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                </button> -->
-                                <button class="dropdown-item"
-                                    (click)="editMenumaster({id : menuData._id, index:menuIndex})"><i
-                                        class="bx bx-edit-alt me-1"></i>
+                            <div class="d-flex">
+                                <button class="btn-bg" (click)="editMenumaster({id : menuData._id, index:menuIndex})"><i
+                                        class="bx bx-edit-alt"></i>
                                 </button>
-                                <button *ngIf="menuData.status == 2" class="dropdown-item"
+                                <button *ngIf="menuData.status == 2" class="btn-bg bg-label-success"
                                     (confirm-click)="statusMenu({id :menuData._id,index:menuIndex, status:1})"
                                     appConfirm [confirmTitle]="'Active'"
                                     [confirmContent]="'Are you sure to Active this Menu Master?'">
-                                    <i class="bx bx-plus me-1"></i></button>
-                                <button *ngIf="menuData.status == 1" class="dropdown-item"
+                                    <i class="bx bx-plus"></i></button>
+                                <button *ngIf="menuData.status == 1" class="btn-bg bg-label-danger"
                                     (confirm-click)="statusMenu({id :menuData._id,index:menuIndex, status:2})"
                                     appConfirm [confirmTitle]="'Deactive'"
                                     [confirmContent]="'Are you sure to Deactive this Menu Master?'">
-                                    <i class="bx bx-trash me-1"></i></button>
-                                <!-- <div class="dropdown-menu">
-
-                                </div> -->
+                                    <i class="bx bx-trash "></i></button>
                             </div>
                         </td>
                     </tr>

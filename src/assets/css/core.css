@@ -3166,9 +3166,9 @@ fieldset:disabled .btn {
   clear: both;
   font-weight: 400;
   color: #00adef;
-  text-align: center;
+  text-align: inherit;
   white-space: nowrap;
-  background-color: #e7e7ff !important;
+  background-color: transparent !important;
   border: 0;
   border-radius: 5px;
 }
@@ -17304,5 +17304,19 @@ html:not(.layout-footer-fixed) .content-wrapper {
   display: none;
 }
 .ngx-pagination .current {
+  border-radius: 5px;
+}
+.btn-bg {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  margin-right: 5px;
+  clear: both;
+  font-weight: 400;
+  color: #00adef;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #e7e7ff;
+  border: 0;
   border-radius: 5px;
 }
