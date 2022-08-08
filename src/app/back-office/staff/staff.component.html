@@ -34,18 +34,21 @@
                         <td>{{staffData.reference}}</td>
                         <td>{{staffData.aadharcardNo}}</td>
                         <td>{{staffData.email}}</td>
-                        <td>{{staffData.partyplotData}}</td>
-                        <td></td>
+                        <td>
+                            <span *ngFor="let partyplotname of staffData.partyplotData; let eventIndex = index"><span
+                            *ngIf="eventIndex > 0">,&nbsp;</span>{{partyplotname.name}}</span>
+                        </td>
+                        <td>{{staffData.roleName}}</td>
                         <td>
                             <span *ngIf="staffData.status == 1"
-                                class="badge bg-label-success me-1">Active</span>
+                            class="badge bg-label-success me-1">Active</span>
                             <span *ngIf="staffData.status == 2"
-                                class="badge bg-label-danger me-1">Deactive</span>
-                        </td>
+                            class="badge bg-label-danger me-1">Deactive</span></td>
                         <td>
                             <div class="d-flex">
-
-                                <button class="btn-bg" href="javascript:void(0);"><i class="bx bx-edit-alt "></i>
+                                <button class="btn-bg"
+                                    (click)="editStaff({id : staffData._id, index : staffIndex})">
+                                    <i class="bx bx-edit-alt "></i>
                                 </button>
                                 <button class="btn-bg bg-label-danger" href="javascript:void(0);"><i
                                         class="bx bx-trash "></i>
@@ -55,7 +58,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="footer-pagination">
+            <div class="footer-pagination float-end mt-3">
                 <pagination-controls (pageChange)="p = $event"></pagination-controls>
             </div>
         </div>
@@ -70,46 +73,58 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancelMenu()"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-4 mb-3">
-                        <label for="nameBasic" class="form-label">Name</label>
-                        <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name" />
+                <form role="form" class="add-employee-form" [formGroup]="staffForm" autocomplete="off">
+                    <div class="row">
+                        <div class="col-lg-4 mb-3">
+                            <label for="nameBasic" class="form-label">Name</label>
+                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name" formControlName="name"/>
+                            <div *ngIf="submittedStaffData && fnameData.name.errors">
+                                <div *ngIf="fnameData.name.errors.required">
+                                    <span class="error_msg">Name is Required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label class="form-label" for="basic-default-phone">Phone No</label>
+                            <input type="text" id="basic-default-phone" class="form-control phone-mask" placeholder="658 799 8941" formControlName="contact">
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label class="form-label" for="basic-default-company">Reference</label>
+                            <input type="text" class="form-control" id="basic-default-company" placeholder="ACME Inc." formControlName="reference">
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label class="form-label" for="basic-default-phone">Aadhar Card</label>
+                            <input type="text" id="basic-default-aadhar-card" class="form-control phone-mask" placeholder="9999 9999 9999" formControlName="aadharcardNo">
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label for="nameBasic" class="form-label">Email</label>
+                            <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe" aria-label="john.doe" aria-describedby="basic-default-email2" formControlName="email">
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label for="nameBasic" class="form-label">Designation</label>
+                            <ng-select [items]="activeroleList" class="form-control p-0" bindLabel="roleName" bindValue="_id" placeholder="Select Role" formControlName="roleId">
+                            </ng-select>
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label for="nameBasic" class="form-label">Select Party plot</label>
+                            <ng-select [items]="partyplotList" [multiple]="true" [closeOnSelect]="false" class="form-control p-0" bindLabel="name" bindValue="_id"  formControlName="partyplotData"
+                                placeholder="Select Module">
+                            </ng-select>
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label for="nameBasic" class="form-label">Is Login?</label>
+                            <div class="form-check">
+                                <input type="checkbox"  class="form-check-input" formControlName="isLogin" (change)="isloginOnchange({checked: $event.target.checked})"/>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-4 mb-3">
-                        <label class="form-label" for="basic-default-phone">Phone No</label>
-                        <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                            placeholder="658 799 8941">
-                    </div>
-                    <div class="col-lg-4 mb-3">
-                        <label class="form-label" for="basic-default-company">Reference</label>
-                        <input type="text" class="form-control" id="basic-default-company" placeholder="ACME Inc.">
-                    </div>
-                    <div class="col-lg-4 mb-3">
-                        <label class="form-label" for="basic-default-phone">Aadhar Card</label>
-                        <input type="text" id="basic-default-aadhar-card" class="form-control phone-mask"
-                            placeholder="9999 9999 9999">
-                    </div>
-                    <div class="col-lg-4 mb-3">
-                        <label for="nameBasic" class="form-label">Email</label>
-                        <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
-                            aria-label="john.doe" aria-describedby="basic-default-email2">
-                    </div>
-                    <div class="col-lg-4 mb-3">
-                        <label for="nameBasic" class="form-label">Designation</label>
-                        <ng-select [items]="staffList" class="form-control p-0" bindLabel="name" bindValue="value"
-                            placeholder="Select Module">
-                        </ng-select>
-                    </div>
-                    <div class="col-lg-4 mb-3">
-                        <label for="nameBasic" class="form-label">Select Party plot</label>
-                        <ng-select [items]="partyplotList" class="form-control p-0" bindLabel="name" bindValue="value"
-                            placeholder="Select Module">
-                        </ng-select>
-                    </div>
-                </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" *ngIf="ISeditStaff === false"
+                    (click)="savestaff()">Save</button>
+                <button type="button" class="btn btn-primary" *ngIf="ISeditStaff === true"
+                    (click)="updatestaff()">Update</button>
             </div>
         </div>
     </div>

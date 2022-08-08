@@ -88,7 +88,7 @@ export class RoleWiseMenuComponent implements OnInit {
   }
 
   getRoleActiveList() {
-    this.adminLayoutService.getRoleList().subscribe(
+    this.adminLayoutService.getRoleActiveList().subscribe(
       (Response: any) => {
         if (Response.meta.code == 200) {
           this.activeroleList = Response.data;

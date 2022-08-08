@@ -92,7 +92,7 @@ export class AdminLayoutService {
 
   // ============== Role Wise Menu =========== //
 
-  getRoleList() {
+  getRoleActiveList() {
     let headers = new HttpHeaders({
         'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
@@ -210,11 +210,25 @@ export class AdminLayoutService {
       return this.http.post(this.commonService.rootData.rootUrl + 'staff/create', createstaffData, { headers: headers });
   }
 
+  getstaffId(params: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'staff/staff-getById', { params: params, headers: headers });
+  }
+
+  updateStaff(staffData: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'staff/staffDetailsUpdate', staffData, { headers: headers });
+  }
+
   getPartyplotActiveList() {
     let headers = new HttpHeaders({
         'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
-    return this.http.get(this.commonService.rootData.rootUrl + 'event/ActiveEventList', { headers: headers });
+    return this.http.get(this.commonService.rootData.rootUrl + 'partyplot/ActivePartyplotList', { headers: headers });
   }
   
 }
