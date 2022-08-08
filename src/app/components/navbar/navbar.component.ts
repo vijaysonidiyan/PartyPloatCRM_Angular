@@ -21,6 +21,9 @@ export class NavbarComponent implements OnInit {
   mobile_menu_visible: any = 0;
   private toggleButton: any;
   private sidebarVisible: boolean;
+  hide1 = false;
+  hide2 = false;
+  hide3 = false;
 
   constructor(
     location: Location,
@@ -45,11 +48,22 @@ export class NavbarComponent implements OnInit {
       }
     });
   }
+  handleKeyUp(e: any) {
+    if (e.keyCode === 13) {
+      this.changePassword();
+    }
+  }
   cancelmyProfile() {
     $("#add-myprofile-modal").modal("hide");
   }
   myProfile() {
     $("#add-myprofile-modal").modal("show");
+  }
+  changePassword() {
+    $("#change-password-modal").modal("show");
+  }
+  cancelchangePassword() {
+    $("#change-password-modal").modal("hide");
   }
   sidebarOpen() {
     const toggleButton = this.toggleButton;

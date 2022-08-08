@@ -13,4 +13,10 @@ export class InquiryComponent implements OnInit {
   partyplotList: any[] = [];
   constructor() {}
   ngOnInit(): void {}
+  addInquiry() {
+    $("#add-menu-modal").modal("show");
+  }
+  cancleInquiry() {
+    $("#add-menu-modal").modal("hide");
+  }
 }
