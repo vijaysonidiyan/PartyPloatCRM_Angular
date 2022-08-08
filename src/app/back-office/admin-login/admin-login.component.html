@@ -47,10 +47,10 @@
                                         <span (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'"
                                             [attr.aria-pressed]="hide1" class="input-group-text cursor-pointer"><i
                                                 class="bx {{hide1 ? 'bx-show' : 'bx-hide'}}"></i></span>
-                                        <div *ngIf="submittedLoginData && fLoginData.pwd.errors" class="text-right">
-                                            <div *ngIf="fLoginData.pwd.errors.required">
-                                                <span class="error_msg">Password is Required.</span>
-                                            </div>
+                                    </div>
+                                    <div *ngIf="submittedLoginData && fLoginData.pwd.errors" class="text-right">
+                                        <div *ngIf="fLoginData.pwd.errors.required">
+                                            <span class="error_msg">Password is Required.</span>
                                         </div>
                                     </div>
                                 </div>
@@ -102,6 +102,12 @@
                                     <button class="btn btn-primary d-grid w-100" type="submit" (click)="sendOtp()">Send
                                         OTP</button>
                                 </div>
+                                <div class="text-center">
+                                    <a href="javascript:void(0);" (click)="backtoLogin()">
+                                        <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+                                        <small>Back to Login ?</small>
+                                    </a>
+                                </div>
                             </form>
                         </div>
                         <div class="card-body" *ngIf="activeTab == 3">
@@ -136,15 +142,16 @@
                                         <a href="javascript:void(0);" (click)="login()">
                                             <small>Resend OTP</small>
                                         </a>
-                                        <a href="javascript:void(0);" (click)="backtoLogin()">
-                                            <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
-                                            <small>Back to Login ?</small>
-                                        </a>
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <button class="btn btn-primary d-grid w-100" type="submit"
-                                        (click)="login()">Submit</button>
+                                    <button class="btn btn-primary d-grid w-100" type="submit">Submit</button>
+                                </div>
+                                <div class="text-center">
+                                    <a href="javascript:void(0);" (click)="backtoLogin()">
+                                        <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+                                        <small>Back to Login ?</small>
+                                    </a>
                                 </div>
                             </form>
                         </div>
