@@ -10,6 +10,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
 import { AdminLoginComponent } from 'app/back-office/admin-login/admin-login.component';
+import { NgOtpInputModule } from 'ng-otp-input';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { AdminLoginComponent } from 'app/back-office/admin-login/admin-login.com
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    NgOtpInputModule
   ],
   declarations: [
     AdminLoginComponent

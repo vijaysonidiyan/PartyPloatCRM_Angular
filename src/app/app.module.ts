@@ -9,6 +9,7 @@ import { AppComponent } from "./app.component";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
 import { LoginLayoutComponent } from "./layouts/login-layout/login-layout.component";
 import { NotifierModule } from "angular-notifier";
+import { NgOtpInputModule } from  'ng-otp-input';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -18,6 +19,7 @@ import { NotifierModule } from "angular-notifier";
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
+    NgOtpInputModule,
     NotifierModule.withConfig({
       // Custom options in here
       position: {

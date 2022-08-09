@@ -236,5 +236,33 @@ export class AdminLayoutService {
     })
     return this.http.post(this.commonService.rootData.rootUrl + 'staff/ChangePassword', updatechangepwdData, { headers: headers });
   }
+
+  forgotPassword(forgotpwdData: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'staff/forgotPassworForStaff', forgotpwdData, { headers: headers });
+  }
+
+  reSendOtp(forgotpwdData: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'staff/resendOTP', forgotpwdData, { headers: headers });
+  }
+
+  otpVerification(forgotpwdData: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'staff/checkOtpVerificationUserForForgotPasssword', forgotpwdData, { headers: headers });
+  }
+
+  resetPassword(resetpwdData: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'staff/resetPassword', resetpwdData, { headers: headers });
+  }
   
 }
