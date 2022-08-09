@@ -12,7 +12,7 @@ import { CommonService } from "app/shared/common.service";
   styleUrls: ["./admin-login.component.css"],
 })
 export class AdminLoginComponent implements OnInit {
-  activeTab = 1;
+  activeTab = 5;
   loginForm: FormGroup | any;
   userId: any;
   hide1 = false;
@@ -37,14 +37,20 @@ export class AdminLoginComponent implements OnInit {
   ngOnInit(): void {
     this.defaultloginForm();
   }
+  backtoLogin() {
+    this.activeTab = 1;
+  }
   forgotPassword() {
     this.activeTab = 2;
   }
   sendOtp() {
     this.activeTab = 3;
   }
-  backtoLogin() {
-    this.activeTab = 1;
+  resetPassword() {
+    this.activeTab = 4;
+  }
+  newPassword() {
+    this.activeTab = 4;
   }
   defaultloginForm() {
     this.loginForm = this.fb.group({
