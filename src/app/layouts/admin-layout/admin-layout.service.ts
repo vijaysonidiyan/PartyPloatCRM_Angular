@@ -149,6 +149,12 @@ export class AdminLayoutService {
       })
       return this.http.post(this.commonService.rootData.rootUrl + 'event/eventStatusupdate', updatestatusroleMasterData, { headers: headers });
   }
+  geteventActiveList() {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'event/ActiveEventList', { headers: headers });
+  }
 
   // ============== Party Plot Master =========== //
 
@@ -187,13 +193,13 @@ export class AdminLayoutService {
       return this.http.post(this.commonService.rootData.rootUrl + 'partyplot/partyplotStatusupdate', updatestatusroleMasterData, { headers: headers });
   }
 
-  geteventActiveList() {
+
+  getPartyplotActiveList() {
     let headers = new HttpHeaders({
         'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
-    return this.http.get(this.commonService.rootData.rootUrl + 'event/ActiveEventList', { headers: headers });
+    return this.http.get(this.commonService.rootData.rootUrl + 'partyplot/ActivePartyplotList', { headers: headers });
   }
-
 // ============== Staff =========== //
 
   getStaff() {
@@ -224,11 +230,11 @@ export class AdminLayoutService {
     return this.http.post(this.commonService.rootData.rootUrl + 'staff/staffDetailsUpdate', staffData, { headers: headers });
   }
 
-  getPartyplotActiveList() {
+  changePassword(updatechangepwdData: any) {
     let headers = new HttpHeaders({
         'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
-    return this.http.get(this.commonService.rootData.rootUrl + 'partyplot/ActivePartyplotList', { headers: headers });
+    return this.http.post(this.commonService.rootData.rootUrl + 'staff/ChangePassword', updatechangepwdData, { headers: headers });
   }
   
 }

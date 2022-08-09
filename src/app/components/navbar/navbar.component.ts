@@ -7,6 +7,11 @@ import {
 } from "@angular/common";
 import { Router } from "@angular/router";
 import { StorageKey, StorageService } from "app/shared/storage.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { CoreHelperService } from "app/Providers/core-helper/core-helper.service";
+import { CommonService } from "app/shared/common.service";
+import { AdminLayoutService } from "app/layouts/admin-layout/admin-layout.service";
+
 declare const $: any;
 @Component({
   selector: "app-navbar",
@@ -14,23 +19,23 @@ declare const $: any;
   styleUrls: ["./navbar.component.css"],
 })
 export class NavbarComponent implements OnInit {
+
+  changePasswordForm: FormGroup;
+
   staffList: any;
   partyplotList: any;
   private listTitles: any[];
-  location: Location;
+  // location: Location;
   mobile_menu_visible: any = 0;
   private toggleButton: any;
   private sidebarVisible: boolean;
   hide1 = false;
   hide2 = false;
   hide3 = false;
+  submittedChangePasswordData = false;
+  get fLoginData() { return this.changePasswordForm.controls; }
 
-  constructor(
-    location: Location,
-    private element: ElementRef,
-    public storageService: StorageService,
-    private router: Router
-  ) {
+  constructor(public location: Location, private element: ElementRef, public storageService: StorageService, private router: Router, private fb: FormBuilder,  private coreHelper: CoreHelperService,  public commonService: CommonService, public adminLayoutService: AdminLayoutService) {
     this.location = location;
     this.sidebarVisible = false;
   }
@@ -38,6 +43,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.listTitles = ROUTES.filter((listTitle) => listTitle);
     const navbar: HTMLElement = this.element.nativeElement;
+    this.defaultChangePasswordForm();
     this.toggleButton = navbar.getElementsByClassName("navbar-toggler")[0];
     this.router.events.subscribe((event) => {
       this.sidebarClose();
@@ -48,6 +54,18 @@ export class NavbarComponent implements OnInit {
       }
     });
   }
+
+  defaultChangePasswordForm() {
+    this.changePasswordForm = this.fb.group({
+      oldpwd: ['', [Validators.required]],
+      newpwd: ['', [Validators.required, this.coreHelper.patternPasswordValidator()]],
+      confirmPwd: ['', [Validators.required]],
+    }, {
+      validator: [this.coreHelper.MustMatch('newpwd', 'confirmPwd')]
+    });
+  }
+
+
   handleKeyUp(e: any) {
     if (e.keyCode === 13) {
       this.changePassword();
@@ -65,6 +83,7 @@ export class NavbarComponent implements OnInit {
   cancelchangePassword() {
     $("#change-password-modal").modal("hide");
   }
+
   sidebarOpen() {
     const toggleButton = this.toggleButton;
     const body = document.getElementsByTagName("body")[0];
@@ -76,12 +95,14 @@ export class NavbarComponent implements OnInit {
 
     this.sidebarVisible = true;
   }
+
   sidebarClose() {
     const body = document.getElementsByTagName("body")[0];
     this.toggleButton.classList.remove("toggled");
     this.sidebarVisible = false;
     body.classList.remove("nav-open");
   }
+
   sidebarToggle() {
     // const toggleButton = this.toggleButton;
     // const body = document.getElementsByTagName('body')[0];
@@ -139,6 +160,33 @@ export class NavbarComponent implements OnInit {
       body.classList.add("nav-open");
       this.mobile_menu_visible = 1;
     }
+  }
+
+  updateChangepwd() {
+
+    this.submittedChangePasswordData = true;
+    if (this.changePasswordForm.invalid) {
+      return;
+    }
+    let changepwdObj = {
+      "oldpwd": this.changePasswordForm.value.oldpwd,
+      "newpwd": this.changePasswordForm.value.newpwd
+    }
+    this.adminLayoutService.changePassword(changepwdObj).subscribe((Response: any) => {
+
+      if (Response.meta.code == 200) {
+        $("#change-password-modal").modal("hide");
+        this.submittedChangePasswordData = false;
+        this.defaultChangePasswordForm();
+        this.commonService.notifier.notify('success', Response.meta.message);
+        this.logout();
+      }
+      else {
+        this.commonService.notifier.notify('error', Response.meta.message);
+      }
+    }, (error : any) => {
+      console.log(error);
+    });
   }
 
   logout() {
