@@ -12,7 +12,7 @@ import { CommonService } from "app/shared/common.service";
   styleUrls: ["./admin-login.component.css"],
 })
 export class AdminLoginComponent implements OnInit {
-  activeTab = 5;
+  activeTab = 1;
   loginForm: FormGroup | any;
   userId: any;
   hide1 = false;

@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { AddInquiryComponent } from "app/back-office/add-inquiry/add-inquiry.component";
 import { EventMasterComponent } from "app/back-office/event-master/event-master.component";
 import { InquiryComponent } from "app/back-office/inquiry/inquiry.component";
 import { PartyPlotMasterComponent } from "app/back-office/party-plot-master/party-plot-master.component";
@@ -29,4 +30,5 @@ export const AdminLayoutRoutes: Routes = [
   { path: "product-master", component: ProductMasterComponent },
   { path: "vendor-details", component: VendorDetailsComponent },
   { path: "inquiry", component: InquiryComponent },
+  { path: "add-inquiry", component: AddInquiryComponent },
 ];
