@@ -25,6 +25,8 @@ import { NgxPaginationModule } from "ngx-pagination";
 import { DirectivesModule } from "app/shared/directives/directives.module";
 import { CompanySettingComponent } from "app/back-office/setting/company-setting/company-setting.component";
 import { InquiryComponent } from "app/back-office/inquiry/inquiry.component";
+import { AddInquiryComponent } from "app/back-office/add-inquiry/add-inquiry.component";
+//import { DaterangepickerModule } from "angular-2-daterangepicker";
 
 @NgModule({
   imports: [
@@ -41,6 +43,7 @@ import { InquiryComponent } from "app/back-office/inquiry/inquiry.component";
     NgSelectModule,
     NgxPaginationModule,
     DirectivesModule,
+    //DaterangepickerModule
   ],
   declarations: [
     DashboardComponent,
@@ -56,6 +59,7 @@ import { InquiryComponent } from "app/back-office/inquiry/inquiry.component";
     VendorDetailsComponent,
     CompanySettingComponent,
     InquiryComponent,
+    AddInquiryComponent
   ],
 })
 export class AdminLayoutModule {}
