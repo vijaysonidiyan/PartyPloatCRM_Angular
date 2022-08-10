@@ -1,0 +1,91 @@
+<div class="container-fluid flex-grow-1 container-p-y">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span>Add Inquiry</h4>
+        <!-- <div>
+            <button type="button" class="btn btn-primary" (click)="addInquiry()">
+                Add New
+            </button>
+        </div> -->
+    </div>
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Add Inquiry</h5>
+        </div>
+        <div class="card-body">
+            <form role="form" class="add-employee-form" autocomplete="off">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <label for="nameBasic" class="form-label">Name</label>
+                        <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
+                            formControlName="name" />
+                    </div>
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <label class="form-label" for="basic-default-email">Email</label>
+                        <div class="input-group input-group-merge">
+                            <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
+                                aria-label="john.doe" aria-describedby="basic-default-email2" />
+                            <span class="input-group-text" id="basic-default-email2">@example.com</span>
+                        </div>
+                        <!-- <div class="form-text">You can use letters, numbers & periods</div> -->
+                    </div>
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <label class="form-label" for="basic-default-phone">Contact</label>
+                        <input type="text" id="basic-default-phone" class="form-control phone-mask"
+                            placeholder="658 799 8941" />
+                    </div>
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <label class="form-label" for="basic-default-phone">Contact-2</label>
+                        <input type="text" id="basic-default-phone" class="form-control phone-mask"
+                            placeholder="658 799 8941" />
+                    </div>
+                    <div class="col-lg-12 col-md-6 mb-3">
+                        <label for="nameBasic" class="form-label">Address</label>
+                        <textarea id="basic-default-message" class="form-control" placeholder=""
+                            formControlName="address"></textarea>
+                    </div>
+                    
+                </div>
+                <div class="card-header d-flex justify-content-between align-items-center px-0">
+                    <h5 class="mb-0">Event</h5>
+                </div>
+                <div class="d-sm-block d-lg-flex align-items-center clear-fix">
+                    <div class="w-100">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                                <label for="nameBasic" class="form-label">Event Type</label>
+                                <ng-select [items]="eventList" [multiple]="true" class="form-control p-0"
+                                    bindLabel="name" bindValue="_id" placeholder="Select Event"
+                                    [closeOnSelect]="false">
+                                </ng-select>
+                            </div>
+                            <div class="col-lg-6 col-md-6 mb-3">
+                                <label class="form-label" for="basic-default-company">Guest</label>
+                                <input type="text" class="form-control" id="basic-default-company"
+                                placeholder="ACME Inc." />
+                            </div>
+                            <div class="col-lg-12 col-md-6 col-sm-12 mb-3">
+                                <label for="html5-date-input" class="form-label">Date</label>
+                                <input class="form-control" type="date" value="2021-06-18" id="html5-date-input">
+                            </div>
+                            <!-- <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                                <label for="html5-time-input" class="form-label">Time</label>
+                                <input class="form-control" type="time" value="12:30:00" id="html5-time-input">
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="w-px-30 mb-3 h-px-100">
+                        <!-- <lael for="nameBasic" class="form-label d-block">&nbsp;</lael> -->
+                        <button type="button" class="event-btn-close ml-10" aria-label="Close"></button>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+                <div class="float-end">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

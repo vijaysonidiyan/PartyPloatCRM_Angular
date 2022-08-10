@@ -1,19 +1,69 @@
 <div class="container-fluid flex-grow-1 container-p-y">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Inquiry</h4>
-        <div>
+        <!-- <div>
             <button type="button" class="btn btn-primary" (click)="addInquiry()">
                 Add New
             </button>
-        </div>
+        </div> -->
     </div>
     <div class="card mb-4">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Add Inquiry</h5>
-        </div>
         <div class="card-body">
-
+            <div class="table-responsive text-nowrap">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Contact</th>
+                            <th>Contact-2</th>
+                            <th>Address</th>
+                            <th>Event Type</th>
+                            <th>Guest</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0" *ngFor="let staffData of staffList | paginate: { itemsPerPage: l, currentPage: p }; let staffIndex = index">
+                        <tr>
+                            <td>{{ l * (p - 1) + staffIndex + 1 }}</td>
+                            <td><strong>{{staffData.name}}</strong></td>
+                            <td>{{staffData.contact}}</td>
+                            <td>{{staffData.reference}}</td>
+                            <td>{{staffData.aadharcardNo}}</td>
+                            <td>{{staffData.email}}</td>
+                            <td>
+                                <span *ngFor="let partyplotname of staffData.partyplotData; let eventIndex = index"><span
+                                *ngIf="eventIndex > 0">,&nbsp;</span>{{partyplotname.name}}</span>
+                            </td>
+                            <td>{{staffData.roleName}}</td>
+                            <td>{{staffData.Date}}</td>
+                            <td>
+                                <span *ngIf="staffData.status == 1"
+                                class="badge bg-label-success me-1">Active</span>
+                                <span *ngIf="staffData.status == 2"
+                                class="badge bg-label-danger me-1">Deactive</span></td>
+                            <td>
+                                <div class="d-flex">
+                                    <button class="btn-bg"
+                                        (click)="editStaff({id : staffData._id, index : staffIndex})">
+                                        <i class="bx bx-edit-alt "></i>
+                                    </button>
+                                    <button class="btn-bg bg-label-danger" href="javascript:void(0);"><i
+                                            class="bx bx-trash "></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+    </div>
+    <div class="footer-pagination float-end mt-3">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
 </div>
 <div class="modal fade" id="add-menu-modal" tabindex="-1" aria-hidden="true">
@@ -25,83 +75,10 @@
                     (click)="cancleInquiry()"></button>
             </div>
             <div class="modal-body">
-                <form role="form" class="add-employee-form" autocomplete="off">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 mb-3">
-                            <label for="nameBasic" class="form-label">Name</label>
-                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
-                                formControlName="name" />
-                        </div>
-                        <div class="col-lg-6 col-md-6 mb-3">
-                            <label class="form-label" for="basic-default-email">Email</label>
-                            <div class="input-group input-group-merge">
-                                <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
-                                    aria-label="john.doe" aria-describedby="basic-default-email2" />
-                                <span class="input-group-text" id="basic-default-email2">@example.com</span>
-                            </div>
-                            <!-- <div class="form-text">You can use letters, numbers & periods</div> -->
-                        </div>
-                        <div class="col-lg-6 col-md-6 mb-3">
-                            <label class="form-label" for="basic-default-phone">Contact</label>
-                            <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                                placeholder="658 799 8941" />
-                        </div>
-                        <div class="col-lg-6 col-md-6 mb-3">
-                            <label class="form-label" for="basic-default-phone">Contact-2</label>
-                            <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                                placeholder="658 799 8941" />
-                        </div>
-                        <div class="col-lg-6 col-md-6 mb-3">
-                            <label class="form-label" for="basic-default-company">Guest</label>
-                            <input type="text" class="form-control" id="basic-default-company"
-                                placeholder="ACME Inc." />
-                        </div>
 
-                        <div class="col-lg-6 col-md-6 mb-3">
-                            <label for="nameBasic" class="form-label">Address</label>
-                            <textarea id="basic-default-message" class="form-control" placeholder=""
-                                formControlName="address"></textarea>
-                        </div>
-                    </div>
-                    <div class="card-header d-flex justify-content-between align-items-center px-0">
-                        <h5 class="mb-0">Event</h5>
-                    </div>
-                    <div class="d-sm-block d-lg-flex align-items-center clear-fix">
-                        <div class="w-100">
-                            <div class="row">
-                                <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                                    <label for="nameBasic" class="form-label">Event Type</label>
-                                    <ng-select [items]="eventList" [multiple]="true" class="form-control p-0"
-                                        bindLabel="name" bindValue="_id" placeholder="Select Event"
-                                        [closeOnSelect]="false">
-                                    </ng-select>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                                    <label for="html5-date-input" class="form-label">Date</label>
-                                    <input class="form-control" type="date" value="2021-06-18" id="html5-date-input">
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                                    <label for="html5-time-input" class="form-label">Time</label>
-                                    <input class="form-control" type="time" value="12:30:00" id="html5-time-input">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="w-px-30 mb-3">
-                            <label for="nameBasic" class="form-label d-block">&nbsp;</label>
-                            <button type="button" class="event-btn-close ml-10" aria-label="Close"></button>
-                        </div>
-                    </div>
-                    <div>
-                        <button type="submit" class="btn btn-primary">Add</button>
-                    </div>
-
-                </form>
             </div>
             <div class="modal-footer">
-                <div class="float-end">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
+                
             </div>
         </div>
     </div>
