@@ -62,11 +62,11 @@ export class AdminLayoutService {
     return this.http.get(this.commonService.rootData.rootUrl + 'menuMaster/menuList', { headers: headers });
   }
 
-  Savemenu(createroleMasterData: any) {
+  Savemenu(createmenuMasterData: any) {
     let headers = new HttpHeaders({
         'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
-    return this.http.post(this.commonService.rootData.rootUrl + 'menuMaster/menuSave', createroleMasterData, { headers: headers });
+    return this.http.post(this.commonService.rootData.rootUrl + 'menuMaster/menuSave', createmenuMasterData, { headers: headers });
   }
 
   Updatemenu(updatemenuData: any) {
@@ -122,11 +122,11 @@ export class AdminLayoutService {
     return this.http.get(this.commonService.rootData.rootUrl + 'event/eventList', { headers: headers });
   }
 
-  SaveeventMaster(createroleMasterData: any) {
+  SaveeventMaster(createeventMasterData: any) {
       let headers = new HttpHeaders({
           'Authorization': `Bearer ${localStorage.getItem('myToken')}`
       })
-      return this.http.post(this.commonService.rootData.rootUrl + 'event/eventCreate', createroleMasterData, { headers: headers });
+      return this.http.post(this.commonService.rootData.rootUrl + 'event/eventCreate', createeventMasterData, { headers: headers });
   }
 
   geteventMasterId(params: any) {
@@ -136,18 +136,18 @@ export class AdminLayoutService {
     return this.http.get(this.commonService.rootData.rootUrl + 'event/eventListById', { params: params, headers: headers });
   }
 
-  UpdateeventMaster(updateroleMasterData: any) {
+  UpdateeventMaster(updateeventMasterData: any) {
     let headers = new HttpHeaders({
         'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
-    return this.http.post(this.commonService.rootData.rootUrl + 'event/eventUpdate', updateroleMasterData, { headers: headers });
+    return this.http.post(this.commonService.rootData.rootUrl + 'event/eventUpdate', updateeventMasterData, { headers: headers });
   }
 
-  StatuseventMaster(updatestatusroleMasterData: any) {
+  StatuseventMaster(updatestatuseventMasterData: any) {
       let headers = new HttpHeaders({
           'Authorization': `Bearer ${localStorage.getItem('myToken')}`
       })
-      return this.http.post(this.commonService.rootData.rootUrl + 'event/eventStatusupdate', updatestatusroleMasterData, { headers: headers });
+      return this.http.post(this.commonService.rootData.rootUrl + 'event/eventStatusupdate', updatestatuseventMasterData, { headers: headers });
   }
   geteventActiveList() {
     let headers = new HttpHeaders({
@@ -165,11 +165,11 @@ export class AdminLayoutService {
     return this.http.get(this.commonService.rootData.rootUrl + 'partyplot/partyplotList', { headers: headers });
   }
 
-  SavepartyplotMaster(createroleMasterData: any) {
+  SavepartyplotMaster(createpartPlotData: any) {
       let headers = new HttpHeaders({
           'Authorization': `Bearer ${localStorage.getItem('myToken')}`
       })
-      return this.http.post(this.commonService.rootData.rootUrl + 'partyplot/partyplotCreate', createroleMasterData, { headers: headers });
+      return this.http.post(this.commonService.rootData.rootUrl + 'partyplot/partyplotCreate', createpartPlotData, { headers: headers });
   }
 
   getpartyplotMasterId(params: any) {
@@ -179,18 +179,18 @@ export class AdminLayoutService {
     return this.http.get(this.commonService.rootData.rootUrl + 'partyplot/partyplotListById', { params: params, headers: headers });
   }
 
-  UpdatepartyplotMaster(updateroleMasterData: any) {
+  UpdatepartyplotMaster(updatepartyPlotData: any) {
     let headers = new HttpHeaders({
         'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
-    return this.http.post(this.commonService.rootData.rootUrl + 'partyplot/partyplotUpdate', updateroleMasterData, { headers: headers });
+    return this.http.post(this.commonService.rootData.rootUrl + 'partyplot/partyplotUpdate', updatepartyPlotData, { headers: headers });
   }
 
-  StatuspartyplotMaster(updatestatusroleMasterData: any) {
+  StatuspartyplotMaster(updatestatuspartyPlotData: any) {
       let headers = new HttpHeaders({
           'Authorization': `Bearer ${localStorage.getItem('myToken')}`
       })
-      return this.http.post(this.commonService.rootData.rootUrl + 'partyplot/partyplotStatusupdate', updatestatusroleMasterData, { headers: headers });
+      return this.http.post(this.commonService.rootData.rootUrl + 'partyplot/partyplotStatusupdate', updatestatuspartyPlotData, { headers: headers });
   }
 
 
@@ -200,7 +200,8 @@ export class AdminLayoutService {
     })
     return this.http.get(this.commonService.rootData.rootUrl + 'partyplot/ActivePartyplotList', { headers: headers });
   }
-// ============== Staff =========== //
+
+  // ============== Staff =========== //
 
   getStaff() {
     let headers = new HttpHeaders({
@@ -228,6 +229,13 @@ export class AdminLayoutService {
         'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
     return this.http.post(this.commonService.rootData.rootUrl + 'staff/staffDetailsUpdate', staffData, { headers: headers });
+  }
+
+  StatusStaff(staffData: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'staff/staffActiveDeActive', staffData, { headers: headers });
   }
 
   changePassword(updatechangepwdData: any) {
@@ -265,4 +273,47 @@ export class AdminLayoutService {
     return this.http.post(this.commonService.rootData.rootUrl + 'staff/resetPassword', resetpwdData, { headers: headers });
   }
   
+  // ============== Vendor Details =========== //
+
+  getvendorDetails() {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'venderDetails/venderList', { headers: headers });
+  }
+
+  SavevendorDetails(createvendorDetailsData: any) {
+      let headers = new HttpHeaders({
+          'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+      })
+      return this.http.post(this.commonService.rootData.rootUrl + 'venderDetails/venderDetailsCreate', createvendorDetailsData, { headers: headers });
+  }
+
+  getvendorDetailsId(params: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'venderDetails/venderListById', { params: params, headers: headers });
+  }
+
+  UpdatevendorDetails(updatevendorDetailsData: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'venderDetails/venderUpdate', updatevendorDetailsData, { headers: headers });
+  }
+
+  StatusvendorDetails(updatestatusvendorDetailsData: any) {
+      let headers = new HttpHeaders({
+          'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+      })
+      return this.http.post(this.commonService.rootData.rootUrl + 'venderDetails/venderActiveDeActive', updatestatusvendorDetailsData, { headers: headers });
+  }
+
+  getvendorActiveList() {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'venderDetails/ActivevenderList', { headers: headers });
+  }
 }

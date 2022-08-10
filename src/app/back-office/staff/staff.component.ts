@@ -228,4 +228,28 @@ export class StaffComponent implements OnInit {
       }
     );
   }
+
+  statusRolemaster(paramsObj) {
+    debugger
+    let statusrolemasterModelObj = {
+        "_id": paramsObj.id,
+        "status": paramsObj.status
+    };
+
+    this.adminLayoutService.StatusStaff(statusrolemasterModelObj).subscribe((Response: any) => {
+
+        if (Response.meta.code == 200) {
+            this.submittedStaffData = false;
+            this.getStaffList();
+            this.defaultForm();
+            this.ISeditStaff = false;
+            this.commonService.notifier.notify('success', Response.meta.message);
+        }
+        else {
+            this.commonService.notifier.notify('error', Response.meta.message);
+        }
+    }, (error) => {
+        console.log(error);
+    });
+  }
 }

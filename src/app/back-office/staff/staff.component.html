@@ -50,9 +50,22 @@
                                     (click)="editStaff({id : staffData._id, index : staffIndex})">
                                     <i class="bx bx-edit-alt "></i>
                                 </button>
-                                <button class="btn-bg bg-label-danger" href="javascript:void(0);"><i
+                                <!-- <button class="btn-bg bg-label-danger" href="javascript:void(0);"><i
                                         class="bx bx-trash "></i>
-                                </button>
+                                </button> -->
+
+                                <button *ngIf="staffData.status == 2" class="dtl-btn btn bg-gradient-dark"
+                                    title="Active Role"
+                                    (confirm-click)="statusRolemaster({id :staffData._id, index : staffIndex, status:1})"
+                                    appConfirm [confirmTitle]="'Active'"
+                                    [confirmContent]="'Are you sure to Active this Staff?'"
+                                    class="btn-bg bg-label-success"><i class="bx bx-plus"></i></button>
+                                <button *ngIf="staffData.status == 1" class="dtl-btn btn bg-gradient-dark"
+                                    title="Deactive Role"
+                                    (confirm-click)="statusRolemaster({id :staffData._id, index : staffIndex, status:2})"
+                                    appConfirm [confirmTitle]="'Deactive'"
+                                    [confirmContent]="'Are you sure to Deactive this Staff?'"
+                                    class="btn-bg bg-label-danger"><i class="bx bx-trash"></i></button>
                             </div>
                         </td>
                     </tr>

@@ -24,21 +24,36 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    <tr>
-                        <td>1</td>
-                        <td><strong>Dashboard</strong></td>
-                        <td>985 859 8888</td>
-                        <td>Superadmin@gmail.com</td>
-                        <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit.<br> Corporis, et provident saepe
-                            pariatur harum explicabo sint. Nihil, porro numquam. Ex.</td>
-                        <td><span class="badge bg-label-success me-1">Active</span></td>
+                    <tr *ngFor="let vendorDetailsData of vendorDetailsList | paginate: { itemsPerPage: l, currentPage: p }; let vendorDetailsIndex = index">
+                        <td>{{ l * (p - 1) + vendorDetailsIndex + 1 }}</td>
+                        <td><strong>{{ vendorDetailsData.name }}</strong></td>
+                        <td>{{ vendorDetailsData.primaryContact }}</td>
+                        <td>{{ vendorDetailsData.email }}</td>
+                        <td>{{ vendorDetailsData.address }}</td>
+                        <td>
+                            <span *ngIf="vendorDetailsData.status == 1" class="badge bg-label-success me-1">Active</span>
+                            <span *ngIf="vendorDetailsData.status == 2" class="badge bg-label-danger me-1">Deactive</span>
+                        </td>
                         <td>
                             <div class="d-flex">
 
-                                <button class="btn-bg" href="javascript:void(0);"><i class="bx bx-edit-alt"></i>
+                                <button class="btn-bg"
+                                    (click)="editvendorDetails({id : vendorDetailsData._id, index : vendorDetailsIndex})"><i
+                                        class="bx bx-edit-alt"></i>
                                 </button>
-                                <button class="btn-bg bg-label-danger" href="javascript:void(0);"><i
-                                        class="bx bx-trash "></i>
+                                <button *ngIf="vendorDetailsData.status == 2" title="Active Vendor"
+                                    (confirm-click)="satusvendorDetails({id :vendorDetailsData._id,index:vendorDetailsIndex, status:1})"
+                                    appConfirm [confirmTitle]="'Active'"
+                                    [confirmContent]="'Are you sure to Active this Vendor?'"
+                                    class="bg-label-success btn-bg bg-label-success">
+                                    <i class="bx bx-plus"></i>
+                                </button>
+                                <button *ngIf="vendorDetailsData.status == 1" title="Deactive Vendor"
+                                    (confirm-click)="satusvendorDetails({id :vendorDetailsData._id,index:vendorDetailsIndex, status:2})"
+                                    appConfirm [confirmTitle]="'Deactive'"
+                                    [confirmContent]="'Are you sure to Deactive this Vendor?'"
+                                    class="bg-label-danger btn-bg bg-label-danger">
+                                    <i class="bx bx-trash"></i>
                                 </button>
                             </div>
                         </td>
@@ -54,32 +69,42 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel1"><strong>Add Vendor Details</strong></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancelMenu()"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-4 mb-3">
-                        <label for="nameBasic" class="form-label">Name</label>
-                        <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name" />
+                <form role="form" class="add-employee-form" [formGroup]="vendordetailsForm">
+                    <div class="row">
+                        <div class="col-lg-4 mb-3">
+                            <label for="nameBasic" class="form-label">Name</label>
+                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name" formControlName="name"/>
+                            <div *ngIf="submittvendordetailsData && fvendorData.name.errors">
+                                <div *ngIf="fvendorData.name.errors.required">
+                                    <span class="error_msg">Name is Required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label class="form-label" for="basic-default-phone">Conatct</label>
+                            <input type="text" id="basic-default-phone" class="form-control phone-mask"
+                                placeholder="658 799 8941" formControlName="primaryContact">
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label for="nameBasic" class="form-label">Email</label>
+                            <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
+                                aria-label="john.doe" aria-describedby="basic-default-email2" formControlName="email">
+                        </div>
+                        <div class="col-lg-12 mb-3">
+                            <label for="nameBasic" class="form-label">Address</label>
+                            <textarea id="basic-default-message" class="form-control" placeholder="" formControlName="address"></textarea>
+                        </div>
                     </div>
-                    <div class="col-lg-4 mb-3">
-                        <label class="form-label" for="basic-default-phone">Conatct</label>
-                        <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                            placeholder="658 799 8941">
-                    </div>
-                    <div class="col-lg-4 mb-3">
-                        <label for="nameBasic" class="form-label">Email</label>
-                        <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
-                            aria-label="john.doe" aria-describedby="basic-default-email2">
-                    </div>
-                    <div class="col-lg-12 mb-3">
-                        <label for="nameBasic" class="form-label">Address</label>
-                        <textarea id="basic-default-message" class="form-control" placeholder=""></textarea>
-                    </div>
-                </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" *ngIf="ISeditVendorDetails === false"
+                    (click)="saveVendorDetails()">Save</button>
+                <button type="button" class="btn btn-primary" *ngIf="ISeditVendorDetails === true"
+                    (click)="updatevendorDetails()">Update</button>
             </div>
         </div>
     </div>
