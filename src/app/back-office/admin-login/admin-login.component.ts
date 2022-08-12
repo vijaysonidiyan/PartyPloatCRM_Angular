@@ -106,6 +106,7 @@ export class AdminLoginComponent implements OnInit {
       (Response: any) => {
         console.log(loginObj);
         if (Response.meta.code == 200) {
+          debugger
           localStorage.setItem("LoginUserData", JSON.stringify(Response.data));
           this.storageService.setValue(
             StorageKey.myToken,
@@ -131,7 +132,7 @@ export class AdminLoginComponent implements OnInit {
           this.storageService.setValue(StorageKey.email, Response.data.email);
           this.storageService.setValue(
             StorageKey.full_name,
-            Response.data.full_name
+            Response.data.name
           );
           this.storageService.setValue(StorageKey.isUtsavDecoreLogin, "true");
           this.commonService.notifier.notify("success", Response.meta.message);

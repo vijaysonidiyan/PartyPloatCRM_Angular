@@ -21,7 +21,7 @@ declare const $: any;
 export class NavbarComponent implements OnInit {
 
   changePasswordForm: FormGroup;
-
+  userName = '';
   staffList: any;
   partyplotList: any;
   private listTitles: any[];
@@ -41,6 +41,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userName = this.storageService.getValue(StorageKey.full_name) ? this.storageService.getValue(StorageKey.full_name) : this.storageService.getValue(StorageKey.email); 
     this.listTitles = ROUTES.filter((listTitle) => listTitle);
     const navbar: HTMLElement = this.element.nativeElement;
     this.defaultChangePasswordForm();

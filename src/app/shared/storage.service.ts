@@ -29,7 +29,7 @@ export class StorageKey {
   public static aadharcardNo = 'aadharcardNo';
   public static lastName = 'lastName';
   public static email = 'email';
-  public static full_name = 'full_name';
+  public static full_name = 'name';
   public static roleName = 'roleName';
   public static isUtsavDecoreLogin = 'isUtsavDecoreLogin';
 
