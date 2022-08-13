@@ -19,7 +19,8 @@
                         <label class="form-label">Role</label>
                     </div>
                     <ng-select [items]="activeroleList" [(ngModel)]="selectedRole" class="form-control p-0"
-                        bindLabel="roleName" bindValue="_id" placeholder="Select Role" (ngModelChange)="onRoleChange();">
+                        bindLabel="roleName" bindValue="_id" placeholder="Select Role"
+                        (ngModelChange)="onRoleChange();">
                     </ng-select>
                 </div>
             </div>
@@ -43,7 +44,8 @@
                                         <th class="w-15">Delete</th>
                                     </tr>
                                 </thead>
-                                <tbody class="table-border-bottom-0" [formGroupName]="i" *ngFor=" let item of rolewisemenuForm.get('menuList')['controls']; let i = index">
+                                <tbody class="table-border-bottom-0" [formGroupName]="i"
+                                    *ngFor=" let item of rolewisemenuForm.get('menuList')['controls']; let i = index">
                                     <tr>
                                         <td class="w-5">
                                             <a *ngIf="
@@ -62,80 +64,101 @@
                                         </td>
                                         <td class="w-5">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="remember-me" />
+                                                <input class="form-check-input" type="checkbox" id="remember-me"
+                                                    formControlName="isSelectedMainData"
+                                                    (change)="isSelectedAllData({checked: $event.target.checked, index: i})" />
                                             </div>
                                         </td>
                                         <td class="w-20">
                                             <input type="hidden" formControlName="menuId" />
-                                            <input type="hidden" class="form-control-disabled" disabled formControlName="title" />
+                                            <input type="hidden" class="form-control-disabled" disabled
+                                                formControlName="title" />
                                             <strong> {{ item.controls.title.value }} </strong>
                                         </td>
                                         <td class="w-15">
                                             <div class="form-check">
-                                                <input type="checkbox"  class="form-check-input" formControlName="isCreated" (change)="isCreatedAllchildrenData({checked: $event.target.checked, index: i})"/>
+                                                <input type="checkbox" class="form-check-input"
+                                                    formControlName="isCreated"
+                                                    (change)="isCreatedAllchildrenData({checked: $event.target.checked, index: i})" />
                                             </div>
                                         </td>
                                         <td class="w-15">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" formControlName="isUpdated" (change)="
-                                                isUpdatedchildrenData({checked: $event.target.checked, index: i})"/>
+                                                <input class="form-check-input" type="checkbox"
+                                                    formControlName="isUpdated" (change)="
+                                                isUpdatedchildrenData({checked: $event.target.checked, index: i})" />
                                             </div>
                                         </td>
                                         <td class="w-15">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" formControlName="isView" (change)="
-                                                isViewAllchildrenData({checked: $event.target.checked, index: i})"/>
+                                                <input class="form-check-input" type="checkbox" formControlName="isView"
+                                                    (change)="
+                                                isViewAllchildrenData({checked: $event.target.checked, index: i})" />
                                             </div>
                                         </td>
                                         <td class="w-15">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" formControlName="isDeleted" (change)="
-                                                isDeletedchildrenData({checked: $event.target.checked, index: i})"/>
+                                                <input class="form-check-input" type="checkbox"
+                                                    formControlName="isDeleted" (change)="
+                                                isDeletedchildrenData({checked: $event.target.checked, index: i})" />
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr formArrayName="childrenData" *ngIf="item.controls.isShowChildrenList.value === true">
+                                    <tr formArrayName="childrenData"
+                                        *ngIf="item.controls.isShowChildrenList.value === true">
                                         <td colspan="7" class="p-0">
                                             <table class="table m-0">
-                                            <tbody>
-                                            <tr [formGroupName]="x" *ngFor="let item1 of item.controls.childrenData.controls; let x = index">
-                                                <td class="w-5"></td>
-                                                <td class="w-5"><input class="form-check-input" type="checkbox"  /></td>
-                                                <td class="w-20">
-                                                    <input type="hidden" formControlName="menuId" />
-                                                    <input type="hidden" class="form-control-disabled" disabled formControlName="title" />
-                                                    <span class="mb-0 heading-font-style">
-                                                        {{ item.controls.title.value }} >>
-                                        {{ item1.controls.title.value }}
-                                                    </span>
-                                                </td>
-                                                <td class="w-15">
-                                                    <input class="form-check-input" type="checkbox" id="remember-me"  formControlName="isCreated" (change)="
-                                                    isCreatedmenuData({checked: $event.target.checked, menuIndex: i})
-                                                  "/>
-                                                </td>
-                                                <td class="w-15">
-                                                    <input class="form-check-input" type="checkbox" id="remember-me"  formControlName="isUpdated" (change)="
-                                                    isUpdatedmenuData({checked: $event.target.checked, menuIndex: i})">
-                                                </td>
-                                                <td class="w-15">
-                                                    <input class="form-check-input" type="checkbox" id="remember-me"  formControlName="isView" (change)="
-                                                    isViewmenuData({checked: $event.target.checked, menuIndex: i})">
-                                                </td>
-                                                <td class="w-15">
-                                                    <input class="form-check-input" type="checkbox" id="remember-me"  formControlName="isDeleted" (change)="
-                                                    isDeletedmenuData({checked: $event.target.checked, menuIndex: i})">
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                            <tbody *ngIf="noData">
-                                                <tr>
-                                                  <td colspan="6">
-                                                    <h2 class="text-center mb-0">Data Not Found</h2>
-                                                  </td>
-                                                </tr>
-                                              </tbody>
-                                        </table>
+                                                <tbody>
+                                                    <tr [formGroupName]="x"
+                                                        *ngFor="let item1 of item.controls.childrenData.controls; let x = index">
+                                                        <td class="w-5"></td>
+                                                        <td class="w-5"><input class="form-check-input" type="checkbox"
+                                                                formControlName="isMainMenuSelected"
+                                                                (change)="isSelectedMainChildrenData({checked: $event.target.checked, menuIndex: i,index : x})" />
+                                                        </td>
+                                                        <td class="w-20">
+                                                            <input type="hidden" formControlName="menuId" />
+                                                            <input type="hidden" class="form-control-disabled" disabled
+                                                                formControlName="title" />
+                                                            <span class="mb-0 heading-font-style">
+                                                                {{ item.controls.title.value }} >>
+                                                                {{ item1.controls.title.value }}
+                                                            </span>
+                                                        </td>
+                                                        <td class="w-15">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="remember-me" formControlName="isCreated" (change)="
+                                                    isCreatedmenuData({checked: $event.target.checked, menuIndex: i,index : x})
+                                                  " />
+                                                        </td>
+                                                        <td class="w-15">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="remember-me" formControlName="isUpdated"
+                                                                (change)="
+                                                    isUpdatedmenuData({checked: $event.target.checked, menuIndex: i,index : x})">
+                                                        </td>
+                                                        <td class="w-15">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="remember-me" formControlName="isView"
+                                                                (change)="
+                                                    isViewmenuData({checked: $event.target.checked, menuIndex: i,index : x})">
+                                                        </td>
+                                                        <td class="w-15">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="remember-me" formControlName="isDeleted"
+                                                                (change)="
+                                                    isDeletedmenuData({checked: $event.target.checked, menuIndex: i,index : x})">
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tbody *ngIf="noData">
+                                                    <tr>
+                                                        <td colspan="6">
+                                                            <h2 class="text-center mb-0">Data Not Found</h2>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -153,9 +176,9 @@
                     'btn-danger': storageService.getValue('colour') === '5',
                     'btn-rose': storageService.getValue('colour') === '6'
                   }">
-                  Save
+                    Save
                 </button>
-              </div>
+            </div>
         </div>
     </div>
     <div class="content-backdrop fade"></div>
