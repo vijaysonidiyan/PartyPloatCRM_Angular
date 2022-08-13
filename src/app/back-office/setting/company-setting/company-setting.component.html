@@ -29,7 +29,7 @@
                         <div class="input-group input-group-merge">
                             <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
                                 aria-label="john.doe" aria-describedby="basic-default-email2"
-                                formControlName="companyEmail" />
+                                formControlName="email" />
                             <span class="input-group-text" id="basic-default-email2">@example.com</span>
                         </div>
                         <!-- <div class="form-text">You can use letters, numbers & periods</div> -->
@@ -38,36 +38,28 @@
                     <div class="col-lg-6 mb-3">
                         <label class="form-label" for="basic-default-phone">Phone No</label>
                         <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                            placeholder="658 799 8941" formControlName="phone" />
+                            placeholder="658 799 8941" formControlName="Telephone1" />
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label class="form-label" for="basic-default-phone">Tel No</label>
                         <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                            placeholder="658 799 8941" formControlName="phone2" />
+                            placeholder="658 799 8941" formControlName="Telephone2" />
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label for="formFile" class="form-label">Logo</label>
-                        <input class="form-control" type="file" id="formFile" formControlName="companyLogo"
-                            (change)="onLogoChange($event)">
-                        <div *ngIf="imgLogoSrc" class="imgUpload">
-                            <img [src]="imgLogoSrc" alt="" width="100">
-                            <button type="button" class="btn-close ml-10" data-bs-dismiss="modal" aria-label="Close"
-                                (click)="imgLogoSrc=''"></button>
+                        <input class="form-control" type="file" [multiple]=false accept="image/*" formControlName="logo" (change)="onLogoChange($event)">
+                        <div *ngIf="imgURLlogo" class="imgUpload">
+                            <img [src]="imgURLlogo" alt="" width="100">
+                            <button *ngIf="isEditing === true" type="button" class="btn-close ml-10" data-bs-dismiss="modal" aria-label="Close" (click)="imgURLlogo=''"></button>
                         </div>
-
                     </div>
-                    <!-- <div class="col-lg-6 mb-3">
-                        <label for="html5-password-input" class="col-md-2 col-form-label">Password</label>
-                        <input class="form-control" type="password" value="password" id="html5-password-input">
-                    </div> -->
                     <div class="col-lg-6 mb-3">
                         <label class="form-label" for="basic-default-company">Signature</label>
-                        <input type="file" class="form-control" id="basic-default-company" placeholder="ACME Inc."
-                            formControlName="signature" (change)="onSignatureChange($event)" />
-                        <div *ngIf="imgSignatureSrc" class="imgUpload">
-                            <img [src]="imgSignatureSrc" alt="" width="100">
-                            <button type="button" class="btn-close ml-10" data-bs-dismiss="modal" aria-label="Close"
-                                (click)="imgSignatureSrc=''"></button>
+                        <input type="file" class="form-control" id="basic-default-company" placeholder="ACME Inc." formControlName="signature" [multiple]=false accept="image/*" (change)="onSignatureChange($event)"/>
+                        <div *ngIf="imgURLsignature" class="imgUpload">
+                            <img [src]="imgURLsignature" alt="" width="100">
+                            <button *ngIf="isEditing === true" type="button" class="btn-close ml-10" data-bs-dismiss="modal" aria-label="Close"
+                                (click)="imgURLsignature = '' "></button>
                         </div>
                     </div>
                 </div>
@@ -80,7 +72,7 @@
                         <label class="form-label" for="basic-default-email">Email</label>
                         <div class="input-group input-group-merge">
                             <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
-                                aria-label="john.doe" aria-describedby="basic-default-email2" formControlName="email" />
+                                aria-label="john.doe" aria-describedby="basic-default-email2" formControlName="SMTP_email" />
                             <span class="input-group-text" id="basic-default-email2">@example.com</span>
                         </div>
                         <!-- <div class="form-text">You can use letters, numbers & periods</div> -->
@@ -88,7 +80,7 @@
                     <div class="col-lg-6 mb-3">
                         <label for="html5-password-input" class="col-md-2 col-form-label">Password</label>
                         <input class="form-control" type="password" value="password" id="html5-password-input"
-                            formControlName="password">
+                            formControlName="SMTP_password">
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label class="form-label" for="basic-default-company">Service</label>
@@ -103,13 +95,13 @@
                     <div class="col-lg-6 mb-3">
                         <label class="form-label" for="basic-default-phone">SMTP</label>
                         <input type="text" id="basic-default-phone" class="form-control phone-mask" placeholder=""
-                            formControlName="smtp" />
+                            formControlName="SMTP" />
                     </div>
                 </div>
             </form>
             <div class="d-flex float-end">
                 <div class="pe-3" *ngIf="isEditing === true">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary" (click)="updateCompanySetting()">Save</button>
                 </div>
                 <div class="" *ngIf="isEditing === true" (click)="canclecompanySetting()">
                     <button type="submit" class="btn btn-outline-primary">Cancle</button>

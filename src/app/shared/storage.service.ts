@@ -31,6 +31,7 @@ export class StorageKey {
   public static email = 'email';
   public static full_name = 'full_name';
   public static roleName = 'roleName';
+  public static logo = 'logo';
   public static isUtsavDecoreLogin = 'isUtsavDecoreLogin';
 
 }
