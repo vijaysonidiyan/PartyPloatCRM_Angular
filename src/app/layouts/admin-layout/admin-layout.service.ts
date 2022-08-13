@@ -334,4 +334,30 @@ export class AdminLayoutService {
     })
     return this.http.get(this.commonService.rootData.rootUrl + 'venderDetails/ActivevenderList', { headers: headers });
   }
+
+  // ============== Client Inquiry =========== //
+
+  createClientinquiry(createvendorDetailsData: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/clientinquiryCreate', createvendorDetailsData, { headers: headers });
+  }
+
+  // ============== Company Setting =========== //
+
+  getComapnysetting() {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'companySetting/companysettingList', { headers: headers });
+  }
+
+  UpdateCompanySetting(companySettingData: any) {
+    let headers = new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'companySetting/companySettingCreate', companySettingData, { headers: headers }); 
+  }
+}
 }
