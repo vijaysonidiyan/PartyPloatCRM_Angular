@@ -26,6 +26,7 @@ import { DirectivesModule } from "app/shared/directives/directives.module";
 import { CompanySettingComponent } from "app/back-office/setting/company-setting/company-setting.component";
 import { InquiryComponent } from "app/back-office/inquiry/inquiry.component";
 import { AddInquiryComponent } from "app/back-office/add-inquiry/add-inquiry.component";
+import { NgxMaskModule } from 'ngx-mask'
 //import { DaterangepickerModule } from "angular-2-daterangepicker";
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
@@ -51,6 +52,7 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
     MatDatepickerModule,
     NgxMatMomentModule
     //DaterangepickerModule
+    NgxMaskModule.forRoot(),
   ],
   declarations: [
     DashboardComponent,

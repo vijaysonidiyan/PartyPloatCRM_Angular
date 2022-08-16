@@ -93,6 +93,9 @@
                                 <div *ngIf="fRolenameData.roleName.errors.required">
                                     <span class="error_msg">Role Name is Required.</span>
                                 </div>
+                                <div *ngIf="fRolenameData.roleName.errors.pattern">
+                                    <span class="error_msg text-danger">Email must be a valid email address.</span>
+                                </div>
                             </div>
                         </div>
                     </div>

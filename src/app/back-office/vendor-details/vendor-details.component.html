@@ -89,23 +89,47 @@
                             <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name" formControlName="name"/>
                             <div *ngIf="submittvendordetailsData && fvendorData.name.errors">
                                 <div *ngIf="fvendorData.name.errors.required">
-                                    <span class="error_msg">Name is Required.</span>
+                                    <span class="error_msg text-danger">Name is Required.</span>
+                                </div>
+                                <div *ngIf="fvendorData.name.errors.pattern">
+                                    <span class="error_msg text-danger">You use only A-Z Or a-z.</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label class="form-label" for="basic-default-phone">Conatct</label>
                             <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                                placeholder="658 799 8941" formControlName="primaryContact">
+                                placeholder="658 799 8941" formControlName="primaryContact" maxlength="10"  minlength="10" appNumbersOnly>
+                            <div *ngIf="submittvendordetailsData && fvendorData.primaryContact.errors">
+                                <div *ngIf="fvendorData.primaryContact.errors.required">
+                                    <span class="error_msg text-danger">Contact is Required.</span>
+                                </div>
+                                <div *ngIf="fvendorData.primaryContact.errors.pattern">
+                                    <span class="error_msg text-danger">Please, Enter Valid Number.</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Email</label>
                             <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
                                 aria-label="john.doe" aria-describedby="basic-default-email2" formControlName="email">
+                            <div *ngIf="submittvendordetailsData && fvendorData.email.errors">
+                                <div *ngIf="fvendorData.email.errors.required">
+                                    <span class="error_msg text-danger">Email is Required.</span>
+                                </div>
+                                <div *ngIf="fvendorData.email.errors.email">
+                                    <span class="error_msg text-danger">Email must be a valid email address.</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-lg-12 mb-3">
                             <label for="nameBasic" class="form-label">Address</label>
                             <textarea id="basic-default-message" class="form-control" placeholder="" formControlName="address"></textarea>
+                            <div *ngIf="submittvendordetailsData && fvendorData.address.errors">
+                                <div *ngIf="fvendorData.address.errors.required">
+                                    <span class="error_msg text-danger">Address is Required.</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>

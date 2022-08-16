@@ -43,10 +43,10 @@ export class VendorDetailsComponent implements OnInit {
   defaultForm() {
     this.vendordetailsForm = this.fb.group({
       _id: [""],
-      name: ["", [Validators.required]],
-      address: [""],
-      primaryContact: [""],
-      email: [""],
+      name: ["", [Validators.required, Validators.pattern('([a-z]|[A-Z])*')]],
+      address: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.email]],
+      primaryContact: ["", [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
       // secondyContact: [""],
     });
   }

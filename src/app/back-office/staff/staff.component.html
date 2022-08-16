@@ -38,7 +38,7 @@
                             <td><strong>{{staffData.name}}</strong></td>
                             <td>{{staffData.contact}}</td>
                             <td>{{staffData.reference}}</td>
-                            <td>{{staffData.aadharcardNo}}</td>
+                            <td>{{staffData.aadharcardNo | mask: '0000 0000 0000'}}</td>
                             <td>{{staffData.email}}</td>
                             <td>
                                 <span *ngFor="let partyplotname of staffData.partyplotData; let eventIndex = index"><span
@@ -100,13 +100,24 @@
                             <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name" formControlName="name"/>
                             <div *ngIf="submittedStaffData && fnameData.name.errors">
                                 <div *ngIf="fnameData.name.errors.required">
-                                    <span class="error_msg">Name is Required.</span>
+                                    <span class="error_msg text-danger">Name is Required.</span>
+                                </div>
+                                <div *ngIf="fnameData.name.errors.pattern">
+                                    <span class="error_msg text-danger">You use only A-Z Or a-z.</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label class="form-label" for="basic-default-phone">Phone No</label>
-                            <input type="text" id="basic-default-phone" class="form-control phone-mask" placeholder="658 799 8941" formControlName="contact">
+                            <input type="text" id="basic-default-phone" class="form-control phone-mask" placeholder="658 799 8941" formControlName="contact" maxlength="10"  minlength="10" appNumbersOnly>
+                            <div *ngIf="submittedStaffData && fnameData.contact.errors">
+                                <div *ngIf="fnameData.contact.errors.required">
+                                    <span class="error_msg text-danger">Contact is Required.</span>
+                                </div>
+                                <div *ngIf="fnameData.contact.errors.pattern">
+                                    <span class="error_msg text-danger">Please, Enter Valid Number.</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label class="form-label" for="basic-default-company">Reference</label>
@@ -114,22 +125,36 @@
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label class="form-label" for="basic-default-phone">Aadhar Card</label>
-                            <input type="text" id="basic-default-aadhar-card" class="form-control phone-mask" placeholder="9999 9999 9999" formControlName="aadharcardNo">
+                            <input type="text" id="basic-default-aadhar-card" class="form-control phone-mask" mask="0000 0000 0000" placeholder="9999 9999 9999" formControlName="aadharcardNo">
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Email</label>
                             <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe" aria-label="john.doe" aria-describedby="basic-default-email2" formControlName="email">
+                            <div *ngIf="submittedStaffData && fnameData.email.errors">
+                                <div *ngIf="fnameData.email.errors.required">
+                                    <span class="error_msg text-danger">Email is Required.</span>
+                                </div>
+                                <div *ngIf="fnameData.email.errors.email">
+                                    <span class="error_msg text-danger">Email must be a valid email address.</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Designation</label>
                             <ng-select [items]="activeroleList" class="form-control p-0" bindLabel="roleName" bindValue="_id" placeholder="Select Role" formControlName="roleId">
                             </ng-select>
+                            <div *ngIf="submittedStaffData && roleInvalid === true">
+                                <span class="error_msg text-danger">Designation is Required.</span>
+                            </div>
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Select Party plot</label>
                             <ng-select [items]="partyplotList" [multiple]="true" [closeOnSelect]="false" class="form-control p-0" bindLabel="name" bindValue="_id"  formControlName="partyplotData"
                                 placeholder="Select Module">
                             </ng-select>
+                            <div *ngIf="submittedStaffData && partyplotInvalid === true">
+                                <span class="error_msg text-danger">Party plot is Required.</span>
+                            </div>
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Is Login?</label>

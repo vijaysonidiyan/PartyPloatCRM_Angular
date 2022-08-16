@@ -95,7 +95,10 @@
                                 formControlName="name" />
                             <div *ngIf="submittedPartyplotData && fnameData.name.errors">
                                 <div *ngIf="fnameData.name.errors.required">
-                                    <span class="error_msg">Name is Required.</span>
+                                    <span class="error_msg text-danger">Name is Required.</span>
+                                </div>
+                                <div *ngIf="fnameData.name.errors.pattern">
+                                    <span class="error_msg text-danger">You use only A-Z Or a-z.</span>
                                 </div>
                             </div>
                         </div>
@@ -106,13 +109,18 @@
                                 [closeOnSelect]="false">
                             </ng-select>
                             <div *ngIf="submittedPartyplotData && eventInvalid === true">
-                                <span class="error_msg">Event is Required.</span>
+                                <span class="error_msg text-danger">Event is Required.</span>
                             </div>
                         </div>
                         <div class="col-lg-12 mb-3">
                             <label for="nameBasic" class="form-label">Address</label>
                             <textarea id="basic-default-message" class="form-control" placeholder=""
                                 formControlName="address"></textarea>
+                            <div *ngIf="submittedPartyplotData && fnameData.address.errors">
+                                <div *ngIf="fnameData.address.errors.required">
+                                    <span class="error_msg text-danger">Address is Required.</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
