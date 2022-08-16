@@ -18,7 +18,6 @@ export class StaffComponent implements OnInit {
   StaffList: any[];
   l: number;
   p: number = 1;
-  mySelect;
   itemsPage: any;
   staffIndex: number;
   staffListlength: any;
@@ -28,7 +27,8 @@ export class StaffComponent implements OnInit {
     return this.staffForm.controls;
   }
   submittedStaffData = false;
-  eventInvalid = false;
+  partyplotInvalid = false;
+  roleInvalid = false;
 
   constructor(
     public commonService: CommonService,
@@ -38,7 +38,6 @@ export class StaffComponent implements OnInit {
 
   ngOnInit(): void {
     this.noData = false;
-    this.mySelect = 5;
     this.l = 10;
     this.ISeditStaff = false;
     this.getStaffList();
@@ -50,13 +49,13 @@ export class StaffComponent implements OnInit {
   defaultForm() {
     this.staffForm = this.fb.group({
       _id: ["0"],
-      name: ["", [Validators.required]],
-      email: [""],
-      contact: [""],
-      roleId: [""],
+      name: ["", [Validators.required, Validators.pattern('([a-z]|[A-Z])*')]],
+      email: ["", [Validators.required, Validators.email]],
+      contact: ["", [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
+      roleId: [null],
       reference: [""],
       aadharcardNo: [""],
-      partyplotData: [],
+      partyplotData: [""],
       roleName: [""],
       isLogin : false
     });
@@ -134,12 +133,22 @@ export class StaffComponent implements OnInit {
   }
 
   savestaff() {
+    if (this.staffForm.value.partyplotData.length === 0) {
+      this.partyplotInvalid = true;
+    } else {
+      this.partyplotInvalid = false;
+    }
 
-    if (this.staffForm.invalid) {
+    if (this.staffForm.value.roleId === null) {
+      this.roleInvalid = true;
+    } else {
+      this.roleInvalid = false;
+    }
+
+    if (this.staffForm.invalid || this.partyplotInvalid === true || this.roleInvalid === true ) {
       this.submittedStaffData = true;
       return;
     }
-
 
     let staffModelObj = {
       name: this.staffForm.controls.name.value,
@@ -193,7 +202,19 @@ export class StaffComponent implements OnInit {
 
   updatestaff() {
 
-    if (this.staffForm.invalid) {
+    if (this.staffForm.value.partyplotData.length === 0) {
+      this.partyplotInvalid = true;
+    } else {
+      this.partyplotInvalid = false;
+    }
+
+    if (this.staffForm.value.roleId === null) {
+      this.roleInvalid = true;
+    } else {
+      this.roleInvalid = false;
+    }
+
+    if (this.staffForm.invalid || this.partyplotInvalid === true || this.roleInvalid === true ) {
       this.submittedStaffData = true;
       return;
     }

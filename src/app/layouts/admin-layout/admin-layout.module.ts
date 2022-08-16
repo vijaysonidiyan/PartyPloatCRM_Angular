@@ -26,6 +26,7 @@ import { DirectivesModule } from "app/shared/directives/directives.module";
 import { CompanySettingComponent } from "app/back-office/setting/company-setting/company-setting.component";
 import { InquiryComponent } from "app/back-office/inquiry/inquiry.component";
 import { AddInquiryComponent } from "app/back-office/add-inquiry/add-inquiry.component";
+import { NgxMaskModule } from 'ngx-mask'
 //import { DaterangepickerModule } from "angular-2-daterangepicker";
 
 @NgModule({
@@ -44,6 +45,7 @@ import { AddInquiryComponent } from "app/back-office/add-inquiry/add-inquiry.com
     NgxPaginationModule,
     DirectivesModule,
     //DaterangepickerModule
+    NgxMaskModule.forRoot(),
   ],
   declarations: [
     DashboardComponent,

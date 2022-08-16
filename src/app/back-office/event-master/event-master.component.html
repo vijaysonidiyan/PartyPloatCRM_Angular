@@ -78,7 +78,10 @@
                                 formControlName="name" />
                             <div *ngIf="submittedeventMasterData && fnameData.name.errors">
                                 <div *ngIf="fnameData.name.errors.required">
-                                    <span class="error_msg">Name is Required.</span>
+                                    <span class="error_msg text-danger">Name is Required.</span>
+                                </div>
+                                <div *ngIf="fnameData.name.errors.pattern">
+                                    <span class="error_msg text-danger">You use only A-Z Or a-z.</span>
                                 </div>
                             </div>
                         </div>

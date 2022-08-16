@@ -17,7 +17,6 @@ export class PartyPlotMasterComponent implements OnInit {
   PartyplotList: any[];
   l: number;
   p: number = 1;
-  mySelect;
   itemsPage: any;
   partyPlotIndex: number;
   partyplotListlength: any;
@@ -36,7 +35,6 @@ export class PartyPlotMasterComponent implements OnInit {
 
   ngOnInit(): void {
     this.noData = false;
-    this.mySelect = 5;
     this.l = 10;
     this.ISeditPartyplot = false;
     this.getPartyplotList();
@@ -47,8 +45,8 @@ export class PartyPlotMasterComponent implements OnInit {
   defaultForm() {
     this.partyplotForm = this.fb.group({
       _id: ["0"],
-      name: ["", [Validators.required]],
-      address: [""],
+      name: ["", [Validators.required, Validators.pattern('([a-z]|[A-Z])*')]],
+      address: ["", [Validators.required]],
       events: [""],
     });
   }
