@@ -32,7 +32,9 @@
                         <td>{{ menuData.parentName }}</td>
                         <td>{{ menuData.module }}</td>
                         <td>{{ menuData.order }}</td>
-                        <td><i class="material-icons">{{menuData.icon}}</i></td>
+                        <td>
+                            <img src="{{iconDefaultURL}}{{menuData.default_icon}}" width="50px" alt="">
+                        </td>
                         <td>
                             <span *ngIf="menuData.status == 1" class="badge bg-label-primary">Active</span>
                             <span *ngIf="menuData.status == 2" class="badge bg-label-danger">Deactive</span>
@@ -95,11 +97,11 @@
                             <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
                                 formControlName="class" />
                         </div>
-                        <div class="col-lg-4 mb-3">
+                        <!-- <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Icon</label>
                             <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
                                 formControlName="icon" />
-                        </div>
+                        </div> -->
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Order</label>
                             <input type="number" id="nameBasic" class="form-control" placeholder="Enter Name"
@@ -114,8 +116,27 @@
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Module List</label>
                             <ng-select [items]="moduleList" class="form-control p-0" bindLabel="name" bindValue="value"
-                                placeholder="Select Module">
+                                placeholder="Select Module" formControlName="module">
                             </ng-select>
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label for="formFile" class="form-label">Default Icon</label>
+                            <input class="form-control" #defaultIcon type="file" id="defaultICON"
+                                formControlName="defaultIcon" [multiple]=false accept="image/*"
+                                (change)="onDefaultIconChange($event)">
+                            <div *ngIf="defaultIconUrl" class="imgUpload">
+                                <img [src]="defaultIconUrl" alt="" width="100">
+                                <button type="button" class="btn-close ml-10" (click)="removeDefaultIcon()"></button>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label for="formFile" class="form-label">Active Icon</label>
+                            <input class="form-control" #activeIcon type="file" [multiple]=false accept="image/*"
+                                (change)="onActiveIconChange($event)">
+                            <div *ngIf="activeIconUrl" class="imgUpload">
+                                <img [src]="activeIconUrl" alt="" width="100">
+                                <button type="button" class="btn-close ml-10" (click)="removeActiveIcon()"></button>
+                            </div>
                         </div>
                     </div>
                 </form>
