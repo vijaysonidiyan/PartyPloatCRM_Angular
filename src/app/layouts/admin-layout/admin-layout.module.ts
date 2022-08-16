@@ -50,7 +50,7 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     MatDatepickerModule,
-    NgxMatMomentModule
+    NgxMatMomentModule,
     //DaterangepickerModule
     NgxMaskModule.forRoot(),
   ],
