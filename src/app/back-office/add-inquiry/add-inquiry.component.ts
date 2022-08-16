@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ThemePalette } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { AdminLayoutService } from "app/layouts/admin-layout/admin-layout.service";
 import { CommonService } from "app/shared/common.service";
@@ -16,6 +17,21 @@ export class AddInquiryComponent implements OnInit {
   eventActiveList: any;
   ISeditClientInquiry = false;
 
+  // calender
+  public date: moment.Moment;
+  public disabled = false;
+  public showSpinners = true;
+  public showSeconds = false;
+  public touchUi = false;
+  public enableMeridian = false;
+  public minDate = new Date();
+  public maxDate: moment.Moment;
+  public stepHour = 1;
+  public stepMinute = 1;
+  public stepSecond = 1;
+  public color: ThemePalette = 'primary';
+  //calender done
+
   get fclientinquiryData() {
     return this.clientinquiryDataForm.controls;
   }
@@ -29,7 +45,12 @@ export class AddInquiryComponent implements OnInit {
     this.eventList = this.clientinquiryDataForm.get("events") as FormArray;
     this.eventList.push(this.createeventItem({}));
   }
-  
+
+  onStartDateChange(index: any) {
+    debugger
+    (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['endDateObj'].setValue(''));
+  }
+
   getEventActiveList() {
     this.adminLayoutService.geteventActiveList().subscribe(
       (Response: any) => {
@@ -58,10 +79,12 @@ export class AddInquiryComponent implements OnInit {
 
   createeventItem(oItem?: any): FormGroup {
     return this.fb.group({
-      eventType: [(oItem['eventType'] ? oItem['eventType'] : '')],
+      eventType: [(oItem['eventType'] ? oItem['eventType'] : null)],
       guest: [(oItem['guest'] ? oItem['guest'] : '')],
-      startDateObj: [(oItem['startDateObj'] ? oItem['startDateObj'] : '2022-08-10T09:58:36.274Z')],
-      endDateObj: [(oItem['endDateObj'] ? oItem['endDateObj'] : '2022-08-10T11:58:36.274Z')],
+      startDateObj: [(oItem['startDateObj'] ? oItem['startDateObj'] : '')],
+      endDateObj: [(oItem['endDateObj'] ? oItem['endDateObj'] : '')],
+      // startDateObj: [(oItem['startDateObj'] ? oItem['startDateObj'] : '2022-08-10T09:58:36.274Z')],
+      // endDateObj: [(oItem['endDateObj'] ? oItem['endDateObj'] : '2022-08-10T11:58:36.274Z')],
     });
   }
 
@@ -80,13 +103,54 @@ export class AddInquiryComponent implements OnInit {
       this.submittedclientInquiryData = true;
       return;
     }
+    let eventObjList = [];
+    this.clientinquiryDataForm.controls.events.value.map((x: any) => {
+      if (!!x.endDateObj._d && !!x.startDateObj._d) {
+        let eventObj = {
+          eventType: x.eventType,
+          guest: x.guest,
+          startDateObj: x.startDateObj._d,
+          endDateObj: x.endDateObj._d
+        }
+        eventObjList.push(eventObj);
+      }
+      else if (!!x.startDateObj._d && x.endDateObj) {
+        let eventObj = {
+          eventType: x.eventType,
+          guest: x.guest,
+          startDateObj: x.startDateObj._d,
+          endDateObj: x.endDateObj
+        }
+        eventObjList.push(eventObj);
+      }
+      else if (!!x.endDateObj._d && x.startDateObj) {
+        let eventObj = {
+          eventType: x.eventType,
+          guest: x.guest,
+          startDateObj: x.startDateObj,
+          endDateObj: x.endDateObj._d
+        }
+        eventObjList.push(eventObj);
+      }
+      else if (x.endDateObj && x.startDateObj) {
+        let eventObj = {
+          eventType: x.eventType,
+          guest: x.guest,
+          startDateObj: x.startDateObj,
+          endDateObj: x.endDateObj
+        }
+        eventObjList.push(eventObj);
+      }
+    })
+
+
     let clientinquiryModelObj = {
       name: this.clientinquiryDataForm.controls.name.value,
       email: this.clientinquiryDataForm.controls.email.value,
       primaryContact: this.clientinquiryDataForm.controls.primaryContact.value,
       secondryContact: this.clientinquiryDataForm.controls.secondryContact.value,
       address: this.clientinquiryDataForm.controls.address.value,
-      events: this.clientinquiryDataForm.controls.events.value,
+      events: eventObjList
     };
 
     this.adminLayoutService.createClientinquiry(clientinquiryModelObj).subscribe(

@@ -27,7 +27,8 @@
                     <div class="col-lg-6 col-md-6 mb-3">
                         <label class="form-label" for="basic-default-email">Email</label>
                         <div class="input-group input-group-merge">
-                            <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe" aria-label="john.doe" aria-describedby="basic-default-email2" formControlName="email"/>
+                            <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
+                                aria-label="john.doe" aria-describedby="basic-default-email2" formControlName="email" />
                             <span class="input-group-text" id="basic-default-email2">@example.com</span>
                         </div>
                         <div *ngIf="submittedclientInquiryData && fclientinquiryData.email.errors">
@@ -39,7 +40,7 @@
                     <div class="col-lg-6 col-md-6 mb-3">
                         <label class="form-label" for="basic-default-phone">Contact</label>
                         <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                            placeholder="658 799 8941" formControlName="primaryContact"/>
+                            placeholder="658 799 8941" formControlName="primaryContact" />
                         <div *ngIf="submittedclientInquiryData && fclientinquiryData.primaryContact.errors">
                             <div *ngIf="fclientinquiryData.primaryContact.errors.required">
                                 <span class="error_msg">Contact is Required.</span>
@@ -61,40 +62,66 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="card-header d-flex justify-content-between align-items-center px-0">
                     <h5 class="mb-0">Event</h5>
                 </div>
                 <div formArrayName="events">
-                    <div class="d-sm-block d-lg-flex align-items-center clear-fix"  [formGroupName]="i"
-                    *ngFor="let item of clientinquiryDataForm.get('events')['controls']; let i = index;">
+                    <div class="d-sm-block d-lg-flex align-items-center clear-fix" [formGroupName]="i"
+                        *ngFor="let item of clientinquiryDataForm.get('events')['controls']; let i = index;">
                         <div class="w-100">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                                     <label for="nameBasic" class="form-label">Event Type</label>
-                                    <ng-select [items]="eventActiveList" class="form-control p-0"
-                                        bindLabel="name" bindValue="_id" placeholder="Select Event" formControlName="eventType">
+                                    <ng-select [items]="eventActiveList" class="form-control p-0" bindLabel="name"
+                                        bindValue="_id" placeholder="Select Event" formControlName="eventType">
                                     </ng-select>
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-3">
                                     <label class="form-label" for="basic-default-company">Guest</label>
                                     <input type="text" class="form-control" id="basic-default-company"
-                                    placeholder="ACME Inc."  formControlName="guest"/>
+                                        placeholder="ACME Inc." formControlName="guest" />
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                                    <label for="html5-date-input" class="form-label">Start Date</label>
+                                    <input type="text" class="form-control" matInput
+                                        (ngModelChange)="onStartDateChange(i)" [ngxMatDatetimePicker]="startDate"
+                                        placeholder="Choose a start date" formControlName="startDateObj" [min]="minDate"
+                                        [max]="maxDate" [disabled]="disabled">
+                                    <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                                    <ngx-mat-datetime-picker #startDate [showSpinners]="showSpinners"
+                                        [showSeconds]="showSeconds" [stepHour]="stepHour" [stepMinute]="stepMinute"
+                                        [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
+                                        [enableMeridian]="enableMeridian">
+                                    </ngx-mat-datetime-picker>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                                    <label for="html5-date-input" class="form-label">End Date</label>
+                                    <input type="text" class="form-control" matInput [ngxMatDatetimePicker]="endDate"
+                                        placeholder="Choose a start date" formControlName="endDateObj" [min]="minDate"
+                                        [max]="maxDate" [disabled]="disabled">
+                                    <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                                    <ngx-mat-datetime-picker #endDate [showSpinners]="showSpinners"
+                                        [showSeconds]="showSeconds" [stepHour]="stepHour" [stepMinute]="stepMinute"
+                                        [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
+                                        [enableMeridian]="enableMeridian">
+                                    </ngx-mat-datetime-picker>
+                                </div>
+                                <!-- <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                                     <label for="html5-date-input" class="form-label">Date</label>
                                     <input class="form-control" type="date" value="2021-06-18" id="html5-date-input" >
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-3">
                                     <label for="html5-time-input" class="form-label">Time</label>
                                     <input class="form-control" type="date" value="2021-06-18" id="html5-date-input" >
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="w-px-30 mb-3 h-px-100">
                             <!-- <lael for="nameBasic" class="form-label d-block">&nbsp;</lael> -->
-                            <button  *ngIf="i != 0" type="button" class="event-btn-close ml-10" aria-label="Close" (click)="deletEventList(i)"></button>
+                            <button *ngIf="i != 0" type="button" class="event-btn-close ml-10" aria-label="Close"
+                                (click)="deletEventList(i)"></button>
                         </div>
                     </div>
 

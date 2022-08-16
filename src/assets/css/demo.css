@@ -2,7 +2,7 @@
 * demo.css
 * File include item demo only specific css only
 ******************************************************************************/
-
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 .menu .app-brand.demo {
   height: 64px;
   margin: 12px;
