@@ -11,6 +11,9 @@ declare const $: any;
   styleUrls: ["./inquiry.component.css"],
 })
 export class InquiryComponent implements OnInit {
+  activeTab = 1;
+  monthList: any[];
+  yearList: any[];
   staffList: any[];
   l: number;
   p: number = 1;
@@ -24,7 +27,12 @@ export class InquiryComponent implements OnInit {
   cancleInquiry() {
     $("#add-menu-modal").modal("hide");
   }
-
+  tableView() {
+    this.activeTab = 2;
+  }
+  calendarView() {
+    this.activeTab = 1;
+  }
   // daterangepickerOptions = {
   //   startDate: null,
   //   endDate: null,

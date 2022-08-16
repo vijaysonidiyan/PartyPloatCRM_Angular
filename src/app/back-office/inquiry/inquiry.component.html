@@ -1,72 +1,112 @@
 <div class="container-fluid flex-grow-1 container-p-y">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Inquiry</h4>
-        <!-- <div>
-            <button type="button" class="btn btn-primary" (click)="addInquiry()">
-                Add New
-            </button>
-        </div> -->
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <div class="table-responsive text-nowrap">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Contact</th>
-                            <th>Contact-2</th>
-                            <th>Address</th>
-                            <th>Event Type</th>
-                            <th>Guest</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0" *ngFor="let staffData of staffList | paginate: { itemsPerPage: l, currentPage: p }; let staffIndex = index">
-                        <tr>
-                            <td>{{ l * (p - 1) + staffIndex + 1 }}</td>
-                            <td><strong>{{staffData.name}}</strong></td>
-                            <td>{{staffData.contact}}</td>
-                            <td>{{staffData.reference}}</td>
-                            <td>{{staffData.aadharcardNo}}</td>
-                            <td>{{staffData.email}}</td>
-                            <td>
-                                <span *ngFor="let partyplotname of staffData.partyplotData; let eventIndex = index"><span
-                                *ngIf="eventIndex > 0">,&nbsp;</span>{{partyplotname.name}}</span>
-                            </td>
-                            <td>{{staffData.roleName}}</td>
-                            <td>{{staffData.Date}}</td>
-                            <td>
-                                <span *ngIf="staffData.status == 1"
-                                class="badge bg-label-success me-1">Active</span>
-                                <span *ngIf="staffData.status == 2"
-                                class="badge bg-label-danger me-1">Deactive</span></td>
-                            <td>
-                                <div class="d-flex">
-                                    <button class="btn-bg"
-                                        (click)="editStaff({id : staffData._id, index : staffIndex})">
-                                        <i class="bx bx-edit-alt "></i>
-                                    </button>
-                                    <button class="btn-bg bg-label-danger" href="javascript:void(0);"><i
-                                            class="bx bx-trash "></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="row mb-3">
+        <div class="col-lg-10">
+            <div class="row">
+                <div class="col-lg-4">
+                    <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Inquiry</h4> -->
+                    <ng-select [items]="monthList" [multiple]="true" class="form-control p-0 me-3" bindLabel="name"
+                        bindValue="_id" placeholder="Select Month" formControlName="month">
+                    </ng-select>
+                </div>
+                <div class="col-lg-4">
+                    <ng-select [items]="yearList" [multiple]="true" class="form-control p-0 me-3" bindLabel="name"
+                        bindValue="_id" placeholder="Select Year" formControlName="year">
+                    </ng-select>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card border-solid-primary flex-row align-items-center ps-2">
+                        <i class="bx bx-search fs-4 lh-0"></i>
+                        <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
+                            aria-label="Search..." />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="float-end">
+                <button type="button" class="btn btn-primary" (click)="tableView()" *ngIf="activeTab === 1">
+                    Table View
+                </button>
+                <button type="button" class="btn btn-primary" (click)="calendarView()" *ngIf="activeTab === 2">
+                    Calendar View
+                </button>
             </div>
         </div>
     </div>
-    <div class="footer-pagination float-end mt-3">
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    <div>
+
+
+    </div>
+    <div *ngIf="activeTab == 1">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive text-nowrap">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Contact</th>
+                                <th>Contact-2</th>
+                                <th>Address</th>
+                                <th>Event Type</th>
+                                <th>Guest</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0"
+                            *ngFor="let staffData of staffList | paginate: { itemsPerPage: l, currentPage: p }; let staffIndex = index">
+                            <tr>
+                                <td>{{ l * (p - 1) + staffIndex + 1 }}</td>
+                                <td><strong>{{staffData.name}}</strong></td>
+                                <td>{{staffData.contact}}</td>
+                                <td>{{staffData.reference}}</td>
+                                <td>{{staffData.aadharcardNo}}</td>
+                                <td>{{staffData.email}}</td>
+                                <td>
+                                    <span
+                                        *ngFor="let partyplotname of staffData.partyplotData; let eventIndex = index"><span
+                                            *ngIf="eventIndex > 0">,&nbsp;</span>{{partyplotname.name}}</span>
+                                </td>
+                                <td>{{staffData.roleName}}</td>
+                                <td>{{staffData.Date}}</td>
+                                <td>
+                                    <span *ngIf="staffData.status == 1"
+                                        class="badge bg-label-success me-1">Active</span>
+                                    <span *ngIf="staffData.status == 2"
+                                        class="badge bg-label-danger me-1">Deactive</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <button class="btn-bg"
+                                            (click)="editStaff({id : staffData._id, index : staffIndex})">
+                                            <i class="bx bx-edit-alt "></i>
+                                        </button>
+                                        <button class="btn-bg bg-label-danger" href="javascript:void(0);"><i
+                                                class="bx bx-trash "></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="footer-pagination float-end mt-3">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    </div>
+
+    <div class="card" *ngIf="activeTab == 2">
+        <div class="card-body">
+        </div>
     </div>
 </div>
-<div class="modal fade" id="add-menu-modal" tabindex="-1" aria-hidden="true">
+<!-- <div class="modal fade" id="add-menu-modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -82,4 +122,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
