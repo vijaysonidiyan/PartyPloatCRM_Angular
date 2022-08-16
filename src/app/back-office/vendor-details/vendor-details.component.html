@@ -1,66 +1,73 @@
 <div class="container-fluid flex-grow-1 container-p-y">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Vendor Details</h4>
-        <div>
-            <button type="button" class="btn btn-primary" (click)="addMenu()">
-                Add New
-            </button>
-        </div>
-    </div>
-
+   
     <!-- Basic Bootstrap Table -->
     <div class="card">
-        <div class="table-responsive text-nowrap">
-            <table class="table">
-                <thead>
-                    <tr class="text-nowrap">
-                        <th>No</th>
-                        <th>Name</th>
-                        <th>Contact</th>
-                        <th>Email ID</th>
-                        <th>Address</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                    <tr *ngFor="let vendorDetailsData of vendorDetailsList | paginate: { itemsPerPage: l, currentPage: p }; let vendorDetailsIndex = index">
-                        <td>{{ l * (p - 1) + vendorDetailsIndex + 1 }}</td>
-                        <td><strong>{{ vendorDetailsData.name }}</strong></td>
-                        <td>{{ vendorDetailsData.primaryContact }}</td>
-                        <td>{{ vendorDetailsData.email }}</td>
-                        <td>{{ vendorDetailsData.address }}</td>
-                        <td>
-                            <span *ngIf="vendorDetailsData.status == 1" class="badge bg-label-success me-1">Active</span>
-                            <span *ngIf="vendorDetailsData.status == 2" class="badge bg-label-danger me-1">Deactive</span>
-                        </td>
-                        <td>
-                            <div class="d-flex">
-
-                                <button class="btn-bg"
-                                    (click)="editvendorDetails({id : vendorDetailsData._id, index : vendorDetailsIndex})"><i
-                                        class="bx bx-edit-alt"></i>
-                                </button>
-                                <button *ngIf="vendorDetailsData.status == 2" title="Active Vendor"
-                                    (confirm-click)="satusvendorDetails({id :vendorDetailsData._id,index:vendorDetailsIndex, status:1})"
-                                    appConfirm [confirmTitle]="'Active'"
-                                    [confirmContent]="'Are you sure to Active this Vendor?'"
-                                    class="bg-label-success btn-bg bg-label-success">
-                                    <i class="bx bx-plus"></i>
-                                </button>
-                                <button *ngIf="vendorDetailsData.status == 1" title="Deactive Vendor"
-                                    (confirm-click)="satusvendorDetails({id :vendorDetailsData._id,index:vendorDetailsIndex, status:2})"
-                                    appConfirm [confirmTitle]="'Deactive'"
-                                    [confirmContent]="'Are you sure to Deactive this Vendor?'"
-                                    class="bg-label-danger btn-bg bg-label-danger">
-                                    <i class="bx bx-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="footer-pagination float-end mt-3">
+        <div class="card-body p-0">
+            <div class="d-flex justify-content-between align-items-center mb-3 p-4">
+                <div class="card border-solid-primary flex-row align-items-center ps-2">
+                    <i class="bx bx-search fs-4 lh-0"></i>
+                    <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
+                        aria-label="Search..." />
+                </div>
+                <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Vendor Details</h4> -->
+                <div>
+                    <button type="button" class="btn btn-primary" (click)="addMenu()">
+                        Add New
+                    </button>
+                </div>
+            </div>
+            <div class="table-responsive text-nowrap">
+                <table class="table">
+                    <thead>
+                        <tr class="text-nowrap">
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Contact</th>
+                            <th>Email ID</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        <tr *ngFor="let vendorDetailsData of vendorDetailsList | paginate: { itemsPerPage: l, currentPage: p }; let vendorDetailsIndex = index">
+                            <td>{{ l * (p - 1) + vendorDetailsIndex + 1 }}</td>
+                            <td><strong>{{ vendorDetailsData.name }}</strong></td>
+                            <td>{{ vendorDetailsData.primaryContact }}</td>
+                            <td>{{ vendorDetailsData.email }}</td>
+                            <td>{{ vendorDetailsData.address }}</td>
+                            <td>
+                                <span *ngIf="vendorDetailsData.status == 1" class="badge bg-label-success me-1">Active</span>
+                                <span *ngIf="vendorDetailsData.status == 2" class="badge bg-label-danger me-1">Deactive</span>
+                            </td>
+                            <td>
+                                <div class="d-flex">
+    
+                                    <button class="btn-bg"
+                                        (click)="editvendorDetails({id : vendorDetailsData._id, index : vendorDetailsIndex})"><i
+                                            class="bx bx-edit-alt"></i>
+                                    </button>
+                                    <button *ngIf="vendorDetailsData.status == 2" title="Active Vendor"
+                                        (confirm-click)="satusvendorDetails({id :vendorDetailsData._id,index:vendorDetailsIndex, status:1})"
+                                        appConfirm [confirmTitle]="'Active'"
+                                        [confirmContent]="'Are you sure to Active this Vendor?'"
+                                        class="bg-label-success btn-bg bg-label-success">
+                                        <i class="bx bx-plus"></i>
+                                    </button>
+                                    <button *ngIf="vendorDetailsData.status == 1" title="Deactive Vendor"
+                                        (confirm-click)="satusvendorDetails({id :vendorDetailsData._id,index:vendorDetailsIndex, status:2})"
+                                        appConfirm [confirmTitle]="'Deactive'"
+                                        [confirmContent]="'Are you sure to Deactive this Vendor?'"
+                                        class="bg-label-danger btn-bg bg-label-danger">
+                                        <i class="bx bx-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer-pagination float-end mt-3 p-4">
                 <pagination-controls (pageChange)="p = $event"></pagination-controls>
             </div>
         </div>

@@ -12,8 +12,8 @@ declare const $: any;
 })
 export class InquiryComponent implements OnInit {
   activeTab = 1;
-  monthList: any[];
-  yearList: any[];
+  monthList: any[] = [];
+  yearList: any[] = [];
   staffList: any[];
   l: number;
   p: number = 1;

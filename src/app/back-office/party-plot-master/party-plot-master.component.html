@@ -1,72 +1,81 @@
 <div class="container-fluid flex-grow-1 container-p-y">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Party Plot Master</h4>
-        <div>
-            <button type="button" class="btn btn-primary" (click)="addPartyplot()">
-                Add New
-            </button>
-        </div>
-    </div>
 
     <!-- Basic Bootstrap Table -->
     <div class="card">
-        <div class="text-nowrap table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Name</th>
-                        <th>Event</th>
-                        <th>Address</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                    <tr
-                        *ngFor="let partyplotmasterData of partyplotList | paginate: { itemsPerPage: l, currentPage: p }; let partyPlotIndex = index">
-                        <td>{{ l * (p - 1) + partyPlotIndex + 1 }}</td>
-                        <td><strong>{{ partyplotmasterData.name }}</strong></td>
-                        <td><span *ngFor="let eventsData of partyplotmasterData.events; let eventIndex = index"><span
-                                    *ngIf="eventIndex > 0">,&nbsp;</span>{{eventsData.name}}</span></td>
-                        <td>{{ partyplotmasterData.address }}</td>
-                        <td>
-                            <span *ngIf="partyplotmasterData.status == 1"
-                                class="badge bg-label-success me-1">Active</span>
-                            <span *ngIf="partyplotmasterData.status == 2"
-                                class="badge bg-label-danger me-1">Deactive</span>
-                        </td>
-
-                        <td>
-                            <div class="d-flex">
-                                <button class="btn-bg"
-                                    (click)="editPartyplotmaster({id : partyplotmasterData._id, index : partyPlotIndex})">
-                                    <i class="bx bx-edit-alt "></i>
-                                </button>
-                                <button *ngIf="partyplotmasterData.status == 2" title="Active Party Plot"
-                                    (confirm-click)="statusPartyplot({id :partyplotmasterData._id,index:partyPlotIndex, status:1})"
-                                    appConfirm [confirmTitle]="'Active'"
-                                    [confirmContent]="'Are you sure to Active this Party Plot Master?'"
-                                    class="btn-bg bg-label-success">
-                                    <i class="bx bx-plus bg-label-success"></i>
-                                </button>
-                                <button *ngIf="partyplotmasterData.status == 1" title="Deactive Party Plot"
-                                    (confirm-click)="statusPartyplot({id :partyplotmasterData._id,index:partyPlotIndex, status:2})"
-                                    appConfirm [confirmTitle]="'Deactive'"
-                                    [confirmContent]="'Are you sure to Deactive this Party Plot Master?'"
-                                    class="btn-bg bg-label-danger">
-                                    <i class="bx bx-trash bg-label-danger"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="card-body p-0">
+            <div class="d-flex justify-content-between align-items-center mb-3 p-4">
+                <div class="card border-solid-primary flex-row align-items-center ps-2">
+                    <i class="bx bx-search fs-4 lh-0"></i>
+                    <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
+                        aria-label="Search..." />
+                </div>
+                <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Party Plot Master</h4> -->
+                <div>
+                    <button type="button" class="btn btn-primary" (click)="addPartyplot()">
+                        Add New
+                    </button>
+                </div>
+            </div>
+            <div class="text-nowrap table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Event</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        <tr
+                            *ngFor="let partyplotmasterData of partyplotList | paginate: { itemsPerPage: l, currentPage: p }; let partyPlotIndex = index">
+                            <td>{{ l * (p - 1) + partyPlotIndex + 1 }}</td>
+                            <td><strong>{{ partyplotmasterData.name }}</strong></td>
+                            <td><span *ngFor="let eventsData of partyplotmasterData.events; let eventIndex = index"><span
+                                        *ngIf="eventIndex > 0">,&nbsp;</span>{{eventsData.name}}</span></td>
+                            <td>{{ partyplotmasterData.address }}</td>
+                            <td>
+                                <span *ngIf="partyplotmasterData.status == 1"
+                                    class="badge bg-label-success me-1">Active</span>
+                                <span *ngIf="partyplotmasterData.status == 2"
+                                    class="badge bg-label-danger me-1">Deactive</span>
+                            </td>
+    
+                            <td>
+                                <div class="d-flex">
+                                    <button class="btn-bg"
+                                        (click)="editPartyplotmaster({id : partyplotmasterData._id, index : partyPlotIndex})">
+                                        <i class="bx bx-edit-alt "></i>
+                                    </button>
+                                    <button *ngIf="partyplotmasterData.status == 2" title="Active Party Plot"
+                                        (confirm-click)="statusPartyplot({id :partyplotmasterData._id,index:partyPlotIndex, status:1})"
+                                        appConfirm [confirmTitle]="'Active'"
+                                        [confirmContent]="'Are you sure to Active this Party Plot Master?'"
+                                        class="btn-bg bg-label-success">
+                                        <i class="bx bx-plus bg-label-success"></i>
+                                    </button>
+                                    <button *ngIf="partyplotmasterData.status == 1" title="Deactive Party Plot"
+                                        (confirm-click)="statusPartyplot({id :partyplotmasterData._id,index:partyPlotIndex, status:2})"
+                                        appConfirm [confirmTitle]="'Deactive'"
+                                        [confirmContent]="'Are you sure to Deactive this Party Plot Master?'"
+                                        class="btn-bg bg-label-danger">
+                                        <i class="bx bx-trash bg-label-danger"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer-pagination float-end mt-3 p-4">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
         </div>
+        
     </div>
-    <div class="footer-pagination float-end mt-3">
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-    </div>
+    
     <div class="content-backdrop fade"></div>
 </div>
 <div class="modal fade" id="add-menu-modal" tabindex="-1" aria-hidden="true">
