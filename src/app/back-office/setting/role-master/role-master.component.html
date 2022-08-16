@@ -1,58 +1,73 @@
 <div class="container-fluid flex-grow-1 container-p-y">
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <!-- <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Role Master</h4>
         <div>
             <button type="button" class="btn btn-primary" (click)="addRole()">
                 Add New
             </button>
         </div>
-    </div>
+    </div> -->
 
     <!-- Basic Bootstrap Table -->
     <div class="card">
-        <div class="table-responsive text-nowrap">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th class="w-10">No</th>
-                        <th class="w-70">Role Name</th>
-                        <th class="w-10">Status</th>
-                        <th class="w-10">Action</th>
-                    </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                    <tr
-                        *ngFor="let rolemasterData of rolemasterList | paginate: { itemsPerPage: l, currentPage: p }; let roleMasterIndex = index">
-                        <td>{{ l * (p - 1) + roleMasterIndex + 1 }}</td>
-                        <td>{{ rolemasterData.roleName }}</td>
-                        <td>
-                            <span *ngIf="rolemasterData.status == 1" class="badge bg-label-primary me-1">Active</span>
-                            <span *ngIf="rolemasterData.status == 2" class="badge bg-label-danger me-1">Deactive</span>
-                        </td>
-                        <td>
-                            <div class="d-flex" *ngIf="rolemasterData.isEditable === true">
-                                <button class="btn-bg"
-                                    (click)="editRolemaster({id : rolemasterData._id, index : roleMasterIndex})"><i
-                                        class="bx bx-edit-alt "></i>
-                                </button>
-                                <button *ngIf="rolemasterData.status == 2" class="dtl-btn btn bg-gradient-dark"
-                                    title="Active Role"
-                                    (confirm-click)="statusRolemaster({id :rolemasterData._id,index:roleMasterIndex, status:1})"
-                                    appConfirm [confirmTitle]="'Active'"
-                                    [confirmContent]="'Are you sure to Active this Role Master?'"
-                                    class="btn-bg bg-label-success"><i class="bx bx-plus"></i></button>
-                                <button *ngIf="rolemasterData.status == 1" class="dtl-btn btn bg-gradient-dark"
-                                    title="Deactive Role"
-                                    (confirm-click)="statusRolemaster({id :rolemasterData._id,index:roleMasterIndex, status:2})"
-                                    appConfirm [confirmTitle]="'Deactive'"
-                                    [confirmContent]="'Are you sure to Deactive this Role Master?'"
-                                    class="btn-bg bg-label-danger"><i class="bx bx-trash"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="footer-pagination float-end mt-3">
+        <div class="card-body p-0">
+            <div class="d-flex justify-content-between align-items-center mb-3 p-4">
+                <div class="card border-solid-primary flex-row align-items-center ps-2">
+                    <i class="bx bx-search fs-4 lh-0"></i>
+                    <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
+                        aria-label="Search..." />
+                </div>
+                <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Vendor Details</h4> -->
+                <div>
+                    <button type="button" class="btn btn-primary" (click)="addRole()">
+                        Add New
+                    </button>
+                </div>
+            </div>
+            <div class="table-responsive text-nowrap">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="w-10">No</th>
+                            <th class="w-70">Role Name</th>
+                            <th class="w-10">Status</th>
+                            <th class="w-10">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        <tr
+                            *ngFor="let rolemasterData of rolemasterList | paginate: { itemsPerPage: l, currentPage: p }; let roleMasterIndex = index">
+                            <td>{{ l * (p - 1) + roleMasterIndex + 1 }}</td>
+                            <td>{{ rolemasterData.roleName }}</td>
+                            <td>
+                                <span *ngIf="rolemasterData.status == 1" class="badge bg-label-primary me-1">Active</span>
+                                <span *ngIf="rolemasterData.status == 2" class="badge bg-label-danger me-1">Deactive</span>
+                            </td>
+                            <td>
+                                <div class="d-flex" *ngIf="rolemasterData.isEditable === true">
+                                    <button class="btn-bg"
+                                        (click)="editRolemaster({id : rolemasterData._id, index : roleMasterIndex})"><i
+                                            class="bx bx-edit-alt "></i>
+                                    </button>
+                                    <button *ngIf="rolemasterData.status == 2" class="dtl-btn btn bg-gradient-dark"
+                                        title="Active Role"
+                                        (confirm-click)="statusRolemaster({id :rolemasterData._id,index:roleMasterIndex, status:1})"
+                                        appConfirm [confirmTitle]="'Active'"
+                                        [confirmContent]="'Are you sure to Active this Role Master?'"
+                                        class="btn-bg bg-label-success"><i class="bx bx-plus"></i></button>
+                                    <button *ngIf="rolemasterData.status == 1" class="dtl-btn btn bg-gradient-dark"
+                                        title="Deactive Role"
+                                        (confirm-click)="statusRolemaster({id :rolemasterData._id,index:roleMasterIndex, status:2})"
+                                        appConfirm [confirmTitle]="'Deactive'"
+                                        [confirmContent]="'Are you sure to Deactive this Role Master?'"
+                                        class="btn-bg bg-label-danger"><i class="bx bx-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer-pagination float-end mt-3 p-4">
                 <pagination-controls (pageChange)="p = $event"></pagination-controls>
             </div>
         </div>
@@ -77,6 +92,9 @@
                             <div *ngIf="submittedroleMasterData && fRolenameData.roleName.errors">
                                 <div *ngIf="fRolenameData.roleName.errors.required">
                                     <span class="error_msg">Role Name is Required.</span>
+                                </div>
+                                <div *ngIf="fRolenameData.roleName.errors.pattern">
+                                    <span class="error_msg text-danger">Email must be a valid email address.</span>
                                 </div>
                             </div>
                         </div>

@@ -1,66 +1,73 @@
 <div class="container-fluid flex-grow-1 container-p-y">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Vendor Details</h4>
-        <div>
-            <button type="button" class="btn btn-primary" (click)="addMenu()">
-                Add New
-            </button>
-        </div>
-    </div>
-
+   
     <!-- Basic Bootstrap Table -->
     <div class="card">
-        <div class="table-responsive text-nowrap">
-            <table class="table">
-                <thead>
-                    <tr class="text-nowrap">
-                        <th>No</th>
-                        <th>Name</th>
-                        <th>Contact</th>
-                        <th>Email ID</th>
-                        <th>Address</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                    <tr *ngFor="let vendorDetailsData of vendorDetailsList | paginate: { itemsPerPage: l, currentPage: p }; let vendorDetailsIndex = index">
-                        <td>{{ l * (p - 1) + vendorDetailsIndex + 1 }}</td>
-                        <td><strong>{{ vendorDetailsData.name }}</strong></td>
-                        <td>{{ vendorDetailsData.primaryContact }}</td>
-                        <td>{{ vendorDetailsData.email }}</td>
-                        <td>{{ vendorDetailsData.address }}</td>
-                        <td>
-                            <span *ngIf="vendorDetailsData.status == 1" class="badge bg-label-success me-1">Active</span>
-                            <span *ngIf="vendorDetailsData.status == 2" class="badge bg-label-danger me-1">Deactive</span>
-                        </td>
-                        <td>
-                            <div class="d-flex">
-
-                                <button class="btn-bg"
-                                    (click)="editvendorDetails({id : vendorDetailsData._id, index : vendorDetailsIndex})"><i
-                                        class="bx bx-edit-alt"></i>
-                                </button>
-                                <button *ngIf="vendorDetailsData.status == 2" title="Active Vendor"
-                                    (confirm-click)="satusvendorDetails({id :vendorDetailsData._id,index:vendorDetailsIndex, status:1})"
-                                    appConfirm [confirmTitle]="'Active'"
-                                    [confirmContent]="'Are you sure to Active this Vendor?'"
-                                    class="bg-label-success btn-bg bg-label-success">
-                                    <i class="bx bx-plus"></i>
-                                </button>
-                                <button *ngIf="vendorDetailsData.status == 1" title="Deactive Vendor"
-                                    (confirm-click)="satusvendorDetails({id :vendorDetailsData._id,index:vendorDetailsIndex, status:2})"
-                                    appConfirm [confirmTitle]="'Deactive'"
-                                    [confirmContent]="'Are you sure to Deactive this Vendor?'"
-                                    class="bg-label-danger btn-bg bg-label-danger">
-                                    <i class="bx bx-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="footer-pagination float-end mt-3">
+        <div class="card-body p-0">
+            <div class="d-flex justify-content-between align-items-center mb-3 p-4">
+                <div class="card border-solid-primary flex-row align-items-center ps-2">
+                    <i class="bx bx-search fs-4 lh-0"></i>
+                    <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
+                        aria-label="Search..." />
+                </div>
+                <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Vendor Details</h4> -->
+                <div>
+                    <button type="button" class="btn btn-primary" (click)="addMenu()">
+                        Add New
+                    </button>
+                </div>
+            </div>
+            <div class="table-responsive text-nowrap">
+                <table class="table">
+                    <thead>
+                        <tr class="text-nowrap">
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Contact</th>
+                            <th>Email ID</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        <tr *ngFor="let vendorDetailsData of vendorDetailsList | paginate: { itemsPerPage: l, currentPage: p }; let vendorDetailsIndex = index">
+                            <td>{{ l * (p - 1) + vendorDetailsIndex + 1 }}</td>
+                            <td><strong>{{ vendorDetailsData.name }}</strong></td>
+                            <td>{{ vendorDetailsData.primaryContact }}</td>
+                            <td>{{ vendorDetailsData.email }}</td>
+                            <td>{{ vendorDetailsData.address }}</td>
+                            <td>
+                                <span *ngIf="vendorDetailsData.status == 1" class="badge bg-label-success me-1">Active</span>
+                                <span *ngIf="vendorDetailsData.status == 2" class="badge bg-label-danger me-1">Deactive</span>
+                            </td>
+                            <td>
+                                <div class="d-flex">
+    
+                                    <button class="btn-bg"
+                                        (click)="editvendorDetails({id : vendorDetailsData._id, index : vendorDetailsIndex})"><i
+                                            class="bx bx-edit-alt"></i>
+                                    </button>
+                                    <button *ngIf="vendorDetailsData.status == 2" title="Active Vendor"
+                                        (confirm-click)="satusvendorDetails({id :vendorDetailsData._id,index:vendorDetailsIndex, status:1})"
+                                        appConfirm [confirmTitle]="'Active'"
+                                        [confirmContent]="'Are you sure to Active this Vendor?'"
+                                        class="bg-label-success btn-bg bg-label-success">
+                                        <i class="bx bx-plus"></i>
+                                    </button>
+                                    <button *ngIf="vendorDetailsData.status == 1" title="Deactive Vendor"
+                                        (confirm-click)="satusvendorDetails({id :vendorDetailsData._id,index:vendorDetailsIndex, status:2})"
+                                        appConfirm [confirmTitle]="'Deactive'"
+                                        [confirmContent]="'Are you sure to Deactive this Vendor?'"
+                                        class="bg-label-danger btn-bg bg-label-danger">
+                                        <i class="bx bx-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer-pagination float-end mt-3 p-4">
                 <pagination-controls (pageChange)="p = $event"></pagination-controls>
             </div>
         </div>
@@ -82,23 +89,47 @@
                             <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name" formControlName="name"/>
                             <div *ngIf="submittvendordetailsData && fvendorData.name.errors">
                                 <div *ngIf="fvendorData.name.errors.required">
-                                    <span class="error_msg">Name is Required.</span>
+                                    <span class="error_msg text-danger">Name is Required.</span>
+                                </div>
+                                <div *ngIf="fvendorData.name.errors.pattern">
+                                    <span class="error_msg text-danger">You use only A-Z Or a-z.</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label class="form-label" for="basic-default-phone">Conatct</label>
                             <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                                placeholder="658 799 8941" formControlName="primaryContact">
+                                placeholder="658 799 8941" formControlName="primaryContact" maxlength="10"  minlength="10" appNumbersOnly>
+                            <div *ngIf="submittvendordetailsData && fvendorData.primaryContact.errors">
+                                <div *ngIf="fvendorData.primaryContact.errors.required">
+                                    <span class="error_msg text-danger">Contact is Required.</span>
+                                </div>
+                                <div *ngIf="fvendorData.primaryContact.errors.pattern">
+                                    <span class="error_msg text-danger">Please, Enter Valid Number.</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Email</label>
                             <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
                                 aria-label="john.doe" aria-describedby="basic-default-email2" formControlName="email">
+                            <div *ngIf="submittvendordetailsData && fvendorData.email.errors">
+                                <div *ngIf="fvendorData.email.errors.required">
+                                    <span class="error_msg text-danger">Email is Required.</span>
+                                </div>
+                                <div *ngIf="fvendorData.email.errors.email">
+                                    <span class="error_msg text-danger">Email must be a valid email address.</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-lg-12 mb-3">
                             <label for="nameBasic" class="form-label">Address</label>
                             <textarea id="basic-default-message" class="form-control" placeholder="" formControlName="address"></textarea>
+                            <div *ngIf="submittvendordetailsData && fvendorData.address.errors">
+                                <div *ngIf="fvendorData.address.errors.required">
+                                    <span class="error_msg text-danger">Address is Required.</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>

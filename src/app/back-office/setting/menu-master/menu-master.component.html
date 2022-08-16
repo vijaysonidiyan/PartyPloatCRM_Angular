@@ -1,65 +1,78 @@
 <div class="container-fluid flex-grow-1 container-p-y">
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <!-- <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Menu Master</h4>
         <div>
             <button type="button" class="btn btn-primary" (click)="addMenu()">
                 Add New
             </button>
         </div>
-    </div>
+    </div> -->
 
     <!-- Basic Bootstrap Table -->
     <div class="card">
-        <div class="table-responsive text-nowrap">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Menu Name</th>
-                        <th>Parent Name</th>
-                        <th>Module</th>
-                        <th>Order</th>
-                        <th>Icon</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                    <tr
-                        *ngFor="let menuData of menuList | paginate: { itemsPerPage: l, currentPage: p };let menuIndex = index">
-                        <td>{{ l * (p - 1) + menuIndex +1 }}</td>
-                        <td><strong>{{ menuData.title }}</strong></td>
-                        <td>{{ menuData.parentName }}</td>
-                        <td>{{ menuData.module }}</td>
-                        <td>{{ menuData.order }}</td>
-                        <td>
-                            <img src="{{iconDefaultURL}}{{menuData.default_icon}}" width="50px" alt="">
-                        </td>
-                        <td>
-                            <span *ngIf="menuData.status == 1" class="badge bg-label-primary">Active</span>
-                            <span *ngIf="menuData.status == 2" class="badge bg-label-danger">Deactive</span>
-                        </td>
-                        <td>
-                            <div class="d-flex">
-                                <button class="btn-bg" (click)="editMenumaster({id : menuData._id, index:menuIndex})"><i
-                                        class="bx bx-edit-alt"></i>
-                                </button>
-                                <button *ngIf="menuData.status == 2" class="btn-bg bg-label-success"
-                                    (confirm-click)="statusMenu({id :menuData._id,index:menuIndex, status:1})"
-                                    appConfirm [confirmTitle]="'Active'"
-                                    [confirmContent]="'Are you sure to Active this Menu Master?'">
-                                    <i class="bx bx-plus"></i></button>
-                                <button *ngIf="menuData.status == 1" class="btn-bg bg-label-danger"
-                                    (confirm-click)="statusMenu({id :menuData._id,index:menuIndex, status:2})"
-                                    appConfirm [confirmTitle]="'Deactive'"
-                                    [confirmContent]="'Are you sure to Deactive this Menu Master?'">
-                                    <i class="bx bx-trash "></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="footer-pagination float-end mt-3">
+        <div class="card-body p-0">
+            <div class="d-flex justify-content-between align-items-center mb-3 p-4">
+                <div class="card border-solid-primary flex-row align-items-center ps-2">
+                    <i class="bx bx-search fs-4 lh-0"></i>
+                    <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
+                        aria-label="Search..." />
+                </div>
+                <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Vendor Details</h4> -->
+                <div>
+                    <button type="button" class="btn btn-primary" (click)="addMenu()">
+                        Add New
+                    </button>
+                </div>
+            </div>
+            <div class="table-responsive text-nowrap">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Menu Name</th>
+                            <th>Parent Name</th>
+                            <th>Module</th>
+                            <th>Order</th>
+                            <th>Icon</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        <tr
+                            *ngFor="let menuData of menuList | paginate: { itemsPerPage: l, currentPage: p };let menuIndex = index">
+                            <td>{{ l * (p - 1) + menuIndex +1 }}</td>
+                            <td><strong>{{ menuData.title }}</strong></td>
+                            <td>{{ menuData.parentName }}</td>
+                            <td>{{ menuData.module }}</td>
+                            <td>{{ menuData.order }}</td>
+                            <td><img src="{{iconDefaultURL}}{{menuData.default_icon}}" width="50px" alt=""></td>
+                            <td>
+                                <span *ngIf="menuData.status == 1" class="badge bg-label-primary">Active</span>
+                                <span *ngIf="menuData.status == 2" class="badge bg-label-danger">Deactive</span>
+                            </td>
+                            <td>
+                                <div class="d-flex">
+                                    <button class="btn-bg" (click)="editMenumaster({id : menuData._id, index:menuIndex})"><i
+                                            class="bx bx-edit-alt"></i>
+                                    </button>
+                                    <button *ngIf="menuData.status == 2" class="btn-bg bg-label-success"
+                                        (confirm-click)="statusMenu({id :menuData._id,index:menuIndex, status:1})"
+                                        appConfirm [confirmTitle]="'Active'"
+                                        [confirmContent]="'Are you sure to Active this Menu Master?'">
+                                        <i class="bx bx-plus"></i></button>
+                                    <button *ngIf="menuData.status == 1" class="btn-bg bg-label-danger"
+                                        (confirm-click)="statusMenu({id :menuData._id,index:menuIndex, status:2})"
+                                        appConfirm [confirmTitle]="'Deactive'"
+                                        [confirmContent]="'Are you sure to Deactive this Menu Master?'">
+                                        <i class="bx bx-trash "></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer-pagination float-end mt-3 p-4">
                 <pagination-controls (pageChange)="p = $event"></pagination-controls>
             </div>
         </div>

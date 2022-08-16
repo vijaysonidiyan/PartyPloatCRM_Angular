@@ -18,11 +18,14 @@
                         <label for="nameBasic" class="form-label">Name</label>
                         <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
                             formControlName="name" />
-                        <!-- <div>
-                            <div>
-                                <span class="error_msg">Name is Required.</span>
+                        <div *ngIf="submittedCompanyData && fnameData.name.errors">
+                            <div *ngIf="fnameData.name.errors.required">
+                                <span class="error_msg text-danger">Name is Required.</span>
                             </div>
-                        </div> -->
+                            <div *ngIf="fnameData.name.errors.pattern">
+                                <span class="error_msg text-danger">You use only A-Z Or a-z.</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label class="form-label" for="basic-default-email">Comapny Email</label>
@@ -32,34 +35,49 @@
                                 formControlName="email" />
                             <span class="input-group-text" id="basic-default-email2">@example.com</span>
                         </div>
-                        <!-- <div class="form-text">You can use letters, numbers & periods</div> -->
+                        <div *ngIf="submittedCompanyData && fnameData.email.errors">
+                            <div *ngIf="fnameData.email.errors.required">
+                                <span class="error_msg text-danger">Email is Required.</span>
+                            </div>
+                            <div *ngIf="fnameData.email.errors.email">
+                                <span class="error_msg text-danger">Email must be a valid email address.</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-lg-6 mb-3">
-                        <label class="form-label" for="basic-default-phone">Phone No</label>
+                        <label class="form-label" for="basic-default-phone">Mobile No</label>
                         <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                            placeholder="658 799 8941" formControlName="Telephone1" />
+                            placeholder="658 799 8941" formControlName="Telephone1" maxlength="10"  minlength="10" appNumbersOnly/>
+                        <div *ngIf="submittedCompanyData && fnameData.Telephone1.errors">
+                            <div *ngIf="fnameData.Telephone1.errors.required">
+                                <span class="error_msg text-danger">Mobile is Required.</span>
+                            </div>
+                            <div *ngIf="fnameData.Telephone1.errors.pattern">
+                                <span class="error_msg text-danger">Please, Enter Valid Number.</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label class="form-label" for="basic-default-phone">Tel No</label>
                         <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                            placeholder="658 799 8941" formControlName="Telephone2" />
+                            placeholder="658 799 8941" formControlName="Telephone2" maxlength="10"  minlength="10" appNumbersOnly/>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label for="formFile" class="form-label">Logo</label>
-                        <input class="form-control" type="file" [multiple]=false accept="image/*" formControlName="logo" (change)="onLogoChange($event)">
+                        <input class="form-control" type="file" [multiple]=false accept="image/*" formControlName="logo" #filelogo (change)="onLogoChange($event)">
                         <div *ngIf="imgURLlogo" class="imgUpload">
                             <img [src]="imgURLlogo" alt="" width="100">
-                            <button *ngIf="isEditing === true" type="button" class="btn-close ml-10" data-bs-dismiss="modal" aria-label="Close" (click)="imgURLlogo=''"></button>
+                            <button *ngIf="isEditing === true" type="button" class="btn-close ml-10" data-bs-dismiss="modal" aria-label="Close" (click)="removeURLlogo()"></button>
                         </div>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label class="form-label" for="basic-default-company">Signature</label>
-                        <input type="file" class="form-control" id="basic-default-company" placeholder="ACME Inc." formControlName="signature" [multiple]=false accept="image/*" (change)="onSignatureChange($event)"/>
+                        <input #filesignature type="file" class="form-control" id="basic-default-company" placeholder="ACME Inc." formControlName="signature" [multiple]=false accept="image/*" (change)="onSignatureChange($event)"/>
                         <div *ngIf="imgURLsignature" class="imgUpload">
                             <img [src]="imgURLsignature" alt="" width="100">
                             <button *ngIf="isEditing === true" type="button" class="btn-close ml-10" data-bs-dismiss="modal" aria-label="Close"
-                                (click)="imgURLsignature = '' "></button>
+                                (click)="removeURLsignature()"></button>
                         </div>
                     </div>
                 </div>
@@ -75,27 +93,54 @@
                                 aria-label="john.doe" aria-describedby="basic-default-email2" formControlName="SMTP_email" />
                             <span class="input-group-text" id="basic-default-email2">@example.com</span>
                         </div>
-                        <!-- <div class="form-text">You can use letters, numbers & periods</div> -->
+                        <div *ngIf="submittedCompanyData && fnameData.SMTP_email.errors">
+                            <div *ngIf="fnameData.SMTP_email.errors.required">
+                                <span class="error_msg text-danger">Email is Required.</span>
+                            </div>
+                            <div *ngIf="fnameData.SMTP_email.errors.email">
+                                <span class="error_msg text-danger">Email must be a valid email address.</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label for="html5-password-input" class="col-md-2 col-form-label">Password</label>
                         <input class="form-control" type="password" value="password" id="html5-password-input"
                             formControlName="SMTP_password">
+                        <div *ngIf="submittedCompanyData && fnameData.SMTP_password.errors">
+                            <div *ngIf="fnameData.SMTP_password.errors.required">
+                                <span class="error_msg text-danger">Password is Required.</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label class="form-label" for="basic-default-company">Service</label>
                         <input type="text" class="form-control" id="basic-default-company" placeholder="ACME Inc."
                             formControlName="service" />
+                        <div *ngIf="submittedCompanyData && fnameData.service.errors">
+                            <div *ngIf="fnameData.service.errors.required">
+                                <span class="error_msg text-danger">Service is Required.</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label class="form-label" for="basic-default-phone">Port</label>
                         <input type="text" id="basic-default-phone" class="form-control phone-mask"
                             placeholder="658 799" formControlName="port" />
+                        <div *ngIf="submittedCompanyData && fnameData.port.errors">
+                            <div *ngIf="fnameData.port.errors.required">
+                                <span class="error_msg text-danger">Port is Required.</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label class="form-label" for="basic-default-phone">SMTP</label>
                         <input type="text" id="basic-default-phone" class="form-control phone-mask" placeholder=""
                             formControlName="SMTP" />
+                        <div *ngIf="submittedCompanyData && fnameData.SMTP.errors">
+                            <div *ngIf="fnameData.SMTP.errors.required">
+                                <span class="error_msg text-danger">SMTP is Required.</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>

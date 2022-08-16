@@ -10,7 +10,6 @@ declare const $: any;
 })
 export class EventMasterComponent implements OnInit {
   eventmasterForm: FormGroup;
-  mySelect;
   noData;
   ISeditEventMaster = false;
   l: number;
@@ -32,7 +31,6 @@ export class EventMasterComponent implements OnInit {
 
   ngOnInit(): void {
     this.noData = false;
-    this.mySelect = 5;
     this.l = 10;
     this.ISeditEventMaster = false;
     this.getEventmasterList();
@@ -42,7 +40,7 @@ export class EventMasterComponent implements OnInit {
   defaultForm() {
     this.eventmasterForm = this.fb.group({
       _id: [""],
-      name: ["", [Validators.required]],
+      name: ["", [Validators.required, Validators.pattern('([a-z]|[A-Z])*')]],
     });
   }
 
