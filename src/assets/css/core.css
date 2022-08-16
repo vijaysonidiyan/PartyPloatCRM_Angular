@@ -17355,3 +17355,6 @@ html:not(.layout-footer-fixed) .content-wrapper {
   border-radius: 0.375rem;
   opacity: 0.95;
 }
+.border-solid-primary {
+  border: 1px solid #00adef !important;
+}
