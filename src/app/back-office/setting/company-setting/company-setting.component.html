@@ -22,9 +22,6 @@
                             <div *ngIf="fnameData.name.errors.required">
                                 <span class="error_msg text-danger">Name is Required.</span>
                             </div>
-                            <div *ngIf="fnameData.name.errors.pattern">
-                                <span class="error_msg text-danger">You use only A-Z Or a-z.</span>
-                            </div>
                         </div>
                     </div>
                     <div class="col-lg-6 mb-3">
@@ -104,8 +101,10 @@
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label for="html5-password-input" class="col-md-2 col-form-label">Password</label>
-                        <input class="form-control" type="password" value="password" id="html5-password-input"
-                            formControlName="SMTP_password">
+                        <div class="input-group input-group-merge">
+                            <input class="form-control" type="password" value="password" id="html5-password-input" formControlName="SMTP_password" [type]="hide1 ? 'text' : 'password'">
+                            <span (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1" class="input-group-text cursor-pointer"><i class="bx {{hide1 ? 'bx-show' : 'bx-hide'}}"></i></span>
+                        </div>
                         <div *ngIf="submittedCompanyData && fnameData.SMTP_password.errors">
                             <div *ngIf="fnameData.SMTP_password.errors.required">
                                 <span class="error_msg text-danger">Password is Required.</span>

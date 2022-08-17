@@ -45,7 +45,7 @@ export class PartyPlotMasterComponent implements OnInit {
   defaultForm() {
     this.partyplotForm = this.fb.group({
       _id: ["0"],
-      name: ["", [Validators.required, Validators.pattern('([a-z]|[A-Z])*')]],
+      name: ["", [Validators.required]],
       address: ["", [Validators.required]],
       events: [""],
     });
@@ -223,5 +223,16 @@ export class PartyPlotMasterComponent implements OnInit {
           console.log(error);
         }
       );
+  }
+
+  search(value: string): void {
+    this.partyplotList = this.allpartyplot.filter((val: any) => JSON.stringify(val).toLowerCase().includes(value.toLowerCase()));
+    this.p = 1;
+    if (this.partyplotList.length == 0) {
+        debugger
+        this.noData = true;
+    } else {
+        this.noData = false;
+    }
   }
 }

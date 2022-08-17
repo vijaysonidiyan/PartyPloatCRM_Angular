@@ -21,7 +21,7 @@ export class CompanySettingComponent implements OnInit {
   imgURLlogo: string | ArrayBuffer;
   @ViewChild('filelogo') myInputVariablelogo: ElementRef | any;
   @ViewChild('filesignature') myInputVariablesignature: ElementRef;
-
+  hide1 = false;
   get fnameData() {
     return this.comapnyForm.controls;
   }
@@ -39,7 +39,7 @@ export class CompanySettingComponent implements OnInit {
   defaultForm() {
     this.comapnyForm = this.fb.group({
       _id: [""],
-      name: ["", [Validators.required, Validators.pattern('([a-z]|[A-Z])*')]],
+      name: ["", [Validators.required]],
       email: ["", [Validators.required, Validators.email]],
       Telephone1: ["", [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
       Telephone2: [""],

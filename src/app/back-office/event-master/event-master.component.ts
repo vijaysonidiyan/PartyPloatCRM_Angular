@@ -40,7 +40,7 @@ export class EventMasterComponent implements OnInit {
   defaultForm() {
     this.eventmasterForm = this.fb.group({
       _id: [""],
-      name: ["", [Validators.required, Validators.pattern('([a-z]|[A-Z])*')]],
+      name: ["", [Validators.required]],
     });
   }
 
@@ -173,5 +173,16 @@ export class EventMasterComponent implements OnInit {
         console.log(error.error.Message);
       }
     );
+  }
+
+  search(value: string): void {
+    this.eventmasterList = this.alleventmaster.filter((val: any) => JSON.stringify(val).toLowerCase().includes(value.toLowerCase()));
+    this.p = 1;
+    if (this.eventmasterList.length == 0) {
+        debugger
+        this.noData = true;
+    } else {
+        this.noData = false;
+    }
   }
 }

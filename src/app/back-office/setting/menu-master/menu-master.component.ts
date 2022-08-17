@@ -21,7 +21,6 @@ export class MenuMasterComponent implements OnInit {
   MenuList: any[];
   l: number;
   p: number = 1;
-  mySelect;
   itemsPage: any;
   listindex: number;
   menuListlength: any;
@@ -38,7 +37,6 @@ export class MenuMasterComponent implements OnInit {
 
   ngOnInit(): void {
     this.noData = false;
-    this.mySelect = 5;
     this.l = 10;
     this.ISeditMenu = false;
     this.getMenuList();

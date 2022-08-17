@@ -12,7 +12,6 @@ declare const $: any;
 export class RoleMasterComponent implements OnInit {
 
   rolemasterForm: FormGroup;
-  mySelect;
   noData;
   ISeditRoleMaster = false;
   l: number;
@@ -28,7 +27,6 @@ export class RoleMasterComponent implements OnInit {
 
   ngOnInit(): void {
     this.noData = false;
-    this.mySelect = 5;
     this.l = 10;
     this.ISeditRoleMaster = false;
     this.getRolemasterList();
@@ -159,5 +157,15 @@ export class RoleMasterComponent implements OnInit {
     }, (error) => {
         console.log(error.error.Message);
     });
+  }
+  search(value: string): void {
+    this.rolemasterList = this.allrolemaster.filter((val: any) => JSON.stringify(val).toLowerCase().includes(value.toLowerCase()));
+    this.p = 1;
+    if (this.rolemasterList.length == 0) {
+        debugger
+        this.noData = true;
+    } else {
+        this.noData = false;
+    }
   }
 }

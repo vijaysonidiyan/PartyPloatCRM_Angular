@@ -7,7 +7,7 @@
                 <div class="card border-solid-primary flex-row align-items-center ps-2">
                     <i class="bx bx-search fs-4 lh-0"></i>
                     <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
-                        aria-label="Search..." />
+                        aria-label="Search..." (input)="search($event.target.value)"/>
                 </div>
                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Party Plot Master</h4> -->
                 <div>
@@ -66,11 +66,16 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr *ngIf="noData">
+                            <td colspan="6">
+                                <h4 class="text-center mt-3">No Data Found</h4>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="footer-pagination float-end mt-3 p-4">
-                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            <div class="footer-pagination float-end mt-3 p-4" *ngIf="!noData">
+                <pagination-controls (pageChange)="p = $event" *ngIf="partyplotList.length > l"></pagination-controls>
             </div>
         </div>
         
@@ -82,7 +87,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel1"><strong>Add Party Plot Details</strong></h5>
+                <h5 class="modal-title" id="exampleModalLabel1"><strong>{{ISeditPartyplot ?
+                    'Edit' : 'Add'}} Party Plot Details</strong></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                     (click)="cancelPartyplot()"></button>
             </div>
@@ -96,9 +102,6 @@
                             <div *ngIf="submittedPartyplotData && fnameData.name.errors">
                                 <div *ngIf="fnameData.name.errors.required">
                                     <span class="error_msg text-danger">Name is Required.</span>
-                                </div>
-                                <div *ngIf="fnameData.name.errors.pattern">
-                                    <span class="error_msg text-danger">You use only A-Z Or a-z.</span>
                                 </div>
                             </div>
                         </div>

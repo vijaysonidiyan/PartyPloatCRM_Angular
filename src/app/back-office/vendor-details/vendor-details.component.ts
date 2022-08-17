@@ -11,7 +11,6 @@ declare const $: any;
 export class VendorDetailsComponent implements OnInit {
 
   vendordetailsForm: FormGroup;
-  mySelect;
   noData;
   ISeditVendorDetails = false;
   l: number;
@@ -33,7 +32,6 @@ export class VendorDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.noData = false;
-    this.mySelect = 5;
     this.l = 10;
     this.ISeditVendorDetails = false;
     this.getVendordetailsList();
@@ -43,7 +41,7 @@ export class VendorDetailsComponent implements OnInit {
   defaultForm() {
     this.vendordetailsForm = this.fb.group({
       _id: [""],
-      name: ["", [Validators.required, Validators.pattern('([a-z]|[A-Z])*')]],
+      name: ["", [Validators.required]],
       address: ["", [Validators.required]],
       email: ["", [Validators.required, Validators.email]],
       primaryContact: ["", [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
@@ -191,5 +189,16 @@ export class VendorDetailsComponent implements OnInit {
         console.log(error.error.Message);
       }
     );
+  }
+
+  search(value: string): void {
+    this.vendorDetailsList = this.allvendordetails.filter((val: any) => JSON.stringify(val).toLowerCase().includes(value.toLowerCase()));
+    this.p = 1;
+    if (this.vendorDetailsList.length == 0) {
+        debugger
+        this.noData = true;
+    } else {
+        this.noData = false;
+    }
   }
 }

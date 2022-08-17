@@ -23,6 +23,7 @@ export class StaffComponent implements OnInit {
   staffListlength: any;
   noData;
 
+
   get fnameData() {
     return this.staffForm.controls;
   }
@@ -49,7 +50,7 @@ export class StaffComponent implements OnInit {
   defaultForm() {
     this.staffForm = this.fb.group({
       _id: ["0"],
-      name: ["", [Validators.required, Validators.pattern('([a-z]|[A-Z])*')]],
+      name: ["", [Validators.required]],
       email: ["", [Validators.required, Validators.email]],
       contact: ["", [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
       roleId: [null],
@@ -272,5 +273,16 @@ export class StaffComponent implements OnInit {
     }, (error) => {
         console.log(error);
     });
+  }
+
+  search(value: string): void {
+    this.staffList = this.allstaffList.filter((val: any) => JSON.stringify(val).toLowerCase().includes(value.toLowerCase()));
+    this.p = 1;
+    if (this.staffList.length == 0) {
+        debugger
+        this.noData = true;
+    } else {
+        this.noData = false;
+    }
   }
 }
