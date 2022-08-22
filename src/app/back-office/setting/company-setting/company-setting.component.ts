@@ -15,8 +15,8 @@ export class CompanySettingComponent implements OnInit {
   isEditing = false;
   userFile: any;
   userSignatureFile: any;
-  filelogo : any;
-  filesignature : any;
+  filelogo: any;
+  filesignature: any;
   imgURLsignature: string | ArrayBuffer;
   imgURLlogo: string | ArrayBuffer;
   @ViewChild('filelogo') myInputVariablelogo: ElementRef | any;
@@ -29,7 +29,7 @@ export class CompanySettingComponent implements OnInit {
 
 
 
-  constructor(private fb: FormBuilder, public adminLayoutService: AdminLayoutService,  public storageService: StorageService, public commonService: CommonService) {}
+  constructor(private fb: FormBuilder, public adminLayoutService: AdminLayoutService, public storageService: StorageService, public commonService: CommonService) { }
 
   ngOnInit(): void {
     this.defaultForm();
@@ -55,43 +55,44 @@ export class CompanySettingComponent implements OnInit {
 
   getcomapnySetting() {
     this.adminLayoutService.getComapnysetting().subscribe((Response: any) => {
-        this.comapnyForm.controls._id.setValue(Response.data._id);
-        this.comapnyForm.controls.name.setValue(Response.data.name);
-        this.comapnyForm.controls.email.setValue(Response.data.email);
-        this.comapnyForm.controls.Telephone1.setValue(Response.data.Telephone1);
-        this.comapnyForm.controls.Telephone2.setValue(Response.data.Telephone2);
-        this.comapnyForm.controls.SMTP_email.setValue(Response.data.SMTP_email);
-        this.comapnyForm.controls.SMTP_password.setValue(Response.data.SMTP_password);
-        this.comapnyForm.controls.service.setValue(Response.data.service);
-        this.comapnyForm.controls.port.setValue(Response.data.port);
-        this.comapnyForm.controls.SMTP.setValue(Response.data.SMTP);
+      this.comapnyForm.controls._id.setValue(Response.data._id);
+      this.comapnyForm.controls.name.setValue(Response.data.name);
+      this.comapnyForm.controls.email.setValue(Response.data.email);
+      this.comapnyForm.controls.Telephone1.setValue(Response.data.Telephone1);
+      this.comapnyForm.controls.Telephone2.setValue(Response.data.Telephone2);
+      this.comapnyForm.controls.SMTP_email.setValue(Response.data.SMTP_email);
+      this.comapnyForm.controls.SMTP_password.setValue(Response.data.SMTP_password);
+      this.comapnyForm.controls.service.setValue(Response.data.service);
+      this.comapnyForm.controls.port.setValue(Response.data.port);
+      this.comapnyForm.controls.SMTP.setValue(Response.data.SMTP);
 
-        if (Response.data.logo!= "") {
-          this.imgURLlogo = environment.uploadsUrl + "photos/" + Response.data.logo;
-          this.userFile = Response.data.logo;
-        } else {
-            this.imgURLlogo = "";
-            this.userFile = "";
-            this.myInputVariablelogo.nativeElement.value = "";
-        }
-        if (!!Response.data.signature) {
-            this.imgURLsignature = environment.uploadsUrl + "photos/" + Response.data.signature;
-            this.userSignatureFile = Response.data.signature;
-        } else {
-            this.imgURLsignature = "";
-            this.userSignatureFile = "";
-            this.myInputVariablesignature.nativeElement.value = "";
-        }
+      if (Response.data.logo != "") {
+        this.imgURLlogo = environment.uploadsUrl + "photos/" + Response.data.logo;
+        this.userFile = Response.data.logo;
+      } else {
+        this.imgURLlogo = "";
+        this.userFile = "";
+        this.myInputVariablelogo.nativeElement.value = "";
+        this.storageService.setValue(StorageKey.utsav_decor_logo, this.userFile);
+      }
+      if (!!Response.data.signature) {
+        this.imgURLsignature = environment.uploadsUrl + "photos/" + Response.data.signature;
+        this.userSignatureFile = Response.data.signature;
+      } else {
+        this.imgURLsignature = "";
+        this.userSignatureFile = "";
+        this.myInputVariablesignature.nativeElement.value = "";
+      }
     })
   }
 
-  removeURLsignature(){
+  removeURLsignature() {
     this.imgURLsignature = "";
     this.userSignatureFile = "";
     this.myInputVariablesignature.nativeElement.value = "";
   }
 
-  removeURLlogo(){
+  removeURLlogo() {
     this.imgURLlogo = "";
     this.userFile = "";
     this.myInputVariablelogo.nativeElement.value = "";
@@ -118,17 +119,19 @@ export class CompanySettingComponent implements OnInit {
     loginModelObj.append('SMTP', this.comapnyForm.value.SMTP);
 
     this.adminLayoutService.UpdateCompanySetting(loginModelObj).subscribe((Response: any) => {
-        if (Response.meta.code == 200) {
-            this.comapnyForm.disable();
-            this.isEditing = false;
-            this.commonService.notifier.notify('success', Response.meta.message);
-        } else {
-            this.commonService.notifier.notify('error', Response.meta.message);
-        }
+      if (Response.meta.code == 200) {
+        this.comapnyForm.disable();
+        this.storageService.setValue(StorageKey.utsav_decor_logo, Response.data.logo);
+        this.isEditing = false;
+        window.location.reload();
+        this.commonService.notifier.notify('success', Response.meta.message);
+      } else {
+        this.commonService.notifier.notify('error', Response.meta.message);
+      }
     }, (error) => {
-        console.log(error);
+      console.log(error);
     });
-}
+  }
 
   onLogoChange(event: any) {
     this.userFile = event.target.files[0];
