@@ -10,6 +10,7 @@ import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.compon
 import { LoginLayoutComponent } from "./layouts/login-layout/login-layout.component";
 import { NotifierModule } from "angular-notifier";
 import { NgOtpInputModule } from  'ng-otp-input';
+import { BreadcrumbModule } from "angular-crumbs";
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -20,6 +21,7 @@ import { NgOtpInputModule } from  'ng-otp-input';
     RouterModule,
     AppRoutingModule,
     NgOtpInputModule,
+    BreadcrumbModule,
     NotifierModule.withConfig({
       // Custom options in here
       position: {

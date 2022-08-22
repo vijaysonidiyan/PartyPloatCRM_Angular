@@ -7,9 +7,10 @@ import { NavbarComponent } from "./navbar/navbar.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BreadcrumbModule } from "angular-crumbs";
 
 @NgModule({
-  imports: [CommonModule, RouterModule, NgSelectModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, NgSelectModule, FormsModule, ReactiveFormsModule, BreadcrumbModule],
   declarations: [FooterComponent, NavbarComponent, SidebarComponent],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })

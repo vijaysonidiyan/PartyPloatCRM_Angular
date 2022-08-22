@@ -31,6 +31,7 @@ import { NgxMaskModule } from 'ngx-mask'
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { MatDatepickerModule } from "@angular/material/datepicker";
+import { BreadcrumbModule } from "angular-crumbs";
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
     NgxMatMomentModule,
     //DaterangepickerModule
     NgxMaskModule.forRoot(),
+    BreadcrumbModule,
   ],
   declarations: [
     DashboardComponent,

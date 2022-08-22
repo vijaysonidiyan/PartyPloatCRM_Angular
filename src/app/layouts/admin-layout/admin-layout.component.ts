@@ -5,7 +5,7 @@ import {
   PathLocationStrategy,
   PopStateEvent,
 } from "@angular/common";
-import { Router, NavigationEnd, NavigationStart } from "@angular/router";
+import { Router, NavigationEnd,RouterOutlet, NavigationStart } from "@angular/router";
 import PerfectScrollbar from "perfect-scrollbar";
 import * as $ from "jquery";
 import { filter, Subscription } from "rxjs";
@@ -155,6 +155,11 @@ export class AdminLayoutComponent implements OnInit {
   ngAfterViewInit() {
     this.runOnRouteChange();
   }
+
+  getAnimationData(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+  }
+
   isMaps(path) {
     var titlee = this.location.prepareExternalUrl(this.location.path());
     titlee = titlee.slice(1);
