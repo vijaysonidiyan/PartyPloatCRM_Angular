@@ -43,7 +43,10 @@ export class InquiryComponent implements OnInit {
       this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName })
     }
     else if (this.activeTab == 2) {
-      this.searchedMonth = this.currentMonth;
+      let month = new Date().toJSON();
+
+      this.searchedMonth = month.split('T')[0].split('-')[1];
+      // this.searchedMonth = this.currentMonth;
       this.searchedYear = this.currentYear;
       this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear })
     }
@@ -66,6 +69,15 @@ export class InquiryComponent implements OnInit {
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
   // Inquiry List
   inquiryEvent = [];
+  // inquiryEvent = [
+  //   {
+  //     borderColor: "#FFF0",
+  //     color: "#e7e7ff",
+  //     date: "10-8-2022",
+  //     textColor: "#00adef",
+  //     title: "1 Inquiry Pendding",
+  //   }
+  // ];
   // inquiryEvent = [
   //   {
   //     'id': '123', 'title': '10 Inquiry', 'start': '2022-08-01', 'end': '2022-08-02', 'textColor': '#378006', 'borderColor': '#FFF0', 'color': '#37800666'
@@ -107,8 +119,23 @@ export class InquiryComponent implements OnInit {
 
     this.adminLayoutService.getInquiryListForCalenderView(inquiryObj).subscribe((response: any) => {
       if (response.meta.code == 200) {
+        debugger
         this.inquiryEvent = [];
         this.inquiryEvent = response.data;
+
+        // response.data.filter((x: any) => {
+        //   let Obj = {
+        //     id: 12,
+        //     title: x.title,
+        //     textColor: x.textColor,
+        //     borderColor: x.borderColor,
+        //     color: x.color,
+        //     date: x.date.split("-")[2] + '-' + x.date.split("-")[1] + '-' + x.date.split("-")[0],
+        //   }
+        //   this.inquiryEvent.push(Obj);
+        // })
+
+
         this.calendarOptions = {
           initialView: 'dayGridMonth',
           navLinks: true,
@@ -162,8 +189,9 @@ export class InquiryComponent implements OnInit {
     debugger
     let calendarApi = this.calendarComponent.getApi();
     calendarApi.next();
+    let month = calendarApi.currentData.currentDate.toJSON();
 
-    this.searchedMonth = calendarApi.currentData.currentDate.getMonth() + 1;
+    this.searchedMonth = month.split('T')[0].split('-')[1];
     this.searchedYear = calendarApi.currentData.currentDate.getFullYear();
     this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear });
     // console.log(calendarApi)
@@ -175,7 +203,9 @@ export class InquiryComponent implements OnInit {
     let calendarApi = this.calendarComponent.getApi();
     calendarApi.prev();
 
-    this.searchedMonth = calendarApi.currentData.currentDate.getMonth() + 1;
+    let month = calendarApi.currentData.currentDate.toJSON();
+
+    this.searchedMonth = month.split('T')[0].split('-')[1];
     this.searchedYear = calendarApi.currentData.currentDate.getFullYear();
     this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear });
     // console.log(calendarApi)

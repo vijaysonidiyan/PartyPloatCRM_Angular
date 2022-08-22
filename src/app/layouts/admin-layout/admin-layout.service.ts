@@ -391,7 +391,7 @@ export class AdminLayoutService {
     let headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
-    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/clientinquiryList', data, { headers: headers });
+    return this.http.get(this.commonService.rootData.rootUrl + 'clientinquiry/clientEventListgetByMothWise', { params: data, headers: headers });
   }
 
   getInquiryListByDate(data: any) {
