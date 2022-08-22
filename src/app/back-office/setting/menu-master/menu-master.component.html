@@ -46,7 +46,7 @@
                             <td>{{ menuData.parentName }}</td>
                             <td>{{ menuData.module }}</td>
                             <td>{{ menuData.order }}</td>
-                            <td><img src="{{iconDefaultURL}}{{menuData.default_icon}}" width="50px" alt=""></td>
+                            <td><img src="{{iconDefaultURL}}{{menuData.default_icon}}" class="icon-png" alt=""></td>
                             <td>
                                 <span *ngIf="menuData.status == 1" class="badge bg-label-primary">Active</span>
                                 <span *ngIf="menuData.status == 2" class="badge bg-label-danger">Deactive</span>
