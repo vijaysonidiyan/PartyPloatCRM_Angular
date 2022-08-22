@@ -85,28 +85,41 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                                     <label for="html5-date-input" class="form-label">Start Date</label>
-                                    <input type="text" class="form-control" matInput
-                                        (ngModelChange)="onStartDateChange($event,i)" [ngxMatDatetimePicker]="startDate"
-                                        placeholder="Choose a start date" formControlName="startDateObj" [min]="minDate"
-                                        [max]="maxDate" [disabled]="disabled">
-                                    <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-                                    <ngx-mat-datetime-picker #startDate [showSpinners]="showSpinners"
-                                        [showSeconds]="showSeconds" [stepHour]="stepHour" [stepMinute]="stepMinute"
-                                        [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
-                                        [enableMeridian]="enableMeridian">
-                                    </ngx-mat-datetime-picker>
+                                    <div class="position-relative mat-date-picker">
+                                        <input type="text" class="form-control" matInput
+                                            (ngModelChange)="onStartDateChange($event,i)"
+                                            [ngxMatDatetimePicker]="startDate" placeholder="Choose a start date"
+                                            formControlName="startDateObj" [min]="minDate" [max]="maxDate"
+                                            [disabled]="disabled">
+                                        <div class="mat-dat-picker-icon">
+                                            <div class="calendar-icon"><i class="bx bxs-calendar"></i></div>
+                                            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                                            <ngx-mat-datetime-picker #startDate [showSpinners]="showSpinners"
+                                                [showSeconds]="showSeconds" [stepHour]="stepHour"
+                                                [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi"
+                                                [color]="color" [enableMeridian]="enableMeridian">
+                                            </ngx-mat-datetime-picker>
+                                        </div>
+
+                                    </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                                     <label for="html5-date-input" class="form-label">End Date</label>
-                                    <input type="text" class="form-control" matInput [ngxMatDatetimePicker]="endDate"
-                                        placeholder="Choose a start date" formControlName="endDateObj"
-                                        [min]="minEndDate[i]" [max]="maxDate" [disabled]="disabled">
-                                    <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-                                    <ngx-mat-datetime-picker #endDate [showSpinners]="showSpinners"
-                                        [showSeconds]="showSeconds" [stepHour]="stepHour" [stepMinute]="stepMinute"
-                                        [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
-                                        [enableMeridian]="enableMeridian">
-                                    </ngx-mat-datetime-picker>
+                                    <div class="position-relative mat-date-picker">
+                                        <input type="text" class="form-control" matInput
+                                            [ngxMatDatetimePicker]="endDate" placeholder="Choose a start date"
+                                            formControlName="endDateObj" [min]="minEndDate[i]" [max]="maxDate"
+                                            [disabled]="disabled">
+                                        <div class="mat-dat-picker-icon">
+                                            <div class="calendar-icon"><i class="bx bxs-calendar"></i></div>
+                                            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                                            <ngx-mat-datetime-picker #endDate [showSpinners]="showSpinners"
+                                                [showSeconds]="showSeconds" [stepHour]="stepHour"
+                                                [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi"
+                                                [color]="color" [enableMeridian]="enableMeridian">
+                                            </ngx-mat-datetime-picker>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                                     <label for="html5-date-input" class="form-label">Date</label>
