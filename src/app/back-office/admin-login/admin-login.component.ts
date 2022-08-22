@@ -7,6 +7,7 @@ import { LoginLayoutService } from "app/layouts/login-layout/login-layout.servic
 import { CommonService } from "app/shared/common.service";
 import { AdminLayoutService } from "app/layouts/admin-layout/admin-layout.service";
 import { CoreHelperService } from "app/Providers/core-helper/core-helper.service";
+import { environment } from "environments/environment";
 
 @Component({
   selector: "app-admin-login",
@@ -14,6 +15,7 @@ import { CoreHelperService } from "app/Providers/core-helper/core-helper.service
   styleUrls: ["./admin-login.component.css"],
 })
 export class AdminLoginComponent implements OnInit {
+  utsav_logo_img: any;
   activeTab = 1;
   loginForm: FormGroup | any;
   userId: any;
@@ -72,6 +74,9 @@ export class AdminLoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.utsav_logo_img = environment.uploadedUrl + this.storageService.getValue(StorageKey.utsav_decor_logo)
+    }, 0);
     this.defaultloginForm();
     this.defaultForgotpwdForm();
     this.defaultOtpForm();
