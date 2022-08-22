@@ -1,8 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { AdminLayoutService } from "app/layouts/admin-layout/admin-layout.service";
+import { CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
 import { CommonService } from "app/shared/common.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ThemePalette } from "@angular/material/core";
 import * as moment from 'moment';
+
 
 declare const $: any;
 @Component({
@@ -11,7 +14,7 @@ declare const $: any;
   styleUrls: ["./inquiry.component.css"],
 })
 export class InquiryComponent implements OnInit {
-  activeTab = 1;
+  activeTab = 2;
   monthList: any[] = [];
   yearList: any[] = [];
   staffList: any[];
@@ -19,75 +22,371 @@ export class InquiryComponent implements OnInit {
   p: number = 1;
   eventList: any[] = [];
   partyplotList: any[] = [];
-  constructor() {}
-  ngOnInit(): void {}
-  addInquiry() {
-    $("#add-menu-modal").modal("show");
+  searchedName = '';
+  searchedYear = null;
+  searchedMonth = null;
+
+  date = new Date();
+  currentMonth = this.date.getMonth() + 1;
+  currentYear = this.date.getFullYear();
+  inquiryList: any[] = [];
+  inquiryForm: FormGroup;
+  eventActiveList: any;
+  noData: boolean;
+  inquiryListByDate: any[] = [];
+
+  tabClick(tab) {
+    this.activeTab = tab;
+    if (this.activeTab == 1) {
+      this.searchedMonth = this.currentMonth;
+      this.searchedYear = this.currentYear;
+      this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName })
+    }
+    else if (this.activeTab == 2) {
+      this.searchedMonth = this.currentMonth;
+      this.searchedYear = this.currentYear;
+      this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear })
+    }
   }
-  cancleInquiry() {
-    $("#add-menu-modal").modal("hide");
+
+  constructor(public adminLayoutService: AdminLayoutService, public fb: FormBuilder, public commonService: CommonService) { }
+
+  ngOnInit(): void {
+    this.l = 10;
+    this.defaultForm();
+    this.getEventActiveList()
+    this.getYear();
+    this.minEndDate = new Date();
+
+    this.tabClick(this.activeTab);
   }
-  tableView() {
-    this.activeTab = 2;
-  }
-  calendarView() {
-    this.activeTab = 1;
-  }
-  // daterangepickerOptions = {
-  //   startDate: null,
-  //   endDate: null,
-  //   format: "DD.MM.YYYY HH:mm",
-  //   minDate: moment()
-  //     .add(-2, "months")
-  //     .format("DD.MM.YYYY HH:mm"),
-  //   maxDate: moment()
-  //     .add(2, "months")
-  //     .format("DD.MM.YYYY HH:mm"),
-  //   inactiveBeforeStart: true,
-  //   autoApply: false,
-  //   showRanges: true,
-  //   preDefinedRanges: [
-  //     {
-  //       name: "Day After tomorrow",
-  //       value: {
-  //         start: moment().add(2, "days"),
-  //         end: moment().add(2, "days")
-  //       }
-  //     },
-  //     {
-  //       name: "Today",
-  //       value: {
-  //         start: moment(),
-  //         end: moment()
-  //       }
-  //     },
-  //     {
-  //       name: "Tomorrow",
-  //       value: {
-  //         start: moment().add(1, "days"),
-  //         end: moment().add(1, "days")
-  //       }
-  //     },
-  //     {
-  //       name: "This week",
-  //       value: {
-  //         start: moment(),
-  //         end: moment().add(7, "days")
-  //       }
-  //     }
-  //   ],
-  //   singleCalendar: false,
-  //   displayFormat: "DD.MM.YYYY HH:mm",
-  //   position: "left",
-  //   disabled: false,
-  //   noDefaultRangeSelected: true,
-  //   timePicker: {
-  //     minuteInterval: 5,
-  //     twentyFourHourFormat: true
+
+
+  // calender view
+  @ViewChild('calendar') calendarComponent: FullCalendarComponent;
+  // Inquiry List
+  inquiryEvent = [];
+  // inquiryEvent = [
+  //   {
+  //     'id': '123', 'title': '10 Inquiry', 'start': '2022-08-01', 'end': '2022-08-02', 'textColor': '#378006', 'borderColor': '#FFF0', 'color': '#37800666'
   //   },
-  //   disableBeforeStart: true
-  // };
-  // rangeSelected(data) {
-  //   debugger;
-  // }
+  //   // {
+  //   //   'id': '123', 'title': 'Hardik Event', 'start': '2022-08-01', 'constraint': "availableForMeeting", 'end': '2022-08-02', 'display': "background", 'color': 'red'
+  //   // },
+  //   {
+  //     'id': '124', 'title': 'dharmesh Event', 'start': '2022-08-04', 'end': '2022-08-06', 'color': '#37800666', extendedProps: {
+  //       id: 13,
+  //       department: 'IT',
+  //       course: 'BE'
+  //     }
+  //   }
+  // ];
+
+  events = [
+    {
+      title: "Inquiry",
+      start: "2022-08-13T11:00:00",
+      constraint: "availableForMeeting", // defined below
+      color: 'green'
+    },
+    {
+      title: "Party",
+      start: "2022-08-29T20:00:00"
+    },
+  ]
+
+  calendarOptions: CalendarOptions;
+
+  // calender view list data
+  getInquiryListForCalenderView(data: any) {
+
+    let inquiryObj = {
+      month: data.month,
+      year: data.year,
+    }
+
+    this.adminLayoutService.getInquiryListForCalenderView(inquiryObj).subscribe((response: any) => {
+      if (response.meta.code == 200) {
+        this.inquiryEvent = [];
+        this.inquiryEvent = response.data;
+        this.calendarOptions = {
+          initialView: 'dayGridMonth',
+          navLinks: true,
+          businessHours: false, // display business hours
+          editable: true,
+          selectable: true,
+          dateClick: this.handleDateClick.bind(this),
+          events: this.inquiryEvent,
+          // eventClick: this.eventClickFunction.bind(this),
+          customButtons: {
+            next: {
+              click: this.nextMonth.bind(this),
+            },
+            prev: {
+              click: this.prevMonth.bind(this),
+            }
+          },
+        }
+      }
+      else {
+        this.inquiryEvent = [];
+      }
+    })
+
+  }
+
+  // date selction through open popup
+  handleDateClick(arg) {
+    debugger
+    let inquiryObj = {
+      date: arg.date.getDate() + '/' + (arg.date.getMonth() + 1) + '/' + arg.date.getFullYear()
+    }
+
+    this.adminLayoutService.getInquiryListByDate(inquiryObj).subscribe((response: any) => {
+      this.inquiryListByDate = []
+      if (response.meta.code == 200) {
+        this.inquiryListByDate = response.data;
+        this.noData = false;
+      }
+      else {
+        this.noData = true;
+      }
+    })
+
+
+    $('#add-menu-modal').modal('show')
+  }
+
+  // For Next Month Click
+  nextMonth(): void {
+    debugger
+    let calendarApi = this.calendarComponent.getApi();
+    calendarApi.next();
+
+    this.searchedMonth = calendarApi.currentData.currentDate.getMonth() + 1;
+    this.searchedYear = calendarApi.currentData.currentDate.getFullYear();
+    this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear });
+    // console.log(calendarApi)
+  }
+
+  // For Prev Month Click
+  prevMonth(): void {
+    debugger
+    let calendarApi = this.calendarComponent.getApi();
+    calendarApi.prev();
+
+    this.searchedMonth = calendarApi.currentData.currentDate.getMonth() + 1;
+    this.searchedYear = calendarApi.currentData.currentDate.getFullYear();
+    this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear });
+    // console.log(calendarApi)
+  }
+
+  // all data get by date wise given thorugh api 
+  eventClickFunction(eventInformation) {
+    console.log(eventInformation.event.extendedProps);
+  }
+
+
+
+  // get month and year wise api call and get data
+
+  yearArray = new Array<number>();
+  monthArray = [
+    { value: 1, month: 'January' },
+    { value: 2, month: 'February' },
+    { value: 3, month: 'March' },
+    { value: 4, month: 'April' },
+    { value: 5, month: 'May' },
+    { value: 6, month: 'June' },
+    { value: 7, month: 'July' },
+    { value: 8, month: 'August' },
+    { value: 9, month: 'September' },
+    { value: 10, month: 'October' },
+    { value: 11, month: 'November' },
+    { value: 12, month: 'December' },
+  ];
+
+  getYear() {
+    this.yearArray = new Array<number>();
+    let d = new Date();
+    let nowYear = 2022;
+
+    for (let index = 0; index < 50; index++) {
+      let prYear = d.getFullYear();
+      // let prYear = 2024;
+      let arr = prYear - index;
+      if (arr >= nowYear) {
+        this.yearArray.push(arr)
+      }
+    }
+    return this.yearArray;
+  }
+
+  getInquiryList(data: any) {
+
+    let inquiryObj = {
+      month: data.month,
+      year: data.year,
+      name: data.name
+    }
+
+    this.adminLayoutService.getInquiryList(inquiryObj).subscribe((response: any) => {
+      if (response.meta.code == 200) {
+        // response.data.forEach((x: any) => {
+        //   let Obj = {
+        //     _id: x._id,
+        //     eventType: x.eventType,
+        //     guest: x.guest,
+        //     startDateObj: moment(x.startDateObj).format('DD/MM/yyyy hh:MM:ss a'),
+        //     // startDateObj: x.startDateObj,
+        //     endDateObj: x.endDateObj,
+        //     name: x.name,
+        //     email: x.email,
+        //     primaryContact: x.primaryContact,
+        //     secondryContact: x.secondryContact,
+        //     address: x.address,
+        //     approvalStatus: x.approvalStatus,
+        //     status: x.status,
+        //     eventName: x.eventName,
+        //   }
+        //   this.inquiryList.push(Obj);
+        // })
+        this.inquiryList = [];
+        this.inquiryList = response.data;
+        this.noData = false;
+      }
+      else {
+        this.inquiryList = [];
+        this.noData = true;
+      }
+    })
+
+  }
+
+  searchFilterInquiryList() {
+    this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName })
+  }
+
+
+
+  // status update of event
+  inquiryStatus(paramsObj) {
+    let statusInquiryModelObj = {
+      _id: paramsObj.id,
+      status: paramsObj.status,
+    };
+
+    this.adminLayoutService.StatusInquiry(statusInquiryModelObj).subscribe((Response: any) => {
+      if (Response.meta.code == 200) {
+        this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName })
+        this.commonService.notifier.notify("success", Response.meta.message);
+      }
+      else {
+        this.commonService.notifier.notify("error", Response.meta.message);
+      }
+    },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  // update inquiry
+  submittedclientInquiryData: boolean = false;
+  get fclientinquiryData() {
+    return this.inquiryForm.controls;
+  }
+  // calender
+  // public date: moment.Moment;
+  public disabled = false;
+  public showSpinners = true;
+  public showSeconds = false;
+  public touchUi = false;
+  public enableMeridian = false;
+  public minDate = new Date();
+  public minEndDate = {};
+  public maxDate: moment.Moment;
+  public stepHour = 1;
+  public stepMinute = 1;
+  public stepSecond = 1;
+  public color: ThemePalette = 'primary';
+
+  getEventActiveList() {
+    this.adminLayoutService.geteventActiveList().subscribe((Response: any) => {
+      if (Response.meta.code == 200) {
+        this.eventActiveList = Response.data;
+      }
+      //for select sub industry step
+    },
+      (error) => {
+        console.log(error.error.Message);
+      }
+    );
+  }
+
+  defaultForm() {
+    this.inquiryForm = this.fb.group({
+      _id: [""],
+      name: ["", [Validators.required]],
+      email: ["", [Validators.required]],
+      primaryContact: ["", [Validators.required]],
+      secondryContact: ["", [Validators.required]],
+      address: ["", [Validators.required]],
+      eventType: [, [Validators.required]],
+      guest: ["", [Validators.required]],
+      startDateObj: ["", [Validators.required]],
+      endDateObj: ["", [Validators.required]],
+    })
+  }
+
+  onStartDateChange(data: any) {
+    this.minEndDate = data._d;
+    this.inquiryForm.controls.endDateObj.setValue('');
+  }
+
+  editInquiryData(data: any) {
+    this.defaultForm();
+    console.log(data);
+    // set value in form
+    this.inquiryForm.controls._id.setValue(data._id)
+    this.inquiryForm.controls.name.setValue(data.name)
+    this.inquiryForm.controls.email.setValue(data.email)
+    this.inquiryForm.controls.primaryContact.setValue(data.primaryContact)
+    this.inquiryForm.controls.secondryContact.setValue(data.secondryContact)
+    this.inquiryForm.controls.address.setValue(data.address)
+    this.inquiryForm.controls.eventType.setValue(data.eventType == '' ? null : data.eventType)
+    this.inquiryForm.controls.guest.setValue(data.guest)
+    this.inquiryForm.controls.startDateObj.setValue(data.startDateObj)
+    this.inquiryForm.controls.endDateObj.setValue(data.endDateObj)
+    $('#edit-inquiry-modal').modal('show')
+
+  }
+
+  updateClientInquiry() {
+    debugger
+    if (this.inquiryForm.invalid) {
+      return
+    }
+
+    let inquiryObj = Object.assign({}, this.inquiryForm.getRawValue());
+
+    this.adminLayoutService.updateClientinquiry(inquiryObj).subscribe((Response: any) => {
+      if (Response.meta.code == 200) {
+        this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName })
+        this.commonService.notifier.notify("success", Response.meta.message);
+        $('#edit-inquiry-modal').modal('hide')
+      }
+      else {
+        this.commonService.notifier.notify("error", Response.meta.message);
+      }
+      //for select sub industry step
+    },
+      (error) => {
+        console.log(error.error.Message);
+      }
+    );
+
+  }
+
+
 }

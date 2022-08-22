@@ -25,7 +25,9 @@ export class AddInquiryComponent implements OnInit {
   public touchUi = false;
   public enableMeridian = false;
   public minDate = new Date();
+  public minEndDate = {};
   public maxDate: moment.Moment;
+
   public stepHour = 1;
   public stepMinute = 1;
   public stepSecond = 1;
@@ -43,11 +45,12 @@ export class AddInquiryComponent implements OnInit {
     this.getEventActiveList();
     this.defaultForm();
     this.eventList = this.clientinquiryDataForm.get("events") as FormArray;
+    this.minEndDate[0] = new Date();
     this.eventList.push(this.createeventItem({}));
   }
 
-  onStartDateChange(index: any) {
-    debugger
+  onStartDateChange(data: any, index: any) {
+    this.minEndDate[index] = data._d;
     (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['endDateObj'].setValue(''));
   }
 
@@ -89,7 +92,7 @@ export class AddInquiryComponent implements OnInit {
   }
 
   addEventList() {
-    this.eventList.push(this.createeventItem({}))
+    this.eventList.push(this.createeventItem({}));
   }
 
   deletEventList(index: number) {

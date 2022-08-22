@@ -25,6 +25,7 @@ export class MenuMasterComponent implements OnInit {
   listindex: number;
   menuListlength: any;
   noData;
+  moduleList: any[] = [];
   get fTitleData() { return this.menuForm.controls; }
   get fPathData() { return this.menuForm.controls; }
   submittedMenuData = false;
@@ -41,6 +42,7 @@ export class MenuMasterComponent implements OnInit {
     this.ISeditMenu = false;
     this.getMenuList();
     this.getPerentList();
+    this.getModuleActiveList();
     this.defaultForm();
   }
 
@@ -59,12 +61,25 @@ export class MenuMasterComponent implements OnInit {
   }
 
   addMenu() {
+    this.defaultForm();
+    this.defaultIconUrl = '';
+    this.defaultIconFile = '';
+    this.defaultIcon = '';
+    this.activeIconUrl = '';
+    this.activeIconFile = '';
+    this.activeIcon = '';
     $("#add-menu-modal").modal("show");
   }
 
   cancelMenu() {
     $("#add-menu-modal").modal("hide");
     this.defaultForm();
+    this.defaultIconUrl = '';
+    this.defaultIconFile = '';
+    this.defaultIcon = '';
+    this.activeIconUrl = '';
+    this.activeIconFile = '';
+    this.activeIcon = '';
     this.ISeditMenu = false;
   }
 
@@ -76,7 +91,7 @@ export class MenuMasterComponent implements OnInit {
   activeIconUrl: string | ArrayBuffer;
 
   onDefaultIconChange(event: any) {
-    debugger
+
     this.defaultIconFile = event.target.files[0];
     this.defaultIcon = this.defaultIconFile.name;
     if (event.target.files && event.target.files[0]) {
@@ -150,7 +165,7 @@ export class MenuMasterComponent implements OnInit {
     menuModelObj.append('class', this.menuForm.value.class);
     menuModelObj.append('parentId', this.menuForm.value.parentId == null ? '' : this.menuForm.value.parentId);
     menuModelObj.append('order', this.menuForm.value.order);
-    menuModelObj.append('module', this.menuForm.value.module);
+    menuModelObj.append('module', this.menuForm.value.module == null ? '' : this.menuForm.value.module);
     menuModelObj.append('default_icon', this.defaultIconFile);
     menuModelObj.append('active_icon', this.activeIconFile);
 
@@ -178,7 +193,7 @@ export class MenuMasterComponent implements OnInit {
     this.ISeditMenu = true;
     let Id: any = { '_id': paramsObj.id }
     this.adminLayoutService.getmenuId(Id).subscribe((Response: any) => {
-      debugger
+
       this.menuForm.controls._id.setValue(Response.data._id)
       this.menuForm.controls.title.setValue(Response.data.title)
       this.menuForm.controls.path.setValue(Response.data.path)
@@ -203,7 +218,6 @@ export class MenuMasterComponent implements OnInit {
         this.activeIconUrl = this.iconActiveURL + Response.data.active_icon;
         this.activeIcon = Response.data.active_icon;
         this.activeIconFile = Response.data.active_icon;
-        this.activeIconVarible.nativeElement = this.activeIcon;
       } else {
         this.activeIconUrl = "";
         this.activeIcon = "";
@@ -215,10 +229,10 @@ export class MenuMasterComponent implements OnInit {
         this.menuForm.controls.class.setValue(Response.data.class)
       }
       if (!!Response.data.parentId) {
-        this.menuForm.controls.parentId.setValue(Response.data.parentId)
+        this.menuForm.controls.parentId.setValue(Response.data.parentId == '' ? null : Response.data.parentId)
       }
       this.menuForm.controls.order.setValue(parseFloat(Response.data.order))
-      this.menuForm.controls.module.setValue(Response.data.module)
+      this.menuForm.controls.module.setValue(Response.data.module == '' ? null : Response.data.module)
       $("#add-menu-modal").modal("show");
     }, (error) => {
 
@@ -233,12 +247,13 @@ export class MenuMasterComponent implements OnInit {
 
 
     let menuModelObj: FormData = new FormData();
+    menuModelObj.append('_id', this.menuForm.value._id);
     menuModelObj.append('title', this.menuForm.value.title);
     menuModelObj.append('path', this.menuForm.value.path);
     menuModelObj.append('class', this.menuForm.value.class);
-    menuModelObj.append('parentId', this.menuForm.value.parentId);
+    menuModelObj.append('parentId', this.menuForm.value.parentId == null ? '' : this.menuForm.value.parentId);
     menuModelObj.append('order', this.menuForm.value.order);
-    menuModelObj.append('module', this.menuForm.value.module);
+    menuModelObj.append('module', this.menuForm.value.module == null ? '' : this.menuForm.value.module);
     menuModelObj.append('default_icon', this.defaultIconFile);
     menuModelObj.append('active_icon', this.activeIconFile);
 
@@ -300,18 +315,19 @@ export class MenuMasterComponent implements OnInit {
     });
   }
 
-  moduleList = [
-    {
-      name: "Dashboard",
-      value: "dashboard",
-    },
-    {
-      name: "Employee List",
-      value: "employeelist",
-    },
-    {
-      name: "Designation Master",
-      value: "designationmaster",
-    },
-  ];
+  getModuleActiveList() {
+
+    this.adminLayoutService.getModuleActiveList().subscribe((Response: any) => {
+
+      if (Response.meta.code == 200) {
+        this.moduleList = Response.data;
+      } else {
+      }
+      //for select sub industry step
+    }, (error) => {
+      console.log(error.error.Message);
+    });
+  }
+
+
 }

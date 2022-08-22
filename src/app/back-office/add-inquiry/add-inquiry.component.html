@@ -80,13 +80,13 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-3">
                                     <label class="form-label" for="basic-default-company">Guest</label>
-                                    <input type="text" class="form-control" id="basic-default-company"
+                                    <input type="text" appNumbersOnly class="form-control" id="basic-default-company"
                                         placeholder="ACME Inc." formControlName="guest" />
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                                     <label for="html5-date-input" class="form-label">Start Date</label>
                                     <input type="text" class="form-control" matInput
-                                        (ngModelChange)="onStartDateChange(i)" [ngxMatDatetimePicker]="startDate"
+                                        (ngModelChange)="onStartDateChange($event,i)" [ngxMatDatetimePicker]="startDate"
                                         placeholder="Choose a start date" formControlName="startDateObj" [min]="minDate"
                                         [max]="maxDate" [disabled]="disabled">
                                     <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
@@ -99,8 +99,8 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                                     <label for="html5-date-input" class="form-label">End Date</label>
                                     <input type="text" class="form-control" matInput [ngxMatDatetimePicker]="endDate"
-                                        placeholder="Choose a start date" formControlName="endDateObj" [min]="minDate"
-                                        [max]="maxDate" [disabled]="disabled">
+                                        placeholder="Choose a start date" formControlName="endDateObj"
+                                        [min]="minEndDate[i]" [max]="maxDate" [disabled]="disabled">
                                     <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
                                     <ngx-mat-datetime-picker #endDate [showSpinners]="showSpinners"
                                         [showSeconds]="showSeconds" [stepHour]="stepHour" [stepMinute]="stepMinute"

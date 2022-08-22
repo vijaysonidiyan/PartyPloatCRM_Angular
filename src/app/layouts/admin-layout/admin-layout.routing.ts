@@ -6,6 +6,7 @@ import { PartyPlotMasterComponent } from "app/back-office/party-plot-master/part
 import { ProductMasterComponent } from "app/back-office/product-master/product-master.component";
 import { CompanySettingComponent } from "app/back-office/setting/company-setting/company-setting.component";
 import { MenuMasterComponent } from "app/back-office/setting/menu-master/menu-master.component";
+import { ModuleMasterComponent } from "app/back-office/setting/module-master/module-master.component";
 import { RoleMasterComponent } from "app/back-office/setting/role-master/role-master.component";
 import { RoleWiseMenuComponent } from "app/back-office/setting/role-wise-menu/role-wise-menu.component";
 import { UserWiseMenuComponent } from "app/back-office/setting/user-wise-menu/user-wise-menu.component";
@@ -20,6 +21,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "table-list", component: TableListComponent },
   { path: "setting", component: MenuMasterComponent },
   { path: "setting/menu-master", component: MenuMasterComponent },
+  { path: "setting/module-master", component: ModuleMasterComponent },
   { path: "setting/role-master", component: RoleMasterComponent },
   { path: "setting/role-wise-menu", component: RoleWiseMenuComponent },
   { path: "setting/user-wise-menu", component: UserWiseMenuComponent },

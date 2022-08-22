@@ -31,6 +31,15 @@ import { NgxMaskModule } from 'ngx-mask'
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { MatDatepickerModule } from "@angular/material/datepicker";
+import { ModuleMasterComponent } from "app/back-office/setting/module-master/module-master.component";
+import { FullCalendarModule } from "@fullcalendar/angular";
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+
+FullCalendarModule.registerPlugins([
+  dayGridPlugin,
+  interactionPlugin
+]);
 
 @NgModule({
   imports: [
@@ -51,6 +60,7 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
     NgxMatTimepickerModule,
     MatDatepickerModule,
     NgxMatMomentModule,
+    FullCalendarModule,
     //DaterangepickerModule
     NgxMaskModule.forRoot(),
   ],
@@ -68,7 +78,8 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
     VendorDetailsComponent,
     CompanySettingComponent,
     InquiryComponent,
-    AddInquiryComponent
+    AddInquiryComponent,
+    ModuleMasterComponent
   ],
 })
 export class AdminLayoutModule { }
