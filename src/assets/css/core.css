@@ -4760,7 +4760,14 @@ fieldset:disabled .btn {
 .modal.modal-static .modal-dialog {
   transform: scale(1.02);
 }
-
+.modal-scroll {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.modal-height-calc {
+  height: 100%;
+  max-height: calc(100vh - 100px);
+}
 .modal-dialog-scrollable {
   height: calc(100% - 3rem);
 }
@@ -6034,6 +6041,111 @@ input:-internal-autofill-selected {
 .row-bordered.row-border-light > [class="col"]::before,
 .row-bordered.row-border-light > [class="col"]::after {
   border-color: rgba(67, 89, 113, 0.1);
+}
+.btn-label-primary {
+  color: #00adef;
+  border-color: transparent;
+  background: #00adef29 ;
+}
+
+.btn-label-primary:hover {
+  border-color: transparent;
+  background: #00adef;
+  color: #fff;
+  box-shadow: 0 0.125rem 0.25rem 0 #00adef66;
+  transform: translateY(-1px);
+}
+
+.btn-label-gray {
+  color: rgba(67,89,113,.1);
+  border-color: transparent;
+  background: rgba(253,253,254,.856);
+}
+
+.btn-label-gray:hover {
+  border-color: transparent;
+  background: rgba(22,29,36,.19);
+  color: #fff;
+  box-shadow: 0 0.125rem 0.25rem 0 rgb(67 89 113 / 40%);
+  transform: translateY(-1px);
+}
+.btn-label-dark {
+  color: #233446;
+  border-color: transparent;
+  background: #dcdfe1;
+}
+
+.btn-label-dark:hover {
+  border-color: transparent;
+  background: #202f3f;
+  color: #fff;
+  box-shadow: 0 0.125rem 0.25rem 0 rgb(35 52 70 / 40%);
+  transform: translateY(-1px);
+}
+
+.btn-label-warning {
+  color: #ffab00;
+  border-color: transparent;
+  background: #fff2d6;
+}
+.btn-label-warning:hover {
+  border-color: transparent;
+  background: #e69a00;
+  color: #fff;
+  box-shadow: 0 0.125rem 0.25rem 0 rgb(255 171 0 / 40%);
+  transform: translateY(-1px);
+}
+
+.btn-label-info {
+  color: #03c3ec;
+  border-color: transparent;
+  background: #d7f5fc;
+}
+.btn-label-info:hover {
+  border-color: transparent;
+  background: #03b0d4;
+  color: #fff;
+  box-shadow: 0 0.125rem 0.25rem 0 rgb(3 195 236 / 40%);
+  transform: translateY(-1px);
+}
+.btn-label-success {
+  color: #71dd37;
+  border-color: transparent;
+  background: #e8fadf;
+}
+
+.btn-label-success:hover {
+  border-color: transparent;
+  background: #66c732;
+  color: #fff;
+  box-shadow: 0 0.125rem 0.25rem 0 rgb(113 221 55 / 40%);
+  transform: translateY(-1px);
+}
+
+.btn-label-danger {
+  color: #ff3e1d;
+  border-color: transparent;
+  background: #ffe0db;
+}
+.btn-label-danger:hover {
+  border-color: transparent;
+  background: #e6381a;
+  color: #fff;
+  box-shadow: 0 0.125rem 0.25rem 0 rgb(255 62 29 / 40%);
+  transform: translateY(-1px);
+}
+
+.btn-label-secondary {
+  color: #8592a3;
+  border-color: transparent;
+  background: #ebeef0;
+}
+.btn-label-secondary:hover {
+  border-color: transparent;
+  background: #788393;
+  color: #fff;
+  box-shadow: 0 0.125rem 0.25rem 0 rgb(133 146 163 / 40%);
+  transform: translateY(-1px);
 }
 
 .bg-label-secondary {
@@ -17357,4 +17469,37 @@ html:not(.layout-footer-fixed) .content-wrapper {
 }
 .border-solid-primary {
   border: 1px solid #00adef !important;
+}
+.inquiry-bydate .inquiry-bydate-list .inquiry-bydate-list-item {
+  margin-bottom: 1rem ;
+  border-bottom: 1px solid #d9dee3;
+}
+.inquiry-bydate .inquiry-bydate-list .inquiry-bydate-list-item:last-child {
+  margin-bottom: 0 ;
+  border-bottom: none ;
+}
+.mat-date-picker .mat-dat-picker-icon {
+  width: 100%;
+  height: 100%;
+}
+.mat-date-picker .form-control {
+  padding-left: 40px;
+}
+.mat-date-picker .mat-dat-picker-icon .calendar-icon{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40px;
+  height: 100%;
+  text-align: center;
+}
+.mat-date-picker .mat-dat-picker-icon .calendar-icon .bx{
+  font-size: 22px;
+  margin-top: 10px;
+}
+.mat-date-picker .mat-dat-picker-icon .mat-datepicker-toggle {
+  opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
 }

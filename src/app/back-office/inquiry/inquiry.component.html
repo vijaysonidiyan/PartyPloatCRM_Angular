@@ -135,15 +135,59 @@
 
     </div>
 </div>
-<div class="modal fade" id="add-menu-modal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="inquiry-details-by-date-modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content modal-height-calc">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel1"><strong>Inquiry Details</strong></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div class="table-responsive text-nowrap">
+            <div class="modal-body modal-scroll inquiry-bydate">
+                <div class="inquiry-bydate-list">
+                    <div class="inquiry-bydate-list-item">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <a href="javascript:;" class="d-flex align-items-center">
+                                <div class="me-2 text-body h6 mb-0">
+                                    Event Name :
+                                </div>
+                                <div class="me-2 text-body h5 mb-0">
+                                    <strong>Raas Garba</strong>
+                                </div>
+                            </a>
+                            <div class="d-flex order-sm-0 order-1">
+                                <button class="btn btn-label-primary me-3">Edit</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <ul class="list-unstyled mb-4 mt-3">
+                                    <li class="d-flex align-items-center mb-2"><i class="bx bx-user"></i><span
+                                            class="fw-semibold mx-2">Name:</span> <span>John Doe</span></li>
+                                    <li class="d-flex align-items-center mb-2"><i class="bx bx-envelope"></i><span
+                                            class="fw-semibold mx-2">Email:</span> <span>john.doe@example.com</span>
+                                    </li>
+                                    <li class="d-flex align-items-center mb-2"><i class="bx bx-phone"></i><span
+                                            class="fw-semibold mx-2">Contact:</span> <span>(123) 456-7890</span></li>
+
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <ul class="list-unstyled mb-4 mt-3">
+                                    <li class="d-flex align-items-center mb-2"><i class="bx bx-user"></i><span
+                                            class="fw-semibold mx-2">Guest:</span> <span>USA</span></li>
+                                    <li class="d-flex align-items-center mb-2"><i class="bx bxs-calendar"></i><span
+                                            class="fw-semibold mx-2">Date:</span> <span>English</span></li>
+                                    <li class="d-flex align-items-center mb-2"><i class="bx bx-check"></i><span
+                                            class="fw-semibold mx-2">Status:</span> <span
+                                            class="badge bg-label-success">Active</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- <div class="table-responsive text-nowrap">
                     <table class="table">
                         <thead>
                             <tr>
@@ -210,10 +254,72 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div> -->
             </div>
             <div class="modal-footer">
 
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="add-inquiry-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content modal-height-calc">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1"><strong>Add Inquiry</strong></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body modal-scroll inquiry-bydate">
+                <div class="inquiry-bydate-list">
+                    <div class="inquiry-bydate-list-item">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 mb-3">
+                                <label for="html5-date-input" class="form-label">Start Date</label>
+                                <div class="position-relative mat-date-picker">
+                                    <input type="text" class="form-control" matInput
+                                        (ngModelChange)="onStartDateChange($event)" [ngxMatDatetimePicker]="startDate"
+                                        placeholder="Choose a start date" formControlName="startDateObj" [min]="minDate"
+                                        [max]="maxDate" [disabled]="disabled">
+                                    <div class="mat-dat-picker-icon">
+                                        <div class="calendar-icon"><i class="bx bxs-calendar"></i></div>
+                                        <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                                        <ngx-mat-datetime-picker #startDate [showSpinners]="showSpinners"
+                                            [showSeconds]="showSeconds" [stepHour]="stepHour" [stepMinute]="stepMinute"
+                                            [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
+                                            [enableMeridian]="enableMeridian">
+                                        </ngx-mat-datetime-picker>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 mb-3">
+                                <label for="html5-date-input" class="form-label">End Date</label>
+                                <div class="position-relative mat-date-picker">
+                                    <input type="text" class="form-control" matInput [ngxMatDatetimePicker]="endDate"
+                                        placeholder="Choose a start date" formControlName="endDateObj" [min]="minEndDate"
+                                        [max]="maxDate" [disabled]="disabled">
+                                    <div class="mat-dat-picker-icon">
+                                        <div class="calendar-icon"><i class="bx bxs-calendar"></i></div>
+                                        <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                                        <ngx-mat-datetime-picker #endDate [showSpinners]="showSpinners"
+                                            [showSeconds]="showSeconds" [stepHour]="stepHour" [stepMinute]="stepMinute"
+                                            [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
+                                            [enableMeridian]="enableMeridian">
+                                        </ngx-mat-datetime-picker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="float-end">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+                <div class="float-end">
+                    <button type="cancle" class="btn btn-danger">Cancle</button>
+                </div>
             </div>
         </div>
     </div>
@@ -292,26 +398,38 @@
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label for="html5-date-input" class="form-label">Start Date</label>
-                            <input type="text" class="form-control" matInput (ngModelChange)="onStartDateChange($event)"
-                                [ngxMatDatetimePicker]="startDate" placeholder="Choose a start date"
-                                formControlName="startDateObj" [min]="minDate" [max]="maxDate" [disabled]="disabled">
-                            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-                            <ngx-mat-datetime-picker #startDate [showSpinners]="showSpinners"
-                                [showSeconds]="showSeconds" [stepHour]="stepHour" [stepMinute]="stepMinute"
-                                [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
-                                [enableMeridian]="enableMeridian">
-                            </ngx-mat-datetime-picker>
+                            <div class="position-relative mat-date-picker">
+                                <input type="text" class="form-control" matInput
+                                    (ngModelChange)="onStartDateChange($event)" [ngxMatDatetimePicker]="startDate"
+                                    placeholder="Choose a start date" formControlName="startDateObj" [min]="minDate"
+                                    [max]="maxDate" [disabled]="disabled">
+                                <div class="mat-dat-picker-icon">
+                                    <div class="calendar-icon"><i class="bx bxs-calendar"></i></div>
+                                    <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                                    <ngx-mat-datetime-picker #startDate [showSpinners]="showSpinners"
+                                        [showSeconds]="showSeconds" [stepHour]="stepHour" [stepMinute]="stepMinute"
+                                        [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
+                                        [enableMeridian]="enableMeridian">
+                                    </ngx-mat-datetime-picker>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label for="html5-date-input" class="form-label">End Date</label>
-                            <input type="text" class="form-control" matInput [ngxMatDatetimePicker]="endDate"
-                                placeholder="Choose a start date" formControlName="endDateObj" [min]="minEndDate"
-                                [max]="maxDate" [disabled]="disabled">
-                            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-                            <ngx-mat-datetime-picker #endDate [showSpinners]="showSpinners" [showSeconds]="showSeconds"
-                                [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
-                                [touchUi]="touchUi" [color]="color" [enableMeridian]="enableMeridian">
-                            </ngx-mat-datetime-picker>
+                            <div class="position-relative mat-date-picker">
+                                <input type="text" class="form-control" matInput [ngxMatDatetimePicker]="endDate"
+                                    placeholder="Choose a start date" formControlName="endDateObj" [min]="minEndDate"
+                                    [max]="maxDate" [disabled]="disabled">
+                                <div class="mat-dat-picker-icon">
+                                    <div class="calendar-icon"><i class="bx bxs-calendar"></i></div>
+                                    <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                                    <ngx-mat-datetime-picker #endDate [showSpinners]="showSpinners"
+                                        [showSeconds]="showSeconds" [stepHour]="stepHour" [stepMinute]="stepMinute"
+                                        [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
+                                        [enableMeridian]="enableMeridian">
+                                    </ngx-mat-datetime-picker>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>

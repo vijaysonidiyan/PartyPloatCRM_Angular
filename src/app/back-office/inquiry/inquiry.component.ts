@@ -144,7 +144,7 @@ export class InquiryComponent implements OnInit {
           selectable: true,
           dateClick: this.handleDateClick.bind(this),
           events: this.inquiryEvent,
-          // eventClick: this.eventClickFunction.bind(this),
+           eventClick: this.eventClickFunction.bind(this),
           customButtons: {
             next: {
               click: this.nextMonth.bind(this),
@@ -181,7 +181,7 @@ export class InquiryComponent implements OnInit {
     })
 
 
-    $('#add-menu-modal').modal('show')
+    $('#add-inquiry-modal').modal('show')
   }
 
   // For Next Month Click
@@ -214,6 +214,7 @@ export class InquiryComponent implements OnInit {
   // all data get by date wise given thorugh api 
   eventClickFunction(eventInformation) {
     console.log(eventInformation.event.extendedProps);
+    $('#inquiry-details-by-date-modal').modal('show')
   }
 
 
