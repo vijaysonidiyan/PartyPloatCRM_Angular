@@ -14,23 +14,20 @@ import { StaffComponent } from "app/back-office/staff/staff.component";
 import { VendorDetailsComponent } from "app/back-office/vendor-details/vendor-details.component";
 
 import { DashboardComponent } from "../../back-office/dashboard/dashboard.component";
-import { TableListComponent } from "../../back-office/table-list/table-list.component";
 
 export const AdminLayoutRoutes: Routes = [
-  { path: "dashboard", component: DashboardComponent },
-  { path: "table-list", component: TableListComponent },
-  { path: "setting", component: MenuMasterComponent },
-  { path: "setting/menu-master", component: MenuMasterComponent },
-  { path: "setting/module-master", component: ModuleMasterComponent },
-  { path: "setting/role-master", component: RoleMasterComponent },
-  { path: "setting/role-wise-menu", component: RoleWiseMenuComponent },
-  { path: "setting/user-wise-menu", component: UserWiseMenuComponent },
-  { path: "setting/company-setting", component: CompanySettingComponent },
-  { path: "party-plot-master", component: PartyPlotMasterComponent },
-  { path: "staff", component: StaffComponent },
-  { path: "event-master", component: EventMasterComponent },
-  { path: "product-master", component: ProductMasterComponent },
-  { path: "vendor-details", component: VendorDetailsComponent },
-  { path: "inquiry", component: InquiryComponent },
-  { path: "add-inquiry", component: AddInquiryComponent },
+  { path: "dashboard", component: DashboardComponent, data: { breadcrumb: 'Dashboard' } },
+  { path: "setting/menu-master", component: MenuMasterComponent, data: { breadcrumb: 'Menu Master' } },
+  { path: "setting/module-master", component: ModuleMasterComponent, data: { breadcrumb: 'Module Master' } },
+  { path: "setting/role-master", component: RoleMasterComponent, data: { breadcrumb: 'Role Master' } },
+  { path: "setting/role-wise-menu", component: RoleWiseMenuComponent, data: { breadcrumb: 'Role Wise Menu' } },
+  { path: "setting/user-wise-menu", component: UserWiseMenuComponent, data: { breadcrumb: 'User Wise Menu' } },
+  { path: "setting/company-setting", component: CompanySettingComponent, data: { breadcrumb: 'Company Setting' } },
+  { path: "party-plot-master", component: PartyPlotMasterComponent, data: { breadcrumb: 'Party Plot Master' } },
+  { path: "staff", component: StaffComponent, data: { breadcrumb: 'Staff' } },
+  { path: "event-master", component: EventMasterComponent, data: { breadcrumb: 'Event Master' }  },
+  { path: "product-master", component: ProductMasterComponent, data: { breadcrumb: 'Product Master' } },
+  { path: "vendor-details", component: VendorDetailsComponent, data: { breadcrumb: 'Vendor Details' } },
+  { path: "inquiry", component: InquiryComponent, data: { breadcrumb: 'Inquiry' } },
+  { path: "add-inquiry", component: AddInquiryComponent, data: { breadcrumb: 'Add Inquiry' } },
 ];

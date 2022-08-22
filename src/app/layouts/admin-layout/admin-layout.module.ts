@@ -40,6 +40,7 @@ FullCalendarModule.registerPlugins([
   dayGridPlugin,
   interactionPlugin
 ]);
+import { BreadcrumbModule } from "angular-crumbs";
 
 @NgModule({
   imports: [
@@ -63,6 +64,7 @@ FullCalendarModule.registerPlugins([
     FullCalendarModule,
     //DaterangepickerModule
     NgxMaskModule.forRoot(),
+    BreadcrumbModule,
   ],
   declarations: [
     DashboardComponent,

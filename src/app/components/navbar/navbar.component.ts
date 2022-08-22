@@ -5,12 +5,14 @@ import {
   LocationStrategy,
   PathLocationStrategy,
 } from "@angular/common";
-import { Router } from "@angular/router";
+import { Router, RouterOutlet } from "@angular/router";
 import { StorageKey, StorageService } from "app/shared/storage.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { CoreHelperService } from "app/Providers/core-helper/core-helper.service";
 import { CommonService } from "app/shared/common.service";
 import { AdminLayoutService } from "app/layouts/admin-layout/admin-layout.service";
+import { Breadcrumb, BreadcrumbService } from "angular-crumbs";
+import { Title } from "@angular/platform-browser";
 
 declare const $: any;
 @Component({
@@ -33,14 +35,24 @@ export class NavbarComponent implements OnInit {
   hide2 = false;
   hide3 = false;
   submittedChangePasswordData = false;
+  isDashboard = true;
   get fLoginData() { return this.changePasswordForm.controls; }
 
-  constructor(public location: Location, private element: ElementRef, public storageService: StorageService, private router: Router, private fb: FormBuilder,  private coreHelper: CoreHelperService,  public commonService: CommonService, public adminLayoutService: AdminLayoutService) {
+  constructor(public location: Location, private element: ElementRef, public storageService: StorageService, private router: Router, private fb: FormBuilder,  private coreHelper: CoreHelperService,  public commonService: CommonService, public adminLayoutService: AdminLayoutService,  private breadcrumbService: BreadcrumbService, private titleService: Title) {
     this.location = location;
     this.sidebarVisible = false;
   }
 
   ngOnInit() {
+    if (this.breadcrumbService.breadcrumbs[0].displayName  == "Dashboard"){
+      this.isDashboard = true;
+    }
+    else{
+      this.isDashboard = false;
+    }
+    this.breadcrumbService.breadcrumbChanged.subscribe((crumbs :any) => {
+      this.titleService.setTitle(this.createTitle(crumbs));
+    })
     this.userName = this.storageService.getValue(StorageKey.full_name) ? this.storageService.getValue(StorageKey.full_name) : this.storageService.getValue(StorageKey.email); 
     this.listTitles = ROUTES.filter((listTitle) => listTitle);
     const navbar: HTMLElement = this.element.nativeElement;
@@ -56,6 +68,30 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  createTitle(routesCollection: Breadcrumb[]) {
+    const title = 'Dashboard';
+    const titles = routesCollection.filter((route) => route.displayName);
+
+    if (!titles.length) { return title; }
+
+    const routeTitle = this.titlesToString(titles);
+    return `${routeTitle} ${title}`;
+}
+
+  private titlesToString(titles) {
+      return titles.reduce((prev, curr) => {
+          if (curr.displayName  == "Dashboard"){
+            this.isDashboard = true;
+          }
+          else{
+            this.isDashboard = false;
+          }
+          return `${curr.displayName} - ${prev}`;
+      }, '');
+  }
+  getAnimationData(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+  }
   defaultChangePasswordForm() {
     this.changePasswordForm = this.fb.group({
       oldpwd: ['', [Validators.required]],
