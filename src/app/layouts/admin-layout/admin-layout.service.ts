@@ -46,6 +46,50 @@ export class AdminLayoutService {
     return this.http.post(this.commonService.rootData.rootUrl + 'roleMaster/roleStatusupdate', updatestatusroleMasterData, { headers: headers });
   }
 
+  // ============== Module Master =========== //
+
+  getModuleMaster() {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'moduleMaster/moduleList', { headers: headers });
+  }
+
+  SaveModuleMaster(createModuleMasterData: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'moduleMaster/moduleSave', createModuleMasterData, { headers: headers });
+  }
+
+  getModuleMasterId(params: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'moduleMaster/modulegetById', { params: params, headers: headers });
+  }
+
+  UpdateModuleMaster(updateModuleMasterData: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'moduleMaster/moduleUpdateById', updateModuleMasterData, { headers: headers });
+  }
+
+  StatusModuleMaster(updatestatusModuleMasterData: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'moduleMaster/moduleStatusupdate', updatestatusModuleMasterData, { headers: headers });
+  }
+
+  getModuleActiveList() {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'moduleMaster/ActiveModuleList', { headers: headers });
+  }
+
   // ============== Menu Master =========== //
 
   getPerentList() {
@@ -336,6 +380,41 @@ export class AdminLayoutService {
     return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/clientinquiryCreate', createvendorDetailsData, { headers: headers });
   }
 
+  getInquiryList(data: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/clientinquiryList', data, { headers: headers });
+  }
+
+  getInquiryListForCalenderView(data: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/clientinquiryList', data, { headers: headers });
+  }
+
+  getInquiryListByDate(data: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/clientListgetByDate', data, { headers: headers });
+  }
+
+  StatusInquiry(updatestatusInquiryData: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/clientinquiryStatusupdate', updatestatusInquiryData, { headers: headers });
+  }
+
+  updateClientinquiry(updateClientInquiryData: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/clientinquiryUpdate', updateClientInquiryData, { headers: headers });
+  }
+
   // ============== Company Setting =========== //
 
   getComapnysetting() {
@@ -351,6 +430,17 @@ export class AdminLayoutService {
     })
     return this.http.post(this.commonService.rootData.rootUrl + 'companySetting/companySettingCreate', companySettingData, { headers: headers });
   }
+
+  // ============== Company Setting =========== //
+
+  getSideMenuList() {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'userwiseMenu/sideMenu-List', { headers: headers });
+  }
+
+
 }
 
 

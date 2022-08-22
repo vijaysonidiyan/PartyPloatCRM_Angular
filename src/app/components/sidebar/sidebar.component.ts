@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { AdminLayoutService } from "app/layouts/admin-layout/admin-layout.service";
+import { environment } from "environments/environment";
 
 declare const $: any;
 declare interface RouteInfo {
@@ -57,16 +59,23 @@ export class SidebarComponent implements OnInit {
   menuItems: any[];
   activeMenu: any;
   iconactive: boolean = false;
-  isSettingOpen: boolean = false;
+  isSettingOpen = {};
   istoggle: boolean | any = false;
   isSettingActive: boolean = false;
-  constructor() {}
+  noData: boolean;
+  constructor(public adminLayoutService: AdminLayoutService,) { }
+
+  iconDefaultURL = environment.uploadsUrl + 'default_icon/'
+  iconActiveURL = environment.uploadsUrl + 'active_icon/'
+
 
   ngOnInit() {
-    this.menuItems = ROUTES.filter((menuItem) => menuItem);
+    this.getSideMenuList();
+    // this.menuItems = ROUTES.filter((menuItem) => menuItem);
   }
-  settingMenu() {
-    this.isSettingOpen = !this.isSettingOpen;
+  childrenMenu(index: any) {
+    debugger
+    this.isSettingOpen[index] = !this.isSettingOpen[index];
   }
   toggle() {
     this.istoggle = !this.istoggle;
@@ -85,4 +94,27 @@ export class SidebarComponent implements OnInit {
     this.activeMenu = menuName;
     this.isSettingActive = true;
   }
+
+  reInializeChildMenu() {
+    this.isSettingOpen = {};
+  }
+
+  getSideMenuList() {
+    this.adminLayoutService.getSideMenuList().subscribe(
+      (Response: any) => {
+        if (Response.meta.code == 200) {
+          this.menuItems = Response.data.sort((a, b) => a.order - b.order);
+          this.noData = false;
+        } else {
+          this.noData = true;
+        }
+
+        //for select sub industry step
+      },
+      (error) => {
+        console.log(error.error.Message);
+      }
+    );
+  }
+
 }

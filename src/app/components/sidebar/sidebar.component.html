@@ -1,6 +1,6 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-        <a href="index.html" class="app-brand-link">
+        <a routerLink="dashboard" class="app-brand-link">
             <span class="app-brand-logo demo">
                 <img src="../../../assets/img/logo.png" alt="" width="100%" height="60px">
                 <!-- <svg width="25" viewBox="0 0 25 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -56,14 +56,11 @@
 
     <div class="menu-inner-shadow"></div>
 
-    <ul class="menu-inner py-1">
-        <!-- Dashboard -->
+    <!-- <ul class="menu-inner py-1">
         <li class="menu-item" routerLinkActive="active">
             <a routerLink="dashboard" class="menu-link">
-                <!-- <strong style="font-size:22px; width:50px">D</strong> -->
                 <img class="icon-png default-icon" src="../../../assets/img/dashboard.png" alt="default-icon">
                 <img class="icon-png active-icon" src="../../../assets/img/dashboard-white.png" alt="active-icon">
-                <!-- <i class="menu-icon tf-icons bx bx-home-circle"></i> -->
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
         </li>
@@ -71,8 +68,6 @@
             <a routerLink="event-master" class="menu-link">
                 <img class="icon-png default-icon" src="../../../assets/img/event.png" alt="default-icon">
                 <img class="icon-png active-icon" src="../../../assets/img/event-white.png" alt="active-icon">
-                <!-- <strong style="font-size:22px; width:50px">FM</strong> -->
-                <!-- <i class="menu-icon tf-icons bx bx-home-circle"></i> -->
                 <div data-i18n="Analytics">Event Mater</div>
             </a>
         </li>
@@ -81,8 +76,6 @@
                 <img class="icon-png default-icon" src="../../../assets/img/party-plot-master.png" alt="default-icon">
                 <img class="icon-png active-icon" src="../../../assets/img/party-plot-master-white.png"
                     alt="active-icon">
-                <!-- <strong style="font-size:22px; width:50px">PP</strong> -->
-                <!-- <i class="menu-icon tf-icons fa-solid fa-face-party"></i> -->
                 <div data-i18n="Analytics">Party Plot Master</div>
             </a>
         </li>
@@ -90,24 +83,13 @@
             <a routerLink="staff" class="menu-link">
                 <img class="icon-png default-icon" src="../../../assets/img/staff.png" alt="default-icon">
                 <img class="icon-png active-icon" src="../../../assets/img/staff-white.png" alt="active-icon">
-                <!-- <strong style="font-size:22px; width:50px">S</strong> -->
-                <!-- <i class="menu-icon tf-icons fa-solid fa-user-tie"></i> -->
                 <div data-i18n="Analytics">Staff</div>
             </a>
         </li>
-        <!-- <li class="menu-item" routerLinkActive="active">
-            <a routerLink="product-master" class="menu-link">
-                <img class="icon-png default-icon" src="../../../assets/img/product.png" alt="default-icon">
-                <img class="icon-png active-icon" src="../../../assets/img/product-white.png" alt="active-icon">
-                <div data-i18n="Analytics">Product Mater</div>
-            </a>
-        </li> -->
         <li class="menu-item" routerLinkActive="active">
             <a routerLink="vendor-details" class="menu-link">
                 <img class="icon-png default-icon" src="../../../assets/img/vendor.png" alt="default-icon">
                 <img class="icon-png active-icon" src="../../../assets/img/vendor-white.png" alt="active-icon">
-                <!-- <strong style="font-size:22px; width:50px">VD</strong> -->
-                <!-- <i class="menu-icon tf-icons bx bx-home-circle"></i> -->
                 <div data-i18n="Analytics">Vendor Details</div>
             </a>
         </li>
@@ -115,8 +97,6 @@
             <a routerLink="inquiry" class="menu-link">
                 <img class="icon-png default-icon" src="../../../assets/img/inquiry.png" alt="default-icon">
                 <img class="icon-png active-icon" src="../../../assets/img/inquiry-white.png" alt="active-icon">
-                <!-- <strong style="font-size:22px; width:50px">VD</strong> -->
-                <!-- <i class="menu-icon tf-icons bx bx-home-circle"></i> -->
                 <div data-i18n="Analytics">Inquiry</div>
             </a>
         </li>
@@ -124,19 +104,14 @@
             <a routerLink="add-inquiry" class="menu-link">
                 <img class="icon-png default-icon" src="../../../assets/img/add-inquiry.png" alt="default-icon">
                 <img class="icon-png active-icon" src="../../../assets/img/add-inquiry-white.png" alt="active-icon">
-                <!-- <strong style="font-size:22px; width:50px">VD</strong> -->
-                <!-- <i class="menu-icon tf-icons bx bx-home-circle"></i> -->
                 <div data-i18n="Analytics">Add Inquiry</div>
             </a>
         </li>
 
-        <!-- Layouts -->
-        <li class="menu-item" routerLinkActive="active open" [ngClass]="{'open':isSettingOpen === true} ">
-            <a routerLink="#setting" (click)="settingMenu()" class="menu-link menu-toggle">
+        <li class="menu-item" routerLinkActive="active open" [ngClass]="{'open':istoggle === true} ">
+            <a routerLink="#setting" (click)="toggle()" class="menu-link menu-toggle">
                 <img class="icon-png default-icon" src="../../../assets/img/settings.png" alt="default-icon">
                 <img class="icon-png active-icon" src="../../../assets/img/settings-white.png" alt="active-icon">
-                <!-- <strong style="font-size:22px; width:50px">S</strong> -->
-                <!-- <i class="menu-icon tf-icons bx bx-layout"></i> -->
                 <div data-i18n="Layouts">Setting</div>
             </a>
 
@@ -168,5 +143,38 @@
                 </li>
             </ul>
         </li>
+    </ul> -->
+
+
+    <ul class="menu-inner py-1">
+        <!-- single menu without children -->
+        <li class="menu-item" routerLinkActive="active open" [ngClass]="{'open':isSettingOpen[menuIndex] === true}"
+            *ngFor="let menuData of menuItems; let menuIndex = index">
+            <a routerLink="{{menuData.path}}" class="menu-link" (click)="reInializeChildMenu()"
+                *ngIf="menuData.children.length == 0">
+                <!-- <strong style="font-size:22px; width:50px">D</strong> -->
+                <img class="icon-png default-icon" src="{{iconDefaultURL}}{{menuData.default_icon}}" alt="default-icon">
+                <img class="icon-png active-icon" src="{{iconActiveURL}}{{menuData.active_icon}}" alt="active-icon">
+                <!-- <i class="menu-icon tf-icons bx bx-home-circle"></i> -->
+                <div data-i18n="Analytics">{{menuData.title}}</div>
+            </a>
+
+            <a href="javascript:void(0);" (click)="childrenMenu(menuIndex)" class="menu-link menu-toggle"
+                *ngIf="menuData.children.length > 0">
+                <img class="icon-png default-icon" src="{{iconDefaultURL}}{{menuData.default_icon}}" alt="default-icon">
+                <img class="icon-png active-icon" src="{{iconActiveURL}}{{menuData.active_icon}}" alt="active-icon">
+                <!-- <strong style="font-size:22px; width:50px">S</strong> -->
+                <!-- <i class="menu-icon tf-icons bx bx-layout"></i> -->
+                <div data-i18n="Analytics">{{menuData.title}}</div>
+            </a>
+            <ul class="menu-sub ml-20" *ngIf="menuData.children.length > 0">
+                <li class="menu-item" routerLinkActive="active" *ngFor="let childrenData of menuData.children">
+                    <a routerLink="{{childrenData.path}}" class="menu-link">
+                        <div data-i18n="Blank">{{childrenData.title}}</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul>
+
 </aside>

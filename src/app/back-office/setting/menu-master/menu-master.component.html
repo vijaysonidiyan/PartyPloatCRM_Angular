@@ -46,14 +46,15 @@
                             <td>{{ menuData.parentName }}</td>
                             <td>{{ menuData.module }}</td>
                             <td>{{ menuData.order }}</td>
-                            <td><img src="{{iconDefaultURL}}{{menuData.default_icon}}" width="50px" alt=""></td>
+                            <td><img src="{{iconDefaultURL}}{{menuData.default_icon}}" width="20px" alt=""></td>
                             <td>
                                 <span *ngIf="menuData.status == 1" class="badge bg-label-primary">Active</span>
                                 <span *ngIf="menuData.status == 2" class="badge bg-label-danger">Deactive</span>
                             </td>
                             <td>
                                 <div class="d-flex">
-                                    <button class="btn-bg" (click)="editMenumaster({id : menuData._id, index:menuIndex})"><i
+                                    <button class="btn-bg"
+                                        (click)="editMenumaster({id : menuData._id, index:menuIndex})"><i
                                             class="bx bx-edit-alt"></i>
                                     </button>
                                     <button *ngIf="menuData.status == 2" class="btn-bg bg-label-success"

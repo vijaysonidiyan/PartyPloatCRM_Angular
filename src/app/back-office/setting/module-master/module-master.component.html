@@ -1,0 +1,134 @@
+<div class="container-fluid flex-grow-1 container-p-y">
+    <!-- <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Role Master</h4>
+        <div>
+            <button type="button" class="btn btn-primary" (click)="addRole()">
+                Add New
+            </button>
+        </div>
+    </div> -->
+
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="d-flex justify-content-between align-items-center mb-3 p-4">
+                <div class="card border-solid-primary flex-row align-items-center ps-2">
+                    <i class="bx bx-search fs-4 lh-0"></i>
+                    <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
+                        aria-label="Search..." (input)="searchModuleData($event.target.value)" />
+                </div>
+                <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Vendor Details</h4> -->
+                <div>
+                    <button type="button" class="btn btn-primary" (click)="addRole()">
+                        Add New
+                    </button>
+                </div>
+            </div>
+            <div class="table-responsive text-nowrap">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="w-10">No</th>
+                            <th class="w-35">Module Name</th>
+                            <th class="w-35">Module Value</th>
+                            <th class="w-10">Status</th>
+                            <th class="w-10">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        <tr
+                            *ngFor="let modulemasterData of modulemasterList | paginate: { itemsPerPage: l, currentPage: p }; let roleMasterIndex = index">
+                            <td>{{ l * (p - 1) + roleMasterIndex + 1 }}</td>
+                            <td>{{ modulemasterData.name }}</td>
+                            <td>{{ modulemasterData.value }}</td>
+                            <td>
+                                <span *ngIf="modulemasterData.status == 1"
+                                    class="badge bg-label-primary me-1">Active</span>
+                                <span *ngIf="modulemasterData.status == 2"
+                                    class="badge bg-label-danger me-1">Deactive</span>
+                            </td>
+                            <td>
+                                <div class="d-flex">
+                                    <button class="btn-bg"
+                                        (click)="editModulemaster({id : modulemasterData._id, index : roleMasterIndex})"><i
+                                            class="bx bx-edit-alt "></i>
+                                    </button>
+                                    <button *ngIf="modulemasterData.status == 2" class="dtl-btn btn bg-gradient-dark"
+                                        title="Active Role"
+                                        (confirm-click)="statusModulemaster({id :modulemasterData._id,index:roleMasterIndex, status:1})"
+                                        appConfirm [confirmTitle]="'Active'"
+                                        [confirmContent]="'Are you sure to Active this Role Master?'"
+                                        class="btn-bg bg-label-success"><i class="bx bx-plus"></i></button>
+                                    <button *ngIf="modulemasterData.status == 1" class="dtl-btn btn bg-gradient-dark"
+                                        title="Deactive Role"
+                                        (confirm-click)="statusModulemaster({id :modulemasterData._id,index:roleMasterIndex, status:2})"
+                                        appConfirm [confirmTitle]="'Deactive'"
+                                        [confirmContent]="'Are you sure to Deactive this Role Master?'"
+                                        class="btn-bg bg-label-danger"><i class="bx bx-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr *ngIf="noData">
+                            <td colspan="5">
+                                <h4 class="text-center mt-3">No Data Found</h4>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer-pagination float-end mt-3 p-4" *ngIf="!noData">
+                <pagination-controls (pageChange)="p = $event" *ngIf="modulemasterList.length > l">
+                </pagination-controls>
+            </div>
+        </div>
+    </div>
+    <div class="content-backdrop fade"></div>
+</div>
+<div class="modal fade" id="add-module-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1" *ngIf="ISeditModuleMaster === false"><strong>Add New
+                        Module Master</strong></h5>
+                <h5 class="modal-title" id="exampleModalLabel1" *ngIf="ISeditModuleMaster === true"><strong>Edit Module
+                        Master</strong></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="cancelModulemaster()"></button>
+            </div>
+            <div class="modal-body">
+                <form role="form" class="add-employee-form" [formGroup]="modulemasterForm" autocomplete="off">
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="nameBasic" class="form-label">Module Name</label>
+                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
+                                formControlName="name" />
+                            <div *ngIf="submittedModuleMasterData && fModuleMasterData.name.errors">
+                                <div *ngIf="fModuleMasterData.name.errors.required">
+                                    <span class="error_msg">Module Name is Required.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="nameBasic" class="form-label">Module Value</label>
+                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
+                                formControlName="value" />
+                            <div *ngIf="submittedModuleMasterData && fModuleMasterData.value.errors">
+                                <div *ngIf="fModuleMasterData.value.errors.required">
+                                    <span class="error_msg">Module Value is Required.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" *ngIf="ISeditModuleMaster === false"
+                    (click)="saveModulemaster()">Save</button>
+                <button type="button" class="btn btn-primary" *ngIf="ISeditModuleMaster === true"
+                    (click)="updateModulemaster()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>

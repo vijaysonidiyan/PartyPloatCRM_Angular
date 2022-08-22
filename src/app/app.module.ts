@@ -9,7 +9,7 @@ import { AppComponent } from "./app.component";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
 import { LoginLayoutComponent } from "./layouts/login-layout/login-layout.component";
 import { NotifierModule } from "angular-notifier";
-import { NgOtpInputModule } from  'ng-otp-input';
+import { NgOtpInputModule } from 'ng-otp-input';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -42,4 +42,4 @@ import { NgOtpInputModule } from  'ng-otp-input';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
