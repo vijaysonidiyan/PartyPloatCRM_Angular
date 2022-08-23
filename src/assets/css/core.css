@@ -16453,6 +16453,9 @@ html:not(.layout-footer-fixed) .content-wrapper {
     display: block;
   }
 }
+.avatar-text-offline {
+  opacity: 0.5;
+}
 .avatar {
   position: relative;
   width: 2.375rem;
