@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AdminLayoutService } from "app/layouts/admin-layout/admin-layout.service";
+import { CommonService } from "app/shared/common.service";
 import { StorageKey, StorageService } from "app/shared/storage.service";
 import { environment } from "environments/environment";
 
@@ -65,18 +66,23 @@ export class SidebarComponent implements OnInit {
   isSettingActive: boolean = false;
   noData: boolean;
   utsav_logo_img: any;
-  constructor(public adminLayoutService: AdminLayoutService, public storageService: StorageService) { }
+  uploadsUrl: any;
+  constructor(public commonService: CommonService, public adminLayoutService: AdminLayoutService, public storageService: StorageService) {
+    this.uploadsUrl = environment.uploadedUrl
+    this.utsav_logo_img = this.storageService.getValue(StorageKey.utsav_decor_logo);
+  }
 
   iconDefaultURL = environment.uploadsUrl + 'default_icon/'
   iconActiveURL = environment.uploadsUrl + 'active_icon/'
 
 
   ngOnInit() {
+    // this.utsav_logo_img = environment.uploadedUrl + this.storageService.getValue(StorageKey.utsav_decor_logo)
     this.getSideMenuList();
     // this.menuItems = ROUTES.filter((menuItem) => menuItem);
-    setTimeout(() => {
-      this.utsav_logo_img = environment.uploadedUrl + this.storageService.getValue(StorageKey.utsav_decor_logo)
-  }, 0);
+    // setTimeout(() => {
+    //   this.utsav_logo_img = environment.uploadedUrl + this.storageService.getValue(StorageKey.utsav_decor_logo)
+    // }, 0);
   }
   childrenMenu(index: any) {
     debugger

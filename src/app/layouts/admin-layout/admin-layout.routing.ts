@@ -25,7 +25,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "setting/company-setting", component: CompanySettingComponent, data: { breadcrumb: 'Company Setting' } },
   { path: "party-plot-master", component: PartyPlotMasterComponent, data: { breadcrumb: 'Party Plot Master' } },
   { path: "staff", component: StaffComponent, data: { breadcrumb: 'Staff' } },
-  { path: "event-master", component: EventMasterComponent, data: { breadcrumb: 'Event Master' }  },
+  { path: "event-master", component: EventMasterComponent, data: { breadcrumb: 'Event Master' } },
   { path: "product-master", component: ProductMasterComponent, data: { breadcrumb: 'Product Master' } },
   { path: "vendor-details", component: VendorDetailsComponent, data: { breadcrumb: 'Vendor Details' } },
   { path: "inquiry", component: InquiryComponent, data: { breadcrumb: 'Inquiry' } },

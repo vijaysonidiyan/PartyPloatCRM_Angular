@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ThemePalette } from '@angular/material/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AdminLayoutService } from "app/layouts/admin-layout/admin-layout.service";
 import { CommonService } from "app/shared/common.service";
 import * as moment from 'moment';
@@ -32,6 +32,8 @@ export class AddInquiryComponent implements OnInit {
   public stepMinute = 1;
   public stepSecond = 1;
   public color: ThemePalette = 'primary';
+  startDateObj = '';
+  endDateObj = '';
   //calender done
 
   get fclientinquiryData() {
@@ -39,7 +41,18 @@ export class AddInquiryComponent implements OnInit {
   }
   submittedclientInquiryData = false;
 
-  constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, private router: Router) { }
+  constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, private router: Router, public route: ActivatedRoute) {
+    this.route.queryParams.subscribe((queryParams) => {
+      if (!!queryParams.startDate && !!queryParams.endDate) {
+        this.startDateObj = queryParams.startDate;
+        this.endDateObj = queryParams.endDate;
+      }
+      else {
+        this.startDateObj = '';
+        this.endDateObj = '';
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.getEventActiveList();
@@ -47,6 +60,8 @@ export class AddInquiryComponent implements OnInit {
     this.eventList = this.clientinquiryDataForm.get("events") as FormArray;
     this.minEndDate[0] = new Date();
     this.eventList.push(this.createeventItem({}));
+
+
   }
 
   onStartDateChange(data: any, index: any) {
@@ -84,8 +99,8 @@ export class AddInquiryComponent implements OnInit {
     return this.fb.group({
       eventType: [(oItem['eventType'] ? oItem['eventType'] : null)],
       guest: [(oItem['guest'] ? oItem['guest'] : '')],
-      startDateObj: [(oItem['startDateObj'] ? oItem['startDateObj'] : '')],
-      endDateObj: [(oItem['endDateObj'] ? oItem['endDateObj'] : '')],
+      startDateObj: [(oItem['startDateObj'] ? oItem['startDateObj'] : !!this.startDateObj ? new Date(this.startDateObj) : '')],
+      endDateObj: [(oItem['endDateObj'] ? oItem['endDateObj'] : !!this.endDateObj ? new Date(this.endDateObj) : '')],
       // startDateObj: [(oItem['startDateObj'] ? oItem['startDateObj'] : '2022-08-10T09:58:36.274Z')],
       // endDateObj: [(oItem['endDateObj'] ? oItem['endDateObj'] : '2022-08-10T11:58:36.274Z')],
     });

@@ -5,11 +5,12 @@ import {
   PathLocationStrategy,
   PopStateEvent,
 } from "@angular/common";
-import { Router, NavigationEnd,RouterOutlet, NavigationStart } from "@angular/router";
+import { Router, NavigationEnd, RouterOutlet, NavigationStart } from "@angular/router";
 import PerfectScrollbar from "perfect-scrollbar";
 import * as $ from "jquery";
 import { filter, Subscription } from "rxjs";
 import { StorageKey, StorageService } from "app/shared/storage.service";
+import { AdminLayoutService } from "./admin-layout.service";
 
 @Component({
   selector: "app-admin-layout",
@@ -24,11 +25,17 @@ export class AdminLayoutComponent implements OnInit {
   constructor(
     public location: Location,
     private router: Router,
-    public storageService: StorageService
+    public storageService: StorageService,
+    public adminLayoutService: AdminLayoutService
   ) {
     if (this.storageService.getValue(StorageKey.isUtsavDecoreLogin) !== 'true') {
-        this.router.navigate(['/admin-login/login']);
+      this.router.navigate(['/admin-login/login']);
     }
+    this.adminLayoutService.getComapnysetting().subscribe((x: any) => {
+      if (x.meta.code == 200) {
+        this.storageService.setValue(StorageKey.utsav_decor_logo, x.data.logo);
+      }
+    })
   }
 
   ngOnInit() {

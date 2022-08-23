@@ -5,6 +5,7 @@ import { CommonService } from "app/shared/common.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ThemePalette } from "@angular/material/core";
 import * as moment from 'moment';
+import { Router } from "@angular/router";
 
 
 declare const $: any;
@@ -35,6 +36,9 @@ export class InquiryComponent implements OnInit {
   noData: boolean;
   inquiryListByDate: any[] = [];
 
+  startDateObj: any;
+  endDateObj: any;
+
   tabClick(tab) {
     this.activeTab = tab;
     if (this.activeTab == 1) {
@@ -52,7 +56,7 @@ export class InquiryComponent implements OnInit {
     }
   }
 
-  constructor(public adminLayoutService: AdminLayoutService, public fb: FormBuilder, public commonService: CommonService) { }
+  constructor(public adminLayoutService: AdminLayoutService, public fb: FormBuilder, public router: Router, public commonService: CommonService) { }
 
   ngOnInit(): void {
     this.l = 10;
@@ -119,38 +123,33 @@ export class InquiryComponent implements OnInit {
 
     this.adminLayoutService.getInquiryListForCalenderView(inquiryObj).subscribe((response: any) => {
       if (response.meta.code == 200) {
-        debugger
+
         this.inquiryEvent = [];
         this.inquiryEvent = response.data;
 
-        // response.data.filter((x: any) => {
-        //   let Obj = {
-        //     id: 12,
-        //     title: x.title,
-        //     textColor: x.textColor,
-        //     borderColor: x.borderColor,
-        //     color: x.color,
-        //     date: x.date.split("-")[2] + '-' + x.date.split("-")[1] + '-' + x.date.split("-")[0],
-        //   }
-        //   this.inquiryEvent.push(Obj);
-        // })
-
-
         this.calendarOptions = {
           initialView: 'dayGridMonth',
-          navLinks: true,
+          headerToolbar: {
+            left: 'title today prev,next',
+            center: '',
+            right: 'myCustomButton'
+          },
           businessHours: false, // display business hours
           editable: true,
           selectable: true,
           dateClick: this.handleDateClick.bind(this),
           events: this.inquiryEvent,
-           eventClick: this.eventClickFunction.bind(this),
+          eventClick: this.eventClickFunction.bind(this),
           customButtons: {
+            myCustomButton: {
+              text: 'Table View',
+              click: this.customeButton.bind(this)
+            },
             next: {
-              click: this.nextMonth.bind(this),
+              click: this.nextMonth.bind(this)
             },
             prev: {
-              click: this.prevMonth.bind(this),
+              click: this.prevMonth.bind(this)
             }
           },
         }
@@ -161,10 +160,29 @@ export class InquiryComponent implements OnInit {
     })
 
   }
+  addInquiryByDate() {
+    if (!!this.startDateObj && !!this.endDateObj) {
+      $('#add-inquiry-modal').modal('hide');
+      this.router.navigate(["/admin/add-inquiry"], {
+        queryParams: {
+          startDate: this.startDateObj,
+          endDate: this.endDateObj
+        }
+      })
+    }
+  }
+
+  cancelInquiryByDate() {
+    $('#add-inquiry-modal').modal('hide');
+  }
+
+  customeButton(customButton) {
+    this.tabClick(1);
+  }
 
   // date selction through open popup
   handleDateClick(arg) {
-    debugger
+
     let inquiryObj = {
       date: arg.date.getDate() + '/' + (arg.date.getMonth() + 1) + '/' + arg.date.getFullYear()
     }
@@ -186,7 +204,7 @@ export class InquiryComponent implements OnInit {
 
   // For Next Month Click
   nextMonth(): void {
-    debugger
+
     let calendarApi = this.calendarComponent.getApi();
     calendarApi.next();
     let month = calendarApi.currentData.currentDate.toJSON();
@@ -199,7 +217,7 @@ export class InquiryComponent implements OnInit {
 
   // For Prev Month Click
   prevMonth(): void {
-    debugger
+
     let calendarApi = this.calendarComponent.getApi();
     calendarApi.prev();
 
@@ -372,6 +390,8 @@ export class InquiryComponent implements OnInit {
 
   onStartDateChange(data: any) {
     this.minEndDate = data._d;
+
+    localStorage.setItem('startDateObj', data._d);
     this.inquiryForm.controls.endDateObj.setValue('');
   }
 
@@ -394,7 +414,7 @@ export class InquiryComponent implements OnInit {
   }
 
   updateClientInquiry() {
-    debugger
+
     if (this.inquiryForm.invalid) {
       return
     }

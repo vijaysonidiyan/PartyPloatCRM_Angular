@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonService } from 'app/shared/common.service';
 
 @Injectable({
@@ -7,7 +8,7 @@ import { CommonService } from 'app/shared/common.service';
 })
 export class AdminLayoutService {
 
-  constructor(private commonService: CommonService, private http: HttpClient) { }
+  constructor(private commonService: CommonService, private http: HttpClient, public router: Router) { }
 
   // ============== Role Master =========== //
 
@@ -418,10 +419,7 @@ export class AdminLayoutService {
   // ============== Company Setting =========== //
 
   getComapnysetting() {
-    let headers = new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
-    })
-    return this.http.get(this.commonService.rootData.rootUrl + 'companySetting/companysettingList', { headers: headers });
+    return this.http.get(this.commonService.rootData.rootUrl + 'companySetting/companysettingList');
   }
 
   UpdateCompanySetting(companySettingData: any) {
