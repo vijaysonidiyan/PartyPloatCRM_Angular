@@ -17506,3 +17506,21 @@ html:not(.layout-footer-fixed) .content-wrapper {
     left: 0;
     top: 0;
 }
+.fc-header-toolbar .fc-toolbar-chunk {
+  display: flex !important;
+  align-items: center !important;
+}
+.fc-button-primary{
+  color: #fff;
+    background-color: #00adef !important;
+    border-color: #00adef !important;
+    padding: 0.4375rem 1.25rem !important;
+}
+.fc-prev-button , .fc-next-button{
+  background-color: #fff0 !important;
+    color: #566a7f !important;
+    border: none !important;
+}
+.fc .fc-button-primary:focus {
+  box-shadow:none !important;
+}
