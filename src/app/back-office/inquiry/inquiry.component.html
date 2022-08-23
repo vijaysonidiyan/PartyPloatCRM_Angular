@@ -131,9 +131,6 @@
         </div>
     </div>
 
-    <div class="card">
-
-    </div>
 </div>
 <div class="modal fade" id="inquiry-details-by-date-modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -144,47 +141,91 @@
             </div>
             <div class="modal-body modal-scroll inquiry-bydate">
                 <div class="inquiry-bydate-list">
-                    <div class="inquiry-bydate-list-item">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <a href="javascript:;" class="d-flex align-items-center">
-                                <div class="me-2 text-body h6 mb-0">
-                                    Event Name :
-                                </div>
-                                <div class="me-2 text-body h5 mb-0">
-                                    <strong>Raas Garba</strong>
-                                </div>
-                            </a>
-                            <div class="d-flex order-sm-0 order-1">
-                                <button class="btn btn-label-primary me-3">Edit</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <ul class="list-unstyled mb-4 mt-3">
-                                    <li class="d-flex align-items-center mb-2"><i class="bx bx-user"></i><span
-                                            class="fw-semibold mx-2">Name:</span> <span>John Doe</span></li>
-                                    <li class="d-flex align-items-center mb-2"><i class="bx bx-envelope"></i><span
-                                            class="fw-semibold mx-2">Email:</span> <span>john.doe@example.com</span>
-                                    </li>
-                                    <li class="d-flex align-items-center mb-2"><i class="bx bx-phone"></i><span
-                                            class="fw-semibold mx-2">Contact:</span> <span>(123) 456-7890</span></li>
+                    <!-- *ngFor here apply-->
+                    <div class="row my-4">
+                        <div class="col">
+                            <div class="accordion" id="collapsibleSection">
+                                <div class="card shadow">
+                                    <div class="position-relative">
 
-                                </ul>
-                            </div>
-                            <div class="col-lg-6">
-                                <ul class="list-unstyled mb-4 mt-3">
-                                    <li class="d-flex align-items-center mb-2"><i class="bx bx-user"></i><span
-                                            class="fw-semibold mx-2">Guest:</span> <span>USA</span></li>
-                                    <li class="d-flex align-items-center mb-2"><i class="bx bxs-calendar"></i><span
-                                            class="fw-semibold mx-2">Date:</span> <span>English</span></li>
-                                    <li class="d-flex align-items-center mb-2"><i class="bx bx-check"></i><span
-                                            class="fw-semibold mx-2">Status:</span> <span
-                                            class="badge bg-label-success">Active</span></li>
-                                </ul>
+                                        <h2 class="accordion-header" id="headingDeliveryOptions">
+                                            <button type="button" class="accordion-button collapsed border-bottom"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseDeliveryOptions-0"
+                                                aria-expanded="false" aria-controls="collapseDeliveryOptions-0">
+                                                <div class="d-block">
+                                                    <div class="d-flex">
+                                                        <span class="me-2"> John Doe <strong> (Raas
+                                                                Garba)</strong></span>
+
+                                                    </div>
+                                                    <div>
+                                                        <span>
+                                                            <i class="bx bxs-phone me-2"></i><samp class="fw-light">+91
+                                                                989
+                                                                888 9977</samp></span>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                            <div data-bs-toggle="collapse" data-bs-target="#collapseDeliveryOptions-0"
+                                                aria-expanded="false" aria-controls="collapseDeliveryOptions-0"
+                                                class="border-left-div collapsed"></div>
+                                        </h2>
+                                    </div>
+
+                                    <div id="collapseDeliveryOptions-0" class="accordion-collapse collapse"
+                                        aria-labelledby="headingDeliveryOptions" data-bs-parent="#collapsibleSection">
+                                        <div class="accordion-body">
+                                            <div class="inquiry-bydate-list-item">
+                                                <div class="d-flex align-items-center justify-content-end">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-11">
+                                                        <ul class="list-unstyled my-3">
+                                                            <li class="mb-2 accordion-data">
+                                                                <i class="bx bx-user"></i>
+                                                                <div>
+                                                                    <span>Guest:</span>
+                                                                    <span>USA</span>
+                                                                </div>
+                                                            </li>
+                                                            <li class="mb-2 accordion-data">
+                                                                <i class="bx bx-envelope"></i>
+                                                                <div>
+                                                                    <span>Email:</span>
+                                                                    <span>john.doe@example.com</span>
+                                                                </div>
+                                                            </li>
+                                                            <li class="mb-2 accordion-data">
+                                                                <i class="bx bxs-calendar"></i>
+                                                                <div>
+                                                                    <span>From Date:</span>
+                                                                    <span>08/12/2022 04:00 PM</span>
+                                                                </div>
+                                                            </li>
+                                                            <li class="mb-2 accordion-data">
+                                                                <i class="bx bxs-calendar"></i>
+                                                                <div>
+                                                                    <span>To Date:</span>
+                                                                    <span>08/12/2022 10:00 PM</span>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-lg-1 col-md-3 col-sm-3  col-3">
+                                                        <div class="d-flex my-3">
+                                                            <button class="btn-bg">
+                                                                <i class='bx bxs-show'></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <!-- <div class="table-responsive text-nowrap">
