@@ -140,7 +140,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body modal-scroll inquiry-bydate">
-                <div class="inquiry-bydate-list">
+                <div class="inquiry-bydate-list"
+                    *ngFor="let inquiryDataByDate of inquiryListByDate;let inquiryIndex = index;">
                     <!-- *ngFor here apply-->
                     <div class="row my-4">
                         <div class="col">
@@ -149,31 +150,34 @@
                                     <div class="position-relative">
 
                                         <h2 class="accordion-header" id="headingDeliveryOptions">
-                                            <button type="button" class="accordion-button collapsed border-bottom"
-                                                data-bs-toggle="collapse" data-bs-target="#collapseDeliveryOptions-0"
-                                                aria-expanded="false" aria-controls="collapseDeliveryOptions-0">
+                                            <button type="button" class="accordion-button  border-bottom"
+                                                [ngClass]="collapse[inquiryIndex] === true ? '' : 'collapsed'"
+                                                (click)="collapseShow(inquiryIndex)">
                                                 <div class="d-block">
                                                     <div class="d-flex">
-                                                        <span class="me-2"> John Doe <strong> (Raas
-                                                                Garba)</strong></span>
+                                                        <span class="me-2"> {{inquiryDataByDate.name | titlecase}}
+                                                            <strong> {{'(' + inquiryDataByDate.eventName +
+                                                                ')'}}</strong></span>
 
                                                     </div>
                                                     <div>
                                                         <span>
-                                                            <i class="bx bxs-phone me-2"></i><samp class="fw-light">+91
-                                                                989
-                                                                888 9977</samp></span>
+                                                            <i class="bx bxs-phone me-2"></i><samp
+                                                                class="fw-light">{{inquiryDataByDate.primaryContact}}</samp></span>
                                                     </div>
                                                 </div>
                                             </button>
-                                            <div data-bs-toggle="collapse" data-bs-target="#collapseDeliveryOptions-0"
-                                                aria-expanded="false" aria-controls="collapseDeliveryOptions-0"
-                                                class="border-left-div collapsed"></div>
+                                            <div [ngClass]="{'collapsed' : collapse[inquiryIndex] === true,
+                                            'green' : inquiryDataByDate.approvalStatus === 3 ,
+                                            'red' : inquiryDataByDate.approvalStatus === 2 ,
+                                            'blue' : inquiryDataByDate.approvalStatus === 1}" class="border-left-div ">
+                                            </div>
                                         </h2>
                                     </div>
 
-                                    <div id="collapseDeliveryOptions-0" class="accordion-collapse collapse"
-                                        aria-labelledby="headingDeliveryOptions" data-bs-parent="#collapsibleSection">
+                                    <div id="collapseDeliveryOptions-{{inquiryIndex}}"
+                                        class="accordion-collapse collapse"
+                                        [ngClass]="collapse[inquiryIndex] === true ? 'show' : ''">
                                         <div class="accordion-body">
                                             <div class="inquiry-bydate-list-item">
                                                 <div class="d-flex align-items-center justify-content-end">
@@ -185,35 +189,38 @@
                                                                 <i class="bx bx-user"></i>
                                                                 <div>
                                                                     <span>Guest:</span>
-                                                                    <span>USA</span>
+                                                                    <span>{{inquiryDataByDate.guest}}</span>
                                                                 </div>
                                                             </li>
                                                             <li class="mb-2 accordion-data">
                                                                 <i class="bx bx-envelope"></i>
                                                                 <div>
                                                                     <span>Email:</span>
-                                                                    <span>john.doe@example.com</span>
+                                                                    <span>{{inquiryDataByDate.email}}</span>
                                                                 </div>
                                                             </li>
                                                             <li class="mb-2 accordion-data">
                                                                 <i class="bx bxs-calendar"></i>
                                                                 <div>
                                                                     <span>From Date:</span>
-                                                                    <span>08/12/2022 04:00 PM</span>
+                                                                    <span>{{inquiryDataByDate.startDateObj | date :
+                                                                        'dd/MM/yyyy hh:MM:ss a'}}</span>
                                                                 </div>
                                                             </li>
                                                             <li class="mb-2 accordion-data">
                                                                 <i class="bx bxs-calendar"></i>
                                                                 <div>
                                                                     <span>To Date:</span>
-                                                                    <span>08/12/2022 10:00 PM</span>
+                                                                    <span>{{inquiryDataByDate.endDateObj | date :
+                                                                        'dd/MM/yyyy hh:MM:ss a'}}</span>
                                                                 </div>
                                                             </li>
                                                         </ul>
                                                     </div>
                                                     <div class="col-lg-1 col-md-3 col-sm-3  col-3">
                                                         <div class="d-flex my-3">
-                                                            <button class="btn-bg">
+                                                            <button class="btn-bg"
+                                                                (click)="viewInquiryDetails(inquiryDataByDate._id)">
                                                                 <i class='bx bxs-show'></i>
                                                             </button>
                                                         </div>

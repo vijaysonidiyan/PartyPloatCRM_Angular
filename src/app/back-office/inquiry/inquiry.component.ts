@@ -39,6 +39,8 @@ export class InquiryComponent implements OnInit {
   startDateObj: any;
   endDateObj: any;
 
+  collapse = {}
+
   tabClick(tab) {
     this.activeTab = tab;
     if (this.activeTab == 1) {
@@ -182,24 +184,7 @@ export class InquiryComponent implements OnInit {
 
   // date selction through open popup
   handleDateClick(arg) {
-
-    let inquiryObj = {
-      date: arg.date.getDate() + '/' + (arg.date.getMonth() + 1) + '/' + arg.date.getFullYear()
-    }
-
-    this.adminLayoutService.getInquiryListByDate(inquiryObj).subscribe((response: any) => {
-      this.inquiryListByDate = []
-      if (response.meta.code == 200) {
-        this.inquiryListByDate = response.data;
-        this.noData = false;
-      }
-      else {
-        this.noData = true;
-      }
-    })
-
-
-    $('#add-inquiry-modal').modal('show')
+    $('#add-inquiry-modal').modal('show');
   }
 
   // For Next Month Click
@@ -231,6 +216,25 @@ export class InquiryComponent implements OnInit {
 
   // all data get by date wise given thorugh api 
   eventClickFunction(eventInformation) {
+    debugger
+    let inquiryObj = {
+
+      date: eventInformation.event._def.extendedProps.date
+    }
+
+    this.adminLayoutService.getInquiryListByDate(inquiryObj).subscribe((response: any) => {
+      this.inquiryListByDate = [];
+      if (response.meta.code == 200) {
+        this.inquiryListByDate = response.data;
+        for (let i = 0; i < this.inquiryListByDate.length; i++) {
+          this.collapse[i] = false;
+        }
+        this.noData = false;
+      }
+      else {
+        this.noData = true;
+      }
+    })
     console.log(eventInformation.event.extendedProps);
     $('#inquiry-details-by-date-modal').modal('show')
   }
@@ -436,6 +440,23 @@ export class InquiryComponent implements OnInit {
         console.log(error.error.Message);
       }
     );
+
+  }
+
+  collapseShow(inquiryIndex: any) {
+
+    if (this.collapse[inquiryIndex] === true) {
+      this.collapse[inquiryIndex] = false;
+    }
+    else {
+      for (let i = 0; i < this.inquiryListByDate.length; i++) {
+        this.collapse[i] = false;
+      }
+      this.collapse[inquiryIndex] = true;
+    }
+  }
+
+  viewInquiryDetails(id: any) {
 
   }
 
