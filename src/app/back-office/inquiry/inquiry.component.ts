@@ -132,7 +132,7 @@ export class InquiryComponent implements OnInit {
         this.calendarOptions = {
           initialView: 'dayGridMonth',
           headerToolbar: {
-            left: 'title today prev,next',
+            left: 'prev,next title',
             center: '',
             right: 'myCustomButton'
           },

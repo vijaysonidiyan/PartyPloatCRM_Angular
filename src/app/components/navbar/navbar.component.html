@@ -10,15 +10,15 @@
     
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
         <breadcrumb #parent> 
-            <ol class="breadcrumb">
-                <li *ngIf="isDashboard === false" class="breadcrumb-item">
+            <ol class="breadcrumb mb-0">
+                <li *ngIf="isDashboard === false" class="breadcrumb-item fs-3">
                     <a routerLink="dashboard">Dashboard</a>
                 </li>
                 <ng-template ngFor let-route [ngForOf]="parent.breadcrumbs">
-                <li *ngIf="!route.terminal" class="breadcrumb-item">
+                <li *ngIf="!route.terminal" class="breadcrumb-item fs-3">
                     <a href="" [routerLink]="[route.url]">{{ route.displayName }}</a>
                 </li>
-                <li *ngIf="route.terminal" class="breadcrumb-item active">{{ route.displayName }}</li>
+                <li *ngIf="route.terminal" class="breadcrumb-item fs-3 active">{{ route.displayName }}</li>
                 </ng-template>
             </ol>
         </breadcrumb>
