@@ -35,7 +35,6 @@ import { ModuleMasterComponent } from "app/back-office/setting/module-master/mod
 import { FullCalendarModule } from "@fullcalendar/angular";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -59,7 +58,6 @@ import { BreadcrumbModule } from "angular-crumbs";
     NgxPaginationModule,
     DirectivesModule,
     NgxMatDatetimePickerModule,
-    NgxMaterialTimepickerModule,
     NgxMatTimepickerModule,
     MatDatepickerModule,
     MatNativeDateModule,
