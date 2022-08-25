@@ -900,7 +900,7 @@ html:not(.layout-menu-collapsed)
   .menu-inner
   .menu-item
   .menu-link:not(.active):hover {
-  background-color: rgba(67, 89, 113, 0.04);
+  background-color: rgba(0, 173, 239, 0.078) !important;
 }
 .bg-menu-theme
   .menu-inner
