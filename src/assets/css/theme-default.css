@@ -337,13 +337,13 @@ button.list-group-item-primary.active {
 
 .dropdown-item:not(.disabled).active,
 .dropdown-item:not(.disabled):active {
-  background-color: rgba(105, 108, 255, 0.08);
+  background-color: rgba(0, 173, 239, 0.078) !important;
   color: #00adef !important;
 }
 
 .dropdown-menu > li:not(.disabled) > a:not(.dropdown-item):active,
 .dropdown-menu > li.active:not(.disabled) > a:not(.dropdown-item) {
-  background-color: rgba(105, 108, 255, 0.08);
+  background-color: rgba(0, 173, 239, 0.078) !important;
   color: #00adef !important;
 }
 
@@ -900,7 +900,7 @@ html:not(.layout-menu-collapsed)
   .menu-inner
   .menu-item
   .menu-link:not(.active):hover {
-  background-color: rgba(67, 89, 113, 0.04);
+  background-color: rgba(0, 173, 239, 0.078) !important;
 }
 .bg-menu-theme
   .menu-inner

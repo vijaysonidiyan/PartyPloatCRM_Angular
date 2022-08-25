@@ -3192,12 +3192,12 @@ fieldset:disabled .btn {
   border-radius: 5px;
 }
 .dropdown-item:hover i {
-  color: #697a8d;
+  color: #00adef;
 }
 .dropdown-item:hover,
 .dropdown-item:focus {
-  color: #5f6e7f;
-  /* background-color: rgba(67, 89, 113, 0.04); */
+  color: #00adef;
+  background-color: rgba(0, 173, 239, 0.078) !important;
 }
 .dropdown-item.active,
 .dropdown-item:active {
@@ -17443,6 +17443,11 @@ html:not(.layout-footer-fixed) .content-wrapper {
 .ngx-pagination .current {
   border-radius: 5px;
 }
+.ngx-pagination a:hover, .ngx-pagination button:hover {
+  background-color: rgba(0, 173, 239, 0.078) !important;
+  border-radius: 5px;
+}
+
 .btn-bg {
   display: block;
   width: 100%;
@@ -17453,7 +17458,7 @@ html:not(.layout-footer-fixed) .content-wrapper {
   color: #00adef;
   text-align: center;
   white-space: nowrap;
-  background-color: #e7e7ff;
+  background-color: rgba(0, 173, 239, 0.078);
   border: 0;
   border-radius: 5px;
 }
@@ -17509,6 +17514,13 @@ html:not(.layout-footer-fixed) .content-wrapper {
 .fc-header-toolbar .fc-toolbar-chunk {
   display: flex !important;
   align-items: center !important;
+}
+.fc .fc-daygrid-day.fc-day-today {
+  background-color: rgb(235 249 254) !important;
+}
+.fc-h-event {
+  border-color: rgba(255, 255, 255, 0) !important;
+    background-color: rgba(0, 173, 239, 0.078) !important;
 }
 .fc-button-primary{
   color: #fff;
