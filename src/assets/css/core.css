@@ -17458,7 +17458,7 @@ html:not(.layout-footer-fixed) .content-wrapper {
   color: #00adef;
   text-align: center;
   white-space: nowrap;
-  background-color: #e7e7ff;
+  background-color: rgba(0, 173, 239, 0.078);
   border: 0;
   border-radius: 5px;
 }
