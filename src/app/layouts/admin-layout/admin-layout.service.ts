@@ -416,6 +416,13 @@ export class AdminLayoutService {
     return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/clientinquiryUpdate', updateClientInquiryData, { headers: headers });
   }
 
+  bookInquiryApproved(updateClientInquiryData: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/clientinquiryapprovalStatusupdate', updateClientInquiryData, { headers: headers });
+  }
+
   // ============== Company Setting =========== //
 
   getComapnysetting() {

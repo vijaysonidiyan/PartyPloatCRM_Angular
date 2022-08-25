@@ -5,10 +5,27 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AdminLayoutService } from "app/layouts/admin-layout/admin-layout.service";
 import { CommonService } from "app/shared/common.service";
 import * as moment from 'moment';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'MM/DD/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
+  },
+};
+
 @Component({
   selector: 'app-add-inquiry',
   templateUrl: './add-inquiry.component.html',
-  styleUrls: ['./add-inquiry.component.css']
+  styleUrls: ['./add-inquiry.component.css'],
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+  ]
 })
 export class AddInquiryComponent implements OnInit {
 
@@ -32,8 +49,9 @@ export class AddInquiryComponent implements OnInit {
   public stepMinute = 1;
   public stepSecond = 1;
   public color: ThemePalette = 'primary';
-  startDateObj = '';
-  endDateObj = '';
+  // startDateObj = '';
+  // endDateObj = '';
+  selectedDate: any
   //calender done
 
   get fclientinquiryData() {
@@ -42,14 +60,18 @@ export class AddInquiryComponent implements OnInit {
   submittedclientInquiryData = false;
 
   constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, private router: Router, public route: ActivatedRoute) {
+
     this.route.queryParams.subscribe((queryParams) => {
+      debugger
       if (!!queryParams.startDate && !!queryParams.endDate) {
-        this.startDateObj = queryParams.startDate;
-        this.endDateObj = queryParams.endDate;
+        this.selectedDate = queryParams.startDate;
+        // this.startDateObj = queryParams.startDate;
+        // this.endDateObj = queryParams.endDate;
       }
       else {
-        this.startDateObj = '';
-        this.endDateObj = '';
+        this.selectedDate = '';
+        // this.startDateObj = '';
+        // this.endDateObj = '';
       }
     });
   }
@@ -60,8 +82,6 @@ export class AddInquiryComponent implements OnInit {
     this.eventList = this.clientinquiryDataForm.get("events") as FormArray;
     this.minEndDate[0] = new Date();
     this.eventList.push(this.createeventItem({}));
-
-
   }
 
   onStartDateChange(data: any, index: any) {
@@ -90,6 +110,7 @@ export class AddInquiryComponent implements OnInit {
       email: ["", [Validators.required]],
       primaryContact: ["", [Validators.required]],
       secondryContact: [""],
+      date: [new Date(this.selectedDate), [Validators.required]],
       address: ["", [Validators.required]],
       events: this.fb.array([]),
     });
@@ -99,10 +120,10 @@ export class AddInquiryComponent implements OnInit {
     return this.fb.group({
       eventType: [(oItem['eventType'] ? oItem['eventType'] : null)],
       guest: [(oItem['guest'] ? oItem['guest'] : '')],
-      startDateObj: [(oItem['startDateObj'] ? oItem['startDateObj'] : !!this.startDateObj ? new Date(this.startDateObj) : '')],
-      endDateObj: [(oItem['endDateObj'] ? oItem['endDateObj'] : !!this.endDateObj ? new Date(this.endDateObj) : '')],
-      // startDateObj: [(oItem['startDateObj'] ? oItem['startDateObj'] : '2022-08-10T09:58:36.274Z')],
-      // endDateObj: [(oItem['endDateObj'] ? oItem['endDateObj'] : '2022-08-10T11:58:36.274Z')],
+      // startDateObj: [(oItem['startDateObj'] ? oItem['startDateObj'] : !!this.startDateObj ? new Date(this.startDateObj) : '')],
+      // endDateObj: [(oItem['endDateObj'] ? oItem['endDateObj'] : !!this.endDateObj ? new Date(this.endDateObj) : '')],
+      startTimeObj: [(oItem['endTimeObj'] ? oItem['endTimeObj'] : '')],
+      endTimeObj: [(oItem['endTimeObj'] ? oItem['endTimeObj'] : '')],
     });
   }
 
@@ -123,44 +144,55 @@ export class AddInquiryComponent implements OnInit {
     }
     let eventObjList = [];
     this.clientinquiryDataForm.controls.events.value.map((x: any) => {
-      if (!!x.endDateObj._d && !!x.startDateObj._d) {
-        let eventObj = {
-          eventType: x.eventType,
-          guest: x.guest,
-          startDateObj: x.startDateObj._d,
-          endDateObj: x.endDateObj._d
-        }
-        eventObjList.push(eventObj);
-      }
-      else if (!!x.startDateObj._d && x.endDateObj) {
-        let eventObj = {
-          eventType: x.eventType,
-          guest: x.guest,
-          startDateObj: x.startDateObj._d,
-          endDateObj: x.endDateObj
-        }
-        eventObjList.push(eventObj);
-      }
-      else if (!!x.endDateObj._d && x.startDateObj) {
-        let eventObj = {
-          eventType: x.eventType,
-          guest: x.guest,
-          startDateObj: x.startDateObj,
-          endDateObj: x.endDateObj._d
-        }
-        eventObjList.push(eventObj);
-      }
-      else if (x.endDateObj && x.startDateObj) {
-        let eventObj = {
-          eventType: x.eventType,
-          guest: x.guest,
-          startDateObj: x.startDateObj,
-          endDateObj: x.endDateObj
-        }
-        eventObjList.push(eventObj);
-      }
-    })
+      // if (!!x.endDateObj._d && !!x.startDateObj._d) {
+      //   let eventObj = {
+      //     eventType: x.eventType,
+      //     guest: x.guest,
+      //     startDateObj: x.startDateObj._d,
+      //     endDateObj: x.endDateObj._d
+      //   }
+      //   eventObjList.push(eventObj);
+      // }
+      // else if (!!x.startDateObj._d && x.endDateObj) {
+      //   let eventObj = {
+      //     eventType: x.eventType,
+      //     guest: x.guest,
+      //     startDateObj: x.startDateObj._d,
+      //     endDateObj: x.endDateObj
+      //   }
+      //   eventObjList.push(eventObj);
+      // }
+      // else if (!!x.endDateObj._d && x.startDateObj) {
+      //   let eventObj = {
+      //     eventType: x.eventType,
+      //     guest: x.guest,
+      //     startDateObj: x.startDateObj,
+      //     endDateObj: x.endDateObj._d
+      //   }
+      //   eventObjList.push(eventObj);
+      // }
+      // else if (x.endDateObj && x.startDateObj) {
+      //   let eventObj = {
+      //     eventType: x.eventType,
+      //     guest: x.guest,
+      //     startDateObj: x.startDateObj,
+      //     endDateObj: x.endDateObj
+      //   }
+      //   eventObjList.push(eventObj);
+      // }
+      let selectedDate = new Date(this.selectedDate).getFullYear() + '-' + (new Date(this.selectedDate).getMonth() + 1) + '-' + new Date(this.selectedDate).getDate();
 
+      let startDateObj = new Date(selectedDate + ' ' + x.startTimeObj);
+      let endDateObj = new Date(selectedDate + ' ' + x.endTimeObj);
+
+      let eventObj = {
+        eventType: x.eventType,
+        guest: x.guest,
+        startDateObj: startDateObj,
+        endDateObj: endDateObj
+      }
+      eventObjList.push(eventObj);
+    })
 
     let clientinquiryModelObj = {
       name: this.clientinquiryDataForm.controls.name.value,
@@ -170,7 +202,7 @@ export class AddInquiryComponent implements OnInit {
       address: this.clientinquiryDataForm.controls.address.value,
       events: eventObjList
     };
-
+    // return
     this.adminLayoutService.createClientinquiry(clientinquiryModelObj).subscribe(
       (Response: any) => {
         if (Response.meta.code == 200) {

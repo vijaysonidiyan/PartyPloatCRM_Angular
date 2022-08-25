@@ -40,7 +40,7 @@
                     <div class="col-lg-6 col-md-6 mb-3">
                         <label class="form-label" for="basic-default-phone">Contact</label>
                         <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                            placeholder="658 799 8941" formControlName="primaryContact" />
+                            placeholder="658 799 8941" appNumbersOnly maxlength="10" formControlName="primaryContact" />
                         <div *ngIf="submittedclientInquiryData && fclientinquiryData.primaryContact.errors">
                             <div *ngIf="fclientinquiryData.primaryContact.errors.required">
                                 <span class="error_msg">Contact is Required.</span>
@@ -49,17 +49,39 @@
                     </div>
                     <div class="col-lg-6 col-md-6 mb-3">
                         <label class="form-label" for="basic-default-phone">Contact-2</label>
-                        <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                            placeholder="658 799 8941" formControlName="secondryContact" />
+                        <input type="text" id="basic-default-phone" appNumbersOnly maxlength="10"
+                            class="form-control phone-mask" placeholder="658 799 8941"
+                            formControlName="secondryContact" />
                     </div>
                     <div class="col-lg-6 col-md-6 mb-3">
                         <label for="nameBasic" class="form-label">Address</label>
                         <textarea id="basic-default-message" class="form-control" placeholder=""
-                            formControlName="address" formControlName="address"></textarea>
+                            formControlName="address"></textarea>
                         <div *ngIf="submittedclientInquiryData && fclientinquiryData.address.errors">
                             <div *ngIf="fclientinquiryData.address.errors.required">
                                 <span class="error_msg">Address is Required.</span>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <label for="html5-date-input" class="form-label">Date</label>
+                        <div class="position-relative mat-date-picker">
+                            <!-- <input type="text" class="form-control" matInput [matDatepicker]="picker1"
+                                placeholder="Choose a start date" formControlName="date">
+                            <div class="mat-dat-picker-icon">
+                                <div class="calendar-icon"><i class="bx bxs-calendar"></i></div>
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                            </div> -->
+                            <input matInput [matDatepicker]="picker1" class="form-control" formControlName="date">
+                            <!-- <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker> -->
+                            <div class="mat-dat-picker-icon">
+                                <div class="calendar-icon"><i class="bx bxs-calendar"></i></div>
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                            </div>
+
                         </div>
                     </div>
 
@@ -83,7 +105,7 @@
                                     <input type="text" appNumbersOnly class="form-control" id="basic-default-company"
                                         placeholder="ACME Inc." formControlName="guest" />
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                                <!-- <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                                     <label for="html5-date-input" class="form-label">Start Date</label>
                                     <div class="position-relative mat-date-picker">
                                         <input type="text" class="form-control" matInput
@@ -119,6 +141,26 @@
                                                 [color]="color" [enableMeridian]="enableMeridian">
                                             </ngx-mat-datetime-picker>
                                         </div>
+                                    </div>
+                                </div> -->
+                                <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                                    <label for="html5-date-input" class="form-label">Start Time</label>
+                                    <div class="position-relative mat-date-picker">
+                                        <input class="form-control cus-time-picker" formControlName="startTimeObj"
+                                            type="time">
+                                        <!-- <div class="mat-dat-picker-icon">
+                                            <div class="calendar-icon"><i class="bx bx-time-five"></i></div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                                    <label for="html5-date-input" class="form-label">End Time</label>
+                                    <div class="position-relative mat-date-picker">
+                                        <input class="form-control cus-time-picker" formControlName="endTimeObj"
+                                            type="time">
+                                        <!-- <div class="mat-dat-picker-icon">
+                                            <div class="calendar-icon"><i class="bx bx-time-five"></i></div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6 col-md-6 col-sm-12 mb-3">

@@ -1,0 +1,15 @@
+input[type="time"] {
+  display: flex;
+  flex-flow: row-reverse;
+  padding: 8px 8px 8px 0 !important;
+  height: auto;
+}
+.cus-time-picker::-webkit-calendar-picker-indicator {
+  width: 18px !important;
+  height: 18px !important;
+  margin-right: 5px !important;
+  background-position: center !important;
+  background-size: 18px 18px !important;
+  background-repeat: no-repeat !important;
+  background: url("../../../assets/img/bx-time-five.png");
+}

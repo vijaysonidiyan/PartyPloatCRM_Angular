@@ -53,6 +53,8 @@
                         <table class="table">
                             <thead>
                                 <tr>
+                                    <th>Action</th>
+                                    <th>Status</th>
                                     <th>No</th>
                                     <th>Name</th>
                                     <th>Email</th>
@@ -63,35 +65,17 @@
                                     <th>Guest</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0"
                                 *ngFor="let inquiryData of inquiryList | paginate: { itemsPerPage: l, currentPage: p }; let inquiryIndex = index">
                                 <tr>
-                                    <td>{{ l * (p - 1) + inquiryIndex + 1 }}</td>
-                                    <td><strong>{{inquiryData.name}}</strong></td>
-                                    <td>{{inquiryData.email}}</td>
-                                    <td>{{inquiryData.primaryContact}}</td>
-                                    <td>{{inquiryData.secondryContact}}</td>
-                                    <td>{{inquiryData.address}}</td>
-                                    <td>{{inquiryData.eventName}}</td>
-                                    <td>{{inquiryData.guest}}</td>
-                                    <td>{{inquiryData.startDateObj | date:'dd/MM/yyyy hh:MM:SS a'}}</td>
-                                    <td>{{inquiryData.endDateObj | date:'dd/MM/yyyy hh:MM:SS a'}}</td>
-                                    <td>
-                                        <span *ngIf="inquiryData.status == 1"
-                                            class="badge bg-label-success me-1">Active</span>
-                                        <span *ngIf="inquiryData.status == 2"
-                                            class="badge bg-label-danger me-1">Deactive</span>
-                                    </td>
                                     <td>
                                         <div class="d-flex">
                                             <button class="btn-bg" (click)="editInquiryData(inquiryData)">
-                                                <i class="bx bx-edit-alt "></i>
+                                                <i class="bx bxs-show"></i>
                                             </button>
-                                            <button *ngIf="inquiryData.status == 2" title="Active Event"
+                                            <!-- <button *ngIf="inquiryData.status == 2" title="Active Event"
                                                 (confirm-click)="inquiryStatus({id :inquiryData._id,index:inquiryIndex, status:1})"
                                                 appConfirm [confirmTitle]="'Active'"
                                                 [confirmContent]="'Are you sure to Active this Inquiry?'"
@@ -104,9 +88,29 @@
                                                 [confirmContent]="'Are you sure to Deactive this Inquiry?'"
                                                 class="bg-label-danger btn-bg bg-label-danger">
                                                 <i class="bx bx-trash"></i>
-                                            </button>
+                                            </button> -->
                                         </div>
                                     </td>
+                                    <td>
+                                        <span *ngIf="inquiryData.approvalStatus == 1"
+                                            class="badge bg-label-primary me-1">Pending</span>
+                                        <span *ngIf="inquiryData.approvalStatus == 2"
+                                            class="badge bg-label-danger me-1">Cancel</span>
+                                        <span *ngIf="inquiryData.approvalStatus == 3"
+                                            class="badge bg-label-success me-1">Confirm</span>
+                                    </td>
+                                    <td>{{ l * (p - 1) + inquiryIndex + 1 }}</td>
+                                    <td><strong>{{inquiryData.name}}</strong></td>
+                                    <td>{{inquiryData.email}}</td>
+                                    <td>{{inquiryData.primaryContact}}</td>
+                                    <td>{{inquiryData.secondryContact}}</td>
+                                    <td>{{inquiryData.address}}</td>
+                                    <td>{{inquiryData.eventName}}</td>
+                                    <td>{{inquiryData.guest}}</td>
+                                    <td>{{inquiryData.startDateObj | date:'dd/MM/yyyy hh:MM:SS a'}}</td>
+                                    <td>{{inquiryData.endDateObj | date:'dd/MM/yyyy hh:MM:SS a'}}</td>
+
+
                                 </tr>
                                 <tr *ngIf="noData">
                                     <td colspan="12">
@@ -167,7 +171,7 @@
                                                     </div>
                                                 </div>
                                             </button>
-                                            <div [ngClass]="{'collapsed' : collapse[inquiryIndex] === true,
+                                            <div [ngClass]="{'collapsed' : collapse[inquiryIndex] === false,
                                             'green' : inquiryDataByDate.approvalStatus === 3 ,
                                             'red' : inquiryDataByDate.approvalStatus === 2 ,
                                             'blue' : inquiryDataByDate.approvalStatus === 1}" class="border-left-div ">
@@ -377,17 +381,36 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel1"><strong>Edit Inquiry</strong></h5>
+                <h5 class="modal-title" id="exampleModalLabel1" *ngIf="isEditViewInquiryDetails == true"><strong>Edit
+                        Inquiry</strong></h5>
+                <h5 class="modal-title" id="exampleModalLabel1" *ngIf="isEditViewInquiryDetails == false"><strong>View
+                        Inquiry</strong></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
             </div>
             <div class="modal-body">
+                <div class="row">
+                    <div class="float-end d-flex mb-4">
+                        <button type="submit" class="btn btn-primary"
+                            [ngClass]="isEditViewInquiryDetails == true ? 'd-none' : 'd-block'"
+                            (click)="isEditViewInquiryDetails = true">Edit
+                            Inquiry</button>
+                        <button type="submit" class="btn btn-primary"
+                            [ngClass]="isEditViewInquiryDetails == false ? 'd-none' : 'd-block'"
+                            (click)="isEditViewInquiryDetails = false">View
+                            Inquiry</button>
+                        <button type="submit" class="btn btn-primary" (confirm-click)="bookInquiry(3)" appConfirm
+                            [confirmTitle]="'Book Inquiry'" [confirmContent]="'Are you sure to Book this Inquiry?'">Book
+                            Inquiry</button>
+                    </div>
+                </div>
                 <form [formGroup]="inquiryForm">
                     <div class="row">
                         <input type="hidden" formControlName="_id">
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label for="nameBasic" class="form-label">Name</label>
                             <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
-                                formControlName="name" />
+                                formControlName="name" [readonly]="isEditViewInquiryDetails == false" />
                             <div *ngIf="submittedclientInquiryData && fclientinquiryData.name.errors">
                                 <div *ngIf="fclientinquiryData.name.errors.required">
                                     <span class="error_msg">Name is Required.</span>
@@ -399,7 +422,7 @@
                             <div class="input-group input-group-merge">
                                 <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
                                     aria-label="john.doe" aria-describedby="basic-default-email2"
-                                    formControlName="email" />
+                                    formControlName="email" [readonly]="isEditViewInquiryDetails == false" />
                                 <span class="input-group-text" id="basic-default-email2">@example.com</span>
                             </div>
                             <div *ngIf="submittedclientInquiryData && fclientinquiryData.email.errors">
@@ -411,7 +434,8 @@
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label class="form-label" for="basic-default-phone">Contact</label>
                             <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                                placeholder="658 799 8941" formControlName="primaryContact" />
+                                placeholder="658 799 8941" appNumbersOnly maxlength="10"
+                                [readonly]="isEditViewInquiryDetails == false" formControlName="primaryContact" />
                             <div *ngIf="submittedclientInquiryData && fclientinquiryData.primaryContact.errors">
                                 <div *ngIf="fclientinquiryData.primaryContact.errors.required">
                                     <span class="error_msg">Contact is Required.</span>
@@ -420,13 +444,15 @@
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label class="form-label" for="basic-default-phone">Contact-2</label>
-                            <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                                placeholder="658 799 8941" formControlName="secondryContact" />
+                            <input type="text" id="basic-default-phone" appNumbersOnly maxlength="10"
+                                class="form-control phone-mask" placeholder="658 799 8941"
+                                [readonly]="isEditViewInquiryDetails == false" formControlName="secondryContact" />
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label for="nameBasic" class="form-label">Address</label>
                             <textarea id="basic-default-message" class="form-control" placeholder=""
-                                formControlName="address" formControlName="address"></textarea>
+                                formControlName="address" [readonly]="isEditViewInquiryDetails == false"
+                                formControlName="address"></textarea>
                             <div *ngIf="submittedclientInquiryData && fclientinquiryData.address.errors">
                                 <div *ngIf="fclientinquiryData.address.errors.required">
                                     <span class="error_msg">Address is Required.</span>
@@ -435,25 +461,29 @@
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label for="nameBasic" class="form-label">Event Type</label>
-                            <ng-select [items]="eventActiveList" class="form-control p-0" bindLabel="name"
-                                bindValue="_id" placeholder="Select Event" formControlName="eventType">
+                            <ng-select [items]="eventActiveList" [readonly]="isEditViewInquiryDetails == false"
+                                class="form-control p-0" bindLabel="name" bindValue="_id" placeholder="Select Event"
+                                formControlName="eventType">
                             </ng-select>
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label class="form-label" for="basic-default-company">Guest</label>
-                            <input type="text" class="form-control" appNumbersOnly id="basic-default-company"
-                                placeholder="ACME Inc." formControlName="guest" />
+                            <input type="text" class="form-control" [readonly]="isEditViewInquiryDetails == false"
+                                appNumbersOnly id="basic-default-company" placeholder="ACME Inc."
+                                formControlName="guest" />
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label for="html5-date-input" class="form-label">Start Date</label>
                             <div class="position-relative mat-date-picker">
                                 <input type="text" class="form-control" matInput
-                                    (ngModelChange)="onStartDateChange($event)" [ngxMatDatetimePicker]="startDate"
+                                    (ngModelChange)="onStartDateChange($event)"
+                                    [readonly]="isEditViewInquiryDetails == false" [ngxMatDatetimePicker]="startDate"
                                     placeholder="Choose a start date" formControlName="startDateObj" [min]="minDate"
-                                    [max]="maxDate" [disabled]="disabled">
+                                    [max]="maxDate">
                                 <div class="mat-dat-picker-icon">
                                     <div class="calendar-icon"><i class="bx bxs-calendar"></i></div>
-                                    <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                                    <mat-datepicker-toggle matSuffix [for]="startDate"
+                                        [disabled]="isEditViewInquiryDetails == false"></mat-datepicker-toggle>
                                     <ngx-mat-datetime-picker #startDate [showSpinners]="showSpinners"
                                         [showSeconds]="showSeconds" [stepHour]="stepHour" [stepMinute]="stepMinute"
                                         [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
@@ -465,12 +495,13 @@
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label for="html5-date-input" class="form-label">End Date</label>
                             <div class="position-relative mat-date-picker">
-                                <input type="text" class="form-control" matInput [ngxMatDatetimePicker]="endDate"
-                                    placeholder="Choose a start date" formControlName="endDateObj" [min]="minEndDate"
-                                    [max]="maxDate" [disabled]="disabled">
+                                <input type="text" class="form-control" [readonly]="isEditViewInquiryDetails == false"
+                                    matInput [ngxMatDatetimePicker]="endDate" placeholder="Choose a start date"
+                                    formControlName="endDateObj" [min]="minEndDate" [max]="maxDate">
                                 <div class="mat-dat-picker-icon">
                                     <div class="calendar-icon"><i class="bx bxs-calendar"></i></div>
-                                    <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                                    <mat-datepicker-toggle matSuffix [for]="endDate"
+                                        [disabled]="isEditViewInquiryDetails == false"></mat-datepicker-toggle>
                                     <ngx-mat-datetime-picker #endDate [showSpinners]="showSpinners"
                                         [showSeconds]="showSeconds" [stepHour]="stepHour" [stepMinute]="stepMinute"
                                         [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
@@ -481,7 +512,7 @@
                         </div>
                     </div>
                 </form>
-                <div class="float-end">
+                <div class="float-end" *ngIf="isEditViewInquiryDetails == true">
                     <button type="submit" class="btn btn-primary" (click)="updateClientInquiry()">Update</button>
                 </div>
             </div>

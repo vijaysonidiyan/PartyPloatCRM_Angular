@@ -15,7 +15,7 @@ declare const $: any;
   styleUrls: ["./inquiry.component.css"],
 })
 export class InquiryComponent implements OnInit {
-  activeTab = 2;
+  activeTab = 1;
   monthList: any[] = [];
   yearList: any[] = [];
   staffList: any[];
@@ -40,6 +40,7 @@ export class InquiryComponent implements OnInit {
   endDateObj: any;
 
   collapse = {}
+  isEditViewInquiryDetails: boolean = false;
 
   tabClick(tab) {
     this.activeTab = tab;
@@ -125,39 +126,37 @@ export class InquiryComponent implements OnInit {
 
     this.adminLayoutService.getInquiryListForCalenderView(inquiryObj).subscribe((response: any) => {
       if (response.meta.code == 200) {
-
         this.inquiryEvent = [];
         this.inquiryEvent = response.data;
-
-        this.calendarOptions = {
-          initialView: 'dayGridMonth',
-          headerToolbar: {
-            left: 'prev,next title',
-            center: '',
-            right: 'myCustomButton'
-          },
-          businessHours: false, // display business hours
-          editable: true,
-          selectable: true,
-          dateClick: this.handleDateClick.bind(this),
-          events: this.inquiryEvent,
-          eventClick: this.eventClickFunction.bind(this),
-          customButtons: {
-            myCustomButton: {
-              text: 'Table View',
-              click: this.customeButton.bind(this)
-            },
-            next: {
-              click: this.nextMonth.bind(this)
-            },
-            prev: {
-              click: this.prevMonth.bind(this)
-            }
-          },
-        }
       }
       else {
         this.inquiryEvent = [];
+      }
+      this.calendarOptions = {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+          left: 'prev,next title',
+          center: '',
+          right: 'myCustomButton'
+        },
+        businessHours: false, // display business hours
+        editable: true,
+        selectable: true,
+        dateClick: this.handleDateClick.bind(this),
+        events: this.inquiryEvent,
+        eventClick: this.eventClickFunction.bind(this),
+        customButtons: {
+          myCustomButton: {
+            text: 'Table View',
+            click: this.customeButton.bind(this)
+          },
+          next: {
+            click: this.nextMonth.bind(this)
+          },
+          prev: {
+            click: this.prevMonth.bind(this)
+          }
+        },
       }
     })
 
@@ -402,6 +401,7 @@ export class InquiryComponent implements OnInit {
   editInquiryData(data: any) {
     this.defaultForm();
     console.log(data);
+    debugger
     // set value in form
     this.inquiryForm.controls._id.setValue(data._id)
     this.inquiryForm.controls.name.setValue(data.name)
@@ -413,8 +413,9 @@ export class InquiryComponent implements OnInit {
     this.inquiryForm.controls.guest.setValue(data.guest)
     this.inquiryForm.controls.startDateObj.setValue(data.startDateObj)
     this.inquiryForm.controls.endDateObj.setValue(data.endDateObj)
-    $('#edit-inquiry-modal').modal('show')
 
+    this.isEditViewInquiryDetails = false;
+    $('#edit-inquiry-modal').modal('show');
   }
 
   updateClientInquiry() {
@@ -454,6 +455,18 @@ export class InquiryComponent implements OnInit {
       }
       this.collapse[inquiryIndex] = true;
     }
+  }
+
+  bookInquiry(status: any) {
+    let obj = {
+      _id: this.inquiryForm.value._id,
+      approvalStatus: status
+    }
+    this.adminLayoutService.bookInquiryApproved(obj).subscribe((Response: any) => {
+      if (Response.meta.code == 200) {
+
+      }
+    })
   }
 
   viewInquiryDetails(id: any) {

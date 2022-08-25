@@ -7,7 +7,7 @@ import { DashboardComponent } from "../../back-office/dashboard/dashboard.compon
 import { TableListComponent } from "../../back-office/table-list/table-list.component";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
-import { MatRippleModule } from "@angular/material/core";
+import { MatNativeDateModule, MatRippleModule } from "@angular/material/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatSelectModule } from "@angular/material/select";
@@ -35,6 +35,7 @@ import { ModuleMasterComponent } from "app/back-office/setting/module-master/mod
 import { FullCalendarModule } from "@fullcalendar/angular";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -58,8 +59,10 @@ import { BreadcrumbModule } from "angular-crumbs";
     NgxPaginationModule,
     DirectivesModule,
     NgxMatDatetimePickerModule,
+    NgxMaterialTimepickerModule,
     NgxMatTimepickerModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     NgxMatMomentModule,
     FullCalendarModule,
     //DaterangepickerModule
@@ -83,5 +86,6 @@ import { BreadcrumbModule } from "angular-crumbs";
     AddInquiryComponent,
     ModuleMasterComponent
   ],
+  providers: [MatDatepickerModule],
 })
 export class AdminLayoutModule { }
