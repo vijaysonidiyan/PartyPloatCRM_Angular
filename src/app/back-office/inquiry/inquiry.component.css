@@ -9,13 +9,13 @@
   cursor: pointer;
 }
 .border-left-div.green::after {
-  border-color: green !important;
+  border-color: #71dd37  !important;
 }
 .border-left-div.red::after {
-  border-color: red !important;
+  border-color: #ff3e1d !important;
 }
 .border-left-div.blue::after {
-  border-color: blue !important;
+  border-color: #00adef !important;
 }
 .border-left-div::after {
   content: "";

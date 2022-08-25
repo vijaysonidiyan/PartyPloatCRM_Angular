@@ -3192,12 +3192,12 @@ fieldset:disabled .btn {
   border-radius: 5px;
 }
 .dropdown-item:hover i {
-  color: #697a8d;
+  color: #00adef;
 }
 .dropdown-item:hover,
 .dropdown-item:focus {
-  color: #5f6e7f;
-  /* background-color: rgba(67, 89, 113, 0.04); */
+  color: #00adef;
+  background-color: rgba(0, 173, 239, 0.078) !important;
 }
 .dropdown-item.active,
 .dropdown-item:active {
@@ -17443,6 +17443,11 @@ html:not(.layout-footer-fixed) .content-wrapper {
 .ngx-pagination .current {
   border-radius: 5px;
 }
+.ngx-pagination a:hover, .ngx-pagination button:hover {
+  background-color: rgba(0, 173, 239, 0.078) !important;
+  border-radius: 5px;
+}
+
 .btn-bg {
   display: block;
   width: 100%;
