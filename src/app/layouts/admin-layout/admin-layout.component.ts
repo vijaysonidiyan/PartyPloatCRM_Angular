@@ -21,7 +21,7 @@ export class AdminLayoutComponent implements OnInit {
   private _router: Subscription;
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
-
+  navbarNativeElement : any;
   constructor(
     public location: Location,
     private router: Router,
@@ -37,7 +37,9 @@ export class AdminLayoutComponent implements OnInit {
       }
     })
   }
-
+  navbarEvent(Element : any) {
+    this.navbarNativeElement = Element;
+  }
   ngOnInit() {
     const isWindows = navigator.platform.indexOf("Win") > -1 ? true : false;
 

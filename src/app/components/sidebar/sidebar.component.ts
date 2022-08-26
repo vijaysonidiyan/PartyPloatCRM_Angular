@@ -1,9 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ElementRef, Input } from "@angular/core";
 import { AdminLayoutService } from "app/layouts/admin-layout/admin-layout.service";
 import { CommonService } from "app/shared/common.service";
 import { StorageKey, StorageService } from "app/shared/storage.service";
 import { environment } from "environments/environment";
-
+import { NavbarComponent } from "../navbar/navbar.component";
 declare const $: any;
 declare interface RouteInfo {
   path: string;
@@ -67,16 +67,25 @@ export class SidebarComponent implements OnInit {
   noData: boolean;
   utsav_logo_img: any;
   uploadsUrl: any;
-  constructor(public commonService: CommonService, public adminLayoutService: AdminLayoutService, public storageService: StorageService) {
+  private toggleButton: any;
+  navbar: any;
+
+  constructor(public commonService: CommonService,private element: ElementRef, public adminLayoutService: AdminLayoutService, public storageService: StorageService) {
     this.uploadsUrl = environment.uploadedUrl
     this.utsav_logo_img = this.storageService.getValue(StorageKey.utsav_decor_logo);
   }
-
+  @ Input() set navbarNativeElement(value: any) {
+    debugger
+    if(!!value) {
+      this.navbar = value.navbarNativeElement;
+    }
+   }
   iconDefaultURL = environment.uploadsUrl + 'default_icon/'
   iconActiveURL = environment.uploadsUrl + 'active_icon/'
 
 
   ngOnInit() {
+    
     // this.utsav_logo_img = environment.uploadedUrl + this.storageService.getValue(StorageKey.utsav_decor_logo)
     this.getSideMenuList();
     // this.menuItems = ROUTES.filter((menuItem) => menuItem);
@@ -128,4 +137,14 @@ export class SidebarComponent implements OnInit {
     );
   }
 
+  sidebarClose() {
+    debugger
+
+    //const navbar: HTMLElement = this.element.nativeElement;
+    this.toggleButton = this.navbar.getElementsByClassName("layout-menu-toggle")[0];
+    const body = document.getElementsByTagName("body")[0];
+    this.toggleButton.classList.remove("toggled");
+    //this.sidebarVisible = false;
+    body.classList.remove("layout-menu-expanded");
+  }
 }
