@@ -326,6 +326,27 @@
                     <div class="inquiry-bydate-list-item">
                         <div class="row">
                             <div class="col-lg-6 col-md-6 mb-3">
+                                <label for="html5-date-input" class="form-label">Date</label>
+                                <div class="position-relative mat-date-picker">
+                                    <!-- <input type="text" class="form-control" matInput [matDatepicker]="picker1"
+                                        placeholder="Choose a start date" formControlName="date">
+                                    <div class="mat-dat-picker-icon">
+                                        <div class="calendar-icon"><i class="bx bxs-calendar"></i></div>
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </div> -->
+                                    <input matInput [matDatepicker]="picker1" placeholder="Select Date" class="form-control" [(ngModel)]="startDateObj">
+                                    <!-- <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker> -->
+                                    <div class="mat-dat-picker-icon">
+                                        <div class="calendar-icon"><i class="bx bxs-calendar"></i></div>
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </div>
+        
+                                </div>
+                            </div>
+                            <!-- <div class="col-lg-6 col-md-6 mb-3">
                                 <label for="html5-date-input" class="form-label">Start Date</label>
                                 <div class="position-relative mat-date-picker">
                                     <input type="text" class="form-control" matInput
@@ -359,7 +380,7 @@
                                         </ngx-mat-datetime-picker>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 

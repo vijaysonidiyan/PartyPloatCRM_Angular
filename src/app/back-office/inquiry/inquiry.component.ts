@@ -36,7 +36,7 @@ export class InquiryComponent implements OnInit {
   noData: boolean;
   inquiryListByDate: any[] = [];
 
-  startDateObj: any;
+  startDateObj= '';
   endDateObj: any;
 
   collapse = {}
@@ -161,13 +161,16 @@ export class InquiryComponent implements OnInit {
     })
 
   }
+
   addInquiryByDate() {
-    if (!!this.startDateObj && !!this.endDateObj) {
+    if (!!this.startDateObj) {
+      debugger
+    // if (!!this.startDateObj && !!this.endDateObj) {
       $('#add-inquiry-modal').modal('hide');
       this.router.navigate(["/admin/add-inquiry"], {
         queryParams: {
           startDate: this.startDateObj,
-          endDate: this.endDateObj
+          // endDate: this.endDateObj
         }
       })
     }
@@ -183,7 +186,15 @@ export class InquiryComponent implements OnInit {
 
   // date selction through open popup
   handleDateClick(arg) {
-    $('#add-inquiry-modal').modal('show');
+    debugger
+    // this.startDateObj = arg.date
+    this.router.navigate(["/admin/add-inquiry"], {
+      queryParams: {
+        startDate: arg.date,
+        // endDate: this.endDateObj
+      }
+    })
+    // $('#add-inquiry-modal').modal('show');
   }
 
   // For Next Month Click

@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ThemePalette } from '@angular/material/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AdminLayoutService } from "app/layouts/admin-layout/admin-layout.service";
 import { CommonService } from "app/shared/common.service";
 import * as moment from 'moment';
-import { MAT_DATE_FORMATS } from '@angular/material/core';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS,ThemePalette, MAT_DATE_LOCALE} from '@angular/material/core';
 
-export const MY_DATE_FORMATS = {
+export const MY_FORMATS = {
   parse: {
-    dateInput: 'MM/DD/YYYY',
+    dateInput: 'LL',
   },
   display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MMMM YYYY',
+    dateInput: 'DD-MM-YYYY',
+    monthYearLabel: 'YYYY',
     dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY'
+    monthYearA11yLabel: 'YYYY',
   },
 };
 
@@ -24,8 +24,9 @@ export const MY_DATE_FORMATS = {
   templateUrl: './add-inquiry.component.html',
   styleUrls: ['./add-inquiry.component.css'],
   providers: [
-    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
-  ]
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ],
 })
 export class AddInquiryComponent implements OnInit {
 
@@ -63,7 +64,8 @@ export class AddInquiryComponent implements OnInit {
 
     this.route.queryParams.subscribe((queryParams) => {
       debugger
-      if (!!queryParams.startDate && !!queryParams.endDate) {
+      if (!!queryParams.startDate ) {
+      // if (!!queryParams.startDate && !!queryParams.endDate) {
         this.selectedDate = queryParams.startDate;
         // this.startDateObj = queryParams.startDate;
         // this.endDateObj = queryParams.endDate;
@@ -110,7 +112,6 @@ export class AddInquiryComponent implements OnInit {
       email: ["", [Validators.required]],
       primaryContact: ["", [Validators.required]],
       secondryContact: [""],
-      date: [new Date(this.selectedDate), [Validators.required]],
       address: ["", [Validators.required]],
       events: this.fb.array([]),
     });

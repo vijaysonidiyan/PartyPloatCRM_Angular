@@ -142,7 +142,7 @@ a.bg-primary:focus {
 }
 
 .bg-label-primary {
-  background-color: #e7e7ff !important;
+  background-color: rgba(0, 173, 239, 0.078) !important;
   color: #00adef !important;
 }
 
