@@ -28,6 +28,10 @@ export const AdminLayoutRoutes: Routes = [
   { path: "event-master", component: EventMasterComponent, data: { breadcrumb: 'Event Master' } },
   { path: "product-master", component: ProductMasterComponent, data: { breadcrumb: 'Product Master' } },
   { path: "vendor-details", component: VendorDetailsComponent, data: { breadcrumb: 'Vendor Details' } },
-  { path: "inquiry", component: InquiryComponent, data: { breadcrumb: 'Inquiry' } },
-  { path: "add-inquiry", component: AddInquiryComponent, data: { breadcrumb: 'Add Inquiry' } },
+  { path: "inquiry", component: InquiryComponent, data: { breadcrumb: 'Inquiry' }, 
+    children: [
+      { path: 'add-inquiry', component: AddInquiryComponent, data: { breadcrumb: "Add Inquiry" } }
+    ] 
+  },
+  //{ path: "inquiry/add-inquiry", component: AddInquiryComponent, data: { breadcrumb: 'Add Inquiry' } },
 ];
