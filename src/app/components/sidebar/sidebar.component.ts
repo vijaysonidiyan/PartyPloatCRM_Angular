@@ -75,7 +75,7 @@ export class SidebarComponent implements OnInit {
     this.utsav_logo_img = this.storageService.getValue(StorageKey.utsav_decor_logo);
   }
   @ Input() set navbarNativeElement(value: any) {
-    debugger
+    //debugger
     if(!!value) {
       this.navbar = value.navbarNativeElement;
     }
