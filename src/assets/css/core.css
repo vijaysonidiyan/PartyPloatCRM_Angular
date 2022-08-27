@@ -2159,6 +2159,10 @@ progress {
 }
 
 @media (max-width: 575.98px) {
+  .fc .fc-toolbar {
+    display: block !important;
+  }
+
   .table-responsive-sm {
     overflow-x: auto;
     overflow-y: hidden;
@@ -9070,6 +9074,22 @@ button.list-group-item-gray.active {
 }
 
 @media (max-width: 767.98px) {
+  .btn-cus {
+    text-align: right;
+  }
+  .btn-cus .fc-myCustomButton-button {
+    margin-top: 16px !important;
+  }
+  .btn-cus .fc-header-toolbar .fc-toolbar-chunk:first-child {
+    justify-content: space-between !important;
+  }
+  .btn-cus .fc-header-toolbar .fc-toolbar-chunk:last-child {
+    display: block !important;
+    text-align: right !important;
+  }
+  .btn-cus .btn {
+    margin-top: 16px;
+  }
   .card .card-separator {
     border-bottom: 1px solid #d9dee3;
     padding-bottom: 1.5rem;
@@ -15954,6 +15974,15 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
   }
 }
 @media (max-width: 991.98px) {
+  .fc .fc-toolbar {
+    display: block;
+  }
+  .btn-cus {
+    text-align: right;
+  }
+  .btn-cus .btn {
+    margin-top: 16px;
+  }
   .layout-navbar-fixed .layout-navbar.navbar-detached {
     width: calc(100% - (1rem * 2)) !important;
   }

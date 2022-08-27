@@ -1,11 +1,11 @@
 <div class="container-fluid flex-grow-1 container-p-y">
-    <div>
+    <div class="btn-cus">
         <div class="card">
             <div class="card-body p-0">
                 <div class="row mb-3 p-4" *ngIf="activeTab === 1">
-                    <div class="col-lg-10">
+                    <div class="col-lg-9">
                         <div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-lg-3 col-md-12 col-sm-12 mb-3">
                                 <!-- <div class=" d-flex align-items-center">
                                     <label class="me-3">Search:</label>
                                     <input type="search" class="form-control" placeholder=""
@@ -17,27 +17,27 @@
                                         aria-label="Search..." [(ngModel)]="searchedName" />
                                 </div>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-3 col-md-12 col-sm-12 mb-3">
                                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Inquiry</h4> -->
                                 <ng-select [items]="monthArray" [multiple]="false" class="form-control p-0 me-3"
                                     bindLabel="month" bindValue="value" [(ngModel)]="searchedMonth"
                                     placeholder="Select Month">
                                 </ng-select>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-3 col-md-12 col-sm-12">
                                 <ng-select [items]="yearArray" [multiple]="false" class="form-control p-0 me-3"
                                     bindLabel="yearArray" bindValue="yearArray" [(ngModel)]="searchedYear"
                                     placeholder="Select Year">
                                 </ng-select>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-3 col-md-12 col-sm-12">
                                 <button type="button" (click)="searchFilterInquiryList()" class="btn btn-primary">
                                     Search
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <div class="float-end">
                             <!-- <button type="button" class="btn btn-primary" (click)="tabClick(1)" *ngIf="activeTab === 2">
                                 Table View
@@ -125,7 +125,7 @@
                     </div>
                 </div>
                 <div class="" [ngClass]="activeTab == 2 ? 'd-block' : 'd-none'" *ngIf="activeTab == 2">
-                    <div class="p-4">
+                    <div class="p-4 btn-cus">
                         <full-calendar #calendar [options]="calendarOptions">
                         </full-calendar>
                     </div>
