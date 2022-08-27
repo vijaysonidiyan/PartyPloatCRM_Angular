@@ -385,21 +385,21 @@ export class AdminLayoutService {
     let headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
-    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/clientinquiryList', data, { headers: headers });
+    return this.http.get(this.commonService.rootData.rootUrl + 'clientinquiry/eventinquiryList', { params: data, headers: headers });
   }
 
   getInquiryListForCalenderView(data: any) {
     let headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
-    return this.http.get(this.commonService.rootData.rootUrl + 'clientinquiry/clientEventListgetByMothWise', { params: data, headers: headers });
+    return this.http.get(this.commonService.rootData.rootUrl + 'clientinquiry/EvetListgetByMothWise', { params: data, headers: headers });
   }
 
   getInquiryListByDate(data: any) {
     let headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
-    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/clientListgetByDate', data, { headers: headers });
+    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/eventListgetByDate', data, { headers: headers });
   }
 
   StatusInquiry(updatestatusInquiryData: any) {
