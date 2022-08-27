@@ -36,7 +36,7 @@ export class InquiryComponent implements OnInit {
   noData: boolean;
   inquiryListByDate: any[] = [];
 
-  startDateObj= '';
+  startDateObj = '';
   endDateObj: any;
 
   collapse = {}
@@ -160,12 +160,39 @@ export class InquiryComponent implements OnInit {
       }
     })
 
+    this.calendarOptions = {
+      initialView: 'dayGridMonth',
+      headerToolbar: {
+        left: 'prev,next title',
+        center: '',
+        right: 'myCustomButton'
+      },
+      businessHours: false, // display business hours
+      editable: true,
+      selectable: true,
+      dateClick: this.handleDateClick.bind(this),
+      events: this.inquiryEvent,
+      eventClick: this.eventClickFunction.bind(this),
+      customButtons: {
+        myCustomButton: {
+          text: 'Table View',
+          click: this.customeButton.bind(this)
+        },
+        next: {
+          click: this.nextMonth.bind(this)
+        },
+        prev: {
+          click: this.prevMonth.bind(this)
+        }
+      },
+    }
+
   }
 
   addInquiryByDate() {
     if (!!this.startDateObj) {
       debugger
-    // if (!!this.startDateObj && !!this.endDateObj) {
+      // if (!!this.startDateObj && !!this.endDateObj) {
       $('#add-inquiry-modal').modal('hide');
       this.router.navigate(["/admin/add-inquiry"], {
         queryParams: {
@@ -188,7 +215,7 @@ export class InquiryComponent implements OnInit {
   handleDateClick(arg) {
     debugger
     // this.startDateObj = arg.date
-    this.router.navigate(["/admin/add-inquiry"], {
+    this.router.navigate(["/admin/inquiry/add-inquiry"], {
       queryParams: {
         startDate: arg.date,
         // endDate: this.endDateObj
