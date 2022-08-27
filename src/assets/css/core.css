@@ -15712,7 +15712,8 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
   flex-direction: column;
 }
 .menu-vertical:not(.menu-no-animation) {
-  transition: width 0.3s;
+  transition: all 0.3s ease-out;
+  /* transition: width 0.3s; */
 }
 .menu-vertical,
 .menu-vertical .menu-block,
