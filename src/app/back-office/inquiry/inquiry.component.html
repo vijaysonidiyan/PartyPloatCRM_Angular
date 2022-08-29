@@ -411,7 +411,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="float-end d-flex mb-4">
+                    <div class="justify-content-end d-flex mb-4">
                         <button type="submit" class="btn btn-primary"
                             [ngClass]="isEditViewInquiryDetails == true ? 'd-none' : 'd-block'"
                             (click)="isEditViewInquiryDetails = true">Edit
@@ -419,9 +419,6 @@
                         <button type="submit" class="btn btn-primary"
                             [ngClass]="isEditViewInquiryDetails == false ? 'd-none' : 'd-block'"
                             (click)="isEditViewInquiryDetails = false">View
-                            Inquiry</button>
-                        <button type="submit" class="btn btn-primary" (confirm-click)="bookInquiry(3)" appConfirm
-                            [confirmTitle]="'Book Inquiry'" [confirmContent]="'Are you sure to Book this Inquiry?'">Book
                             Inquiry</button>
                     </div>
                 </div>
@@ -533,12 +530,15 @@
                         </div>
                     </div>
                 </form>
+               
+            </div>
+            <div class="justify-content-evenly modal-footer d-flex float-end">
                 <div class="float-end" *ngIf="isEditViewInquiryDetails == true">
                     <button type="submit" class="btn btn-primary" (click)="updateClientInquiry()">Update</button>
                 </div>
-            </div>
-            <div class="modal-footer">
-
+                <button type="submit" class="btn btn-primary" (confirm-click)="bookInquiry(3)" appConfirm
+                [confirmTitle]="'Book Inquiry'" [confirmContent]="'Are you sure to Book this Inquiry?'">Book
+                Inquiry</button>
             </div>
         </div>
     </div>
