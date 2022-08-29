@@ -167,15 +167,8 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer" *ngIf="!!selectedRole">
-                <button class="btn btn-dark" (click)="saveRolewisemenu()" [ngClass]="{
-                    'btn-primary': storageService.getValue('colour') === '1',
-                    'btn-info': storageService.getValue('colour') === '2',
-                    'btn-success': storageService.getValue('colour') === '3',
-                    'btn-warning': storageService.getValue('colour') === '4',
-                    'btn-danger': storageService.getValue('colour') === '5',
-                    'btn-rose': storageService.getValue('colour') === '6'
-                  }">
+            <div class="card-footer float-end" *ngIf="!!selectedRole">
+                <button class="btn btn-primary" (click)="saveRolewisemenu()">
                     Save
                 </button>
             </div>

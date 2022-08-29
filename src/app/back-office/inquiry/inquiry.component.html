@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body p-0">
                 <div class="row mb-3 p-4 btn-cus" *ngIf="activeTab === 1">
-                    <div class="col-lg-9">
+                    <div class="col-lg-12">
                         <div class="row">
                             <div class="col-lg-3 col-md-12 col-sm-12 mb-3">
                                 <!-- <div class=" d-flex align-items-center">
@@ -31,21 +31,31 @@
                                 </ng-select>
                             </div>
                             <div class="col-lg-3 col-md-12 col-sm-12">
-                                <button type="button" (click)="searchFilterInquiryList()" class="btn btn-primary">
-                                    Search
-                                </button>
+                                <div class="row d-flex justify-content-between">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                                        <div class="text-start">
+                                            <button type="button" (click)="searchFilterInquiryList()" class="btn btn-primary">
+                                                Search
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                                        <div class="text-end">
+                                            <!-- <button type="button" class="btn btn-primary" (click)="tabClick(1)" *ngIf="activeTab === 2">
+                                            Table View
+                                        </button> -->
+                                        <button type="button" class="btn btn-primary" (click)="tabClick(2)">
+                                            Calendar View
+                                        </button>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="float-end">
-                            <!-- <button type="button" class="btn btn-primary" (click)="tabClick(1)" *ngIf="activeTab === 2">
-                                Table View
-                            </button> -->
-                            <button type="button" class="btn btn-primary" (click)="tabClick(2)">
-                                Calendar View
-                            </button>
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="py-3" [ngClass]="activeTab == 1 ? 'd-block' : 'd-none'">
