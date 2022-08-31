@@ -17566,3 +17566,6 @@ html:not(.layout-footer-fixed) .content-wrapper {
 .fc .fc-button-primary:focus {
   box-shadow:none !important;
 }
+.notifier__notification--material {
+  padding: 10px !important;
+}
