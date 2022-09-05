@@ -147,7 +147,7 @@ export class InquiryComponent implements OnInit {
         eventClick: this.eventClickFunction.bind(this),
         customButtons: {
           myCustomButton: {
-            text: 'Table View',
+            text: 'List',
             click: this.customeButton.bind(this)
           },
           next: {
@@ -175,7 +175,7 @@ export class InquiryComponent implements OnInit {
       eventClick: this.eventClickFunction.bind(this),
       customButtons: {
         myCustomButton: {
-          text: 'Table View',
+          text: 'List',
           click: this.customeButton.bind(this)
         },
         next: {

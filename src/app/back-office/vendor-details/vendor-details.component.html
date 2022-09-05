@@ -125,7 +125,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-12 mb-3">
+                        <div class="col-lg-6 mb-3">
                             <label for="nameBasic" class="form-label">Address</label>
                             <textarea id="basic-default-message" class="form-control" placeholder="" formControlName="address"></textarea>
                             <div *ngIf="submittvendordetailsData && fvendorData.address.errors">
@@ -133,6 +133,15 @@
                                     <span class="error_msg text-danger">Address is Required.</span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="nameBasic" class="form-label">Description</label>
+                            <textarea id="basic-default-message" class="form-control" placeholder="" formControlName="Description"></textarea>
+                            <!-- <div *ngIf="submittvendordetailsData && fvendorData.Description.errors">
+                                <div *ngIf="fvendorData.Description.errors.required">
+                                    <span class="error_msg text-danger">Description is Required.</span>
+                                </div>
+                            </div> -->
                         </div>
                     </div>
                 </form>

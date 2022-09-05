@@ -35,6 +35,7 @@ import { ModuleMasterComponent } from "app/back-office/setting/module-master/mod
 import { FullCalendarModule } from "@fullcalendar/angular";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { ReferenceMasterComponent } from 'app/back-office/setting/reference-master/reference-master.component';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -82,7 +83,8 @@ import { BreadcrumbModule } from "angular-crumbs";
     CompanySettingComponent,
     InquiryComponent,
     AddInquiryComponent,
-    ModuleMasterComponent
+    ModuleMasterComponent,
+    ReferenceMasterComponent
   ],
   providers: [MatDatepickerModule],
 })

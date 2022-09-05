@@ -22,7 +22,10 @@ export class StaffComponent implements OnInit {
   staffIndex: number;
   staffListlength: any;
   noData;
-
+  filedocument: any;
+  imgURLlogo: any;
+  userFile: any;
+  
 
   get fnameData() {
     return this.staffForm.controls;
@@ -46,7 +49,21 @@ export class StaffComponent implements OnInit {
     this.getRoleActiveList();
     this.defaultForm();
   }
-
+  removeURLlogo() {
+    this.imgURLlogo = "";
+    this.userFile = "";
+  }
+  onDocumentChange(event) {
+    this.userFile = event.target.files[0];
+    this.filedocument = this.userFile.name;
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imgURLlogo = e.target.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
   defaultForm() {
     this.staffForm = this.fb.group({
       _id: ["0"],

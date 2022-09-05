@@ -21,6 +21,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>View</th>
                             <th>Status</th>
                             <th>Action</th>
                             <th>Name</th>
@@ -35,6 +36,27 @@
                     <tbody class="table-border-bottom-0">
                         <tr *ngFor="let staffData of staffList | paginate: { itemsPerPage: l, currentPage: p }; let staffIndex = index">
                             <td>{{ l * (p - 1) + staffIndex + 1 }}</td>
+                            <td>
+                                <div class="d-flex">
+                                    <button class="btn-bg" (click)="editInquiryData(inquiryData)">
+                                        <i class="bx bxs-show"></i>
+                                    </button>
+                                    <!-- <button *ngIf="inquiryData.status == 2" title="Active Event"
+                                        (confirm-click)="inquiryStatus({id :inquiryData._id,index:inquiryIndex, status:1})"
+                                        appConfirm [confirmTitle]="'Active'"
+                                        [confirmContent]="'Are you sure to Active this Inquiry?'"
+                                        class="bg-label-success btn-bg bg-label-success">
+                                        <i class="bx bx-plus"></i>
+                                    </button>
+                                    <button *ngIf="inquiryData.status == 1" title="Deactive Event"
+                                        (confirm-click)="inquiryStatus({id :inquiryData._id,index:inquiryIndex, status:2})"
+                                        appConfirm [confirmTitle]="'Deactive'"
+                                        [confirmContent]="'Are you sure to Deactive this Inquiry?'"
+                                        class="bg-label-danger btn-bg bg-label-danger">
+                                        <i class="bx bx-trash"></i>
+                                    </button> -->
+                                </div>
+                            </td>
                             <td>
                                 <span *ngIf="staffData.status == 1"
                                 class="badge bg-label-success me-1">Active</span>
@@ -124,7 +146,7 @@
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label class="form-label" for="basic-default-company">Reference</label>
-                            <input type="text" class="form-control" id="basic-default-company" placeholder="ACME Inc." formControlName="reference">
+                            <input type="text" class="form-control" id="basic-default-company" placeholder="Reference" formControlName="reference">
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label class="form-label" for="basic-default-phone">Aadhar Card</label>
@@ -158,6 +180,14 @@
                             <div *ngIf="submittedStaffData && partyplotInvalid === true">
                                 <span class="error_msg text-danger">Party plot is Required.</span>
                             </div>
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label for="formFile" class="form-label">Documemt</label>
+                            <input class="form-control" type="file" [multiple]=false accept="image/*" formControlName="document" #filedocument (change)="onDocumentChange($event)">
+                            <!-- <div *ngIf="imgURLlogo" class="imgUpload">
+                                <img [src]="imgURLlogo" alt="" width="100">
+                                <button *ngIf="isEditing === true" type="button" class="btn-close ml-10" data-bs-dismiss="modal" aria-label="Close" (click)="removeURLlogo()"></button>
+                            </div> -->
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Is Login?</label>

@@ -45,7 +45,7 @@
                                             Table View
                                         </button> -->
                                         <button type="button" class="btn btn-primary px-2" (click)="tabClick(2)">
-                                            Calendar View
+                                            Calendar
                                         </button>
                                         </div>
                                     </div>
@@ -53,9 +53,15 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-3">
-                        
+                        <div class="row">
+                            <div class="col-lg-3 col-md-12 col-sm-12 mb-3">
+                                <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Inquiry</h4> -->
+                                <ng-select [items]="monthArray" [multiple]="false" class="form-control p-0 me-3"
+                                    bindLabel="month" bindValue="value" [(ngModel)]="searchedMonth"
+                                    placeholder="Select Party Plot">
+                                </ng-select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="py-3" [ngClass]="activeTab == 1 ? 'd-block' : 'd-none'">
@@ -497,7 +503,7 @@
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label class="form-label" for="basic-default-company">Guest</label>
                             <input type="text" class="form-control" [readonly]="isEditViewInquiryDetails == false"
-                                appNumbersOnly id="basic-default-company" placeholder="ACME Inc."
+                                appNumbersOnly id="basic-default-company" placeholder="Enter Number"
                                 formControlName="guest" />
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">

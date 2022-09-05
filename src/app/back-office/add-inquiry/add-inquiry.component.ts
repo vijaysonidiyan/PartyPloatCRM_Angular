@@ -29,7 +29,7 @@ export const MY_FORMATS = {
   ],
 })
 export class AddInquiryComponent implements OnInit {
-
+  partyplotList: any;
   clientinquiryDataForm: FormGroup | any;
   eventList: any;
   eventActiveList: any;

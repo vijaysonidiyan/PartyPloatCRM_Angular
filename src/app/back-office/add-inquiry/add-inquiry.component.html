@@ -55,7 +55,7 @@
                     </div>
                     <div class="col-lg-6 col-md-6 mb-3">
                         <label for="nameBasic" class="form-label">Address</label>
-                        <textarea id="basic-default-message" class="form-control" placeholder=""
+                        <textarea style="height:38px;" id="basic-default-message" class="form-control" placeholder=""
                             formControlName="address"></textarea>
                         <div *ngIf="submittedclientInquiryData && fclientinquiryData.address.errors">
                             <div *ngIf="fclientinquiryData.address.errors.required">
@@ -63,8 +63,20 @@
                             </div>
                         </div>
                     </div>
-
-
+                    <div class="col-lg-6 mb-3">
+                        <label for="nameBasic" class="form-label">Select Reference Type</label>
+                        <ng-select [items]="partyplotList" [multiple]="true" [closeOnSelect]="false" class="form-control p-0" bindLabel="name" bindValue="_id"  formControlName="partyplotData"
+                            placeholder="Select Module">
+                        </ng-select>
+                        <!-- <div *ngIf="submittedStaffData && partyplotInvalid === true">
+                            <span class="error_msg text-danger">Party plot is Required.</span>
+                        </div> -->
+                    </div>
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <label for="nameBasic" class="form-label">Reference Details</label>
+                        <textarea style="height:38px;" id="basic-default-message" class="form-control" placeholder=""
+                            formControlName="Reference Details"></textarea>
+                    </div>
                 </div>
                 <div class="card-header d-flex justify-content-between align-items-center px-0">
                     <h5 class="mb-0">Event</h5>
@@ -135,6 +147,21 @@
                                             </ngx-mat-datetime-picker>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 mb-3">
+                                    <label class="form-label" for="basic-default-company">Client budget</label>
+                                    <input type="text" appNumbersOnly class="form-control" id="basic-default-company"
+                                        placeholder="Enter budget" formControlName="Client budget" />
+                                </div>
+                                <div class="col-lg-6 col-md-6 mb-3">
+                                    <label class="form-label" for="basic-default-company">Offer budget</label>
+                                    <input type="text" appNumbersOnly class="form-control" id="basic-default-company"
+                                        placeholder="Enter budget" formControlName="Offer budget" />
+                                </div>
+                                <div class="col-lg-6 col-md-6 mb-3">
+                                    <label for="nameBasic" class="form-label">Remark</label>
+                                    <textarea style="height:38px;" id="basic-default-message" class="form-control" placeholder=""
+                                        formControlName="address"></textarea>
                                 </div>
                                 <!-- <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                                     <label for="html5-date-input" class="form-label">Start Time</label>

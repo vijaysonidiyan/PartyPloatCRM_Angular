@@ -7,6 +7,7 @@ import { ProductMasterComponent } from "app/back-office/product-master/product-m
 import { CompanySettingComponent } from "app/back-office/setting/company-setting/company-setting.component";
 import { MenuMasterComponent } from "app/back-office/setting/menu-master/menu-master.component";
 import { ModuleMasterComponent } from "app/back-office/setting/module-master/module-master.component";
+import { ReferenceMasterComponent } from "app/back-office/setting/reference-master/reference-master.component";
 import { RoleMasterComponent } from "app/back-office/setting/role-master/role-master.component";
 import { RoleWiseMenuComponent } from "app/back-office/setting/role-wise-menu/role-wise-menu.component";
 import { UserWiseMenuComponent } from "app/back-office/setting/user-wise-menu/user-wise-menu.component";
@@ -19,6 +20,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "dashboard", component: DashboardComponent, data: { breadcrumb: 'Dashboard' } },
   { path: "setting/menu-master", component: MenuMasterComponent, data: { breadcrumb: 'Menu Master' } },
   { path: "setting/module-master", component: ModuleMasterComponent, data: { breadcrumb: 'Module Master' } },
+  { path: "setting/reference-master", component: ReferenceMasterComponent, data: { breadcrumb: 'Reference Master' } },
   { path: "setting/role-master", component: RoleMasterComponent, data: { breadcrumb: 'Role Master' } },
   { path: "setting/role-wise-menu", component: RoleWiseMenuComponent, data: { breadcrumb: 'Role Wise Menu' } },
   { path: "setting/user-wise-menu", component: UserWiseMenuComponent, data: { breadcrumb: 'User Wise Menu' } },
