@@ -29,24 +29,19 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Status</th>
+                            <th>Action</th>
                             <th>Menu Name</th>
                             <th>Parent Name</th>
                             <th>Module</th>
                             <th>Order</th>
                             <th>Icon</th>
-                            <th>Status</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
                         <tr
                             *ngFor="let menuData of menuList | paginate: { itemsPerPage: l, currentPage: p };let menuIndex = index">
                             <td>{{ l * (p - 1) + menuIndex +1 }}</td>
-                            <td><strong>{{ menuData.title }}</strong></td>
-                            <td>{{ menuData.parentName }}</td>
-                            <td>{{ menuData.module }}</td>
-                            <td>{{ menuData.order }}</td>
-                            <td><img src="{{iconDefaultURL}}{{menuData.active_icon}}" class="icon-png" alt=""></td>
                             <td>
                                 <span *ngIf="menuData.status == 1" class="badge bg-label-success">Active</span>
                                 <span *ngIf="menuData.status == 2" class="badge bg-label-danger">Deactive</span>
@@ -69,6 +64,11 @@
                                         <i class="bx bx-trash "></i></button>
                                 </div>
                             </td>
+                            <td><strong>{{ menuData.title }}</strong></td>
+                            <td>{{ menuData.parentName }}</td>
+                            <td>{{ menuData.module }}</td>
+                            <td>{{ menuData.order }}</td>
+                            <td><img src="{{iconDefaultURL}}{{menuData.active_icon}}" class="icon-png" alt=""></td>
                         </tr>
                     </tbody>
                 </table>

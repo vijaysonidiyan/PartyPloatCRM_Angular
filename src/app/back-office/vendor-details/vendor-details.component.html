@@ -21,21 +21,17 @@
                     <thead>
                         <tr class="text-nowrap">
                             <th>No</th>
+                            <th>Status</th>
+                            <th>Action</th>
                             <th>Name</th>
                             <th>Contact</th>
                             <th>Email ID</th>
                             <th>Address</th>
-                            <th>Status</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
                         <tr *ngFor="let vendorDetailsData of vendorDetailsList | paginate: { itemsPerPage: l, currentPage: p }; let vendorDetailsIndex = index">
                             <td>{{ l * (p - 1) + vendorDetailsIndex + 1 }}</td>
-                            <td><strong>{{ vendorDetailsData.name }}</strong></td>
-                            <td>{{ vendorDetailsData.primaryContact }}</td>
-                            <td>{{ vendorDetailsData.email }}</td>
-                            <td>{{ vendorDetailsData.address }}</td>
                             <td>
                                 <span *ngIf="vendorDetailsData.status == 1" class="badge bg-label-success me-1">Active</span>
                                 <span *ngIf="vendorDetailsData.status == 2" class="badge bg-label-danger me-1">Deactive</span>
@@ -63,6 +59,10 @@
                                     </button>
                                 </div>
                             </td>
+                            <td><strong>{{ vendorDetailsData.name }}</strong></td>
+                            <td>{{ vendorDetailsData.primaryContact }}</td>
+                            <td>{{ vendorDetailsData.email }}</td>
+                            <td>{{ vendorDetailsData.address }}</td>
                         </tr>
                         <tr *ngIf="noData">
                             <td colspan="10">

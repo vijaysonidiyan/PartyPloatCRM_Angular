@@ -29,18 +29,16 @@
                     <thead>
                         <tr>
                             <th class="w-10">No</th>
-                            <th class="w-35">Module Name</th>
-                            <th class="w-35">Module Value</th>
                             <th class="w-10">Status</th>
                             <th class="w-10">Action</th>
+                            <th class="w-35">Module Name</th>
+                            <th class="w-35">Module Value</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
                         <tr
                             *ngFor="let modulemasterData of modulemasterList | paginate: { itemsPerPage: l, currentPage: p }; let roleMasterIndex = index">
                             <td>{{ l * (p - 1) + roleMasterIndex + 1 }}</td>
-                            <td>{{ modulemasterData.name }}</td>
-                            <td>{{ modulemasterData.value }}</td>
                             <td>
                                 <span *ngIf="modulemasterData.status == 1"
                                     class="badge bg-label-success me-1">Active</span>
@@ -67,6 +65,8 @@
                                         class="btn-bg bg-label-danger"><i class="bx bx-trash"></i></button>
                                 </div>
                             </td>
+                            <td>{{ modulemasterData.name }}</td>
+                            <td>{{ modulemasterData.value }}</td>
                         </tr>
                         <tr *ngIf="noData">
                             <td colspan="5">
