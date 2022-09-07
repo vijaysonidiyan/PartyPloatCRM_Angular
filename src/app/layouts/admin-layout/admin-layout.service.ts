@@ -445,6 +445,50 @@ export class AdminLayoutService {
     return this.http.get(this.commonService.rootData.rootUrl + 'userwiseMenu/sideMenu-List', { headers: headers });
   }
 
+  // ============== Reference Master =========== //
+
+  getreferenceMaster() {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'reference/referenceList', { headers: headers });
+  }
+
+  SavereferenceMaster(createreferenceMasterData: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'reference/referenceSave', createreferenceMasterData, { headers: headers });
+  }
+
+  getreferenceMasterId(params: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'reference/referencegetById', { params: params, headers: headers });
+  }
+
+  UpdatereferenceMaster(updatereferenceMasterData: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'reference/referenceUpdate', updatereferenceMasterData, { headers: headers });
+  }
+
+  StatusreferenceMaster(updatestatusreferenceMasterData: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'reference/referenceStatusupdate', updatestatusreferenceMasterData, { headers: headers });
+  }
+
+  getReferenceActiveList() {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'reference/referenceActiveList', { headers: headers });
+  }
+
 
 }
 

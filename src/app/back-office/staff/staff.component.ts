@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AdminLayoutService } from "app/layouts/admin-layout/admin-layout.service";
 import { CommonService } from "app/shared/common.service";
@@ -24,8 +24,10 @@ export class StaffComponent implements OnInit {
   noData;
   filedocument: any;
   imgURLlogo: any;
-  userFile: any;
-  
+  userFile: any[] = [];
+  attactDocument: any = {};
+
+  @ViewChild('filedocument') fileDocument: ElementRef;
 
   get fnameData() {
     return this.staffForm.controls;
@@ -38,7 +40,7 @@ export class StaffComponent implements OnInit {
     public commonService: CommonService,
     public adminLayoutService: AdminLayoutService,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.noData = false;
@@ -49,20 +51,45 @@ export class StaffComponent implements OnInit {
     this.getRoleActiveList();
     this.defaultForm();
   }
-  removeURLlogo() {
-    this.imgURLlogo = "";
-    this.userFile = "";
+  removeURLlogo(params) {
+    if (params.index !== undefined && !!params.action) {
+      if (params.action === 'newDocument') {
+        this.userFile.splice(params.index, 1);
+      } else if (
+        params.action === 'oldDocument' &&
+        !!this.attactDocument &&
+        !!this.attactDocument.oldUploadedDocuments &&
+        !!this.attactDocument.oldUploadedDocuments[params.index]
+      ) {
+        if (this.attactDocument.deletedDocuments === undefined) {
+          this.attactDocument.deletedDocuments = [];
+        }
+        this.attactDocument.deletedDocuments.push(
+          this.attactDocument.oldUploadedDocuments[params.index].id
+        );
+        this.attactDocument.oldUploadedDocuments.splice(params.index, 1);
+      }
+    }
   }
   onDocumentChange(event) {
-    this.userFile = event.target.files[0];
-    this.filedocument = this.userFile.name;
-    if (event.target.files && event.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imgURLlogo = e.target.result;
-      };
-      reader.readAsDataURL(event.target.files[0]);
+    debugger
+    // this.userFile = event.target.files;
+    // this.filedocument = this.userFile.name;
+    // if (event.target.files && event.target.files[0]) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e: any) => {
+    //     this.imgURLlogo = e.target.result;
+    //   };
+    //   reader.readAsDataURL(event.target.files[0]);
+    // }
+    // this.fileDocument.nativeElement.value = "";
+
+    var selectedFiles = event.target.files;
+    for (var i = 0; i < selectedFiles.length; i++) {
+      this.userFile.push(selectedFiles[i]);
+      // this.resultName.push(selectedFiles[i].name);
     }
+    event.target.value = '';
   }
   defaultForm() {
     this.staffForm = this.fb.group({
@@ -75,7 +102,7 @@ export class StaffComponent implements OnInit {
       aadharcardNo: [""],
       partyplotData: [""],
       roleName: [""],
-      isLogin : false
+      isLogin: false
     });
   }
 
@@ -90,7 +117,7 @@ export class StaffComponent implements OnInit {
     this.ISeditStaff = false;
   }
 
-  isloginOnchange(paramsObj){
+  isloginOnchange(paramsObj) {
     let checked = paramsObj.checked;
     if (checked == true) {
       this.staffForm.controls.isLogin.setValue(true)
@@ -163,7 +190,7 @@ export class StaffComponent implements OnInit {
       this.roleInvalid = false;
     }
 
-    if (this.staffForm.invalid || this.partyplotInvalid === true || this.roleInvalid === true ) {
+    if (this.staffForm.invalid || this.partyplotInvalid === true || this.roleInvalid === true) {
       this.submittedStaffData = true;
       return;
     }
@@ -214,7 +241,7 @@ export class StaffComponent implements OnInit {
         this.staffForm.controls.isLogin.setValue(Response.data.isLogin);
         $("#add-menu-modal").modal("show");
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -232,7 +259,7 @@ export class StaffComponent implements OnInit {
       this.roleInvalid = false;
     }
 
-    if (this.staffForm.invalid || this.partyplotInvalid === true || this.roleInvalid === true ) {
+    if (this.staffForm.invalid || this.partyplotInvalid === true || this.roleInvalid === true) {
       this.submittedStaffData = true;
       return;
     }
@@ -271,24 +298,24 @@ export class StaffComponent implements OnInit {
   statusRolemaster(paramsObj) {
     debugger
     let statusrolemasterModelObj = {
-        "_id": paramsObj.id,
-        "status": paramsObj.status
+      "_id": paramsObj.id,
+      "status": paramsObj.status
     };
 
     this.adminLayoutService.StatusStaff(statusrolemasterModelObj).subscribe((Response: any) => {
 
-        if (Response.meta.code == 200) {
-            this.submittedStaffData = false;
-            this.getStaffList();
-            this.defaultForm();
-            this.ISeditStaff = false;
-            this.commonService.notifier.notify('success', Response.meta.message);
-        }
-        else {
-            this.commonService.notifier.notify('error', Response.meta.message);
-        }
+      if (Response.meta.code == 200) {
+        this.submittedStaffData = false;
+        this.getStaffList();
+        this.defaultForm();
+        this.ISeditStaff = false;
+        this.commonService.notifier.notify('success', Response.meta.message);
+      }
+      else {
+        this.commonService.notifier.notify('error', Response.meta.message);
+      }
     }, (error) => {
-        console.log(error);
+      console.log(error);
     });
   }
 
@@ -296,10 +323,10 @@ export class StaffComponent implements OnInit {
     this.staffList = this.allstaffList.filter((val: any) => JSON.stringify(val).toLowerCase().includes(value.toLowerCase()));
     this.p = 1;
     if (this.staffList.length == 0) {
-        debugger
-        this.noData = true;
+      debugger
+      this.noData = true;
     } else {
-        this.noData = false;
+      this.noData = false;
     }
   }
 }

@@ -65,8 +65,9 @@
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label for="nameBasic" class="form-label">Select Reference Type</label>
-                        <ng-select [items]="partyplotList" [multiple]="true" [closeOnSelect]="false" class="form-control p-0" bindLabel="name" bindValue="_id"  formControlName="partyplotData"
-                            placeholder="Select Module">
+                        <ng-select [items]="referenceActiveList" [multiple]="false" class="form-control p-0"
+                            bindLabel="referenceName" bindValue="_id" formControlName="reference_ID"
+                            placeholder="Select Reference Type">
                         </ng-select>
                         <!-- <div *ngIf="submittedStaffData && partyplotInvalid === true">
                             <span class="error_msg text-danger">Party plot is Required.</span>
@@ -97,11 +98,11 @@
                                     <input type="text" appNumbersOnly class="form-control" id="basic-default-company"
                                         placeholder="Enter Guest Count" formControlName="guest" />
                                 </div>
-                                <!-- <div class="col-lg-6 col-md-6 mb-3">
+                                <div class="col-lg-6 col-md-6 mb-3">
                                     <label for="html5-date-input" class="form-label">Date</label>
                                     <div class="position-relative mat-date-picker">
                                         <input matInput [matDatepicker]="picker1" [min]="minDate" class="form-control"
-                                            formControlName="date">
+                                            formControlName="Date">
                                         <div class="mat-dat-picker-icon">
                                             <div class="calendar-icon"><i class="bx bxs-calendar"></i></div>
                                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -109,8 +110,8 @@
                                         </div>
 
                                     </div>
-                                </div> -->
-                                <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                                </div>
+                                <!-- <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                                     <label for="html5-date-input" class="form-label">Start Date</label>
                                     <div class="position-relative mat-date-picker">
                                         <input type="text" class="form-control" matInput
@@ -129,8 +130,8 @@
                                         </div>
 
                                     </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                                </div> -->
+                                <!-- <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                                     <label for="html5-date-input" class="form-label">End Date</label>
                                     <div class="position-relative mat-date-picker">
                                         <input type="text" class="form-control" matInput
@@ -147,21 +148,35 @@
                                             </ngx-mat-datetime-picker>
                                         </div>
                                     </div>
+                                </div> -->
+                                <div class="col-lg-6 col-md-6 mb-3">
+                                    <label class="form-label" for="basic-default-company">Start Time</label>
+                                    <ng-select [items]="timeRange" [multiple]="false" class="form-control p-0"
+                                        bindLabel="name" bindValue="value" formControlName="startTimeObj"
+                                        placeholder="Select Reference Type">
+                                    </ng-select>
+                                </div>
+                                <div class="col-lg-6 col-md-6 mb-3">
+                                    <label class="form-label" for="basic-default-company">End Time</label>
+                                    <ng-select [items]="timeRange" [multiple]="false" class="form-control p-0"
+                                        bindLabel="name" bindValue="value" formControlName="endTimeObj"
+                                        placeholder="Select Reference Type">
+                                    </ng-select>
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-3">
                                     <label class="form-label" for="basic-default-company">Client budget</label>
                                     <input type="text" appNumbersOnly class="form-control" id="basic-default-company"
-                                        placeholder="Enter budget" formControlName="Client budget" />
+                                        placeholder="Enter budget" formControlName="client_budget" />
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-3">
                                     <label class="form-label" for="basic-default-company">Offer budget</label>
                                     <input type="text" appNumbersOnly class="form-control" id="basic-default-company"
-                                        placeholder="Enter budget" formControlName="Offer budget" />
+                                        placeholder="Enter budget" formControlName="offer_budget" />
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-3">
                                     <label for="nameBasic" class="form-label">Remark</label>
-                                    <textarea style="height:38px;" id="basic-default-message" class="form-control" placeholder=""
-                                        formControlName="address"></textarea>
+                                    <textarea style="height:38px;" id="basic-default-message" class="form-control"
+                                        placeholder="" formControlName="remark"></textarea>
                                 </div>
                                 <!-- <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                                     <label for="html5-date-input" class="form-label">Start Time</label>

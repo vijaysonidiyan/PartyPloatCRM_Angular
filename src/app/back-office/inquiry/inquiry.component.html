@@ -34,7 +34,8 @@
                                 <div class="row d-flex justify-content-between">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-6">
                                         <div class="text-start">
-                                            <button type="button" (click)="searchFilterInquiryList()" class="btn btn-primary">
+                                            <button type="button" (click)="searchFilterInquiryList()"
+                                                class="btn btn-primary">
                                                 Search
                                             </button>
                                         </div>
@@ -44,12 +45,12 @@
                                             <!-- <button type="button" class="btn btn-primary" (click)="tabClick(1)" *ngIf="activeTab === 2">
                                             Table View
                                         </button> -->
-                                        <button type="button" class="btn btn-primary px-2" (click)="tabClick(2)">
-                                            Calendar
-                                        </button>
+                                            <button type="button" class="btn btn-primary px-2" (click)="tabClick(2)">
+                                                Calendar
+                                            </button>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -116,7 +117,7 @@
                                         <span *ngIf="inquiryData.approvalStatus == 3"
                                             class="badge bg-label-success me-1">Confirm</span>
                                     </td>
-                                    <td><strong>{{inquiryData.name}}</strong></td>
+                                    <td><strong>{{inquiryData.clientname}}</strong></td>
                                     <td>{{inquiryData.email}}</td>
                                     <td>{{inquiryData.primaryContact}}</td>
                                     <td>{{inquiryData.secondryContact}}</td>
@@ -351,7 +352,8 @@
                                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                         <mat-datepicker #picker1></mat-datepicker>
                                     </div> -->
-                                    <input matInput [matDatepicker]="picker1" placeholder="Select Date" class="form-control" [(ngModel)]="startDateObj">
+                                    <input matInput [matDatepicker]="picker1" placeholder="Select Date"
+                                        class="form-control" [(ngModel)]="startDateObj">
                                     <!-- <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker> -->
                                     <div class="mat-dat-picker-icon">
@@ -359,7 +361,7 @@
                                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                         <mat-datepicker #picker1></mat-datepicker>
                                     </div>
-        
+
                                 </div>
                             </div>
                             <!-- <div class="col-lg-6 col-md-6 mb-3">
@@ -546,15 +548,15 @@
                         </div>
                     </div>
                 </form>
-               
+
             </div>
             <div class="justify-content-evenly modal-footer d-flex float-end">
                 <div class="float-end" *ngIf="isEditViewInquiryDetails == true">
                     <button type="submit" class="btn btn-primary" (click)="updateClientInquiry()">Update</button>
                 </div>
                 <button type="submit" class="btn btn-primary" (confirm-click)="bookInquiry(3)" appConfirm
-                [confirmTitle]="'Book Inquiry'" [confirmContent]="'Are you sure to Book this Inquiry?'">Book
-                Inquiry</button>
+                    [confirmTitle]="'Book Inquiry'" [confirmContent]="'Are you sure to Book this Inquiry?'">Book
+                    Inquiry</button>
             </div>
         </div>
     </div>

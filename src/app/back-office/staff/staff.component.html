@@ -7,7 +7,7 @@
                 <div class="card border-solid-primary flex-row align-items-center ps-2">
                     <i class="bx bx-search fs-4 lh-0"></i>
                     <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
-                        aria-label="Search..." (input)="search($event.target.value)"/>
+                        aria-label="Search..." (input)="search($event.target.value)" />
                 </div>
                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Staff</h4> -->
                 <div class="btn-cus">
@@ -34,7 +34,8 @@
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        <tr *ngFor="let staffData of staffList | paginate: { itemsPerPage: l, currentPage: p }; let staffIndex = index">
+                        <tr
+                            *ngFor="let staffData of staffList | paginate: { itemsPerPage: l, currentPage: p }; let staffIndex = index">
                             <td>{{ l * (p - 1) + staffIndex + 1 }}</td>
                             <td>
                                 <div class="d-flex">
@@ -58,10 +59,9 @@
                                 </div>
                             </td>
                             <td>
-                                <span *ngIf="staffData.status == 1"
-                                class="badge bg-label-success me-1">Active</span>
-                                <span *ngIf="staffData.status == 2"
-                                class="badge bg-label-danger me-1">Deactive</span></td>
+                                <span *ngIf="staffData.status == 1" class="badge bg-label-success me-1">Active</span>
+                                <span *ngIf="staffData.status == 2" class="badge bg-label-danger me-1">Deactive</span>
+                            </td>
                             <td>
                                 <div class="d-flex">
                                     <button class="btn-bg"
@@ -71,7 +71,7 @@
                                     <!-- <button class="btn-bg bg-label-danger" href="javascript:void(0);"><i
                                             class="bx bx-trash "></i>
                                     </button> -->
-    
+
                                     <button *ngIf="staffData.status == 2" class="dtl-btn btn bg-gradient-dark"
                                         title="Active Role"
                                         (confirm-click)="statusRolemaster({id :staffData._id, index : staffIndex, status:1})"
@@ -92,8 +92,9 @@
                             <td>{{staffData.aadharcardNo | mask: '0000 0000 0000'}}</td>
                             <td>{{staffData.email}}</td>
                             <td>
-                                <span *ngFor="let partyplotname of staffData.partyplotData; let eventIndex = index"><span
-                                *ngIf="eventIndex > 0">,&nbsp;</span>{{partyplotname.name}}</span>
+                                <span
+                                    *ngFor="let partyplotname of staffData.partyplotData; let eventIndex = index"><span
+                                        *ngIf="eventIndex > 0">,&nbsp;</span>{{partyplotname.name}}</span>
                             </td>
                             <td>{{staffData.roleName}}</td>
                         </tr>
@@ -117,15 +118,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel1"><strong>{{ISeditStaff ?
-                    'Edit' : 'Add'}} Staff Details</strong></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancelMenu()"></button>
+                        'Edit' : 'Add'}} Staff Details</strong></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="cancelMenu()"></button>
             </div>
             <div class="modal-body">
                 <form role="form" class="add-employee-form" [formGroup]="staffForm" autocomplete="off">
                     <div class="row">
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Name</label>
-                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name" formControlName="name"/>
+                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
+                                formControlName="name" />
                             <div *ngIf="submittedStaffData && fnameData.name.errors">
                                 <div *ngIf="fnameData.name.errors.required">
                                     <span class="error_msg text-danger">Name is Required.</span>
@@ -134,7 +137,9 @@
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label class="form-label" for="basic-default-phone">Phone No</label>
-                            <input type="text" id="basic-default-phone" class="form-control phone-mask" placeholder="658 799 8941" formControlName="contact" maxlength="10"  minlength="10" appNumbersOnly>
+                            <input type="text" id="basic-default-phone" class="form-control phone-mask"
+                                placeholder="658 799 8941" formControlName="contact" maxlength="10" minlength="10"
+                                appNumbersOnly>
                             <div *ngIf="submittedStaffData && fnameData.contact.errors">
                                 <div *ngIf="fnameData.contact.errors.required">
                                     <span class="error_msg text-danger">Contact is Required.</span>
@@ -146,15 +151,18 @@
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label class="form-label" for="basic-default-company">Reference</label>
-                            <input type="text" class="form-control" id="basic-default-company" placeholder="Reference" formControlName="reference">
+                            <input type="text" class="form-control" id="basic-default-company" placeholder="Reference"
+                                formControlName="reference">
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label class="form-label" for="basic-default-phone">Aadhar Card</label>
-                            <input type="text" id="basic-default-aadhar-card" class="form-control phone-mask" mask="0000 0000 0000" placeholder="9999 9999 9999" formControlName="aadharcardNo">
+                            <input type="text" id="basic-default-aadhar-card" class="form-control phone-mask"
+                                mask="0000 0000 0000" placeholder="9999 9999 9999" formControlName="aadharcardNo">
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Email</label>
-                            <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe" aria-label="john.doe" aria-describedby="basic-default-email2" formControlName="email">
+                            <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
+                                aria-label="john.doe" aria-describedby="basic-default-email2" formControlName="email">
                             <div *ngIf="submittedStaffData && fnameData.email.errors">
                                 <div *ngIf="fnameData.email.errors.required">
                                     <span class="error_msg text-danger">Email is Required.</span>
@@ -166,7 +174,8 @@
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Designation</label>
-                            <ng-select [items]="activeroleList" class="form-control p-0" bindLabel="roleName" bindValue="_id" placeholder="Select Role" formControlName="roleId">
+                            <ng-select [items]="activeroleList" class="form-control p-0" bindLabel="roleName"
+                                bindValue="_id" placeholder="Select Role" formControlName="roleId">
                             </ng-select>
                             <div *ngIf="submittedStaffData && roleInvalid === true">
                                 <span class="error_msg text-danger">Designation is Required.</span>
@@ -174,8 +183,9 @@
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Select Party plot</label>
-                            <ng-select [items]="partyplotList" [multiple]="true" [closeOnSelect]="false" class="form-control p-0" bindLabel="name" bindValue="_id"  formControlName="partyplotData"
-                                placeholder="Select Module">
+                            <ng-select [items]="partyplotList" [multiple]="true" [closeOnSelect]="false"
+                                class="form-control p-0" bindLabel="name" bindValue="_id"
+                                formControlName="partyplotData" placeholder="Select Module">
                             </ng-select>
                             <div *ngIf="submittedStaffData && partyplotInvalid === true">
                                 <span class="error_msg text-danger">Party plot is Required.</span>
@@ -183,16 +193,41 @@
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="formFile" class="form-label">Documemt</label>
-                            <input class="form-control" type="file" [multiple]=false accept="image/*" formControlName="document" #filedocument (change)="onDocumentChange($event)">
-                            <!-- <div *ngIf="imgURLlogo" class="imgUpload">
-                                <img [src]="imgURLlogo" alt="" width="100">
-                                <button *ngIf="isEditing === true" type="button" class="btn-close ml-10" data-bs-dismiss="modal" aria-label="Close" (click)="removeURLlogo()"></button>
-                            </div> -->
+                            <input class="form-control" type="file" [multiple]="true" accept="image/* , .pdf"
+                                formControlName="document" #filedocument (change)="onDocumentChange($event)">
+
+                            <!-- for old document remove and show  -->
+                            <div *ngFor="let document of attactDocument.oldUploadedDocuments;let documentindex = index">
+                                <!-- <div class="imgUpload" *ngIf="imgURLlogo">
+                                    <img [src]="imgURLlogo" alt="" width="100">
+                                    <button type="button" class="btn-close ml-10" (click)="removeURLlogo()"></button>
+                                </div> -->
+                                <div>
+                                    {{document.name}}
+                                    <button type="button" class="btn-close ml-10"
+                                        (click)="removeURLlogo({index : documentindex,action : 'oldDocument'})"></button>
+                                </div>
+                            </div>
+
+
+                            <!-- for new document remove and show  -->
+                            <div *ngFor="let document of userFile;let documentindex = index">
+                                <!-- <div class="imgUpload" *ngIf="imgURLlogo">
+                                    <img [src]="imgURLlogo" alt="" width="100">
+                                    <button type="button" class="btn-close ml-10" (click)="removeURLlogo()"></button>
+                                </div> -->
+                                <div>
+                                    {{document.name}}
+                                    <button type="button" class="btn-close ml-10"
+                                        (click)="removeURLlogo({index : documentindex,action : 'newDocument'})"></button>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Is Login?</label>
                             <div class="form-check">
-                                <input type="checkbox"  class="form-check-input" formControlName="isLogin" (change)="isloginOnchange({checked: $event.target.checked})"/>
+                                <input type="checkbox" class="form-check-input" formControlName="isLogin"
+                                    (change)="isloginOnchange({checked: $event.target.checked})" />
                             </div>
                         </div>
                     </div>

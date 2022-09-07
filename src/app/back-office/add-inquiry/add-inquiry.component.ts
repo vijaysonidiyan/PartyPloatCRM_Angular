@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, ThemePalette, MAT_DATE_LOCALE } from '@angular/material/core';
 
+
 export const MY_FORMATS = {
   parse: {
     dateInput: 'LL',
@@ -54,6 +55,7 @@ export class AddInquiryComponent implements OnInit {
   // endDateObj = '';
   selectedDate: any
   minEndTime = {};
+  referenceActiveList: any[] = [];
   //calender done
 
   get fclientinquiryData() {
@@ -64,7 +66,7 @@ export class AddInquiryComponent implements OnInit {
   constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, private router: Router, public route: ActivatedRoute) {
 
     this.route.queryParams.subscribe((queryParams) => {
-      debugger
+
       if (!!queryParams.startDate) {
         // if (!!queryParams.startDate && !!queryParams.endDate) {
         this.selectedDate = queryParams.startDate;
@@ -85,9 +87,63 @@ export class AddInquiryComponent implements OnInit {
   ngOnInit(): void {
     this.getEventActiveList();
     this.defaultForm();
+    this.activeReferenceList();
     this.eventList = this.clientinquiryDataForm.get("events") as FormArray;
     this.minEndDate[0] = new Date();
     this.eventList.push(this.createeventItem({}));
+
+    this.getTimeRanges()
+  }
+
+  defaultForm() {
+    this.clientinquiryDataForm = this.fb.group({
+      name: ["", [Validators.required]],
+      email: ["", [Validators.required]],
+      primaryContact: ["", [Validators.required]],
+      secondryContact: [""],
+      address: ["", [Validators.required]],
+      reference_ID: [null, [Validators.required]],
+      events: this.fb.array([]),
+    });
+  }
+
+  createeventItem(oItem?: any): FormGroup {
+    return this.fb.group({
+      eventType: [(oItem['eventType'] ? oItem['eventType'] : null)],
+      guest: [(oItem['guest'] ? oItem['guest'] : '')],
+      Date: [(oItem['Date'] ? oItem['Date'] : !!this.selectedDate ? new Date(this.selectedDate) : '')],
+      // startDateObj: [(oItem['startDateObj'] ? oItem['startDateObj'] : !!this.selectedDate ? new Date(this.selectedDate) : '')],
+      // endDateObj: [(oItem['endDateObj'] ? oItem['endDateObj'] : !!this.selectedDate ? new Date(this.selectedDate) : '')],
+      startTimeObj: [(oItem['endTimeObj'] ? oItem['endTimeObj'] : null)],
+      endTimeObj: [(oItem['endTimeObj'] ? oItem['endTimeObj'] : null)],
+      offer_budget: [(oItem['offer_budget'] ? oItem['offer_budget'] : '')],
+      client_budget: [(oItem['client_budget'] ? oItem['client_budget'] : '')],
+      remark: [(oItem['remark'] ? oItem['remark'] : '')],
+    });
+  }
+  timeRange = [];
+  getTimeRanges() {
+    let date = new Date(this.selectedDate);
+    for (let minutes = 0; minutes < 24 * 60; minutes = minutes + 30) {
+      date.setHours(0);
+      date.setMinutes(minutes);
+      let time = {
+        value: moment(date).format('HH:mm'),
+        name: moment(date).format('hh:mm A')
+      }
+      this.timeRange.push(time);
+    }
+  }
+
+
+
+  activeReferenceList() {
+    this.adminLayoutService.getReferenceActiveList().subscribe(
+      (Response: any) => {
+        if (Response.meta.code == 200) {
+          this.referenceActiveList = Response.data
+        }
+      });
   }
 
   onStartDateChange(data: any, index: any) {
@@ -96,7 +152,7 @@ export class AddInquiryComponent implements OnInit {
   }
 
   onStartTimeChange(time: any, index: any) {
-    debugger
+
     let maxDate = new Date(this.selectedDate).getFullYear() + '-' + (new Date(this.selectedDate).getMonth() + 1) + '-' + new Date(this.selectedDate).getDate();
     this.minEndTime[index] = new Date(maxDate + ' ' + time.target.value);
     // this.minEndTime[index] = time.target.value
@@ -117,27 +173,7 @@ export class AddInquiryComponent implements OnInit {
     );
   }
 
-  defaultForm() {
-    this.clientinquiryDataForm = this.fb.group({
-      name: ["", [Validators.required]],
-      email: ["", [Validators.required]],
-      primaryContact: ["", [Validators.required]],
-      secondryContact: [""],
-      address: ["", [Validators.required]],
-      events: this.fb.array([]),
-    });
-  }
 
-  createeventItem(oItem?: any): FormGroup {
-    return this.fb.group({
-      eventType: [(oItem['eventType'] ? oItem['eventType'] : null)],
-      guest: [(oItem['guest'] ? oItem['guest'] : '')],
-      startDateObj: [(oItem['startDateObj'] ? oItem['startDateObj'] : !!this.selectedDate ? new Date(this.selectedDate) : '')],
-      endDateObj: [(oItem['endDateObj'] ? oItem['endDateObj'] : !!this.selectedDate ? new Date(this.selectedDate) : '')],
-      // startTimeObj: [(oItem['endTimeObj'] ? oItem['endTimeObj'] : '')],
-      // endTimeObj: [(oItem['endTimeObj'] ? oItem['endTimeObj'] : '')],
-    });
-  }
 
   addEventList() {
     this.eventList.push(this.createeventItem({}));
@@ -149,7 +185,7 @@ export class AddInquiryComponent implements OnInit {
   }
 
   saveClientInquiry() {
-    debugger
+
     if (this.clientinquiryDataForm.invalid) {
       this.submittedclientInquiryData = true;
       return;

@@ -28,7 +28,7 @@ export class VendorDetailsComponent implements OnInit {
     public adminLayoutService: AdminLayoutService,
     private fb: FormBuilder,
     public commonService: CommonService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.noData = false;
@@ -45,6 +45,7 @@ export class VendorDetailsComponent implements OnInit {
       address: ["", [Validators.required]],
       email: ["", [Validators.required, Validators.email]],
       primaryContact: ["", [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
+      description: [""],
       // secondyContact: [""],
     });
   }
@@ -70,6 +71,7 @@ export class VendorDetailsComponent implements OnInit {
       primaryContact: this.vendordetailsForm.controls.primaryContact.value,
       email: this.vendordetailsForm.controls.email.value,
       address: this.vendordetailsForm.controls.address.value,
+      description: this.vendordetailsForm.controls.description.value,
       // secondyContact: this.vendordetailsForm.controls.name.value,
     };
 
@@ -102,9 +104,10 @@ export class VendorDetailsComponent implements OnInit {
         this.vendordetailsForm.controls.primaryContact.setValue(Response.data.primaryContact);
         this.vendordetailsForm.controls.email.setValue(Response.data.email);
         this.vendordetailsForm.controls.address.setValue(Response.data.address);
+        this.vendordetailsForm.controls.description.setValue(Response.data.description);
         $("#add-menu-modal").modal("show");
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -119,6 +122,7 @@ export class VendorDetailsComponent implements OnInit {
       primaryContact: this.vendordetailsForm.controls.primaryContact.value,
       email: this.vendordetailsForm.controls.email.value,
       address: this.vendordetailsForm.controls.address.value,
+      description: this.vendordetailsForm.controls.description.value,
       // secondyContact: this.vendordetailsForm.controls.name.value,
     };
 
@@ -195,10 +199,10 @@ export class VendorDetailsComponent implements OnInit {
     this.vendorDetailsList = this.allvendordetails.filter((val: any) => JSON.stringify(val).toLowerCase().includes(value.toLowerCase()));
     this.p = 1;
     if (this.vendorDetailsList.length == 0) {
-        debugger
-        this.noData = true;
+      debugger
+      this.noData = true;
     } else {
-        this.noData = false;
+      this.noData = false;
     }
   }
 }
