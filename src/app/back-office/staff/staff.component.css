@@ -1,0 +1,11 @@
+.doc-text-ellipsis{
+    white-space: nowrap;
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+.doc-file {
+    display: flex;
+    align-items: center;
+}

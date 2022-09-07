@@ -116,6 +116,16 @@ export class StaffComponent implements OnInit {
     this.defaultForm();
     this.ISeditStaff = false;
   }
+  addDoc() {
+    $("#add-menu-modal").modal("hide");
+    $("#add-document-modal").modal("show");
+  }
+
+  cancelDoc() {
+    $("#add-menu-modal").modal("show");
+    $("#add-document-modal").modal("hide");
+    this.defaultForm();
+  }
 
   isloginOnchange(paramsObj) {
     let checked = paramsObj.checked;
@@ -176,7 +186,10 @@ export class StaffComponent implements OnInit {
       }
     );
   }
-
+savedoc(){
+  $("#add-menu-modal").modal("show");
+  $("#add-document-modal").modal("hide")
+}
   savestaff() {
     if (this.staffForm.value.partyplotData.length === 0) {
       this.partyplotInvalid = true;

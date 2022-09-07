@@ -17569,3 +17569,14 @@ html:not(.layout-footer-fixed) .content-wrapper {
 .notifier__notification--material {
   padding: 10px !important;
 }
+.download-btn {
+  box-sizing: content-box;
+  width: 1.4em;
+  height: 1rem;
+  padding: 0.25em 0.25em;
+  color: #a1acb8;
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAO1JREFUSEtjZKAxYKSx+QwjzIKFa3b8BwVpfIgH0T4nWiHI4FELCKbYER5EuLy/cM32BQwMjPHYw+//wvgQzwRkOXRz4MkUX/guXLPjAgMDgz6aJRfjQzwM0C0my4L56/cLMP39+YCBgYEfauDHf8zsComBjh+oYgHIkPmrdhkwMf07D2L/+8dkmBjmBvIVBiDLBzBTFq3dDg7vuGDPBbjSNEUWEMwoWIoToiKZGINhavD5ABRhsEgkxUxsah/Gh3gogCTgPpi/ersDEyMjKGzlKTT94b///xMSQz0PoFhAoaE4tZNUH5DjiKFvAQA8KoIZ/vlfFQAAAABJRU5ErkJggg);
+  border: 0;
+  border-radius: 0.375rem;
+  opacity: 0.95;
+}
