@@ -37,4 +37,5 @@ export const AdminLayoutRoutes: Routes = [
     // ]
   },
   { path: "inquiry/add-inquiry", component: AddInquiryComponent, data: { breadcrumb: 'Add Inquiry' } },
+  { path: "inquiry/view-inquiry/:id", component: AddInquiryComponent, data: { breadcrumb: 'View Inquiry' } },
 ];

@@ -56,6 +56,8 @@ export class AddInquiryComponent implements OnInit {
   selectedDate: any
   minEndTime = {};
   referenceActiveList: any[] = [];
+  inquiryId: any;
+  viewInquiry: boolean = false;
   //calender done
 
   get fclientinquiryData() {
@@ -65,44 +67,59 @@ export class AddInquiryComponent implements OnInit {
 
   constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, private router: Router, public route: ActivatedRoute) {
 
-    this.route.queryParams.subscribe((queryParams) => {
+    const currentUrl = this.router.url
+    if (currentUrl.includes('view-inquiry')) {
+      this.route.params.subscribe((params: Params) => {
+        this.inquiryId = params.id;
+      });
+      this.viewInquiry = true;
+    } else if (currentUrl.includes('add-inquiry')) {
+      this.route.queryParams.subscribe((queryParams) => {
 
-      if (!!queryParams.startDate) {
-        // if (!!queryParams.startDate && !!queryParams.endDate) {
-        this.selectedDate = queryParams.startDate;
-        this.minDate = new Date(queryParams.startDate);
-        let maxDate = new Date(this.selectedDate).getFullYear() + '-' + (new Date(this.selectedDate).getMonth() + 1) + '-' + new Date(this.selectedDate).getDate();
-        this.maxDate = new Date(maxDate + ' ' + '23:59');
-        // this.startDateObj = queryParams.startDate;
-        // this.endDateObj = queryParams.endDate;
-      }
-      else {
-        this.selectedDate = '';
-        // this.startDateObj = '';
-        // this.endDateObj = '';
-      }
-    });
+        if (!!queryParams.startDate) {
+          // if (!!queryParams.startDate && !!queryParams.endDate) {
+          this.selectedDate = queryParams.startDate;
+          this.minDate = new Date(queryParams.startDate);
+          let maxDate = new Date(this.selectedDate).getFullYear() + '-' + (new Date(this.selectedDate).getMonth() + 1) + '-' + new Date(this.selectedDate).getDate();
+          this.maxDate = new Date(maxDate + ' ' + '23:59');
+          // this.startDateObj = queryParams.startDate;
+          // this.endDateObj = queryParams.endDate;
+        }
+        else {
+          this.selectedDate = '';
+          // this.startDateObj = '';
+          // this.endDateObj = '';
+        }
+      });
+    }
   }
 
   ngOnInit(): void {
-    this.getEventActiveList();
     this.defaultForm();
-    this.activeReferenceList();
-    this.eventList = this.clientinquiryDataForm.get("events") as FormArray;
-    this.minEndDate[0] = new Date();
-    this.eventList.push(this.createeventItem({}));
-
     this.getTimeRanges()
+    this.getEventActiveList();
+    this.activeReferenceList();
+    this.minEndDate[0] = new Date();
+    this.eventList = this.clientinquiryDataForm.get("events") as FormArray;
+    if (this.viewInquiry !== true) {
+      this.eventList.push(this.createeventItem({}));
+    } else if (this.viewInquiry === true) {
+      this.editClientInquiry();
+    }
+
+
   }
 
   defaultForm() {
     this.clientinquiryDataForm = this.fb.group({
+      _id: [""],
       name: ["", [Validators.required]],
       email: ["", [Validators.required]],
       primaryContact: ["", [Validators.required]],
       secondryContact: [""],
       address: ["", [Validators.required]],
       reference_ID: [null, [Validators.required]],
+      reference_detail: [""],
       events: this.fb.array([]),
     });
   }
@@ -242,15 +259,36 @@ export class AddInquiryComponent implements OnInit {
     //   eventObjList.push(eventObj);
     // })
 
+    let eventObjList = [];
+    this.clientinquiryDataForm.controls.events.value.map((x: any) => {
+      debugger
+      let date = moment(x.Date).format('yyyy-MM-DD')
+      let startDateObj: any
+      let endDateObj: any;
+
+      startDateObj = new Date(date + ' ' + x.startTimeObj);
+      endDateObj = new Date(date + ' ' + x.endTimeObj);
+      let eventObj = {
+        "eventType": x.eventType,
+        "startDateObj": startDateObj,
+        "endDateObj": endDateObj,
+        "guest": x.guest,
+        "client_budget": x.client_budget,
+        "offer_budget": x.offer_budget
+      }
+      eventObjList.push(eventObj);
+    });
     let clientinquiryModelObj = {
       name: this.clientinquiryDataForm.controls.name.value,
       email: this.clientinquiryDataForm.controls.email.value,
       primaryContact: this.clientinquiryDataForm.controls.primaryContact.value,
       secondryContact: this.clientinquiryDataForm.controls.secondryContact.value,
       address: this.clientinquiryDataForm.controls.address.value,
-      events: this.clientinquiryDataForm.controls.events.value
+      reference_ID: this.clientinquiryDataForm.controls.reference_ID.value,
+      reference_detail: this.clientinquiryDataForm.controls.reference_detail.value,
+      events: eventObjList
     };
-    // return
+
     this.adminLayoutService.createClientinquiry(clientinquiryModelObj).subscribe(
       (Response: any) => {
         if (Response.meta.code == 200) {
@@ -269,4 +307,36 @@ export class AddInquiryComponent implements OnInit {
       }
     );
   }
+
+  editClientInquiry() {
+    let inquiryId = { '_id': this.inquiryId }
+    this.adminLayoutService.getInquiryById(inquiryId).subscribe((Response: any) => {
+      if (Response.meta.code == 200) {
+        this.clientinquiryDataForm.controls._id.setValue(Response.data._id);
+        this.clientinquiryDataForm.controls.name.setValue(Response.data.name);
+        this.clientinquiryDataForm.controls.email.setValue(Response.data.email);
+        this.clientinquiryDataForm.controls.primaryContact.setValue(Response.data.primaryContact);
+        this.clientinquiryDataForm.controls.secondryContact.setValue(Response.data.secondryContact);
+        this.clientinquiryDataForm.controls.address.setValue(Response.data.address);
+        this.clientinquiryDataForm.controls.reference_ID.setValue(Response.data.reference_ID);
+        this.clientinquiryDataForm.controls.reference_detail.setValue(Response.data.reference_detail);
+
+        Response.data.EventInquiryData.forEach((x: any) => {
+          debugger
+          let eventObj = {
+            eventType: x.eventType,
+            guest: x.guest,
+            Date: x.startDateObj,
+            startTimeObj: moment(x.startDateObj).format('HH:mm'),
+            endTimeObj: moment(x.endDateObj).format('HH:mm'),
+            offer_budget: x.offer_budget,
+            client_budget: x.client_budget,
+            remark: ""
+          }
+          this.createeventItem(eventObj);
+        })
+      }
+    });
+  }
+
 }

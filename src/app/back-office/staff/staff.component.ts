@@ -13,6 +13,7 @@ export class StaffComponent implements OnInit {
   activeroleList: any;
   staffForm: FormGroup;
   ISeditStaff = false;
+  ISviewStaff = false;
   staffList: any[];
   allstaffList: any[];
   StaffList: any[];
@@ -24,10 +25,11 @@ export class StaffComponent implements OnInit {
   noData;
   filedocument: any;
   imgURLlogo: any;
-  userFile: any[] = [];
+  userFile: any = null;
   attactDocument: any = {};
 
   @ViewChild('filedocument') fileDocument: ElementRef;
+  StaffDocumentList: any;
 
   get fnameData() {
     return this.staffForm.controls;
@@ -46,50 +48,35 @@ export class StaffComponent implements OnInit {
     this.noData = false;
     this.l = 10;
     this.ISeditStaff = false;
+    this.ISviewStaff = false;
     this.getStaffList();
     this.getpartyplotActiveList();
     this.getRoleActiveList();
     this.defaultForm();
   }
-  removeURLlogo(params) {
-    if (params.index !== undefined && !!params.action) {
-      if (params.action === 'newDocument') {
-        this.userFile.splice(params.index, 1);
-      } else if (
-        params.action === 'oldDocument' &&
-        !!this.attactDocument &&
-        !!this.attactDocument.oldUploadedDocuments &&
-        !!this.attactDocument.oldUploadedDocuments[params.index]
-      ) {
-        if (this.attactDocument.deletedDocuments === undefined) {
-          this.attactDocument.deletedDocuments = [];
-        }
-        this.attactDocument.deletedDocuments.push(
-          this.attactDocument.oldUploadedDocuments[params.index].id
-        );
-        this.attactDocument.oldUploadedDocuments.splice(params.index, 1);
-      }
-    }
+  removeDocument() {
+    this.userFile = null;
   }
+
   onDocumentChange(event) {
     debugger
-    // this.userFile = event.target.files;
-    // this.filedocument = this.userFile.name;
-    // if (event.target.files && event.target.files[0]) {
-    //   const reader = new FileReader();
-    //   reader.onload = (e: any) => {
-    //     this.imgURLlogo = e.target.result;
-    //   };
-    //   reader.readAsDataURL(event.target.files[0]);
-    // }
-    // this.fileDocument.nativeElement.value = "";
-
-    var selectedFiles = event.target.files;
-    for (var i = 0; i < selectedFiles.length; i++) {
-      this.userFile.push(selectedFiles[i]);
-      // this.resultName.push(selectedFiles[i].name);
+    this.userFile = event.target.files[0];
+    this.filedocument = this.userFile.name;
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imgURLlogo = e.target.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
     }
-    event.target.value = '';
+    this.fileDocument.nativeElement.value = "";
+
+    // this.userFile = event.target.files;
+    // for (var i = 0; i < selectedFiles.length; i++) {
+    //   this.userFile.push(selectedFiles[i]);
+    //   // this.resultName.push(selectedFiles[i].name);
+    // }
+    // event.target.value = '';
   }
   defaultForm() {
     this.staffForm = this.fb.group({
@@ -99,32 +86,34 @@ export class StaffComponent implements OnInit {
       contact: ["", [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
       roleId: [null],
       reference: [""],
-      aadharcardNo: [""],
+      // aadharcardNo: [""],
       partyplotData: [""],
       roleName: [""],
       isLogin: false
     });
   }
 
-  addMenu() {
-    $("#add-menu-modal").modal("show");
+  addStaff() {
+    $("#add-staff-modal").modal("show");
     this.ISeditStaff = false;
+    this.ISviewStaff = false;
   }
 
-  cancelMenu() {
-    $("#add-menu-modal").modal("hide");
+  cancelStaff() {
+    $("#add-staff-modal").modal("hide");
     this.defaultForm();
     this.ISeditStaff = false;
+    this.ISviewStaff = false;
+    this.StaffDocumentList = [];
   }
   addDoc() {
-    $("#add-menu-modal").modal("hide");
+    $("#add-staff-modal").modal("hide");
     $("#add-document-modal").modal("show");
   }
 
   cancelDoc() {
-    $("#add-menu-modal").modal("show");
+    $("#add-staff-modal").modal("show");
     $("#add-document-modal").modal("hide");
-    this.defaultForm();
   }
 
   isloginOnchange(paramsObj) {
@@ -183,13 +172,30 @@ export class StaffComponent implements OnInit {
       },
       (error) => {
         console.log(error.error.Message);
-      }
-    );
+      });
   }
-savedoc(){
-  $("#add-menu-modal").modal("show");
-  $("#add-document-modal").modal("hide")
-}
+  savedoc() {
+    if (this.userFile == null) {
+      return
+    }
+    let staffDocumentModelObj: FormData = new FormData();
+
+    staffDocumentModelObj.append('staffId', this.staffForm.value._id);
+    staffDocumentModelObj.append('documents', this.userFile);
+
+    this.adminLayoutService.saveDocumentbystaffId(staffDocumentModelObj).subscribe(
+      (Response: any) => {
+        if (Response.meta.code == 200) {
+          this.userFile = null;
+          this.getStaffDocument();
+          $("#add-staff-modal").modal("show");
+          $("#add-document-modal").modal("hide");
+        }
+      },
+      (error) => {
+        console.log(error.error.Message);
+      });
+  }
   savestaff() {
     if (this.staffForm.value.partyplotData.length === 0) {
       this.partyplotInvalid = true;
@@ -214,7 +220,7 @@ savedoc(){
       contact: this.staffForm.controls.contact.value,
       roleId: this.staffForm.controls.roleId.value,
       reference: this.staffForm.controls.reference.value,
-      aadharcardNo: this.staffForm.controls.aadharcardNo.value,
+      //aadharcardNo: this.staffForm.controls.aadharcardNo.value,
       assignPartyPlot: this.staffForm.controls.partyplotData.value,
       isLogin: this.staffForm.controls.isLogin.value,
     };
@@ -225,9 +231,11 @@ savedoc(){
           this.submittedStaffData = false;
           this.getStaffList();
           this.defaultForm();
+          this.StaffDocumentList = [];
           this.ISeditStaff = false;
+          this.ISviewStaff = false;
           this.commonService.notifier.notify("success", Response.meta.message);
-          $("#add-menu-modal").modal("hide");
+          $("#add-staff-modal").modal("hide");
         } else {
           this.commonService.notifier.notify("error", Response.meta.message);
         }
@@ -239,8 +247,13 @@ savedoc(){
   }
 
   editStaff(paramsObj) {
-    this.ISeditStaff = true;
+    if(paramsObj.action == 'edit') {
+      this.ISeditStaff = true;
+    } else if(paramsObj.action == 'view') {
+      this.ISviewStaff = true;
+    }
     let Id: any = { staffId: paramsObj.id };
+    this.StaffDocumentList = [];
     this.adminLayoutService.getstaffId(Id).subscribe(
       (Response: any) => {
         this.staffForm.controls._id.setValue(Response.data._id);
@@ -249,10 +262,22 @@ savedoc(){
         this.staffForm.controls.contact.setValue(Response.data.contact);
         this.staffForm.controls.roleId.setValue(Response.data.roleId);
         this.staffForm.controls.reference.setValue(Response.data.reference);
-        this.staffForm.controls.aadharcardNo.setValue(Response.data.aadharcardNo);
+        //this.staffForm.controls.aadharcardNo.setValue(Response.data.aadharcardNo);
         this.staffForm.controls.partyplotData.setValue(Response.data.partyplotData);
         this.staffForm.controls.isLogin.setValue(Response.data.isLogin);
-        $("#add-menu-modal").modal("show");
+        this.StaffDocumentList = Response.data.Staff_documentData;
+        $("#add-staff-modal").modal("show");
+      },
+      (error) => { }
+    );
+  }
+
+  getStaffDocument() {
+    let Id: any = { staffId: this.staffForm.controls._id.value };
+    this.StaffDocumentList = [];
+    this.adminLayoutService.getDocumentbyStaffId(Id).subscribe(
+      (Response: any) => {
+        this.StaffDocumentList = Response.data;
       },
       (error) => { }
     );
@@ -284,7 +309,7 @@ savedoc(){
       contact: this.staffForm.controls.contact.value,
       roleId: this.staffForm.controls.roleId.value,
       reference: this.staffForm.controls.reference.value,
-      aadharcardNo: this.staffForm.controls.aadharcardNo.value,
+      //aadharcardNo: this.staffForm.controls.aadharcardNo.value,
       assignPartyPlot: this.staffForm.controls.partyplotData.value,
       isLogin: this.staffForm.controls.isLogin.value,
     };
@@ -295,9 +320,11 @@ savedoc(){
           this.submittedStaffData = false;
           this.getStaffList();
           this.defaultForm();
+          this.StaffDocumentList = [];
           this.ISeditStaff = false;
+          this.ISviewStaff = false;
           this.commonService.notifier.notify("success", Response.meta.message);
-          $("#add-menu-modal").modal("hide");
+          $("#add-staff-modal").modal("hide");
         } else {
           this.commonService.notifier.notify("error", Response.meta.message);
         }
@@ -308,20 +335,41 @@ savedoc(){
     );
   }
 
-  statusRolemaster(paramsObj) {
+  deletDocument(id: any) {
+    let modelObj = {
+      "_id": id,
+    };
+
+    this.adminLayoutService.staffDocumentDelete(modelObj).subscribe((Response: any) => {
+
+      if (Response.meta.code == 200) {
+        this.submittedStaffData = false;
+        this.getStaffDocument();
+        this.commonService.notifier.notify('success', Response.meta.message);
+      }
+      else {
+        this.commonService.notifier.notify('error', Response.meta.message);
+      }
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  statusStaffmaster(paramsObj) {
     debugger
-    let statusrolemasterModelObj = {
+    let statusstaffmasterModelObj = {
       "_id": paramsObj.id,
       "status": paramsObj.status
     };
 
-    this.adminLayoutService.StatusStaff(statusrolemasterModelObj).subscribe((Response: any) => {
+    this.adminLayoutService.StatusStaff(statusstaffmasterModelObj).subscribe((Response: any) => {
 
       if (Response.meta.code == 200) {
         this.submittedStaffData = false;
         this.getStaffList();
         this.defaultForm();
         this.ISeditStaff = false;
+        this.ISviewStaff = false;
         this.commonService.notifier.notify('success', Response.meta.message);
       }
       else {
