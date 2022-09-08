@@ -9,3 +9,8 @@
     display: flex;
     align-items: center;
 }
+.doc-file-scroll {
+    max-height: 110px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

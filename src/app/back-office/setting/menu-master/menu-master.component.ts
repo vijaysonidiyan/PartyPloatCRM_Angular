@@ -31,7 +31,7 @@ export class MenuMasterComponent implements OnInit {
   submittedMenuData = false;
   @ViewChild('defaultIcon') defaultIconVariable: ElementRef;
   @ViewChild('activeIcon') activeIconVarible: ElementRef;
-  iconDefaultURL = environment.uploadsUrl + 'active_icon/'
+  iconDefaultURL = environment.uploadsUrl + 'default_icon/'
   iconActiveURL = environment.uploadsUrl + 'active_icon/'
 
   constructor(public commonService: CommonService, public adminLayoutService: AdminLayoutService, private fb: FormBuilder) { }
