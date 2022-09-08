@@ -264,6 +264,12 @@ export class AdminLayoutService {
     return this.http.get(this.commonService.rootData.rootUrl + 'partyplot/ActivePartyplotList', { headers: headers });
   }
 
+  assignpartyplotUserWiseList() {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'partyplot/assignpartyplotUserWise', { headers: headers });
+  }
   // ============== Staff =========== //
 
   getStaff() {
@@ -280,11 +286,25 @@ export class AdminLayoutService {
     return this.http.post(this.commonService.rootData.rootUrl + 'staff/create', createstaffData, { headers: headers });
   }
 
+  saveDocumentbystaffId(staffDocumentData: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'staff/documentSave', staffDocumentData, { headers: headers });
+  }
+
   getstaffId(params: any) {
     let headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
     return this.http.get(this.commonService.rootData.rootUrl + 'staff/staff-getById', { params: params, headers: headers });
+  }
+
+  getDocumentbyStaffId(params: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'staff/documentgetByStaffId', { params: params, headers: headers });
   }
 
   updateStaff(staffData: any) {
@@ -299,6 +319,13 @@ export class AdminLayoutService {
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
     return this.http.post(this.commonService.rootData.rootUrl + 'staff/staffActiveDeActive', staffData, { headers: headers });
+  }
+
+  staffDocumentDelete(params: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'staff/documentdeleteById', { params: params, headers: headers });
   }
 
   changePassword(updatechangepwdData: any) {
@@ -386,6 +413,13 @@ export class AdminLayoutService {
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
     return this.http.get(this.commonService.rootData.rootUrl + 'clientinquiry/eventinquiryList', { params: data, headers: headers });
+  }
+  
+  getInquiryById(data: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/eventListgetByclientId',data, { headers: headers });
   }
 
   getInquiryListForCalenderView(data: any) {

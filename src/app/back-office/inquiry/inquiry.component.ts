@@ -26,13 +26,15 @@ export class InquiryComponent implements OnInit {
   searchedName = '';
   searchedYear = null;
   searchedMonth = null;
+  searchedPartyplot = null;
 
   date = new Date();
   currentMonth = this.date.getMonth() + 1;
   currentYear = this.date.getFullYear();
   inquiryList: any[] = [];
   inquiryForm: FormGroup;
-  eventActiveList: any;
+  eventActiveList: any[] = [];
+  assignpartyplotList: any[] = [];
   noData: boolean;
   inquiryListByDate: any[] = [];
 
@@ -64,7 +66,8 @@ export class InquiryComponent implements OnInit {
   ngOnInit(): void {
     this.l = 10;
     this.defaultForm();
-    this.getEventActiveList()
+    this.getEventActiveList();
+    this.getAssignPartyplotList();
     this.getYear();
     this.minEndDate = new Date();
 
@@ -414,6 +417,20 @@ export class InquiryComponent implements OnInit {
     );
   }
 
+  getAssignPartyplotList() {
+    this.adminLayoutService.assignpartyplotUserWiseList().subscribe((Response: any) => {
+      if (Response.meta.code == 200) {
+        this.assignpartyplotList = Response.data;
+        this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
+      }
+      //for select sub industry step
+    },
+      (error) => {
+        console.log(error.error.Message);
+      }
+    );
+  }
+
   defaultForm() {
     this.inquiryForm = this.fb.group({
       _id: [""],
@@ -437,6 +454,8 @@ export class InquiryComponent implements OnInit {
   }
 
   editInquiryData(data: any) {
+    // this.router.navigate(['/admin/inquiry/view-inquiry'], { queryParams: { id: data.clientInquiryId } }
+    // );
     this.defaultForm();
     console.log(data);
     debugger

@@ -5,7 +5,14 @@
                 <div class="row mb-3 p-4 btn-cus" *ngIf="activeTab === 1">
                     <div class="col-lg-12">
                         <div class="row">
-                            <div class="col-lg-3 col-md-12 col-sm-12 mb-3">
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3">
+                                <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Inquiry</h4> -->
+                                <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0 me-3"
+                                    bindLabel="name" bindValue="_id" [(ngModel)]="searchedPartyplot"
+                                    placeholder="Select Party Plot">
+                                </ng-select>
+                            </div>
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3">
                                 <!-- <div class=" d-flex align-items-center">
                                     <label class="me-3">Search:</label>
                                     <input type="search" class="form-control" placeholder=""
@@ -17,50 +24,33 @@
                                         aria-label="Search..." [(ngModel)]="searchedName" />
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-12 col-sm-12 mb-3">
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3">
                                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Inquiry</h4> -->
                                 <ng-select [items]="monthArray" [multiple]="false" class="form-control p-0 me-3"
                                     bindLabel="month" bindValue="value" [(ngModel)]="searchedMonth"
                                     placeholder="Select Month">
                                 </ng-select>
                             </div>
-                            <div class="col-lg-3 col-md-12 col-sm-12">
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <ng-select [items]="yearArray" [multiple]="false" class="form-control p-0 me-3"
                                     bindLabel="yearArray" bindValue="yearArray" [(ngModel)]="searchedYear"
                                     placeholder="Select Year">
                                 </ng-select>
                             </div>
-                            <div class="col-lg-3 col-md-12 col-sm-12">
-                                <div class="row d-flex justify-content-between">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-                                        <div class="text-start">
-                                            <button type="button" (click)="searchFilterInquiryList()"
-                                                class="btn btn-primary">
-                                                Search
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-                                        <div class="text-end">
-                                            <!-- <button type="button" class="btn btn-primary" (click)="tabClick(1)" *ngIf="activeTab === 2">
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12"></div>
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
+                                <div class="text-end">
+                                    <button type="button" (click)="searchFilterInquiryList()"
+                                        class="btn btn-primary me-3">
+                                        Search
+                                    </button>
+                                    <button type="button" class="btn btn-primary px-2" (click)="tabClick(2)">
+                                        Calendar
+                                    </button>
+                                    <!-- <button type="button" class="btn btn-primary" (click)="tabClick(1)" *ngIf="activeTab === 2">
                                             Table View
                                         </button> -->
-                                            <button type="button" class="btn btn-primary px-2" (click)="tabClick(2)">
-                                                Calendar
-                                            </button>
-                                        </div>
-                                    </div>
-
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-3 col-md-12 col-sm-12 mb-3">
-                                <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Inquiry</h4> -->
-                                <ng-select [items]="monthArray" [multiple]="false" class="form-control p-0 me-3"
-                                    bindLabel="month" bindValue="value" [(ngModel)]="searchedMonth"
-                                    placeholder="Select Party Plot">
-                                </ng-select>
                             </div>
                         </div>
                     </div>
@@ -90,7 +80,8 @@
                                     <td>{{ l * (p - 1) + inquiryIndex + 1 }}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <button class="btn-bg" (click)="editInquiryData(inquiryData)">
+                                            <button class="btn-bg"
+                                                routerLink="/admin/inquiry/view-inquiry/{{inquiryData.clientInquiryId}}">
                                                 <i class="bx bxs-show"></i>
                                             </button>
                                             <!-- <button *ngIf="inquiryData.status == 2" title="Active Event"
