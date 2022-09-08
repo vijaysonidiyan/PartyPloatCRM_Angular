@@ -183,18 +183,20 @@
                         </div>
                     </div>
                     <div *ngIf="ISeditStaff === true || ISviewStaff === true">
-                        <div class="row">
-                            <label for="nameBasic" class="form-label">Documents</label>
-                            <div class="col-lg-4 mb-3" *ngFor="let documentData of StaffDocumentList">
-                                <div class="doc-file form-control">
-                                    <p class="doc-text-ellipsis">{{documentData.originalName}} </p>
-                                    <a *ngIf="ISviewStaff === true"
-                                        [href]="this.commonService.rootData.uploadsUrl + 'documents/' + documentData.documents"
-                                        target="_blank" [download]="documentData.documents"
-                                        class="download-btn ml-10"></a>
-                                    <button type="button" *ngIf="ISeditStaff === true"
-                                        (click)="deletDocument(documentData._id)"
-                                        class="event-btn-close ml-10"></button>
+                        <label for="nameBasic" class="form-label">Documents</label>
+                        <div class="doc-file-scroll">
+                            <div class="row">
+                                <div class="col-lg-4 mb-3" *ngFor="let documentData of StaffDocumentList">
+                                    <div class="doc-file form-control">
+                                        <p class="doc-text-ellipsis">{{documentData.originalName}} </p>
+                                        <a *ngIf="ISviewStaff === true"
+                                            [href]="this.commonService.rootData.uploadsUrl + 'documents/' + documentData.documents"
+                                            target="_blank" [download]="documentData.documents"
+                                            class="download-btn ml-10"></a>
+                                        <button type="button" *ngIf="ISeditStaff === true"
+                                            (click)="deletDocument(documentData._id)"
+                                            class="event-btn-close ml-10"></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
