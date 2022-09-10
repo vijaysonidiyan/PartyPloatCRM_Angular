@@ -77,9 +77,25 @@
 }
 @media (min-width: 768px) {
 }
-@media (min-width: 992px) {
+@media (max-width: 800px) {
+  .calendar-search {
+    position: unset !important;
+    top: 0;
+    right: 0;
+  }
 }
+/* @media (max-width: 1024px) {
+  .calendar-search {
+    position: absolute;
+    transform: translate(190%,35%)!important;
+  }
+} */
 @media (min-width: 1200px) {
 }
 @media (min-width: 1400px) {
+}
+.calendar-search {
+  position: absolute;
+  top: 40px;
+  right: 100px;
 }

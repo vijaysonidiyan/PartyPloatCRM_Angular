@@ -133,7 +133,15 @@
                     </div>
                 </div>
                 <div class="" [ngClass]="activeTab == 2 ? 'd-block' : 'd-none'" *ngIf="activeTab == 2">
-                    <div class="p-4 btn-cus">
+                    <div class="p-4 btn-cus position-relative">
+                        <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 mb-3">
+                            <div class="dropdown-search">
+                                <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0 me-3"
+                                bindLabel="name" bindValue="_id" [(ngModel)]="searchedPartyplot"
+                                placeholder="Select Party Plot">
+                            </ng-select>
+                            </div>
+                        </div>
                         <full-calendar #calendar [options]="calendarOptions">
                         </full-calendar>
                     </div>
