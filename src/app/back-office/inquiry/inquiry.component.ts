@@ -15,7 +15,7 @@ declare const $: any;
   styleUrls: ["./inquiry.component.css"],
 })
 export class InquiryComponent implements OnInit {
-  activeTab = 1;
+  activeTab = 2;
   monthList: any[] = [];
   yearList: any[] = [];
   staffList: any[];
@@ -49,7 +49,7 @@ export class InquiryComponent implements OnInit {
     if (this.activeTab == 1) {
       this.searchedMonth = this.currentMonth;
       this.searchedYear = this.currentYear;
-      this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName })
+      this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName, partyplot_ID: this.searchedPartyplot })
     }
     else if (this.activeTab == 2) {
       let month = new Date().toJSON();
@@ -218,12 +218,14 @@ export class InquiryComponent implements OnInit {
   handleDateClick(arg) {
     debugger
     // this.startDateObj = arg.date
-    this.router.navigate(["/admin/inquiry/add-inquiry"], {
-      queryParams: {
-        startDate: arg.date,
-        // endDate: this.endDateObj
-      }
-    })
+    if(new Date() < arg.date) {      
+      this.router.navigate(["/admin/inquiry/add-inquiry"], {
+        queryParams: {
+          startDate: arg.date,
+          // endDate: this.endDateObj
+        }
+      })
+    }
     // $('#add-inquiry-modal').modal('show');
   }
 
@@ -320,7 +322,8 @@ export class InquiryComponent implements OnInit {
     let inquiryObj = {
       month: data.month,
       year: data.year,
-      name: data.name
+      name: data.name,
+      partyplot_ID: data.partyplot_ID
     }
 
     this.adminLayoutService.getInquiryList(inquiryObj).subscribe((response: any) => {
@@ -357,7 +360,7 @@ export class InquiryComponent implements OnInit {
   }
 
   searchFilterInquiryList() {
-    this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName })
+    this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName,  partyplot_ID: this.searchedPartyplot })
   }
 
 
@@ -371,7 +374,7 @@ export class InquiryComponent implements OnInit {
 
     this.adminLayoutService.StatusInquiry(statusInquiryModelObj).subscribe((Response: any) => {
       if (Response.meta.code == 200) {
-        this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName })
+        this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName,  partyplot_ID: this.searchedPartyplot })
         this.commonService.notifier.notify("success", Response.meta.message);
       }
       else {
@@ -485,7 +488,7 @@ export class InquiryComponent implements OnInit {
 
     this.adminLayoutService.updateClientinquiry(inquiryObj).subscribe((Response: any) => {
       if (Response.meta.code == 200) {
-        this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName })
+        this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName, partyplot_ID: this.searchedPartyplot })
         this.commonService.notifier.notify("success", Response.meta.message);
         $('#edit-inquiry-modal').modal('hide')
       }

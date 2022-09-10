@@ -101,14 +101,14 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <span *ngIf="inquiryData.approvalStatus == 1"
+                                        <span *ngIf="inquiryData.approvestatus == 1"
                                             class="badge bg-label-primary me-1">Pending</span>
-                                        <span *ngIf="inquiryData.approvalStatus == 2"
+                                        <span *ngIf="inquiryData.approvestatus == 2"
                                             class="badge bg-label-danger me-1">Cancel</span>
-                                        <span *ngIf="inquiryData.approvalStatus == 3"
+                                        <span *ngIf="inquiryData.approvestatus == 3"
                                             class="badge bg-label-success me-1">Confirm</span>
                                     </td>
-                                    <td><strong>{{inquiryData.clientname}}</strong></td>
+                                    <td><strong>{{inquiryData.name}}</strong></td>
                                     <td>{{inquiryData.email}}</td>
                                     <td>{{inquiryData.primaryContact}}</td>
                                     <td>{{inquiryData.secondryContact}}</td>
@@ -167,7 +167,7 @@
                                                 (click)="collapseShow(inquiryIndex)">
                                                 <div class="d-block">
                                                     <div class="d-flex">
-                                                        <span class="me-2"> {{inquiryDataByDate.name | titlecase}}
+                                                        <span class="me-2"> {{inquiryDataByDate.clientname | titlecase}}
                                                             <strong> {{'(' + inquiryDataByDate.eventName +
                                                                 ')'}}</strong></span>
 
@@ -180,9 +180,9 @@
                                                 </div>
                                             </button>
                                             <div [ngClass]="{'collapsed' : collapse[inquiryIndex] === false,
-                                            'green' : inquiryDataByDate.approvalStatus === 3 ,
-                                            'red' : inquiryDataByDate.approvalStatus === 2 ,
-                                            'blue' : inquiryDataByDate.approvalStatus === 1}" class="border-left-div ">
+                                            'green' : inquiryDataByDate.approvestatus === 3 ,
+                                            'red' : inquiryDataByDate.approvestatus === 2 ,
+                                            'blue' : inquiryDataByDate.approvestatus === 1}" class="border-left-div ">
                                             </div>
                                         </h2>
                                     </div>
@@ -214,9 +214,8 @@
                                                             <li class="mb-2 accordion-data">
                                                                 <i class="bx bxs-calendar"></i>
                                                                 <div>
-                                                                    <span>From Date:</span>
-                                                                    <span>{{inquiryDataByDate.startDateObj | date :
-                                                                        'dd/MM/yyyy hh:MM:ss a'}}</span>
+                                                                    <span>From Date1:</span>
+                                                                    <span>{{inquiryDataByDate.startDateObj | date : 'dd/MM/yyyy, hh:mm a'}}</span>
                                                                 </div>
                                                             </li>
                                                             <li class="mb-2 accordion-data">
@@ -224,7 +223,7 @@
                                                                 <div>
                                                                     <span>To Date:</span>
                                                                     <span>{{inquiryDataByDate.endDateObj | date :
-                                                                        'dd/MM/yyyy hh:MM:ss a'}}</span>
+                                                                        'dd/MM/yyyy, hh:mm a'}}</span>
                                                                 </div>
                                                             </li>
                                                         </ul>
@@ -232,7 +231,7 @@
                                                     <div class="col-lg-1 col-md-3 col-sm-3  col-3">
                                                         <div class="d-flex my-3">
                                                             <button class="btn-bg"
-                                                                (click)="viewInquiryDetails(inquiryDataByDate._id)">
+                                                            routerLink="/admin/inquiry/view-inquiry/{{inquiryDataByDate.clientInquiryId}}">
                                                                 <i class='bx bxs-show'></i>
                                                             </button>
                                                         </div>

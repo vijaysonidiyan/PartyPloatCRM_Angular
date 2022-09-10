@@ -58,6 +58,7 @@ export class AddInquiryComponent implements OnInit {
   referenceActiveList: any[] = [];
   inquiryId: any;
   viewInquiry: boolean = false;
+  assignpartyplotList: any[]=[];
   //calender done
 
   get fclientinquiryData() {
@@ -96,7 +97,8 @@ export class AddInquiryComponent implements OnInit {
 
   ngOnInit(): void {
     this.defaultForm();
-    this.getTimeRanges()
+    this.getTimeRanges();
+    this.getAssignPartyplotList();
     this.getEventActiveList();
     this.activeReferenceList();
     this.minEndDate[0] = new Date();
@@ -120,6 +122,7 @@ export class AddInquiryComponent implements OnInit {
       address: ["", [Validators.required]],
       reference_ID: [null, [Validators.required]],
       reference_detail: [""],
+      partyplot_ID: [null],
       events: this.fb.array([]),
     });
   }
@@ -131,7 +134,7 @@ export class AddInquiryComponent implements OnInit {
       Date: [(oItem['Date'] ? oItem['Date'] : !!this.selectedDate ? new Date(this.selectedDate) : '')],
       // startDateObj: [(oItem['startDateObj'] ? oItem['startDateObj'] : !!this.selectedDate ? new Date(this.selectedDate) : '')],
       // endDateObj: [(oItem['endDateObj'] ? oItem['endDateObj'] : !!this.selectedDate ? new Date(this.selectedDate) : '')],
-      startTimeObj: [(oItem['endTimeObj'] ? oItem['endTimeObj'] : null)],
+      startTimeObj: [(oItem['startTimeObj'] ? oItem['startTimeObj'] : null)],
       endTimeObj: [(oItem['endTimeObj'] ? oItem['endTimeObj'] : null)],
       offer_budget: [(oItem['offer_budget'] ? oItem['offer_budget'] : '')],
       client_budget: [(oItem['client_budget'] ? oItem['client_budget'] : '')],
@@ -140,8 +143,9 @@ export class AddInquiryComponent implements OnInit {
   }
   timeRange = [];
   getTimeRanges() {
-    let date = new Date(this.selectedDate);
+    let date = new Date();
     for (let minutes = 0; minutes < 24 * 60; minutes = minutes + 30) {
+      debugger
       date.setHours(0);
       date.setMinutes(minutes);
       let time = {
@@ -150,6 +154,20 @@ export class AddInquiryComponent implements OnInit {
       }
       this.timeRange.push(time);
     }
+  }
+
+  getAssignPartyplotList() {
+    this.adminLayoutService.assignpartyplotUserWiseList().subscribe((Response: any) => {
+      if (Response.meta.code == 200) {
+        this.assignpartyplotList = Response.data;
+        this.clientinquiryDataForm.controls.partyplot_ID.setValue(Response.data[0]._id);
+      }
+      //for select sub industry step
+    },
+      (error) => {
+        console.log(error.error.Message);
+      }
+    );
   }
 
 
@@ -274,7 +292,8 @@ export class AddInquiryComponent implements OnInit {
         "endDateObj": endDateObj,
         "guest": x.guest,
         "client_budget": x.client_budget,
-        "offer_budget": x.offer_budget
+        "offer_budget": x.offer_budget,
+        "remark": x.remark,
       }
       eventObjList.push(eventObj);
     });
@@ -323,17 +342,19 @@ export class AddInquiryComponent implements OnInit {
 
         Response.data.EventInquiryData.forEach((x: any) => {
           debugger
+          let startDateTime = new Date(x.startDateObj);
+          let endDateTime = new Date(x.endDateObj);
           let eventObj = {
             eventType: x.eventType,
             guest: x.guest,
-            Date: x.startDateObj,
-            startTimeObj: moment(x.startDateObj).format('HH:mm'),
-            endTimeObj: moment(x.endDateObj).format('HH:mm'),
+            Date: new Date(x.startDateObj),
+            startTimeObj: moment(startDateTime).format('HH:mm'),
+            endTimeObj: moment(endDateTime).format('HH:mm'),
             offer_budget: x.offer_budget,
             client_budget: x.client_budget,
-            remark: ""
+            remark: x.client_budget
           }
-          this.createeventItem(eventObj);
+          this.eventList.push(this.createeventItem(eventObj));
         })
       }
     });
