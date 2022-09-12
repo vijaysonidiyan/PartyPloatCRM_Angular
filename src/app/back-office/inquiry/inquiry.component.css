@@ -51,6 +51,13 @@
   margin: 0 0.5rem;
   font-weight: 600;
 }
+.dropdown-search {
+  position: absolute;
+  top: 1.5rem;
+  right: 100px;
+  max-width: 300px;
+  width: 100%;
+}
 @media (max-width: 576px) {
   .accordion-body {
     padding: 0.79rem;
@@ -74,18 +81,22 @@
     margin-top: 0rem !important;
     margin-bottom: 0rem !important;
   }
+  .dropdown-search {
+    max-width: 100% ;
+  }
 }
 @media (min-width: 768px) {
 }
 @media (max-width: 800px) {
-  .calendar-search {
+  .dropdown-search {
     position: unset !important;
     top: 0;
     right: 0;
   }
 }
+
 /* @media (max-width: 1024px) {
-  .calendar-search {
+  .dropdown-search {
     position: absolute;
     transform: translate(190%,35%)!important;
   }
@@ -93,9 +104,4 @@
 @media (min-width: 1200px) {
 }
 @media (min-width: 1400px) {
-}
-.calendar-search {
-  position: absolute;
-  top: 40px;
-  right: 100px;
 }

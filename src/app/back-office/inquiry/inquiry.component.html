@@ -7,9 +7,9 @@
                         <div class="row">
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3">
                                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Inquiry</h4> -->
-                                <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0 me-3"
-                                    bindLabel="name" bindValue="_id" [(ngModel)]="searchedPartyplot"
-                                    placeholder="Select Party Plot">
+                                <ng-select [items]="assignpartyplotList" [multiple]="false"
+                                    class="form-control p-0 me-3" bindLabel="name" bindValue="_id"
+                                    [(ngModel)]="searchedPartyplot" placeholder="Select Party Plot">
                                 </ng-select>
                             </div>
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3">
@@ -134,13 +134,13 @@
                 </div>
                 <div class="" [ngClass]="activeTab == 2 ? 'd-block' : 'd-none'" *ngIf="activeTab == 2">
                     <div class="p-4 btn-cus position-relative">
-                        <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 mb-3">
-                            <div class="dropdown-search">
-                                <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0 me-3"
-                                bindLabel="name" bindValue="_id" [(ngModel)]="searchedPartyplot"
+                        <div class="dropdown-search">
+
+                            <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0 me-3"
+                                bindLabel="name" bindValue="_id" [(ngModel)]="searchedPartyplot" (change)="partyplotChange()"
                                 placeholder="Select Party Plot">
                             </ng-select>
-                            </div>
+
                         </div>
                         <full-calendar #calendar [options]="calendarOptions">
                         </full-calendar>
@@ -223,7 +223,8 @@
                                                                 <i class="bx bxs-calendar"></i>
                                                                 <div>
                                                                     <span>From Date1:</span>
-                                                                    <span>{{inquiryDataByDate.startDateObj | date : 'dd/MM/yyyy, hh:mm a'}}</span>
+                                                                    <span>{{inquiryDataByDate.startDateObj | date :
+                                                                        'dd/MM/yyyy, hh:mm a'}}</span>
                                                                 </div>
                                                             </li>
                                                             <li class="mb-2 accordion-data">
@@ -238,8 +239,8 @@
                                                     </div>
                                                     <div class="col-lg-1 col-md-3 col-sm-3  col-3">
                                                         <div class="d-flex my-3">
-                                                            <button class="btn-bg"
-                                                            routerLink="/admin/inquiry/view-inquiry/{{inquiryDataByDate.clientInquiryId}}">
+                                                            <button class="btn-bg" data-bs-dismiss="modal" aria-label="Close"
+                                                                routerLink="/admin/inquiry/view-inquiry/{{inquiryDataByDate.clientInquiryId}}">
                                                                 <i class='bx bxs-show'></i>
                                                             </button>
                                                         </div>

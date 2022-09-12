@@ -57,7 +57,7 @@ export class InquiryComponent implements OnInit {
       this.searchedMonth = month.split('T')[0].split('-')[1];
       // this.searchedMonth = this.currentMonth;
       this.searchedYear = this.currentYear;
-      this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear })
+      this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear, partyplot_ID: this.searchedPartyplot })
     }
   }
 
@@ -66,8 +66,8 @@ export class InquiryComponent implements OnInit {
   ngOnInit(): void {
     this.l = 10;
     this.defaultForm();
-    this.getEventActiveList();
     this.getAssignPartyplotList();
+    this.getEventActiveList();
     this.getYear();
     this.minEndDate = new Date();
 
@@ -119,12 +119,17 @@ export class InquiryComponent implements OnInit {
 
   calendarOptions: CalendarOptions;
 
+  partyplotChange() {
+    this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear, partyplot_ID: this.searchedPartyplot })
+  }
+
   // calender view list data
   getInquiryListForCalenderView(data: any) {
 
     let inquiryObj = {
-      month: data.month,
-      year: data.year,
+      month: data.month ? data.month : null,
+      year: data.year ? data.year : null,
+      partyplot_ID: data.partyplot_ID ? data.partyplot_ID : null,
     }
 
     this.adminLayoutService.getInquiryListForCalenderView(inquiryObj).subscribe((response: any) => {
@@ -238,7 +243,7 @@ export class InquiryComponent implements OnInit {
 
     this.searchedMonth = month.split('T')[0].split('-')[1];
     this.searchedYear = calendarApi.currentData.currentDate.getFullYear();
-    this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear });
+    this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear, partyplot_ID: this.searchedPartyplot });
     // console.log(calendarApi)
   }
 
@@ -252,7 +257,7 @@ export class InquiryComponent implements OnInit {
 
     this.searchedMonth = month.split('T')[0].split('-')[1];
     this.searchedYear = calendarApi.currentData.currentDate.getFullYear();
-    this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear });
+    this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear, partyplot_ID: this.searchedPartyplot });
     // console.log(calendarApi)
   }
 
@@ -320,12 +325,13 @@ export class InquiryComponent implements OnInit {
   getInquiryList(data: any) {
 
     let inquiryObj = {
-      month: data.month,
-      year: data.year,
-      name: data.name,
-      partyplot_ID: data.partyplot_ID
+      month: data.month ? data.month : null,
+      year: data.year ? data.year : null,
+      name: data.name ? data.name : null,
+      partyplot_ID: data.partyplot_ID ? data.partyplot_ID : null
     }
 
+    this.inquiryList = [];
     this.adminLayoutService.getInquiryList(inquiryObj).subscribe((response: any) => {
       if (response.meta.code == 200) {
         // response.data.forEach((x: any) => {
@@ -347,7 +353,6 @@ export class InquiryComponent implements OnInit {
         //   }
         //   this.inquiryList.push(Obj);
         // })
-        this.inquiryList = [];
         this.inquiryList = response.data;
         this.noData = false;
       }
