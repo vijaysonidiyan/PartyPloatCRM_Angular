@@ -10,6 +10,7 @@
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Add Inquiry</h5>
+            <button type="button" class="btn btn-primary">Edit</button>
         </div>
         <div class="card-body">
             <form role="form" class="add-employee-form" autocomplete="off" [formGroup]="clientinquiryDataForm">
@@ -213,11 +214,22 @@
                                     <input class="form-control" type="date" value="2021-06-18" id="html5-date-input" >
                                 </div> -->
                             </div>
-                        </div>
-                        <div class="w-px-30 mb-3 h-px-100">
-                            <!-- <lael for="nameBasic" class="form-label d-block">&nbsp;</lael> -->
-                            <button *ngIf="i != 0" type="button" class="event-btn-close ml-10" aria-label="Close"
-                                (click)="deletEventList(i)"></button>
+                            <div class="mb-3">
+                                <button type="button" class="btn btn-primary me-3">Edit</button>
+                                <button *ngIf="i != 0" type="button" class="btn btn-label-danger" aria-label="Close"
+                                (click)="deletEventList(i)">
+                                    <i class="bx bx-x"></i>
+                                    <span class="align-middle">Delete</span>
+                                  </button>
+                                <!-- <lael for="nameBasic" class="form-label d-block">&nbsp;</lael> -->
+                                <!-- <button *ngIf="i != 0" type="button" class="event-btn-close ml-10" aria-label="Close"
+                                    (click)="deletEventList(i)"></button> -->
+                            </div>
+                            <!-- <div class="">
+                                <button type="submit" class="btn btn-primary me-3" (click)="saveClientInquiry()">Save</button>
+                                <button type="button" class="btn btn-label-danger" >Cancle</button>
+                            </div> -->
+                            <hr class="my-3">
                         </div>
                     </div>
 
