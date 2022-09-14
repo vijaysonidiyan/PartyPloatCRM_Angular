@@ -197,6 +197,15 @@ export class InquiryComponent implements OnInit {
 
   }
 
+  viewInquiry(id:any) {
+    this.router.navigate(["admin/inquiry/view-inquiry/"+id])
+    $('#add-inquiry-modal').modal('hide');
+  }
+  cancelBooking() {
+    $('#cancel-booking-modal').modal('show');
+    $('#inquiry-details-by-date-modal').modal('hide')
+  }
+
   addInquiryByDate() {
     if (!!this.startDateObj) {
       debugger

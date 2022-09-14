@@ -137,8 +137,8 @@
                         <div class="dropdown-search">
 
                             <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0 me-3"
-                                bindLabel="name" bindValue="_id" [(ngModel)]="searchedPartyplot" (change)="partyplotChange()"
-                                placeholder="Select Party Plot">
+                                bindLabel="name" bindValue="_id" [(ngModel)]="searchedPartyplot"
+                                (change)="partyplotChange()" placeholder="Select Party Plot">
                             </ng-select>
 
                         </div>
@@ -237,13 +237,21 @@
                                                             </li>
                                                         </ul>
                                                     </div>
-                                                    <div class="col-lg-1 col-md-3 col-sm-3  col-3">
-                                                        <div class="d-flex my-3">
-                                                            <button class="btn-bg" data-bs-dismiss="modal" aria-label="Close"
-                                                                routerLink="/admin/inquiry/view-inquiry/{{inquiryDataByDate.clientInquiryId}}">
-                                                                <i class='bx bxs-show'></i>
+                                                    <div  class="col-lg-1 col-md-3 col-sm-3  col-3">
+                                                        <div class="dropdown">
+                                                            <button class="btn p-0" type="button" id="cardOpt6" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                              <i class="bx bx-dots-vertical-rounded"></i>
                                                             </button>
-                                                        </div>
+                                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
+                                                                <a class="dropdown-item"
+                                                                (click)="viewInquiry(inquiryDataByDate.clientInquiryId)">
+                                                                    View More
+                                                                </a>
+                                                            <a class="dropdown-item"
+                                                                href="javascript:void(0);">Booking Confirm</a>
+                                                            <a class="dropdown-item" (click)="cancelBooking()">Booking Cancel</a>
+                                                            </div>
+                                                          </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -557,6 +565,33 @@
                     [confirmTitle]="'Book Inquiry'" [confirmContent]="'Are you sure to Book this Inquiry?'">Book
                     Inquiry</button>
             </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="cancel-booking-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1"><strong>Cancel Booking</strong></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12 col-md-6 mb-3">
+                        <label for="nameBasic" class="form-label">Remark</label>
+                        <textarea id="basic-default-message" class="form-control"
+                            placeholder="Remark"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="float-end">
+                    <div class="float-end">
+                        <button type="submit" class="btn btn-primary">Cancel Booking</button>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </div>
 </div>

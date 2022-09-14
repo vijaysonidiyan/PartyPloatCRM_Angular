@@ -2,6 +2,8 @@ import { Routes } from "@angular/router";
 import { AddInquiryComponent } from "app/back-office/add-inquiry/add-inquiry.component";
 import { EventMasterComponent } from "app/back-office/event-master/event-master.component";
 import { InquiryComponent } from "app/back-office/inquiry/inquiry.component";
+import { AddPackageMasterComponent } from "app/back-office/package-master/add-package-master/add-package-master.component";
+import { PackageMasterComponent } from "app/back-office/package-master/package-master.component";
 import { PartyPlotMasterComponent } from "app/back-office/party-plot-master/party-plot-master.component";
 import { ProductMasterComponent } from "app/back-office/product-master/product-master.component";
 import { CompanySettingComponent } from "app/back-office/setting/company-setting/company-setting.component";
@@ -26,6 +28,8 @@ export const AdminLayoutRoutes: Routes = [
   { path: "setting/user-wise-menu", component: UserWiseMenuComponent, data: { breadcrumb: 'User Wise Menu' } },
   { path: "setting/company-setting", component: CompanySettingComponent, data: { breadcrumb: 'Company Setting' } },
   { path: "party-plot-master", component: PartyPlotMasterComponent, data: { breadcrumb: 'Party Plot Master' } },
+  { path: "package-master", component: PackageMasterComponent, data: { breadcrumb: 'Package Master' } },
+  { path: "package-master/add-package-master", component: AddPackageMasterComponent, data: { breadcrumb: 'Add Package Master' } },
   { path: "staff", component: StaffComponent, data: { breadcrumb: 'Staff' } },
   { path: "event-master", component: EventMasterComponent, data: { breadcrumb: 'Event Master' } },
   { path: "product-master", component: ProductMasterComponent, data: { breadcrumb: 'Product Master' } },

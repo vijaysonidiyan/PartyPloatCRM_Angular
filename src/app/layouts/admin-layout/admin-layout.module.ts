@@ -42,6 +42,8 @@ FullCalendarModule.registerPlugins([
   interactionPlugin
 ]);
 import { BreadcrumbModule } from "angular-crumbs";
+import { PackageMasterComponent } from "app/back-office/package-master/package-master.component";
+import { AddPackageMasterComponent } from "app/back-office/package-master/add-package-master/add-package-master.component";
 
 @NgModule({
   imports: [
@@ -84,7 +86,9 @@ import { BreadcrumbModule } from "angular-crumbs";
     InquiryComponent,
     AddInquiryComponent,
     ModuleMasterComponent,
-    ReferenceMasterComponent
+    ReferenceMasterComponent,
+    PackageMasterComponent,
+    AddPackageMasterComponent
   ],
   providers: [MatDatepickerModule],
 })
