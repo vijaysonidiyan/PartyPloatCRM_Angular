@@ -10,15 +10,22 @@
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Add Inquiry</h5>
-            <button type="button" class="btn btn-primary">Edit</button>
+            <div *ngIf="fclientinquiryData._id.value != '0'">
+                <button type="button" class="btn btn-primary" *ngIf="viewInquiry === true"
+                    (click)="enableOnlyClientInquiryInput()">Edit</button>
+                <button type="button" class="btn btn-primary me-3" *ngIf="viewInquiry === false"
+                    (click)="updateClientInquiryData()">Save</button>
+                <button type="button" class="btn btn-primary" *ngIf="viewInquiry === false"
+                    (click)="diableOnlyClientInquiryInput()">Cancel</button>
+            </div>
         </div>
         <div class="card-body">
             <form role="form" class="add-employee-form" autocomplete="off" [formGroup]="clientinquiryDataForm">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 mb-3">
                         <label for="nameBasic" class="form-label">Name</label>
-                        <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
-                            formControlName="name" />
+                        <input type="text" [readonly]="viewInquiry === true" id="nameBasic" class="form-control"
+                            placeholder="Enter Name" formControlName="name" />
                         <div *ngIf="submittedclientInquiryData && fclientinquiryData.name.errors">
                             <div *ngIf="fclientinquiryData.name.errors.required">
                                 <span class="error_msg">Name is Required.</span>
@@ -28,8 +35,9 @@
                     <div class="col-lg-6 col-md-6 mb-3">
                         <label class="form-label" for="basic-default-email">Email</label>
                         <div class="input-group input-group-merge">
-                            <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
-                                aria-label="john.doe" aria-describedby="basic-default-email2" formControlName="email" />
+                            <input type="text" [readonly]="viewInquiry === true" id="basic-default-email"
+                                class="form-control" placeholder="john.doe" aria-label="john.doe"
+                                aria-describedby="basic-default-email2" formControlName="email" />
                             <span class="input-group-text" id="basic-default-email2">@example.com</span>
                         </div>
                         <div *ngIf="submittedclientInquiryData && fclientinquiryData.email.errors">
@@ -40,8 +48,9 @@
                     </div>
                     <div class="col-lg-6 col-md-6 mb-3">
                         <label class="form-label" for="basic-default-phone">Contact</label>
-                        <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                            placeholder="658 799 8941" appNumbersOnly maxlength="10" formControlName="primaryContact" />
+                        <input type="text" [readonly]="viewInquiry === true" id="basic-default-phone"
+                            class="form-control phone-mask" placeholder="658 799 8941" appNumbersOnly maxlength="10"
+                            formControlName="primaryContact" />
                         <div *ngIf="submittedclientInquiryData && fclientinquiryData.primaryContact.errors">
                             <div *ngIf="fclientinquiryData.primaryContact.errors.required">
                                 <span class="error_msg">Contact is Required.</span>
@@ -50,14 +59,14 @@
                     </div>
                     <div class="col-lg-6 col-md-6 mb-3">
                         <label class="form-label" for="basic-default-phone">Contact-2</label>
-                        <input type="text" id="basic-default-phone" appNumbersOnly maxlength="10"
-                            class="form-control phone-mask" placeholder="658 799 8941"
+                        <input type="text" [readonly]="viewInquiry === true" id="basic-default-phone" appNumbersOnly
+                            maxlength="10" class="form-control phone-mask" placeholder="658 799 8941"
                             formControlName="secondryContact" />
                     </div>
                     <div class="col-lg-6 col-md-6 mb-3">
                         <label for="nameBasic" class="form-label">Address</label>
-                        <textarea style="height:38px;" id="basic-default-message" class="form-control"
-                            placeholder="Address" formControlName="address"></textarea>
+                        <textarea style="height:38px;" [readonly]="viewInquiry === true" id="basic-default-message"
+                            class="form-control" placeholder="Address" formControlName="address"></textarea>
                         <div *ngIf="submittedclientInquiryData && fclientinquiryData.address.errors">
                             <div *ngIf="fclientinquiryData.address.errors.required">
                                 <span class="error_msg">Address is Required.</span>
@@ -66,8 +75,9 @@
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label for="nameBasic" class="form-label">Select Party Plot</label>
-                        <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0 me-3"
-                            bindLabel="name" bindValue="_id" formControlName="partyplot_ID" placeholder="Select Party Plot">
+                        <ng-select [items]="assignpartyplotList" [readonly]="viewInquiry === true" [multiple]="false"
+                            class="form-control p-0 me-3" bindLabel="name" bindValue="_id"
+                            formControlName="partyplot_ID" placeholder="Select Party Plot">
                         </ng-select>
                         <!-- <div *ngIf="submittedStaffData && partyplotInvalid === true">
                             <span class="error_msg text-danger">Party plot is Required.</span>
@@ -75,9 +85,9 @@
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label for="nameBasic" class="form-label">Select Reference Type</label>
-                        <ng-select [items]="referenceActiveList" [multiple]="false" class="form-control p-0"
-                            bindLabel="referenceName" bindValue="_id" formControlName="reference_ID"
-                            placeholder="Select Reference Type">
+                        <ng-select [items]="referenceActiveList" [readonly]="viewInquiry === true" [multiple]="false"
+                            class="form-control p-0" bindLabel="referenceName" bindValue="_id"
+                            formControlName="reference_ID" placeholder="Select Reference Type">
                         </ng-select>
                         <!-- <div *ngIf="submittedStaffData && partyplotInvalid === true">
                             <span class="error_msg text-danger">Party plot is Required.</span>
@@ -85,8 +95,9 @@
                     </div>
                     <div class="col-lg-6 col-md-6 mb-3">
                         <label for="nameBasic" class="form-label">Reference Details</label>
-                        <textarea style="height:38px;" id="basic-default-message" class="form-control"
-                            placeholder="Reference Details" formControlName="reference_detail"></textarea>
+                        <textarea style="height:38px;" [readonly]="viewInquiry === true" id="basic-default-message"
+                            class="form-control" placeholder="Reference Details"
+                            formControlName="reference_detail"></textarea>
                     </div>
                 </div>
                 <div class="card-header d-flex justify-content-between align-items-center px-0">
@@ -121,44 +132,6 @@
 
                                     </div>
                                 </div>
-                                <!-- <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
-                                    <label for="html5-date-input" class="form-label">Start Date</label>
-                                    <div class="position-relative mat-date-picker">
-                                        <input type="text" class="form-control" matInput
-                                            (ngModelChange)="onStartDateChange($event,i)"
-                                            [ngxMatDatetimePicker]="startDate" placeholder="Choose a start date"
-                                            formControlName="startDateObj" [min]="minDate" [max]="maxDate"
-                                            [disabled]="disabled">
-                                        <div class="mat-dat-picker-icon">
-                                            <div class="calendar-icon"><i class="bx bxs-calendar"></i></div>
-                                            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-                                            <ngx-mat-datetime-picker #startDate [showSpinners]="showSpinners"
-                                                [showSeconds]="showSeconds" [stepHour]="stepHour"
-                                                [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi"
-                                                [color]="color" [enableMeridian]="enableMeridian">
-                                            </ngx-mat-datetime-picker>
-                                        </div>
-
-                                    </div>
-                                </div> -->
-                                <!-- <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
-                                    <label for="html5-date-input" class="form-label">End Date</label>
-                                    <div class="position-relative mat-date-picker">
-                                        <input type="text" class="form-control" matInput
-                                            [ngxMatDatetimePicker]="endDate" placeholder="Choose a start date"
-                                            formControlName="endDateObj" [min]="minEndDate[i]" [max]="maxDate"
-                                            [disabled]="disabled">
-                                        <div class="mat-dat-picker-icon">
-                                            <div class="calendar-icon"><i class="bx bxs-calendar"></i></div>
-                                            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-                                            <ngx-mat-datetime-picker #endDate [showSpinners]="showSpinners"
-                                                [showSeconds]="showSeconds" [stepHour]="stepHour"
-                                                [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi"
-                                                [color]="color" [enableMeridian]="enableMeridian">
-                                            </ngx-mat-datetime-picker>
-                                        </div>
-                                    </div>
-                                </div> -->
                                 <div class="col-lg-6 col-md-6 mb-3">
                                     <label class="form-label" for="basic-default-company">Start Time</label>
                                     <ng-select [items]="timeRange" [multiple]="false" class="form-control p-0"
@@ -188,47 +161,25 @@
                                     <textarea style="height:38px;" id="basic-default-message" class="form-control"
                                         placeholder="Remark" formControlName="remark"></textarea>
                                 </div>
-                                <!-- <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
-                                    <label for="html5-date-input" class="form-label">Start Time</label>
-                                    <div class="position-relative mat-date-picker">
-                                        <input class="form-control cus-time-picker"
-                                            (change)="onStartTimeChange($event , i)" formControlName="startTimeObj"
-                                            type="time">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
-                                    <label for="html5-date-input" class="form-label">End Time</label>
-                                    <div class="position-relative mat-date-picker">
-                                        <input class="form-control cus-time-picker"
-                                            min="{{minEndTime[i] | date:'HH:mm:ss'}}" formControlName="endTimeObj"
-                                            type="time">
-                                        {{ item.controls.endTimeObj?.value }}
-                                    </div>
-                                </div> -->
-                                <!-- <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
-                                    <label for="html5-date-input" class="form-label">Date</label>
-                                    <input class="form-control" type="date" value="2021-06-18" id="html5-date-input" >
-                                </div>
-                                <div class="col-lg-6 col-md-6 mb-3">
-                                    <label for="html5-time-input" class="form-label">Time</label>
-                                    <input class="form-control" type="date" value="2021-06-18" id="html5-date-input" >
-                                </div> -->
                             </div>
-                            <div class="mb-3">
-                                <button type="button" class="btn btn-primary me-3">Edit</button>
-                                <button *ngIf="i != 0" type="button" class="btn btn-label-danger" aria-label="Close"
-                                (click)="deletEventList(i)">
+                            <div class="mb-3" *ngIf="fclientinquiryData._id.value != '0'">
+                                <button type="button" class="btn btn-primary me-3"
+                                    *ngIf="viewInquiryFormArray[i] == true"
+                                    (click)="enableClientInquiryEventIndexWise(i)">Edit</button>
+                                <button type="button" class="btn btn-primary me-3"
+                                    *ngIf="viewInquiryFormArray[i] == false"
+                                    (click)="saveUpdateEventInquiryData(i)">Save</button>
+                                <button type="button" class="btn btn-primary me-3"
+                                    *ngIf="viewInquiryFormArray[i] == false"
+                                    (click)="disableClientInquiryEventIndexWise(i)">Cancel</button>
+                                <button type="button" *ngIf="item.value._id != '0'" class="btn btn-label-danger"
+                                    title="Delete Event" (confirm-click)="deletEventList(i)" appConfirm
+                                    [confirmTitle]="'Delete Event'"
+                                    [confirmContent]="'Are you sure to Delete this Event?'" aria-label="Close">
                                     <i class="bx bx-x"></i>
                                     <span class="align-middle">Delete</span>
-                                  </button>
-                                <!-- <lael for="nameBasic" class="form-label d-block">&nbsp;</lael> -->
-                                <!-- <button *ngIf="i != 0" type="button" class="event-btn-close ml-10" aria-label="Close"
-                                    (click)="deletEventList(i)"></button> -->
+                                </button>
                             </div>
-                            <!-- <div class="">
-                                <button type="submit" class="btn btn-primary me-3" (click)="saveClientInquiry()">Save</button>
-                                <button type="button" class="btn btn-label-danger" >Cancle</button>
-                            </div> -->
                             <hr class="my-3">
                         </div>
                     </div>

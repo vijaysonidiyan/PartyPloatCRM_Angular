@@ -58,7 +58,8 @@ export class AddInquiryComponent implements OnInit {
   referenceActiveList: any[] = [];
   inquiryId: any;
   viewInquiry: boolean = false;
-  assignpartyplotList: any[]=[];
+  viewInquiryFormArray = {};
+  assignpartyplotList: any[] = [];
   //calender done
 
   get fclientinquiryData() {
@@ -72,6 +73,7 @@ export class AddInquiryComponent implements OnInit {
     if (currentUrl.includes('view-inquiry')) {
       this.route.params.subscribe((params: Params) => {
         this.inquiryId = params.id;
+
       });
       this.viewInquiry = true;
     } else if (currentUrl.includes('add-inquiry')) {
@@ -114,7 +116,7 @@ export class AddInquiryComponent implements OnInit {
 
   defaultForm() {
     this.clientinquiryDataForm = this.fb.group({
-      _id: [""],
+      _id: ["0"],
       name: ["", [Validators.required]],
       email: ["", [Validators.required]],
       primaryContact: ["", [Validators.required]],
@@ -129,6 +131,7 @@ export class AddInquiryComponent implements OnInit {
 
   createeventItem(oItem?: any): FormGroup {
     return this.fb.group({
+      _id: [(oItem['_id'] ? oItem['_id'] : '0')],
       eventType: [(oItem['eventType'] ? oItem['eventType'] : null)],
       guest: [(oItem['guest'] ? oItem['guest'] : '')],
       Date: [(oItem['Date'] ? oItem['Date'] : !!this.selectedDate ? new Date(this.selectedDate) : '')],
@@ -145,7 +148,6 @@ export class AddInquiryComponent implements OnInit {
   getTimeRanges() {
     let date = new Date();
     for (let minutes = 0; minutes < 24 * 60; minutes = minutes + 30) {
-      debugger
       date.setHours(0);
       date.setMinutes(minutes);
       let time = {
@@ -170,7 +172,59 @@ export class AddInquiryComponent implements OnInit {
     );
   }
 
+  enableOnlyClientInquiryInput() {
+    this.clientinquiryDataForm.controls['name'].enable();
+    this.clientinquiryDataForm.controls['email'].enable();
+    this.clientinquiryDataForm.controls['primaryContact'].enable();
+    this.clientinquiryDataForm.controls['secondryContact'].enable();
+    this.clientinquiryDataForm.controls['address'].enable();
+    this.clientinquiryDataForm.controls['reference_ID'].enable();
+    this.clientinquiryDataForm.controls['reference_detail'].enable();
+    this.clientinquiryDataForm.controls['partyplot_ID'].enable();
+    this.viewInquiry = false;
+  }
+  diableOnlyClientInquiryInput() {
+    this.clientinquiryDataForm.controls['name'].disable();
+    this.clientinquiryDataForm.controls['email'].disable();
+    this.clientinquiryDataForm.controls['primaryContact'].disable();
+    this.clientinquiryDataForm.controls['secondryContact'].disable();
+    this.clientinquiryDataForm.controls['address'].disable();
+    this.clientinquiryDataForm.controls['reference_ID'].disable();
+    this.clientinquiryDataForm.controls['reference_detail'].disable();
+    this.clientinquiryDataForm.controls['partyplot_ID'].disable();
+    this.viewInquiry = true;
+  }
+  enableClientInquiryEventIndexWise(index: any) {
+    (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['eventType'].enable());
+    (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['guest'].enable());
+    (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['Date'].enable());
+    (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['startTimeObj'].enable());
+    (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['endTimeObj'].enable());
+    (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['offer_budget'].enable());
+    (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['client_budget'].enable());
+    (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['remark'].enable());
+    this.viewInquiryFormArray[index] = false;
+  }
+  disableClientInquiryEventIndexWise(index: any) {
 
+    if ((((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['_id'].value) == '0') {
+      const remove = this.eventList;
+      remove.removeAt(index)
+    }
+    else {
+      (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['eventType'].disable());
+      (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['guest'].disable());
+      (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['Date'].disable());
+      (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['startTimeObj'].disable());
+      (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['endTimeObj'].disable());
+      (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['offer_budget'].disable());
+      (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['client_budget'].disable());
+      (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['remark'].disable());
+      this.viewInquiryFormArray[index] = true;
+      this.editClientInquiry();
+    }
+
+  }
 
   activeReferenceList() {
     this.adminLayoutService.getReferenceActiveList().subscribe(
@@ -211,13 +265,13 @@ export class AddInquiryComponent implements OnInit {
 
 
   addEventList() {
+    debugger
+
     this.eventList.push(this.createeventItem({}));
+    this.viewInquiryFormArray[this.eventList.length - 1] = false
   }
 
-  deletEventList(index: number) {
-    const remove = this.eventList;
-    remove.removeAt(index)
-  }
+
 
   saveClientInquiry() {
 
@@ -305,6 +359,7 @@ export class AddInquiryComponent implements OnInit {
       address: this.clientinquiryDataForm.controls.address.value,
       reference_ID: this.clientinquiryDataForm.controls.reference_ID.value,
       reference_detail: this.clientinquiryDataForm.controls.reference_detail.value,
+      partyplot_ID: this.clientinquiryDataForm.controls.partyplot_ID.value,
       events: eventObjList
     };
 
@@ -331,6 +386,11 @@ export class AddInquiryComponent implements OnInit {
     let inquiryId = { '_id': this.inquiryId }
     this.adminLayoutService.getInquiryById(inquiryId).subscribe((Response: any) => {
       if (Response.meta.code == 200) {
+
+        this.defaultForm();
+        this.eventList = '';
+        this.eventList = this.clientinquiryDataForm.get("events") as FormArray;
+
         this.clientinquiryDataForm.controls._id.setValue(Response.data._id);
         this.clientinquiryDataForm.controls.name.setValue(Response.data.name);
         this.clientinquiryDataForm.controls.email.setValue(Response.data.email);
@@ -338,13 +398,14 @@ export class AddInquiryComponent implements OnInit {
         this.clientinquiryDataForm.controls.secondryContact.setValue(Response.data.secondryContact);
         this.clientinquiryDataForm.controls.address.setValue(Response.data.address);
         this.clientinquiryDataForm.controls.reference_ID.setValue(Response.data.reference_ID);
+        this.clientinquiryDataForm.controls.partyplot_ID.setValue(Response.data.partyplot_ID);
         this.clientinquiryDataForm.controls.reference_detail.setValue(Response.data.reference_detail);
 
-        Response.data.EventInquiryData.forEach((x: any) => {
-          debugger
+        Response.data.EventInquiryData.forEach((x: any, index: any) => {
           let startDateTime = new Date(x.startDateObj);
           let endDateTime = new Date(x.endDateObj);
           let eventObj = {
+            _id: x._id,
             eventType: x.eventType,
             guest: x.guest,
             Date: new Date(x.startDateObj),
@@ -354,10 +415,103 @@ export class AddInquiryComponent implements OnInit {
             client_budget: x.client_budget,
             remark: x.client_budget
           }
+          this.viewInquiryFormArray[index] = true
           this.eventList.push(this.createeventItem(eventObj));
         })
+
+        // this.diableOnlyClientInquiryInput();
+        this.clientinquiryDataForm.disable();
+
       }
     });
+  }
+
+  updateClientInquiryData() {
+    let clientinquiryModelObj = {
+      _id: this.clientinquiryDataForm.controls._id.value,
+      name: this.clientinquiryDataForm.controls.name.value,
+      email: this.clientinquiryDataForm.controls.email.value,
+      primaryContact: this.clientinquiryDataForm.controls.primaryContact.value,
+      secondryContact: this.clientinquiryDataForm.controls.secondryContact.value,
+      address: this.clientinquiryDataForm.controls.address.value,
+      reference_ID: this.clientinquiryDataForm.controls.reference_ID.value,
+      partyplot_ID: this.clientinquiryDataForm.controls.partyplot_ID.value,
+      reference_detail: this.clientinquiryDataForm.controls.reference_detail.value
+    };
+    this.adminLayoutService.updateClientinquiryData(clientinquiryModelObj).subscribe(
+      (Response: any) => {
+        if (Response.meta.code == 200) {
+          this.diableOnlyClientInquiryInput()
+          this.editClientInquiry();
+        }
+      })
+  }
+
+  deletEventList(index: number) {
+    let _id = (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['_id'].value);
+    let deleteIdObj = {
+      _id: _id
+    }
+    this.adminLayoutService.deleteEventByID(deleteIdObj).subscribe(
+      (Response: any) => {
+        if (Response.meta.code == 200) {
+          this.editClientInquiry();
+          this.disableClientInquiryEventIndexWise(index);
+        }
+      }
+    )
+  }
+
+  saveUpdateEventInquiryData(index: number) {
+
+    let event = ((this.clientinquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup)
+    let date = moment(event.controls['Date'].value).format('yyyy-MM-DD')
+    let startDateObj: any
+    let endDateObj: any;
+
+    startDateObj = new Date(date + ' ' + event.controls['startTimeObj'].value);
+    endDateObj = new Date(date + ' ' + event.controls['endTimeObj'].value);
+
+    if (event.controls['_id'].value == '0') {
+      let EventObj = {
+        "clientInquiryId": this.inquiryId,
+        "eventType": event.controls['eventType'].value,
+        "startDateObj": startDateObj,
+        "endDateObj": endDateObj,
+        "guest": event.controls['guest'].value,
+        "client_budget": event.controls['client_budget'].value,
+        "offer_budget": event.controls['offer_budget'].value,
+        "remark": event.controls['remark'].value,
+      }
+      this.adminLayoutService.saveEventInquiryData(EventObj).subscribe(
+        (Response: any) => {
+          if (Response.meta.code == 200) {
+            this.editClientInquiry();
+            this.disableClientInquiryEventIndexWise(index);
+          }
+        }
+      )
+    }
+    else {
+      let EventObj = {
+        "_id": event.controls['_id'].value,
+        "eventType": event.controls['eventType'].value,
+        "startDateObj": startDateObj,
+        "endDateObj": endDateObj,
+        "guest": event.controls['guest'].value,
+        "client_budget": event.controls['client_budget'].value,
+        "offer_budget": event.controls['offer_budget'].value,
+        "remark": event.controls['remark'].value,
+      }
+      this.adminLayoutService.updateEventInquiryData(EventObj).subscribe(
+        (Response: any) => {
+          if (Response.meta.code == 200) {
+            this.editClientInquiry();
+            this.disableClientInquiryEventIndexWise(index);
+          }
+        }
+      )
+    }
   }
 
 }

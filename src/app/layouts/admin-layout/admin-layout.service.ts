@@ -412,14 +412,14 @@ export class AdminLayoutService {
     let headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
-    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/eventinquiryList', data , { headers: headers });
+    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/eventinquiryList', data, { headers: headers });
   }
-  
+
   getInquiryById(data: any) {
     let headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
-    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/eventListgetByclientId',data, { headers: headers });
+    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/eventListgetByclientId', data, { headers: headers });
   }
 
   getInquiryListForCalenderView(data: any) {
@@ -455,6 +455,33 @@ export class AdminLayoutService {
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
     return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/clientinquiryapprovalStatusupdate', updateClientInquiryData, { headers: headers });
+  }
+
+  updateClientinquiryData(updateClientInquiryDetailsData: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/clientinquiryUpdate', updateClientInquiryDetailsData, { headers: headers });
+  }
+
+  deleteEventByID(deleteEventId: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'clientinquiry/event_inquiryDelete', { params: deleteEventId, headers: headers });
+  }
+
+  updateEventInquiryData(updateEventInquiryDetailsData: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/eventInquiryUpdate', updateEventInquiryDetailsData, { headers: headers });
+  }
+  saveEventInquiryData(saveEventInquiryDetailsData: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/eventinquiryaddbyclientID', saveEventInquiryDetailsData, { headers: headers });
   }
 
   // ============== Company Setting =========== //
