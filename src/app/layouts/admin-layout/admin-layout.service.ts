@@ -550,6 +550,37 @@ export class AdminLayoutService {
     return this.http.get(this.commonService.rootData.rootUrl + 'reference/referenceActiveList', { headers: headers });
   }
 
+  // package master 
+  savePackageMaster(packageMasterSaveData: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'packageMaster/packageCreate', packageMasterSaveData, { headers: headers });
+  }
+  updatePackageMaster(packageMasterUpdateData: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'packageMaster/packageUpdate', packageMasterUpdateData, { headers: headers });
+  }
+  statusPackageMaster(packageMasterUpdateData: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'packageMaster/packageStatusupdate', packageMasterUpdateData, { headers: headers });
+  }
+  getPackageMasterListById(Id: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'packageMaster/packageListByID', { params: Id, headers: headers });
+  }
+  getPackageMasterList() {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'packageMaster/packageList', { headers: headers });
+  }
 
 }
 

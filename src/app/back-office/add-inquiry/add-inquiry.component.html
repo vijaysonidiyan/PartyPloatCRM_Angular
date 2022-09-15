@@ -188,7 +188,7 @@
                 <div>
                     <button type="button" class="btn btn-primary" (click)="addEventList()">Add</button>
                 </div>
-                <div class="float-end">
+                <div class="float-end" *ngIf="fclientinquiryData._id.value == '0'">
                     <button type="submit" class="btn btn-primary" (click)="saveClientInquiry()">Save</button>
                 </div>
             </form>

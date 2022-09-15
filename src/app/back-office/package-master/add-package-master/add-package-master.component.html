@@ -1,68 +1,92 @@
 <div class="container-fluid flex-grow-1 container-p-y">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span>Add Package Master</h4>
+        <h4 class="fw-bold py-3 m-0" *ngIf="packageData == false"><span class="text-muted fw-light"></span>Add Package
+            Master</h4>
+        <h4 class="fw-bold py-3 m-0" *ngIf="packageData == true"><span class="text-muted fw-light"></span>Edit Package
+            Master</h4>
     </div>
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Package Category</h5>
+            <h5 class="mb-0">Package</h5>
             <!-- <button type="button" class="btn btn-primary">Edit</button> -->
         </div>
         <div class="card-body">
-            <form role="form" class="add-employee-form" autocomplete="off" [formGroup]="categotyDataForm" >
-                <div formArrayName="events">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 mb-3">
-                            <label for="nameBasic" class="form-label">Category Name</label>
-                            <input type="text" class="form-control" id="basic-default-company"
-                            placeholder="Enter Category Name"/>
-                        </div>
-                        <div class="col-lg-6 col-md-6 mb-3">
-                            <label for="nameBasic" class="form-label">Category Description</label>
-                            <textarea id="basic-default-message" style="height:38px;" class="form-control"
-                                placeholder="Description"></textarea>
-                        </div>
-                    </div>
-                    <div class="d-sm-block d-lg-flex align-items-center clear-fix" [formGroupName]="i"
-                    *ngFor="let item of categotyDataForm.get('events')['controls']; let i = index;">
-                        <div class="w-100">
-                            <div class="row">
-                                <div class="col-lg-4 col-md-6 mb-3">
-                                    <label class="form-label" for="basic-default-company">Item</label>
-                                    <input type="text" formControlName="item" class="form-control" id="basic-default-company"
-                                        placeholder="Enter Guest Count"/>
-                                </div>
-                                <div class="col-lg-4 col-md-6 mb-3">
-                                    <label for="nameBasic" class="form-label">Description</label>
-                                    <textarea style="height:38px;" id="basic-default-message" formControlName="description" class="form-control"
-                                        placeholder="Description"></textarea>
-                                </div>
-                                <div class="col-lg-4 col-md-6 mb-3">
-                                    <label class="form-label" for="basic-default-company">Quantity</label>
-                                    <input type="text" class="form-control" id="basic-default-company" formControlName="quantity"
-                                        placeholder="Enter Quantity"/>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <!-- <button type="button" class="btn btn-primary me-3">Edit</button> -->
-                                <button *ngIf="i != 0" type="button" class="btn btn-label-danger" aria-label="Close" (click)="deletCategoryList(i)">
-                                    <i class="bx bx-x"></i>
-                                    <span class="align-middle">Delete</span>
-                                  </button>
-                            </div>
-                            <hr class="my-3">
-                        </div>
-                    </div>
-
+            <form role="form" class="add-employee-form" autocomplete="off" [formGroup]="packageDataForm">
+                <div class="col-lg-4 col-md-6 mb-3">
+                    <label for="nameBasic" class="form-label">Package Name</label>
+                    <input type="text" class="form-control" id="basic-default-company" placeholder="Enter Package Name"
+                        formControlName="packageName" />
                 </div>
-                <div>
-                    <button type="button" class="btn btn-primary" (click)="addCategoryItem()">Add Item</button>
+                <hr class="my-3">
+                <div formArrayName="package">
+                    <span [formGroupName]="i"
+                        *ngFor=" let item of packageDataForm.get('package')['controls']; let i = index">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 mb-3">
+                                <label for="nameBasic" class="form-label">Category Name</label>
+                                <input type="text" class="form-control" id="basic-default-company"
+                                    placeholder="Enter Category Name" formControlName="categoryName" />
+                            </div>
+                            <div class="col-lg-6 col-md-6 mb-3">
+                                <label for="nameBasic" class="form-label">Category Description</label>
+                                <textarea id="basic-default-message" style="height:38px;" class="form-control"
+                                    placeholder="Description" formControlName="categoryDescription"></textarea>
+                            </div>
+                        </div>
+                        <div formArrayName="packageCategoryList">
+                            <div class="d-sm-block d-lg-flex align-items-center clear-fix" [formGroupName]="x"
+                                *ngFor="let citem of item.get('packageCategoryList')['controls']; let x = index;">
+                                <div class="w-100">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6 mb-3">
+                                            <label class="form-label" for="basic-default-company">Item</label>
+                                            <input type="text" formControlName="item" class="form-control"
+                                                id="basic-default-company" placeholder="Enter Guest Count" />
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 mb-3">
+                                            <label for="nameBasic" class="form-label">Description</label>
+                                            <textarea style="height:38px;" id="basic-default-message"
+                                                formControlName="description" class="form-control"
+                                                placeholder="Description"></textarea>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 mb-3">
+                                            <label class="form-label" for="basic-default-company">Quantity</label>
+                                            <input type="text" class="form-control" id="basic-default-company"
+                                                formControlName="quantity" placeholder="Enter Quantity" />
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <!-- <button type="button" class="btn btn-primary me-3">Edit</button> -->
+                                        <button type="button" class="btn btn-label-danger" aria-label="Close"
+                                            (click)="deletepackageCategoryList(i,x)">
+                                            <i class="bx bx-x"></i>
+                                            <span class="align-middle">Remove</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button type="button" class="btn btn-primary" (click)="createCategoryItem(i)">Add
+                                Item</button>
+                            <button type="button" class="btn btn-label-danger float-end"
+                                (click)="deleteCategoryListData(i)">Delete
+                                Category</button>
+                        </div>
+                        <hr class="my-3">
+                    </span>
                 </div>
                 <!-- <div class="float-end">
                     <button type="submit" class="btn btn-primary" (click)="saveClientInquiry()">Save</button>
                 </div> -->
             </form>
             <div>
-                <button type="button" class="btn btn-primary mt-3">Add Category</button>
+                <button type="button" (click)="addPackageItem()" class="btn btn-primary mt-3">Add Category</button>
+            </div>
+            <div>
+                <button type="button" (click)="savePackageMaster()" class="btn btn-primary mt-3 float-end">{{packageData
+                    === true ? 'Update' : 'Save'}}</button>
             </div>
         </div>
     </div>

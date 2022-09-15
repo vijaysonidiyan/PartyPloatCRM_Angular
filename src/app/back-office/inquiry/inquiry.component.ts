@@ -197,9 +197,9 @@ export class InquiryComponent implements OnInit {
 
   }
 
-  viewInquiry(id:any) {
-    this.router.navigate(["admin/inquiry/view-inquiry/"+id])
-    $('#add-inquiry-modal').modal('hide');
+  viewInquiry(id: any) {
+    $('#inquiry-details-by-date-modal').modal('hide');
+    this.router.navigate(["admin/inquiry/view-inquiry/" + id])
   }
   cancelBooking() {
     $('#cancel-booking-modal').modal('show');
@@ -232,7 +232,7 @@ export class InquiryComponent implements OnInit {
   handleDateClick(arg) {
     debugger
     // this.startDateObj = arg.date
-    if(new Date() < arg.date) {      
+    if (new Date() < arg.date) {
       this.router.navigate(["/admin/inquiry/add-inquiry"], {
         queryParams: {
           startDate: arg.date,
@@ -374,7 +374,7 @@ export class InquiryComponent implements OnInit {
   }
 
   searchFilterInquiryList() {
-    this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName,  partyplot_ID: this.searchedPartyplot })
+    this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName, partyplot_ID: this.searchedPartyplot })
   }
 
 
@@ -388,7 +388,7 @@ export class InquiryComponent implements OnInit {
 
     this.adminLayoutService.StatusInquiry(statusInquiryModelObj).subscribe((Response: any) => {
       if (Response.meta.code == 200) {
-        this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName,  partyplot_ID: this.searchedPartyplot })
+        this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName, partyplot_ID: this.searchedPartyplot })
         this.commonService.notifier.notify("success", Response.meta.message);
       }
       else {
