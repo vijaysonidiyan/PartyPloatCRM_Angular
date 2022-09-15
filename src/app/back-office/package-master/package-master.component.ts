@@ -74,4 +74,14 @@ export class PackageMasterComponent implements OnInit {
     this.router.navigate(['admin/package-master/add-package-master']);
   }
 
+  search(value: any) {
+    this.packageMasterList = this.allPackageMasterList.filter((val) => val.packageName.toLowerCase().includes(value.toLowerCase()));
+    this.p = 1;
+    if (this.packageMasterList.length == 0) {
+      this.noData = true;
+    } else {
+      this.noData = false;
+    }
+  }
+
 }

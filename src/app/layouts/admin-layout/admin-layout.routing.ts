@@ -36,7 +36,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "event-master", component: EventMasterComponent, data: { breadcrumb: 'Event Master' } },
   { path: "product-master", component: ProductMasterComponent, data: { breadcrumb: 'Product Master' } },
   { path: "vendor-details", component: VendorDetailsComponent, data: { breadcrumb: 'Vendor Details' } },
-  { path: "booking-confirm", component: BookingConfirmComponent, data: { breadcrumb: 'Booking Confirm' } },
+  { path: "booking-confirm/:id", component: BookingConfirmComponent, data: { breadcrumb: 'Booking Confirm' } },
   {
     path: "inquiry", component: InquiryComponent, data: { breadcrumb: 'Inquiry' },
     // children: [

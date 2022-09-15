@@ -1,6 +1,10 @@
 <div class="container-fluid flex-grow-1 container-p-y">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span>Add Inquiry</h4>
+        <h4 class="fw-bold py-3 m-0" *ngIf="updateInquiry === false"><span class="text-muted fw-light"></span>Add
+            Inquiry</h4>
+        <h4 class="fw-bold py-3 m-0" *ngIf="updateInquiry === true"><span class="text-muted fw-light"></span>View
+            Inquiry
+        </h4>
         <!-- <div>
             <button type="button" class="btn btn-primary" (click)="addInquiry()">
                 Add New
@@ -9,7 +13,7 @@
     </div>
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Add Inquiry</h5>
+            <h5 class="mb-0">Inquiry</h5>
             <div *ngIf="fclientinquiryData._id.value != '0'">
                 <button type="button" class="btn btn-primary" *ngIf="viewInquiry === true"
                     (click)="enableOnlyClientInquiryInput()">Edit</button>

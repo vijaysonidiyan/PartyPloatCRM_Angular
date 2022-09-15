@@ -104,9 +104,9 @@
                                         <span *ngIf="inquiryData.approvestatus == 1"
                                             class="badge bg-label-primary me-1">Pending</span>
                                         <span *ngIf="inquiryData.approvestatus == 2"
-                                            class="badge bg-label-danger me-1">Cancel</span>
-                                        <span *ngIf="inquiryData.approvestatus == 3"
                                             class="badge bg-label-success me-1">Confirm</span>
+                                        <span *ngIf="inquiryData.approvestatus == 3"
+                                            class="badge bg-label-danger me-1">Cancel</span>
                                     </td>
                                     <td><strong>{{inquiryData.name}}</strong></td>
                                     <td>{{inquiryData.email}}</td>
@@ -188,8 +188,8 @@
                                                 </div>
                                             </button>
                                             <div [ngClass]="{'collapsed' : collapse[inquiryIndex] === false,
-                                            'green' : inquiryDataByDate.approvestatus === 3 ,
-                                            'red' : inquiryDataByDate.approvestatus === 2 ,
+                                            'green' : inquiryDataByDate.approvestatus === 2 ,
+                                            'red' : inquiryDataByDate.approvestatus === 3 ,
                                             'blue' : inquiryDataByDate.approvestatus === 1}" class="border-left-div ">
                                             </div>
                                         </h2>
@@ -237,21 +237,29 @@
                                                             </li>
                                                         </ul>
                                                     </div>
-                                                    <div  class="col-lg-1 col-md-3 col-sm-3  col-3">
+                                                    <div class="col-lg-1 col-md-3 col-sm-3  col-3">
                                                         <div class="dropdown">
-                                                            <button class="btn p-0" type="button" id="cardOpt6" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                              <i class="bx bx-dots-vertical-rounded"></i>
+                                                            <button class="btn p-0" type="button" id="cardOpt6"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="bx bx-dots-vertical-rounded"></i>
                                                             </button>
-                                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
+                                                            <div class="dropdown-menu dropdown-menu-end"
+                                                                aria-labelledby="cardOpt6">
                                                                 <a class="dropdown-item"
-                                                                (click)="viewInquiry(inquiryDataByDate.clientInquiryId)">
+                                                                    (click)="viewInquiry(inquiryDataByDate.clientInquiryId)">
                                                                     View More
                                                                 </a>
-                                                            <a class="dropdown-item"
-                                                                href="javascript:void(0);">Booking Confirm</a>
-                                                            <a class="dropdown-item" (click)="cancelBooking()">Booking Cancel</a>
+                                                                <a class="dropdown-item"
+                                                                    *ngIf="inquiryDataByDate.approvestatus == 1"
+                                                                    (click)="bookingConfirmNavigation(inquiryDataByDate._id)">Booking
+                                                                    Confirm</a>
+                                                                <a class=" dropdown-item"
+                                                                    *ngIf="inquiryDataByDate.approvestatus == 1"
+                                                                    (click)="cancelBooking(inquiryDataByDate._id)">Booking
+                                                                    Cancel</a>
                                                             </div>
-                                                          </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -575,23 +583,24 @@
                 <h5 class="modal-title" id="exampleModalLabel1"><strong>Cancel Booking</strong></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" [formGroup]="cancelInquiryForm">
                 <div class="row">
                     <div class="col-lg-12 col-md-6 mb-3">
                         <label for="nameBasic" class="form-label">Remark</label>
-                        <textarea id="basic-default-message" class="form-control"
-                            placeholder="Remark"></textarea>
+                        <textarea id="basic-default-message" class="form-control" placeholder="Remark"
+                            formControlName="remark_status"></textarea>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <div class="float-end">
                     <div class="float-end">
-                        <button type="submit" class="btn btn-primary">Cancel Booking</button>
+                        <button type="submit" class="btn btn-primary" (click)="cancelBookingInquiry()">Cancel
+                            Booking</button>
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </div>

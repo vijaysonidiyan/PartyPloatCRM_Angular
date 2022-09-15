@@ -9,67 +9,63 @@
         </div>
         <div class="card-body">
             <form role="form" class="add-employee-form" autocomplete="off" [formGroup]="bookingDataForm">
-                <div formArrayName="booking">
-                    <form role="form" class="add-employee-form" autocomplete="off" [formGroup]="clientinquiryDataForm">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 mb-3">
-                                <label for="nameBasic" class="form-label">Name</label>
-                                <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
-                                    formControlName="name" />
-                            </div>
-                            <div class="col-lg-6 col-md-6 mb-3">
-                                <label class="form-label" for="basic-default-email">Email</label>
-                                <div class="input-group input-group-merge">
-                                    <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
-                                        aria-label="john.doe" aria-describedby="basic-default-email2"
-                                        formControlName="email" />
-                                    <span class="input-group-text" id="basic-default-email2">@example.com</span>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 mb-3">
-                                <label class="form-label" for="basic-default-phone">Contact</label>
-                                <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                                    placeholder="658 799 8941" appNumbersOnly maxlength="10"
-                                    formControlName="primaryContact" />
-                            </div>
-                            <div class="col-lg-6 col-md-6 mb-3">
-                                <label class="form-label" for="basic-default-phone">Contact-2</label>
-                                <input type="text" id="basic-default-phone" appNumbersOnly maxlength="10"
-                                    class="form-control phone-mask" placeholder="658 799 8941"
-                                    formControlName="secondryContact" />
-                            </div>
-                            <div class="col-lg-6 col-md-6 mb-3">
-                                <label for="nameBasic" class="form-label">Address</label>
-                                <textarea style="height:38px;" id="basic-default-message" class="form-control"
-                                    placeholder="Address" formControlName="address"></textarea>
-                            </div>
-                            <div class="col-lg-6 mb-3">
-                                <label for="nameBasic" class="form-label">Select Party Plot</label>
-                                <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0 me-3"
-                                    bindLabel="name" bindValue="_id" formControlName="partyplot_ID"
-                                    placeholder="Select Party Plot">
-                                </ng-select>
-                                <!-- <div *ngIf="submittedStaffData && partyplotInvalid === true">
-                                <span class="error_msg text-danger">Party plot is Required.</span>
-                            </div> -->
-                            </div>
-                            <div class="col-lg-6 mb-3">
-                                <label for="nameBasic" class="form-label">Select Reference Type</label>
-                                <ng-select [items]="referenceActiveList" [multiple]="false" class="form-control p-0"
-                                    bindLabel="referenceName" bindValue="_id" formControlName="reference_ID"
-                                    placeholder="Select Reference Type">
-                                </ng-select>
-                                <!-- <div *ngIf="submittedStaffData && partyplotInvalid === true">
-                                <span class="error_msg text-danger">Party plot is Required.</span>
-                            </div> -->
-                            </div>
-                            <div class="col-lg-6 col-md-6 mb-3">
-                                <label for="nameBasic" class="form-label">Reference Details</label>
-                                <textarea style="height:38px;" id="basic-default-message" class="form-control"
-                                    placeholder="Reference Details" formControlName="reference_detail"></textarea>
+                <div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 mb-3">
+                            <label for="nameBasic" class="form-label">Name</label>
+                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
+                                formControlName="name" disabled />
+                        </div>
+                        <div class="col-lg-6 col-md-6 mb-3">
+                            <label class="form-label" for="basic-default-email">Email</label>
+                            <div class="input-group input-group-merge">
+                                <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
+                                    aria-label="john.doe" aria-describedby="basic-default-email2"
+                                    formControlName="email" disabled />
+                                <span class="input-group-text" id="basic-default-email2">@example.com</span>
                             </div>
                         </div>
-                    </form>
+                        <div class="col-lg-6 col-md-6 mb-3">
+                            <label class="form-label" for="basic-default-phone">Contact</label>
+                            <input type="text" id="basic-default-phone" class="form-control phone-mask"
+                                placeholder="658 799 8941" appNumbersOnly maxlength="10"
+                                formControlName="primaryContact" disabled />
+                        </div>
+                        <div class="col-lg-6 col-md-6 mb-3">
+                            <label class="form-label" for="basic-default-phone">Contact-2</label>
+                            <input type="text" id="basic-default-phone" appNumbersOnly maxlength="10"
+                                class="form-control phone-mask" placeholder="658 799 8941"
+                                formControlName="secondryContact" disabled />
+                        </div>
+                        <div class="col-lg-6 col-md-6 mb-3">
+                            <label for="nameBasic" class="form-label">Address</label>
+                            <textarea style="height:38px;" id="basic-default-message" class="form-control"
+                                placeholder="Address" formControlName="address" disabled></textarea>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="nameBasic" class="form-label">Party Plot</label>
+                            <!-- <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0 me-3"
+                                bindLabel="name" bindValue="_id" formControlName="partyplot_ID"
+                                placeholder="Select Party Plot">
+                            </ng-select> -->
+                            <input type="text" id="basic-default-phone" class="form-control" placeholder="Party Plot"
+                                formControlName="partyplotName" disabled />
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="nameBasic" class="form-label">Reference Type</label>
+                            <!-- <ng-select [items]="referenceActiveList" [multiple]="false" class="form-control p-0"
+                                bindLabel="referenceName" bindValue="_id" formControlName="reference_ID"
+                                placeholder="Select Reference Type">
+                            </ng-select> -->
+                            <input type="text" id="basic-default-phone" class="form-control"
+                                placeholder="Reference Type" formControlName="reference_Name" disabled />
+                        </div>
+                        <div class="col-lg-6 col-md-6 mb-3">
+                            <label for="nameBasic" class="form-label">Reference Details</label>
+                            <textarea style="height:38px;" id="basic-default-message" class="form-control"
+                                placeholder="Reference Details" formControlName="reference_detail" disabled></textarea>
+                        </div>
+                    </div>
 
                     <hr class="my-3">
 
@@ -77,61 +73,63 @@
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label for="nameBasic" class="form-label">Package Select</label>
                             <ng-select [items]="packageList" [multiple]="false" class="form-control p-0 me-3"
-                                bindLabel="name" bindValue="_id" formControlName="partyplot_ID"
-                                placeholder="Select Package">
+                                bindLabel="packageName" bindValue="_id" formControlName="packageId"
+                                (change)="onActivePackageChange($event)" placeholder="Select Package">
                             </ng-select>
                         </div>
                     </div>
 
-                    <hr class="my-3">
+                    <div formArrayName="package">
+                        <span [formGroupName]="i"
+                            *ngFor=" let item of bookingDataForm.get('package')['controls']; let i = index">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 mb-3">
+                                    <label for="nameBasic" class="form-label">Category Name</label>
+                                    <input type="text" class="form-control" disabled id="basic-default-company"
+                                        placeholder="Enter Category Name" formControlName="categoryName" />
+                                </div>
+                                <div class="col-lg-6 col-md-6 mb-3">
+                                    <label for="nameBasic" class="form-label">Category Description</label>
+                                    <textarea id="basic-default-message" style="height:38px;" class="form-control"
+                                        placeholder="Description" disabled
+                                        formControlName="categoryDescription"></textarea>
+                                </div>
+                            </div>
+                            <div formArrayName="packageCategoryList">
+                                <div class="d-sm-block d-lg-flex align-items-center clear-fix" [formGroupName]="x"
+                                    *ngFor="let citem of item.get('packageCategoryList')['controls']; let x = index;">
+                                    <div class="w-100">
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-6 mb-3">
+                                                <label class="form-label" for="basic-default-company">Item</label>
+                                                <input type="text" disabled formControlName="item" class="form-control"
+                                                    id="basic-default-company" placeholder="Enter Guest Count" />
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 mb-3">
+                                                <label for="nameBasic" class="form-label">Description</label>
+                                                <textarea style="height:38px;" disabled id="basic-default-message"
+                                                    formControlName="description" class="form-control"
+                                                    placeholder="Description"></textarea>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 mb-3">
+                                                <label class="form-label" for="basic-default-company">Quantity</label>
+                                                <input type="text" class="form-control" id="basic-default-company"
+                                                    formControlName="quantity" placeholder="Enter Quantity" />
+                                            </div>
+                                        </div>
 
-                    <div formArrayName="events">
-                        <div class="card-header d-flex justify-content-between align-items-center px-0">
-                            <h5 class="mb-0">Package Category</h5>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 mb-3">
-                                <label for="nameBasic" class="form-label">Category Name</label>
-                                <input type="text" class="form-control" id="basic-default-company"
-                                placeholder="Enter Category Name"/>
-                            </div>
-                            <div class="col-lg-6 col-md-6 mb-3">
-                                <label for="nameBasic" class="form-label">Category Description</label>
-                                <textarea id="basic-default-message" style="height:38px;" class="form-control"
-                                    placeholder="Description"></textarea>
-                            </div>
-                        </div>
-                        <div class="d-sm-block d-lg-flex align-items-center clear-fix">
-                            <div class="w-100">
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-6 mb-3">
-                                        <label class="form-label" for="basic-default-company">Item</label>
-                                        <input type="text" formControlName="item" class="form-control" id="basic-default-company"
-                                            placeholder="Enter Guest Count"/>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 mb-3">
-                                        <label for="nameBasic" class="form-label">Description</label>
-                                        <textarea style="height:38px;" id="basic-default-message" formControlName="description" class="form-control"
-                                            placeholder="Description"></textarea>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 mb-3">
-                                        <label class="form-label" for="basic-default-company">Quantity</label>
-                                        <input type="text" class="form-control" id="basic-default-company" formControlName="quantity"
-                                            placeholder="Enter Quantity"/>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-    
+                            <hr class="my-3" *ngIf="i+1 != bookingDataForm.get('package')['controls'].length">
+                        </span>
                     </div>
-
                     <hr class="my-3">
-
                     <div class="card-header d-flex justify-content-between align-items-center px-0">
                         <h5 class="mb-0">Extra Item</h5>
                     </div>
-                    <div class="d-sm-block d-lg-flex align-items-center clear-fix" [formGroupName]="i"
-                        *ngFor="let item of bookingDataForm.get('booking')['controls']; let i = index;">
+                    <div class="d-sm-block d-lg-flex align-items-center clear-fix" [formGroupName]="y"
+                        *ngFor="let citem of bookingDataForm.get('extradecoration')['controls']; let y = index;">
                         <div class="w-100">
                             <div class="row">
                                 <div class="col-lg-4 col-md-6 mb-3">
@@ -153,7 +151,7 @@
                             </div>
                             <div class="mb-3">
                                 <!-- <button type="button" class="btn btn-primary me-3">Edit</button> -->
-                                <button *ngIf="i != 0" type="button" class="btn btn-label-danger" aria-label="Close"
+                                <button type="button" class="btn btn-label-danger" aria-label="Close"
                                     (click)="deletCategoryList(i)">
                                     <i class="bx bx-x"></i>
                                     <span class="align-middle">Delete</span>
@@ -169,7 +167,8 @@
                 </div>
             </form>
             <div class="float-end">
-                <button type="submit" class="btn btn-primary">Save Booking</button>
+                <button type="submit" class="btn btn-primary" (click)="saveBookingConfirmInquiryEvent()">Save
+                    Booking</button>
             </div>
             <!-- <div>
                 <button type="button" class="btn btn-primary mt-3">Add Category</button>

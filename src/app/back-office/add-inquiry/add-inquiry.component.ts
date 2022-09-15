@@ -58,6 +58,7 @@ export class AddInquiryComponent implements OnInit {
   referenceActiveList: any[] = [];
   inquiryId: any;
   viewInquiry: boolean = false;
+  updateInquiry: boolean = false;
   viewInquiryFormArray = {};
   assignpartyplotList: any[] = [];
   //calender done
@@ -75,6 +76,7 @@ export class AddInquiryComponent implements OnInit {
         this.inquiryId = params.id;
 
       });
+      this.updateInquiry = true;
       this.viewInquiry = true;
     } else if (currentUrl.includes('add-inquiry')) {
       this.route.queryParams.subscribe((queryParams) => {

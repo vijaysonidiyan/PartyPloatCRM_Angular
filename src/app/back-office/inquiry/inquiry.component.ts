@@ -43,6 +43,8 @@ export class InquiryComponent implements OnInit {
 
   collapse = {}
   isEditViewInquiryDetails: boolean = false;
+  cancelRemark = '';
+  cancelInquiryForm: FormGroup;
 
   tabClick(tab) {
     this.activeTab = tab;
@@ -66,12 +68,13 @@ export class InquiryComponent implements OnInit {
   ngOnInit(): void {
     this.l = 10;
     this.defaultForm();
+    this.defaultCancelInquiryForm();
     this.getAssignPartyplotList();
     this.getEventActiveList();
     this.getYear();
     this.minEndDate = new Date();
 
-    this.tabClick(this.activeTab);
+
   }
 
 
@@ -201,7 +204,12 @@ export class InquiryComponent implements OnInit {
     $('#inquiry-details-by-date-modal').modal('hide');
     this.router.navigate(["admin/inquiry/view-inquiry/" + id])
   }
-  cancelBooking() {
+  bookingConfirmNavigation(id: any) {
+    $('#inquiry-details-by-date-modal').modal('hide');
+    this.router.navigate(['admin/booking-confirm/' + id]);
+  }
+  cancelBooking(id: any) {
+    this.cancelInquiryForm.controls._id.setValue(id);
     $('#cancel-booking-modal').modal('show');
     $('#inquiry-details-by-date-modal').modal('hide')
   }
@@ -439,6 +447,7 @@ export class InquiryComponent implements OnInit {
       if (Response.meta.code == 200) {
         this.assignpartyplotList = Response.data;
         this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
+        this.tabClick(this.activeTab);
       }
       //for select sub industry step
     },
@@ -545,6 +554,24 @@ export class InquiryComponent implements OnInit {
 
   viewInquiryDetails(id: any) {
 
+  }
+
+  defaultCancelInquiryForm() {
+    this.cancelInquiryForm = this.fb.group({
+      _id: [''],
+      approvestatus: [3],
+      remark_status: ['']
+    })
+  }
+
+  cancelBookingInquiry() {
+    let remarkBookingObj = Object.assign({}, this.cancelInquiryForm.getRawValue())
+    this.adminLayoutService.cancelBookingInquiry(remarkBookingObj).subscribe((Response: any) => {
+      if (Response.meta.code == 200) {
+        this.tabClick(this.activeTab);
+        $('#cancel-booking-modal').modal('hide');
+      }
+    })
   }
 
 

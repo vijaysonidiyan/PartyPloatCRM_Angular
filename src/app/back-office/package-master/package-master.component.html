@@ -7,8 +7,7 @@
                 <div class="card border-solid-primary flex-row align-items-center ps-2">
                     <i class="bx bx-search fs-4 lh-0"></i>
                     <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
-                        aria-label="Search..." />
-                    <!-- aria-label="Search..." (input)="search($event.target.value)" /> -->
+                        aria-label="Search..." (input)="search($event.target.value)" />
                 </div>
                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Party Plot Master</h4> -->
                 <div class="btn-cus">
@@ -62,7 +61,7 @@
                             <td><strong>{{ packageMasterData.packageName }}</strong></td>
                         </tr>
                         <tr *ngIf="noData">
-                            <td colspan="6">
+                            <td colspan="4">
                                 <h4 class="text-center mt-3">No Data Found</h4>
                             </td>
                         </tr>

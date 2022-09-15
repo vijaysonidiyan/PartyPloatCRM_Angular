@@ -456,6 +456,12 @@ export class AdminLayoutService {
     })
     return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/clientinquiryapprovalStatusupdate', updateClientInquiryData, { headers: headers });
   }
+  cancelBookingInquiry(updateClientInquiryData: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/eventinquiryapprovalStatusupdate', updateClientInquiryData, { headers: headers });
+  }
 
   updateClientinquiryData(updateClientInquiryDetailsData: any) {
     let headers = new HttpHeaders({
@@ -580,6 +586,26 @@ export class AdminLayoutService {
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
     return this.http.get(this.commonService.rootData.rootUrl + 'packageMaster/packageList', { headers: headers });
+  }
+  getActivePackageMasterList() {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'packageMaster/ActivePackageList', { headers: headers });
+  }
+
+  // book inquiry api calling 
+  getClientDetailsByEventId(id: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'clientinquiry/eventListgetById', { params: id, headers: headers });
+  }
+  confirmBookingInquiryEvent(data: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'inquirybooking/inquirybookingSave', data, { headers: headers });
   }
 
 }
