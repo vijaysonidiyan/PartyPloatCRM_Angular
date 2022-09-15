@@ -44,6 +44,7 @@ FullCalendarModule.registerPlugins([
 import { BreadcrumbModule } from "angular-crumbs";
 import { PackageMasterComponent } from "app/back-office/package-master/package-master.component";
 import { AddPackageMasterComponent } from "app/back-office/package-master/add-package-master/add-package-master.component";
+import { BookingConfirmComponent } from "app/back-office/booking-confirm/booking-confirm.component";
 
 @NgModule({
   imports: [
@@ -88,7 +89,8 @@ import { AddPackageMasterComponent } from "app/back-office/package-master/add-pa
     ModuleMasterComponent,
     ReferenceMasterComponent,
     PackageMasterComponent,
-    AddPackageMasterComponent
+    AddPackageMasterComponent,
+    BookingConfirmComponent
   ],
   providers: [MatDatepickerModule],
 })
