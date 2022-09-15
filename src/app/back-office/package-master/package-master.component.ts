@@ -70,4 +70,8 @@ export class PackageMasterComponent implements OnInit {
     this.router.navigate(['admin/package-master/edit-package-master/' + id]);
   }
 
+  addPackageMaster() {
+    this.router.navigate(['admin/package-master/add-package-master']);
+  }
+
 }
