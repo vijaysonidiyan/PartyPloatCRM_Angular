@@ -45,20 +45,20 @@
 
                                     <button class="btn-bg"
                                         (click)="editvendorDetails({id : vendorDetailsData._id, index : vendorDetailsIndex})"><i
-                                            class="bx bx-edit-alt"></i>
+                                            class="bx bx-edit-alt" tooltip="Edit" placement="bottom" showDelay="100"></i>
                                     </button>
                                     <button *ngIf="vendorDetailsData.status == 2" title="Active Vendor"
                                         (confirm-click)="satusvendorDetails({id :vendorDetailsData._id,index:vendorDetailsIndex, status:1})"
                                         appConfirm [confirmTitle]="'Active'"
                                         [confirmContent]="'Are you sure to Active this Vendor?'"
-                                        class="bg-label-success btn-bg bg-label-success">
+                                        class="bg-label-success btn-bg bg-label-success" tooltip="Add" placement="bottom" showDelay="100">
                                         <i class="bx bx-plus"></i>
                                     </button>
                                     <button *ngIf="vendorDetailsData.status == 1" title="Deactive Vendor"
                                         (confirm-click)="satusvendorDetails({id :vendorDetailsData._id,index:vendorDetailsIndex, status:2})"
                                         appConfirm [confirmTitle]="'Deactive'"
                                         [confirmContent]="'Are you sure to Deactive this Vendor?'"
-                                        class="bg-label-danger btn-bg bg-label-danger">
+                                        class="bg-label-danger btn-bg bg-label-danger" tooltip="Delete" placement="bottom" showDelay="100">
                                         <i class="bx bx-trash"></i>
                                     </button>
                                 </div>

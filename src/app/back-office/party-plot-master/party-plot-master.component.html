@@ -42,20 +42,20 @@
                                 <div class="d-flex">
                                     <button class="btn-bg"
                                         (click)="editPartyplotmaster({id : partyplotmasterData._id, index : partyPlotIndex})">
-                                        <i class="bx bx-edit-alt "></i>
+                                        <i class="bx bx-edit-alt " tooltip="Edit" placement="bottom" showDelay="100"></i>
                                     </button>
                                     <button *ngIf="partyplotmasterData.status == 2" title="Active Party Plot"
                                         (confirm-click)="statusPartyplot({id :partyplotmasterData._id,index:partyPlotIndex, status:1})"
                                         appConfirm [confirmTitle]="'Active'"
                                         [confirmContent]="'Are you sure to Active this Party Plot Master?'"
-                                        class="btn-bg bg-label-success">
+                                        class="btn-bg bg-label-success" tooltip="Add" placement="bottom" showDelay="100">
                                         <i class="bx bx-plus bg-label-success"></i>
                                     </button>
                                     <button *ngIf="partyplotmasterData.status == 1" title="Deactive Party Plot"
                                         (confirm-click)="statusPartyplot({id :partyplotmasterData._id,index:partyPlotIndex, status:2})"
                                         appConfirm [confirmTitle]="'Deactive'"
                                         [confirmContent]="'Are you sure to Deactive this Party Plot Master?'"
-                                        class="btn-bg bg-label-danger">
+                                        class="btn-bg bg-label-danger" tooltip="Delete" placement="bottom" showDelay="100">
                                         <i class="bx bx-trash bg-label-danger"></i>
                                     </button>
                                 </div>

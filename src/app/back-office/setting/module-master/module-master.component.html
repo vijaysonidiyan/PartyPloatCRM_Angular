@@ -49,20 +49,20 @@
                                 <div class="d-flex">
                                     <button class="btn-bg"
                                         (click)="editModulemaster({id : modulemasterData._id, index : roleMasterIndex})"><i
-                                            class="bx bx-edit-alt "></i>
+                                            class="bx bx-edit-alt " tooltip="Edit" placement="bottom" showDelay="100"></i>
                                     </button>
                                     <button *ngIf="modulemasterData.status == 2" class="dtl-btn btn bg-gradient-dark"
                                         title="Active Role"
                                         (confirm-click)="statusModulemaster({id :modulemasterData._id,index:roleMasterIndex, status:1})"
                                         appConfirm [confirmTitle]="'Active'"
                                         [confirmContent]="'Are you sure to Active this Role Master?'"
-                                        class="btn-bg bg-label-success"><i class="bx bx-plus"></i></button>
+                                        class="btn-bg bg-label-success" tooltip="Add" placement="bottom" showDelay="100"><i class="bx bx-plus"></i></button>
                                     <button *ngIf="modulemasterData.status == 1" class="dtl-btn btn bg-gradient-dark"
                                         title="Deactive Role"
                                         (confirm-click)="statusModulemaster({id :modulemasterData._id,index:roleMasterIndex, status:2})"
                                         appConfirm [confirmTitle]="'Deactive'"
                                         [confirmContent]="'Are you sure to Deactive this Role Master?'"
-                                        class="btn-bg bg-label-danger"><i class="bx bx-trash"></i></button>
+                                        class="btn-bg bg-label-danger" tooltip="Delete" placement="bottom" showDelay="100"><i class="bx bx-trash"></i></button>
                                 </div>
                             </td>
                             <td>{{ modulemasterData.name }}</td>

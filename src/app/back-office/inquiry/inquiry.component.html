@@ -82,12 +82,12 @@
                                         <div class="d-flex">
                                             <button class="btn-bg"
                                                 routerLink="/admin/inquiry/view-inquiry/{{inquiryData.clientInquiryId}}">
-                                                <i class="bx bxs-show"></i>
+                                                <i class="bx bxs-show" tooltip="View" placement="bottom" showDelay="100"></i>
                                             </button>
-                                            <button class="btn-bg badge bg-label-success" (click)="bookingConfirmNavigation()">
+                                            <button class="btn-bg badge bg-label-success" tooltip="Booking Confirm" placement="bottom" showDelay="100" (click)="bookingConfirmNavigation()">
                                                 <i class="bx bx-check"></i>
                                             </button>
-                                            <button class="btn-bg badge bg-label-danger" (click)="cancelBooking()">
+                                            <button class="btn-bg badge bg-label-danger" tooltip="Booking Cancel" placement="bottom" showDelay="100" (click)="cancelBooking()">
                                                 <i class="bx bx-x"></i>
                                             </button>
                                             <!-- <button *ngIf="inquiryData.status == 2" title="Active Event"

@@ -36,7 +36,10 @@ export class EventMasterComponent implements OnInit {
     this.getEventmasterList();
     this.defaultForm();
   }
-
+  myTooltip = {
+    'placement': 'bottom',
+    'showDelay': 100
+}
   defaultForm() {
     this.eventmasterForm = this.fb.group({
       _id: [""],

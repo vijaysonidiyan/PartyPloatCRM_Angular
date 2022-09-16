@@ -50,14 +50,14 @@
                                 <div class="d-flex">
                                     <button class="btn-bg"
                                         (click)="editMenumaster({id : menuData._id, index:menuIndex})"><i
-                                            class="bx bx-edit-alt"></i>
+                                            class="bx bx-edit-alt" tooltip="Edit" placement="bottom" showDelay="100"></i>
                                     </button>
-                                    <button *ngIf="menuData.status == 2" class="btn-bg bg-label-success"
+                                    <button *ngIf="menuData.status == 2" class="btn-bg bg-label-success" tooltip="Add" placement="bottom" showDelay="100"
                                         (confirm-click)="statusMenu({id :menuData._id,index:menuIndex, status:1})"
                                         appConfirm [confirmTitle]="'Active'"
                                         [confirmContent]="'Are you sure to Active this Menu Master?'">
                                         <i class="bx bx-plus"></i></button>
-                                    <button *ngIf="menuData.status == 1" class="btn-bg bg-label-danger"
+                                    <button *ngIf="menuData.status == 1" class="btn-bg bg-label-danger" tooltip="Delete" placement="bottom" showDelay="100"
                                         (confirm-click)="statusMenu({id :menuData._id,index:menuIndex, status:2})"
                                         appConfirm [confirmTitle]="'Deactive'"
                                         [confirmContent]="'Are you sure to Deactive this Menu Master?'">

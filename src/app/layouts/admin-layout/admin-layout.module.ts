@@ -45,6 +45,7 @@ import { BreadcrumbModule } from "angular-crumbs";
 import { PackageMasterComponent } from "app/back-office/package-master/package-master.component";
 import { AddPackageMasterComponent } from "app/back-office/package-master/add-package-master/add-package-master.component";
 import { BookingConfirmComponent } from "app/back-office/booking-confirm/booking-confirm.component";
+import { TooltipModule } from "ng2-tooltip-directive";
 
 @NgModule({
   imports: [
@@ -70,6 +71,7 @@ import { BookingConfirmComponent } from "app/back-office/booking-confirm/booking
     //DaterangepickerModule
     NgxMaskModule.forRoot(),
     BreadcrumbModule,
+    TooltipModule
   ],
   declarations: [
     DashboardComponent,
