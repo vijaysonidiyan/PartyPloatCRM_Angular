@@ -184,6 +184,10 @@
                                     <span class="align-middle">Delete</span>
                                 </button>
                             </div>
+                            <div class="mb-3" *ngIf="updateInquiry == false">
+                                <button type="button" class="btn btn-label-danger me-3"
+                                    (click)="disableClientInquiryEventIndexWise(i)">Cancel</button>
+                            </div>
                             <hr class="my-3">
                         </div>
                     </div>

@@ -80,7 +80,7 @@ export class AddInquiryComponent implements OnInit {
       this.viewInquiry = true;
     } else if (currentUrl.includes('add-inquiry')) {
       this.route.queryParams.subscribe((queryParams) => {
-
+        this.updateInquiry = false;
         if (!!queryParams.startDate) {
           // if (!!queryParams.startDate && !!queryParams.endDate) {
           this.selectedDate = queryParams.startDate;
@@ -270,7 +270,9 @@ export class AddInquiryComponent implements OnInit {
     debugger
 
     this.eventList.push(this.createeventItem({}));
-    this.viewInquiryFormArray[this.eventList.length - 1] = false
+    this.viewInquiryFormArray[this.eventList.length - 1] = false;
+    (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[this.eventList.length - 1] as FormGroup).controls['Date'].disable());
+    (((this.clientinquiryDataForm.controls['events'] as FormArray).controls[this.eventList.length - 1] as FormGroup).controls['Date'].setValue(this.selectedDate));
   }
 
 
@@ -417,6 +419,7 @@ export class AddInquiryComponent implements OnInit {
             client_budget: x.client_budget,
             remark: x.client_budget
           }
+          this.selectedDate = new Date(x.startDateObj)
           this.viewInquiryFormArray[index] = true
           this.eventList.push(this.createeventItem(eventObj));
         })

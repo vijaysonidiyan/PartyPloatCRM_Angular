@@ -29,7 +29,7 @@ export class InquiryComponent implements OnInit {
   searchedPartyplot = null;
 
   date = new Date();
-  currentMonth = this.date.getMonth() + 1;
+  currentMonth = (this.date.getMonth() + 1).toString();
   currentYear = this.date.getFullYear();
   inquiryList: any[] = [];
   inquiryForm: FormGroup;
@@ -50,6 +50,7 @@ export class InquiryComponent implements OnInit {
   tabClick(tab) {
     this.activeTab = tab;
     if (this.activeTab == 1) {
+      debugger
       this.searchedMonth = this.currentMonth;
       this.searchedYear = this.currentYear;
       this.getInquiryList({ month: parseInt(this.searchedMonth), year: this.searchedYear, name: this.searchedName, partyplot_ID: this.searchedPartyplot })
@@ -294,7 +295,8 @@ export class InquiryComponent implements OnInit {
     debugger
     let inquiryObj = {
 
-      date: eventInformation.event._def.extendedProps.date
+      date: eventInformation.event._def.extendedProps.date,
+      partyplot_ID: this.searchedPartyplot
     }
 
     this.adminLayoutService.getInquiryListByDate(inquiryObj).subscribe((response: any) => {
