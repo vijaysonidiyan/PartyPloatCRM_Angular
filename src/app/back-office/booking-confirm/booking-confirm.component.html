@@ -15,35 +15,35 @@
                         <tbody>
                             <tr>
                                 <td class="w-20 pe-2 form-label">Name:</td>
-                                <td class="text-muted">Rahul Parmar</td>
+                                <td class="text-muted">{{fbookingConfirmData?.name.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-20 pe-2 form-label">Email:</td>
-                                <td class="text-muted">Rahul@gmail.com</td>
+                                <td class="text-muted">{{fbookingConfirmData?.email.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-20 pe-2 form-label">Contact:</td>
-                                <td class="text-muted">9878898458</td>
+                                <td class="text-muted">{{fbookingConfirmData?.primaryContact.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-20 pe-2 form-label">Contact-2:</td>
-                                <td class="text-muted">9878898458</td>
+                                <td class="text-muted">{{fbookingConfirmData?.secondryContact.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-20 pe-2 form-label align-top">Address:</td>
-                                <td class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
+                                <td class="text-muted">{{fbookingConfirmData?.address.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-25 pe-2 form-label">Party Plot:</td>
-                                <td class="text-muted">Tahuko Party Plot</td>
+                                <td class="text-muted">{{fbookingConfirmData?.partyplotName.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-25 pe-2 form-label">Reference Type:</td>
-                                <td class="text-muted">Friend</td>
+                                <td class="text-muted">{{fbookingConfirmData?.reference_Name.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-25 pe-2 form-label align-top">Reference Details:</td>
-                                <td class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
+                                <td class="text-muted">{{fbookingConfirmData?.reference_detail.value}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -54,31 +54,33 @@
                         <tbody>
                             <tr>
                                 <td class="w-20 pe-2 form-label align-top">Event Type:</td>
-                                <td class="text-muted">Haldi</td>
+                                <td class="text-muted">{{fbookingConfirmData?.eventName.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-20 pe-2 form-label align-top">Date:</td>
-                                <td class="text-muted">22-09-2022</td>
+                                <td class="text-muted">{{fbookingConfirmData?.startDateObj.value | date : 'dd/MM/yyyy'}}
+                                </td>
                             </tr>
                             <tr>
                                 <td class="w-20 pe-2 form-label align-top">Client Budget:</td>
-                                <td class="text-muted">30000</td>
+                                <td class="text-muted">{{fbookingConfirmData?.client_budget.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-25 pe-2 form-label align-top">Guest:</td>
-                                <td class="text-muted">200</td>
+                                <td class="text-muted">{{fbookingConfirmData?.guest.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-25 pe-2 form-label align-top">Time:</td>
-                                <td class="text-muted">02:00 - 04:00 PM</td>
+                                <td class="text-muted">{{fbookingConfirmData?.startDateObj.value | date : 'hh:mm:ss
+                                    a'}} - {{fbookingConfirmData?.endDateObj.value| date : 'hh:mm:ss a'}}</td>
                             </tr>
                             <tr>
                                 <td class="w-25 pe-2 form-label align-top">Offer Budget:</td>
-                                <td class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
+                                <td class="text-muted">{{fbookingConfirmData?.offer_budget.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-20 pe-2 form-label align-top">Remark:</td>
-                                <td class="text-muted">Lorem ipsum dolor sit amet.</td>
+                                <td class="text-muted">{{fbookingConfirmData?.remark.value}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -151,8 +153,8 @@
                         <span [formGroupName]="i"
                             *ngFor=" let item of bookingDataForm.get('package')['controls']; let i = index">
                             <div class="text-center mt-3">
-                                <h5 class="mb-0">Category Name</h5>
-                                <span class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit.</span>
+                                <h5 class="mb-0">{{item.value.categoryName}}</h5>
+                                <span class="text-muted">{{item.value.categoryDescription}}</span>
                                 <!-- <button type="button" class="btn btn-primary">Edit</button> -->
                             </div>
                             <!-- <div class="row">
@@ -171,18 +173,19 @@
                             <div formArrayName="packageCategoryList">
                                 <div class="d-sm-block d-lg-flex align-items-center clear-fix" [formGroupName]="x"
                                     *ngFor="let citem of item.get('packageCategoryList')['controls']; let x = index;">
-                                   
+
                                     <div class="w-100">
                                         <div class="row">
                                             <div class="col-lg-8">
                                                 <div>
-                                                    <label for="nameBasic" class="form-label">Item Name</label>
+                                                    <label for="nameBasic"
+                                                        class="form-label">{{citem.value.item}}</label>
                                                 </div>
                                                 <div>
-                                                    <span class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit.</span>
+                                                    <span class="text-muted">{{citem.value.description}}</span>
                                                 </div>
                                             </div>
-                                            
+
                                             <!-- <div class="col-lg-4 col-md-6 mb-3">
                                                 <label class="form-label" for="basic-default-company">Item</label>
                                                 <input type="text" disabled formControlName="item" class="form-control"

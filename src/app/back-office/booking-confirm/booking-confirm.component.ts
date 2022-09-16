@@ -60,6 +60,13 @@ export class BookingConfirmComponent implements OnInit {
       partyplotName: [''],
       reference_Name: [''],
       reference_detail: [''],
+      eventName: [''],
+      startDateObj: [''],
+      endDateObj: [''],
+      client_budget: [''],
+      guest: [''],
+      offer_budget: [''],
+      remark: [''],
       packageId: [null],
       package: this.fb.array([]),
       extradecoration: this.fb.array([]),
@@ -120,6 +127,13 @@ export class BookingConfirmComponent implements OnInit {
         this.bookingDataForm.controls.partyplotName.setValue(Response.data[0].partyplotName);
         this.bookingDataForm.controls.reference_Name.setValue(Response.data[0].reference_Name);
         this.bookingDataForm.controls.reference_detail.setValue(Response.data[0].reference_detail);
+        this.bookingDataForm.controls.eventName.setValue(Response.data[0].eventName);
+        this.bookingDataForm.controls.startDateObj.setValue(Response.data[0].startDateObj);
+        this.bookingDataForm.controls.endDateObj.setValue(Response.data[0].endDateObj);
+        this.bookingDataForm.controls.client_budget.setValue(Response.data[0].client_budget);
+        this.bookingDataForm.controls.guest.setValue(Response.data[0].guest);
+        this.bookingDataForm.controls.offer_budget.setValue(Response.data[0].offer_budget);
+        this.bookingDataForm.controls.remark.setValue(Response.data[0].remark);
       }
     })
   }
