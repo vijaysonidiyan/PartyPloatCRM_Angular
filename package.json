@@ -53,6 +53,7 @@
     "jquery": "3.6.0",
     "moment": "2.29.1",
     "ng-otp-input": "^1.8.5",
+    "ng2-tooltip-directive": "^2.10.3",
     "ngx-mask": "^13.1.15",
     "ngx-pagination": "^6.0.2",
     "node": "^8.15.0",
