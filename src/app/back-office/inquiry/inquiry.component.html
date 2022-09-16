@@ -84,7 +84,8 @@
                                                 routerLink="/admin/inquiry/view-inquiry/{{inquiryData.clientInquiryId}}">
                                                 <i class="bx bxs-show"></i>
                                             </button>
-                                            <button class="btn-bg badge bg-label-success" (click)="bookingConfirmNavigation()">
+                                            <button class="btn-bg badge bg-label-success"
+                                                (click)="bookingConfirmNavigation()">
                                                 <i class="bx bx-check"></i>
                                             </button>
                                             <button class="btn-bg badge bg-label-danger" (click)="cancelBooking()">
@@ -138,7 +139,7 @@
                         <pagination-controls (pageChange)="p = $event"></pagination-controls>
                     </div>
                 </div>
-                <div class="" [ngClass]="activeTab == 2 ? 'd-block' : 'd-none'" *ngIf="activeTab == 2">
+                <div class="" [ngClass]="activeTab == 2 ? 'd-block' : 'd-none'">
                     <div class="p-4 btn-cus position-relative">
                         <div class="dropdown-search">
 

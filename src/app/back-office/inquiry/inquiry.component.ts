@@ -45,25 +45,28 @@ export class InquiryComponent implements OnInit {
   isEditViewInquiryDetails: boolean = false;
   cancelRemark = '';
   cancelInquiryForm: FormGroup;
+  gotoDate: any;
 
   tabClick(tab) {
     this.activeTab = tab;
     if (this.activeTab == 1) {
       this.searchedMonth = this.currentMonth;
       this.searchedYear = this.currentYear;
-      this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName, partyplot_ID: this.searchedPartyplot })
+      this.getInquiryList({ month: parseInt(this.searchedMonth), year: this.searchedYear, name: this.searchedName, partyplot_ID: this.searchedPartyplot })
     }
     else if (this.activeTab == 2) {
-      let month = new Date().toJSON();
 
-      this.searchedMonth = month.split('T')[0].split('-')[1];
-      // this.searchedMonth = this.currentMonth;
+      this.searchedMonth = this.currentMonth;
       this.searchedYear = this.currentYear;
       this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear, partyplot_ID: this.searchedPartyplot })
+
+
     }
   }
 
-  constructor(public adminLayoutService: AdminLayoutService, public fb: FormBuilder, public router: Router, public commonService: CommonService) { }
+  constructor(private adminLayoutService: AdminLayoutService, private commonService: CommonService, private fb: FormBuilder, private router: Router) {
+
+  }
 
   ngOnInit(): void {
     this.l = 10;
@@ -73,8 +76,6 @@ export class InquiryComponent implements OnInit {
     this.getEventActiveList();
     this.getYear();
     this.minEndDate = new Date();
-
-
   }
 
 
@@ -128,6 +129,8 @@ export class InquiryComponent implements OnInit {
 
   // calender view list data
   getInquiryListForCalenderView(data: any) {
+    let calendarApi = this.calendarComponent.getApi();
+    calendarApi.gotoDate(new Date(this.currentMonth + '-01-' + this.currentYear));
 
     let inquiryObj = {
       month: data.month ? data.month : null,
@@ -150,6 +153,7 @@ export class InquiryComponent implements OnInit {
           center: '',
           right: 'myCustomButton'
         },
+        initialDate: new Date(this.searchedYear + '-' + this.searchedMonth),
         businessHours: false, // display business hours
         editable: true,
         selectable: true,
@@ -197,7 +201,8 @@ export class InquiryComponent implements OnInit {
         }
       },
     }
-
+    // let calendarApi = this.calendarComponent.getApi();
+    // calendarApi.gotoDate(this.datePipe.transform(new Date(this.currentYearForCalender + '-' + this.currentMonthForCalender), 'MM-dd-yyyy'));
   }
 
   viewInquiry(id: any) {
@@ -253,13 +258,16 @@ export class InquiryComponent implements OnInit {
 
   // For Next Month Click
   nextMonth(): void {
-
+    debugger
     let calendarApi = this.calendarComponent.getApi();
     calendarApi.next();
     let month = calendarApi.currentData.currentDate.toJSON();
 
     this.searchedMonth = month.split('T')[0].split('-')[1];
     this.searchedYear = calendarApi.currentData.currentDate.getFullYear();
+    this.currentYear = this.searchedYear;
+    this.currentMonth = this.searchedMonth;
+
     this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear, partyplot_ID: this.searchedPartyplot });
     // console.log(calendarApi)
   }
@@ -271,9 +279,12 @@ export class InquiryComponent implements OnInit {
     calendarApi.prev();
 
     let month = calendarApi.currentData.currentDate.toJSON();
-
     this.searchedMonth = month.split('T')[0].split('-')[1];
     this.searchedYear = calendarApi.currentData.currentDate.getFullYear();
+
+    this.currentYear = this.searchedYear;
+    this.currentMonth = this.searchedMonth;
+
     this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear, partyplot_ID: this.searchedPartyplot });
     // console.log(calendarApi)
   }
@@ -309,18 +320,18 @@ export class InquiryComponent implements OnInit {
 
   yearArray = new Array<number>();
   monthArray = [
-    { value: 1, month: 'January' },
-    { value: 2, month: 'February' },
-    { value: 3, month: 'March' },
-    { value: 4, month: 'April' },
-    { value: 5, month: 'May' },
-    { value: 6, month: 'June' },
-    { value: 7, month: 'July' },
-    { value: 8, month: 'August' },
-    { value: 9, month: 'September' },
-    { value: 10, month: 'October' },
-    { value: 11, month: 'November' },
-    { value: 12, month: 'December' },
+    { value: '1', month: 'January' },
+    { value: '2', month: 'February' },
+    { value: '3', month: 'March' },
+    { value: '4', month: 'April' },
+    { value: '5', month: 'May' },
+    { value: '6', month: 'June' },
+    { value: '7', month: 'July' },
+    { value: '8', month: 'August' },
+    { value: '9', month: 'September' },
+    { value: '10', month: 'October' },
+    { value: '11', month: 'November' },
+    { value: '12', month: 'December' },
   ];
 
   getYear() {
@@ -382,6 +393,8 @@ export class InquiryComponent implements OnInit {
   }
 
   searchFilterInquiryList() {
+    this.currentYear = this.searchedYear;
+    this.currentMonth = this.searchedMonth;
     this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName, partyplot_ID: this.searchedPartyplot })
   }
 
@@ -568,6 +581,9 @@ export class InquiryComponent implements OnInit {
     let remarkBookingObj = Object.assign({}, this.cancelInquiryForm.getRawValue())
     this.adminLayoutService.cancelBookingInquiry(remarkBookingObj).subscribe((Response: any) => {
       if (Response.meta.code == 200) {
+
+
+
         this.tabClick(this.activeTab);
         $('#cancel-booking-modal').modal('hide');
       }
