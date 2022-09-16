@@ -60,9 +60,9 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Action</th>
-                                    <th>Status</th>
+                                    <th class="w-5">No</th>
+                                    <th class="w-10">Action</th>
+                                    <th class="w-15">Status</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Contact</th>
@@ -83,6 +83,12 @@
                                             <button class="btn-bg"
                                                 routerLink="/admin/inquiry/view-inquiry/{{inquiryData.clientInquiryId}}">
                                                 <i class="bx bxs-show"></i>
+                                            </button>
+                                            <button class="btn-bg badge bg-label-success" (click)="bookingConfirmNavigation()">
+                                                <i class="bx bx-check"></i>
+                                            </button>
+                                            <button class="btn-bg badge bg-label-danger" (click)="cancelBooking()">
+                                                <i class="bx bx-x"></i>
                                             </button>
                                             <!-- <button *ngIf="inquiryData.status == 2" title="Active Event"
                                                 (confirm-click)="inquiryStatus({id :inquiryData._id,index:inquiryIndex, status:1})"

@@ -37,7 +37,7 @@
                             <div class="d-sm-block d-lg-flex align-items-center clear-fix" [formGroupName]="x"
                                 *ngFor="let citem of item.get('packageCategoryList')['controls']; let x = index;">
                                 <div class="w-100">
-                                    <div class="row">
+                                    <div class="row align-items-center clear-fix">
                                         <div class="col-lg-4 col-md-6 mb-3">
                                             <label class="form-label" for="basic-default-company">Item</label>
                                             <input type="text" formControlName="item" class="form-control"
@@ -49,19 +49,19 @@
                                                 formControlName="description" class="form-control"
                                                 placeholder="Description"></textarea>
                                         </div>
-                                        <div class="col-lg-4 col-md-6 mb-3">
+                                        <div class="col-lg-2 col-md-6 mb-3">
                                             <label class="form-label" for="basic-default-company">Quantity</label>
                                             <input type="text" class="form-control" id="basic-default-company"
                                                 formControlName="quantity" placeholder="Enter Quantity" />
                                         </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <!-- <button type="button" class="btn btn-primary me-3">Edit</button> -->
-                                        <button type="button" class="btn btn-label-danger" aria-label="Close"
-                                            (click)="deletepackageCategoryList(i,x)">
-                                            <i class="bx bx-x"></i>
-                                            <span class="align-middle">Remove</span>
-                                        </button>
+                                        <div class="col-lg-2 mt-2">
+                                            <!-- <button type="button" class="btn btn-primary me-3">Edit</button> -->
+                                            <button type="button" class="btn btn-label-danger" aria-label="Close"
+                                                (click)="deletepackageCategoryList(i,x)">
+                                                <i class="bx bx-x"></i>
+                                                <span class="align-middle">Remove</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -70,7 +70,7 @@
                         <div>
                             <button type="button" class="btn btn-primary" (click)="createCategoryItem(i)">Add
                                 Item</button>
-                            <button type="button" class="btn btn-label-danger float-end"
+                            <button type="button" class="btn btn-label-danger float-end me-3"
                                 (click)="deleteCategoryListData(i)">Delete
                                 Category</button>
                         </div>
