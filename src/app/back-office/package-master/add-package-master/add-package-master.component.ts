@@ -18,6 +18,7 @@ export class AddPackageMasterComponent implements OnInit {
   packageCategoryLists: any;
   packageData: boolean = false;
   PackageId: any;
+  assignpartyplotList: any[] = [];
 
   get fclientinquiryData() {
     return this.packageDataForm.controls;
@@ -40,6 +41,7 @@ export class AddPackageMasterComponent implements OnInit {
 
   ngOnInit(): void {
     this.defaultForm();
+    this.getAssignPartyplotList();
     if (this.packageData !== true) {
       this.addPackageItem();
     }
@@ -48,15 +50,28 @@ export class AddPackageMasterComponent implements OnInit {
     this.packageDataForm = this.fb.group({
       _id: [''],
       packageName: [''],
+      partyplot_ID: [null],
       package: this.fb.array([]),
     });
+  }
+
+  getAssignPartyplotList() {
+    this.adminLayoutService.assignpartyplotUserWiseList().subscribe((Response: any) => {
+      if (Response.meta.code == 200) {
+        this.assignpartyplotList = Response.data;
+      }
+      //for select sub industry step
+    },
+      (error) => {
+        console.log(error.error.Message);
+      }
+    );
   }
 
   addPackageItem(oItem?: any) {
     let packageList = this.packageDataForm.get("package") as FormArray;
     let IG = this.fb.group({
       categoryName: [(oItem ? oItem['categoryName'] : ''),],
-      categoryDescription: [(oItem ? oItem['categoryDescription'] : ''),],
       packageCategoryList: this.fb.array([]),
     });
 
@@ -76,7 +91,6 @@ export class AddPackageMasterComponent implements OnInit {
   createCategoryItem(oItem: number, cItem?: any) {
     let cd = this.fb.group({
       item: [(cItem ? cItem['item'] : '')],
-      description: [(cItem ? cItem['description'] : '')],
       quantity: [(cItem ? cItem['quantity'] : '')],
     });
     (((this.packageDataForm.controls['package'] as FormArray)
@@ -100,6 +114,7 @@ export class AddPackageMasterComponent implements OnInit {
       let packageMasterObj = {
         packageName: this.packageDataForm.controls.packageName.value,
         package: this.packageDataForm.controls.package.value,
+        partyplot_ID: this.packageDataForm.controls.partyplot_ID.value,
       }
       this.adminLayoutService.savePackageMaster(packageMasterObj).subscribe((Response: any) => {
         if (Response.meta.code == 200) {
@@ -117,6 +132,7 @@ export class AddPackageMasterComponent implements OnInit {
         _id: this.packageDataForm.controls._id.value,
         packageName: this.packageDataForm.controls.packageName.value,
         package: this.packageDataForm.controls.package.value,
+        partyplot_ID: this.packageDataForm.controls.partyplot_ID.value,
       }
       this.adminLayoutService.updatePackageMaster(packageMasterObj).subscribe((Response: any) => {
         if (Response.meta.code == 200) {
@@ -137,10 +153,10 @@ export class AddPackageMasterComponent implements OnInit {
     }
     this.adminLayoutService.getPackageMasterListById(Id).subscribe((Response: any) => {
       if (Response.meta.code == 200) {
-        this.packageDataForm.controls._id.setValue(Response.data[0]._id);
-        this.packageDataForm.controls.packageName.setValue(Response.data[0].packageName);
-        Response.data[0].package.forEach((x: any) => {
-          debugger
+        this.packageDataForm.controls._id.setValue(Response.data._id);
+        this.packageDataForm.controls.packageName.setValue(Response.data.packageName);
+        this.packageDataForm.controls.partyplot_ID.setValue(Response.data.partyplot_ID);
+        Response.data.package.forEach((x: any) => {
           this.addPackageItem(x);
         })
       }

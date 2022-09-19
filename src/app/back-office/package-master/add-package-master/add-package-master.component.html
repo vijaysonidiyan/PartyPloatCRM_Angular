@@ -12,25 +12,29 @@
         </div>
         <div class="card-body">
             <form role="form" class="add-employee-form" autocomplete="off" [formGroup]="packageDataForm">
-                <div class="col-lg-4 col-md-6 mb-3">
-                    <label for="nameBasic" class="form-label">Package Name</label>
-                    <input type="text" class="form-control" id="basic-default-company" placeholder="Enter Package Name"
-                        formControlName="packageName" />
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <label for="nameBasic" class="form-label">Package Name</label>
+                        <input type="text" class="form-control" id="basic-default-company"
+                            placeholder="Enter Package Name" formControlName="packageName" />
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <label for="nameBasic" class="form-label">Party Plot</label>
+                        <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0 me-3"
+                            bindLabel="name" bindValue="_id" formControlName="partyplot_ID"
+                            placeholder="Select Party Plot">
+                        </ng-select>
+                    </div>
                 </div>
                 <hr class="my-3">
                 <div formArrayName="package">
                     <span [formGroupName]="i"
                         *ngFor=" let item of packageDataForm.get('package')['controls']; let i = index">
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 mb-3">
+                            <div class="col-lg-4 col-md-6 mb-3">
                                 <label for="nameBasic" class="form-label">Category Name</label>
                                 <input type="text" class="form-control" id="basic-default-company"
                                     placeholder="Enter Category Name" formControlName="categoryName" />
-                            </div>
-                            <div class="col-lg-6 col-md-6 mb-3">
-                                <label for="nameBasic" class="form-label">Category Description</label>
-                                <textarea id="basic-default-message" style="height:38px;" class="form-control"
-                                    placeholder="Description" formControlName="categoryDescription"></textarea>
                             </div>
                         </div>
                         <div formArrayName="packageCategoryList">
@@ -44,19 +48,13 @@
                                                 id="basic-default-company" placeholder="Enter Guest Count" />
                                         </div>
                                         <div class="col-lg-4 col-md-6 mb-3">
-                                            <label for="nameBasic" class="form-label">Description</label>
-                                            <textarea style="height:38px;" id="basic-default-message"
-                                                formControlName="description" class="form-control"
-                                                placeholder="Description"></textarea>
-                                        </div>
-                                        <div class="col-lg-2 col-md-6 mb-3">
                                             <label class="form-label" for="basic-default-company">Quantity</label>
                                             <input type="text" class="form-control" id="basic-default-company"
                                                 formControlName="quantity" placeholder="Enter Quantity" />
                                         </div>
                                         <div class="col-lg-2 mt-2">
                                             <!-- <button type="button" class="btn btn-primary me-3">Edit</button> -->
-                                            <button type="button" class="btn btn-label-danger" aria-label="Close"
+                                            <button type="button" class="btn btn-label-danger " aria-label="Close"
                                                 (click)="deletepackageCategoryList(i,x)">
                                                 <i class="bx bx-x"></i>
                                                 <span class="align-middle">Remove</span>
@@ -70,7 +68,7 @@
                         <div>
                             <button type="button" class="btn btn-primary" (click)="createCategoryItem(i)">Add
                                 Item</button>
-                            <button type="button" class="btn btn-label-danger float-end me-3"
+                            <button type="button" class="btn btn-label-danger float-end "
                                 (click)="deleteCategoryListData(i)">Delete
                                 Category</button>
                         </div>

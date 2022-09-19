@@ -470,6 +470,20 @@ export class AdminLayoutService {
     return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/clientinquiryUpdate', updateClientInquiryDetailsData, { headers: headers });
   }
 
+  getClientDetailsByInquiryId(clientId: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'clientinquiry/clientListgetById', { params: clientId, headers: headers });
+  }
+
+  getEventDetailsByInquiryId(clientId: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'clientinquiry/eventDatagetById', { params: clientId, headers: headers });
+  }
+
   deleteEventByID(deleteEventId: any) {
     let headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
@@ -587,11 +601,11 @@ export class AdminLayoutService {
     })
     return this.http.get(this.commonService.rootData.rootUrl + 'packageMaster/packageList', { headers: headers });
   }
-  getActivePackageMasterList() {
+  getActivePackageMasterListByPartyPlotId(partyPlotId: any) {
     let headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
-    return this.http.get(this.commonService.rootData.rootUrl + 'packageMaster/ActivePackageList', { headers: headers });
+    return this.http.get(this.commonService.rootData.rootUrl + 'packageMaster/ActivePackageList', { params: partyPlotId, headers: headers });
   }
 
   // book inquiry api calling 
@@ -606,6 +620,14 @@ export class AdminLayoutService {
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
     return this.http.post(this.commonService.rootData.rootUrl + 'inquirybooking/inquirybookingSave', data, { headers: headers });
+  }
+
+  // bookging confirm list 
+  getBookingConfirmListDetails(id: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'inquirybooking/inquirydeatilsbypartyplotID', { params: id, headers: headers });
   }
 
 }

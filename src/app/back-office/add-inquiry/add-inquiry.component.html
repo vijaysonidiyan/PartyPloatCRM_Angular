@@ -48,6 +48,9 @@
                             <div *ngIf="fclientinquiryData.email.errors.required">
                                 <span class="error_msg">Email is Required.</span>
                             </div>
+                            <div *ngIf="fclientinquiryData.email.errors.pattern">
+                                <span class="error_msg">Please Enter Valid Email ID.</span>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 mb-3">
@@ -58,6 +61,9 @@
                         <div *ngIf="submittedclientInquiryData && fclientinquiryData.primaryContact.errors">
                             <div *ngIf="fclientinquiryData.primaryContact.errors.required">
                                 <span class="error_msg">Contact is Required.</span>
+                            </div>
+                            <div *ngIf="fclientinquiryData.primaryContact.errors.minlength">
+                                <span class="error_msg">Contact length is 10.</span>
                             </div>
                         </div>
                     </div>
@@ -83,6 +89,11 @@
                             class="form-control p-0 me-3" bindLabel="name" bindValue="_id"
                             formControlName="partyplot_ID" placeholder="Select Party Plot">
                         </ng-select>
+                        <div *ngIf="submittedclientInquiryData && fclientinquiryData.partyplot_ID.errors">
+                            <div *ngIf="fclientinquiryData.partyplot_ID.errors.required">
+                                <span class="error_msg">Please Select Party Plot.</span>
+                            </div>
+                        </div>
                         <!-- <div *ngIf="submittedStaffData && partyplotInvalid === true">
                             <span class="error_msg text-danger">Party plot is Required.</span>
                         </div> -->
@@ -93,6 +104,11 @@
                             class="form-control p-0" bindLabel="referenceName" bindValue="_id"
                             formControlName="reference_ID" placeholder="Select Reference Type">
                         </ng-select>
+                        <div *ngIf="submittedclientInquiryData && fclientinquiryData.reference_ID.errors">
+                            <div *ngIf="fclientinquiryData.reference_ID.errors.required">
+                                <span class="error_msg">Reference Type is Required.</span>
+                            </div>
+                        </div>
                         <!-- <div *ngIf="submittedStaffData && partyplotInvalid === true">
                             <span class="error_msg text-danger">Party plot is Required.</span>
                         </div> -->
@@ -104,12 +120,14 @@
                             formControlName="reference_detail"></textarea>
                     </div>
                 </div>
+            </form>
+            <form role="form" class="add-employee-form" autocomplete="off" [formGroup]="eventInquiryDataForm">
                 <div class="card-header d-flex justify-content-between align-items-center px-0">
                     <h5 class="mb-0">Event</h5>
                 </div>
                 <div formArrayName="events">
                     <div class="d-sm-block d-lg-flex align-items-center clear-fix" [formGroupName]="i"
-                        *ngFor="let item of clientinquiryDataForm.get('events')['controls']; let i = index;">
+                        *ngFor="let item of eventInquiryDataForm.get('events')['controls']; let i = index;">
                         <div class="w-100">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
@@ -117,11 +135,21 @@
                                     <ng-select [items]="eventActiveList" class="form-control p-0" bindLabel="name"
                                         bindValue="_id" placeholder="Select Event" formControlName="eventType">
                                     </ng-select>
+                                    <div *ngIf="submittedAddInquiryData[i] && item.controls.eventType.errors">
+                                        <div *ngIf="item.controls.eventType.errors.required">
+                                            <span class="error_msg">Event Type is Required.</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-3">
                                     <label class="form-label" for="basic-default-company">Guest</label>
                                     <input type="text" appNumbersOnly class="form-control" id="basic-default-company"
                                         placeholder="Enter Guest Count" formControlName="guest" />
+                                    <div *ngIf="submittedAddInquiryData[i] && item.controls.guest.errors">
+                                        <div *ngIf="item.controls.guest.errors.required">
+                                            <span class="error_msg">Guest is Required.</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-3">
                                     <label for="html5-date-input" class="form-label">Date</label>
@@ -133,6 +161,11 @@
                                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                             <mat-datepicker #picker1></mat-datepicker>
                                         </div>
+                                        <div *ngIf="submittedAddInquiryData[i] && item.controls.Date.errors">
+                                            <div *ngIf="item.controls.Date.errors.required">
+                                                <span class="error_msg">Date is Required.</span>
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -142,6 +175,11 @@
                                         bindLabel="name" bindValue="value" formControlName="startTimeObj"
                                         placeholder="Select Start Time">
                                     </ng-select>
+                                    <div *ngIf="submittedAddInquiryData[i] && item.controls.startTimeObj.errors">
+                                        <div *ngIf="item.controls.startTimeObj.errors.required">
+                                            <span class="error_msg">Start Time is Required.</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-3">
                                     <label class="form-label" for="basic-default-company">End Time</label>
@@ -149,21 +187,41 @@
                                         bindLabel="name" bindValue="value" formControlName="endTimeObj"
                                         placeholder="Select End Time">
                                     </ng-select>
+                                    <div *ngIf="submittedAddInquiryData[i] && item.controls.endTimeObj.errors">
+                                        <div *ngIf="item.controls.endTimeObj.errors.required">
+                                            <span class="error_msg">End Time is Required.</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-3">
                                     <label class="form-label" for="basic-default-company">Client budget</label>
                                     <input type="text" appNumbersOnly class="form-control" id="basic-default-company"
                                         placeholder="Enter budget" formControlName="client_budget" />
+                                    <div *ngIf="submittedAddInquiryData[i] && item.controls.client_budget.errors">
+                                        <div *ngIf="item.controls.client_budget.errors.required">
+                                            <span class="error_msg">Event Type is Required.</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-3">
                                     <label class="form-label" for="basic-default-company">Offer budget</label>
                                     <input type="text" appNumbersOnly class="form-control" id="basic-default-company"
                                         placeholder="Enter budget" formControlName="offer_budget" />
+                                    <div *ngIf="submittedAddInquiryData[i] && item.controls.offer_budget.errors">
+                                        <div *ngIf="item.controls.offer_budget.errors.required">
+                                            <span class="error_msg">Offer Budget is Required.</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-3">
                                     <label for="nameBasic" class="form-label">Remark</label>
                                     <textarea style="height:38px;" id="basic-default-message" class="form-control"
                                         placeholder="Remark" formControlName="remark"></textarea>
+                                    <div *ngIf="submittedAddInquiryData[i] && item.controls.remark.errors">
+                                        <div *ngIf="item.controls.remark.errors.required">
+                                            <span class="error_msg">Remark is Required.</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="mb-3" *ngIf="fclientinquiryData._id.value != '0'">

@@ -1,6 +1,8 @@
 import { Routes } from "@angular/router";
 import { AddInquiryComponent } from "app/back-office/add-inquiry/add-inquiry.component";
-import { BookingConfirmComponent } from "app/back-office/booking-confirm/booking-confirm.component";
+import { BookingConfirmListComponent } from "app/back-office/Booking-Confirm-Inquiry/booking-confirm-list/booking-confirm-list.component";
+import { BookingConfirmComponent } from "app/back-office/booking-confirm-inquiry/booking-confirm/booking-confirm.component";
+import { ViewBookingComponent } from "app/back-office/Booking-Confirm-Inquiry/view-booking/view-booking.component";
 import { EventMasterComponent } from "app/back-office/event-master/event-master.component";
 import { InquiryComponent } from "app/back-office/inquiry/inquiry.component";
 import { AddPackageMasterComponent } from "app/back-office/package-master/add-package-master/add-package-master.component";
@@ -37,6 +39,8 @@ export const AdminLayoutRoutes: Routes = [
   { path: "product-master", component: ProductMasterComponent, data: { breadcrumb: 'Product Master' } },
   { path: "vendor-details", component: VendorDetailsComponent, data: { breadcrumb: 'Vendor Details' } },
   { path: "booking-confirm/:id", component: BookingConfirmComponent, data: { breadcrumb: 'Booking Confirm' } },
+  { path: "booking-confirm-list", component: BookingConfirmListComponent, data: { breadcrumb: 'Booking Confirm List' } },
+  { path: "view-booking-confirm", component: ViewBookingComponent, data: { breadcrumb: 'View Booking Confirm' } },
   {
     path: "inquiry", component: InquiryComponent, data: { breadcrumb: 'Inquiry' },
     // children: [

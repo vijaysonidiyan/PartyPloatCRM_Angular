@@ -44,8 +44,10 @@ FullCalendarModule.registerPlugins([
 import { BreadcrumbModule } from "angular-crumbs";
 import { PackageMasterComponent } from "app/back-office/package-master/package-master.component";
 import { AddPackageMasterComponent } from "app/back-office/package-master/add-package-master/add-package-master.component";
-import { BookingConfirmComponent } from "app/back-office/booking-confirm/booking-confirm.component";
+import { BookingConfirmComponent } from "app/back-office/booking-confirm-inquiry/booking-confirm/booking-confirm.component";
 import { TooltipModule } from "ng2-tooltip-directive";
+import { BookingConfirmListComponent } from "app/back-office/Booking-Confirm-Inquiry/booking-confirm-list/booking-confirm-list.component";
+import { ViewBookingComponent } from "app/back-office/Booking-Confirm-Inquiry/view-booking/view-booking.component";
 
 @NgModule({
   imports: [
@@ -92,7 +94,9 @@ import { TooltipModule } from "ng2-tooltip-directive";
     ReferenceMasterComponent,
     PackageMasterComponent,
     AddPackageMasterComponent,
-    BookingConfirmComponent
+    BookingConfirmComponent,
+    BookingConfirmListComponent,
+    ViewBookingComponent
   ],
   providers: [MatDatepickerModule],
 })

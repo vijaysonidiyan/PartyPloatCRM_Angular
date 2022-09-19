@@ -23,9 +23,11 @@ export class BookingConfirmComponent implements OnInit {
   viewInquiry: boolean = false;
   packageList: any[] = [];
   inquiryEventId: any;
+  submittedExtraItemData = {};
   get fbookingConfirmData() {
     return this.bookingDataForm.controls;
   }
+  submittedPackageSelectedData: boolean = false;
   constructor(
     public adminLayoutService: AdminLayoutService,
     private fb: FormBuilder,
@@ -40,14 +42,13 @@ export class BookingConfirmComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getPackageActiveList();
     this.defaultForm();
     this.getClientDetailsByEventId();
     this.eventList = this.bookingDataForm.get("extradecoration") as FormArray;
-    if (this.viewInquiry !== true) {
-      // this.addPackageItem();
-    }
     this.eventList.push(this.createExtraItem({}));
+    // let validation = (this.bookingDataForm.controls['extradecoration'] as FormArray).controls[this.eventList.controls.length - 1] as FormGroup;
+    // validation.get('item').setValidators([Validators.required]);
+    // validation.get('quantity').setValidators([Validators.required]);
   }
 
   defaultForm() {
@@ -58,16 +59,19 @@ export class BookingConfirmComponent implements OnInit {
       secondryContact: [''],
       address: [''],
       partyplotName: [''],
+      partyplot_ID: [''],
       reference_Name: [''],
       reference_detail: [''],
       eventName: [''],
+      clientInquiryId: [''],
+      eventType: [''],
       startDateObj: [''],
       endDateObj: [''],
       client_budget: [''],
       guest: [''],
       offer_budget: [''],
       remark: [''],
-      packageId: [null],
+      packageId: [null, [Validators.required]],
       package: this.fb.array([]),
       extradecoration: this.fb.array([]),
     });
@@ -78,7 +82,6 @@ export class BookingConfirmComponent implements OnInit {
     packageList = this.bookingDataForm.get("package") as FormArray;
     let IG = this.fb.group({
       categoryName: [(oItem ? oItem['categoryName'] : ''),],
-      categoryDescription: [(oItem ? oItem['categoryDescription'] : ''),],
       packageCategoryList: this.fb.array([]),
     });
 
@@ -107,9 +110,9 @@ export class BookingConfirmComponent implements OnInit {
 
   createExtraItem(oItem?: any): FormGroup {
     return this.fb.group({
-      item: [oItem["item"] ? oItem["item"] : ""],
+      item: [oItem["item"] ? oItem["item"] : "", [Validators.required]],
       description: [oItem["description"] ? oItem["description"] : ""],
-      quantity: [oItem["quantity"] ? oItem["quantity"] : ""],
+      quantity: [oItem["quantity"] ? oItem["quantity"] : "", [Validators.required]],
     });
   }
 
@@ -124,22 +127,29 @@ export class BookingConfirmComponent implements OnInit {
         this.bookingDataForm.controls.primaryContact.setValue(Response.data[0].primaryContact);
         this.bookingDataForm.controls.secondryContact.setValue(Response.data[0].secondryContact);
         this.bookingDataForm.controls.address.setValue(Response.data[0].address);
+        this.bookingDataForm.controls.clientInquiryId.setValue(Response.data[0].clientInquiryId);
         this.bookingDataForm.controls.partyplotName.setValue(Response.data[0].partyplotName);
+        this.bookingDataForm.controls.partyplot_ID.setValue(Response.data[0].partyplot_ID);
         this.bookingDataForm.controls.reference_Name.setValue(Response.data[0].reference_Name);
         this.bookingDataForm.controls.reference_detail.setValue(Response.data[0].reference_detail);
         this.bookingDataForm.controls.eventName.setValue(Response.data[0].eventName);
+        this.bookingDataForm.controls.eventType.setValue(Response.data[0].eventType);
         this.bookingDataForm.controls.startDateObj.setValue(Response.data[0].startDateObj);
         this.bookingDataForm.controls.endDateObj.setValue(Response.data[0].endDateObj);
         this.bookingDataForm.controls.client_budget.setValue(Response.data[0].client_budget);
         this.bookingDataForm.controls.guest.setValue(Response.data[0].guest);
         this.bookingDataForm.controls.offer_budget.setValue(Response.data[0].offer_budget);
         this.bookingDataForm.controls.remark.setValue(Response.data[0].remark);
+        this.getPackageActiveList();
       }
     })
   }
 
   getPackageActiveList() {
-    this.adminLayoutService.getActivePackageMasterList().subscribe((Response: any) => {
+    let Id = {
+      partyplot_ID: this.bookingDataForm.controls.partyplot_ID.value
+    }
+    this.adminLayoutService.getActivePackageMasterListByPartyPlotId(Id).subscribe((Response: any) => {
       if (Response.meta.code == 200) {
         this.packageList = Response.data;
       }
@@ -156,7 +166,7 @@ export class BookingConfirmComponent implements OnInit {
     }
     this.adminLayoutService.getPackageMasterListById(idObj).subscribe((Response: any) => {
       if (Response.meta.code == 200) {
-        Response.data[0].package.forEach((x: any, oItem) => {
+        Response.data.package.forEach((x: any, oItem) => {
           this.addPackageItem(x);
         })
       }
@@ -174,6 +184,9 @@ export class BookingConfirmComponent implements OnInit {
 
   addExtraItem() {
     this.eventList.push(this.createExtraItem({}));
+    // let validation = (this.bookingDataForm.controls['extradecoration'] as FormArray).controls[this.eventList.controls.length - 1] as FormGroup;
+    // validation.get('item').setValidators([Validators.required]);
+    // validation.get('quantity').setValidators([Validators.required]);
   }
   deletCategoryList(index: number) {
     const remove = this.eventList;
@@ -181,6 +194,15 @@ export class BookingConfirmComponent implements OnInit {
   }
 
   saveBookingConfirmInquiryEvent() {
+
+    if (this.bookingDataForm.invalid) {
+      this.submittedPackageSelectedData = true;
+      (this.bookingDataForm.controls['extradecoration'] as FormArray).controls.map((x: any, index: any) => {
+        this.submittedExtraItemData[index] = true
+      })
+      return
+    }
+
     let bookInquiryConfirmEvent = {
       _id: this.inquiryEventId,
       package: this.bookingDataForm.controls.package.value,

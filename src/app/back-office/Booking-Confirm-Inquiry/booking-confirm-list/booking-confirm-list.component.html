@@ -1,0 +1,74 @@
+<div class="container-fluid flex-grow-1 container-p-y">
+
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="d-md-flex justify-content-between align-items-center mb-3 p-4">
+                <div class="card border-solid-primary flex-row align-items-center ps-2">
+                    <i class="bx bx-search fs-4 lh-0"></i>
+                    <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
+                        aria-label="Search..." (input)="search($event.target.value)" />
+                </div>
+                <div>
+                    <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0"
+                        bindLabel="name" bindValue="_id" [(ngModel)]="searchedPartyplot" (change)="partyplotChange()"
+                        placeholder="Select Party Plot">
+                    </ng-select>
+                </div>
+                <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Vendor Details</h4> -->
+                <!-- <div class="btn-cus">
+                    <button type="button" class="btn btn-primary" (click)="addMenu()">
+                        Add New
+                    </button>
+                </div> -->
+            </div>
+            <div class="table-responsive text-nowrap">
+                <table class="table">
+                    <thead>
+                        <tr class="text-nowrap">
+                            <th class="w-5">No</th>
+                            <th class="w-15">Action</th>
+                            <th>Name</th>
+                            <th>Contact</th>
+                            <th>Email ID</th>
+                            <th>Address</th>
+                            <th>Date</th>
+                            <th>Event</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        <tr
+                            *ngFor="let bookingConfirmData of bookingConfirmList | paginate: { itemsPerPage: l, currentPage: p }; let bookingConfirmIndex = index">
+                            <td>{{ l * (p - 1) + bookingConfirmIndex + 1 }}</td>
+                            <td>
+                                <div class="d-flex">
+                                    <button class="btn-bg"
+                                        (click)="editvendorDetails({id : bookingConfirmData._id, index : bookingConfirmIndex})"><i
+                                            class="bx bx-edit-alt" tooltip="Edit" placement="bottom"
+                                            showDelay="100"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td><strong>{{ bookingConfirmData.name }}</strong></td>
+                            <td>{{ bookingConfirmData.primaryContact }}</td>
+                            <td>{{ bookingConfirmData.email }}</td>
+                            <td>{{ bookingConfirmData.address }}</td>
+                            <td>{{ bookingConfirmData.startDateObj | date:'dd/MM/yyyy hh:mm:ss a' }}</td>
+                            <td>{{ bookingConfirmData.eventname }}</td>
+                        </tr>
+                        <tr *ngIf="noData">
+                            <td colspan="8">
+                                <h4 class="text-center mt-3">No Data Found</h4>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer-pagination float-end mt-3 p-4" *ngIf="!noData">
+                <pagination-controls (pageChange)="p = $event" *ngIf="bookingConfirmList.length > l">
+                </pagination-controls>
+            </div>
+        </div>
+    </div>
+    <div class="content-backdrop fade"></div>
+</div>

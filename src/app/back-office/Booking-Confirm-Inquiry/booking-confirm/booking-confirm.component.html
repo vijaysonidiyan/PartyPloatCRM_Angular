@@ -33,10 +33,7 @@
                                 <td class="w-20 pe-2 "><strong>Address:</strong></td>
                                 <td class="text-muted">{{fbookingConfirmData?.address.value}}</td>
                             </tr>
-                            <tr>
-                                <td class="w-25 pe-2 "><strong>Party Plot:</strong></td>
-                                <td class="text-muted">{{fbookingConfirmData?.partyplotName.value}}</td>
-                            </tr>
+
                             <tr>
                                 <td class="w-25 pe-2 "><strong>Reference Type:</strong></td>
                                 <td class="text-muted">{{fbookingConfirmData?.reference_Name.value}}</td>
@@ -53,8 +50,16 @@
                     <table>
                         <tbody>
                             <tr>
+                                <td class="w-25 pe-2 "><strong>Party Plot:</strong></td>
+                                <td class="text-muted">{{fbookingConfirmData?.partyplotName.value}}</td>
+                            </tr>
+                            <tr>
                                 <td class="w-20 pe-2 "><strong>Event Type:</strong></td>
                                 <td class="text-muted">{{fbookingConfirmData?.eventName.value}}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-25 pe-2 "><strong>Guest:</strong></td>
+                                <td class="text-muted">{{fbookingConfirmData?.guest.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-20 pe-2 "><strong>Date:</strong></td>
@@ -62,17 +67,15 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td class="w-25 pe-2 "><strong>Time:</strong></td>
+                                <td class="text-muted">{{fbookingConfirmData?.startDateObj.value |
+                                    date : 'hh:mm:ss a'}}&nbsp;-&nbsp;{{fbookingConfirmData?.endDateObj.value| date :
+                                    'hh:mm:ss
+                                    a'}}</td>
+                            </tr>
+                            <tr>
                                 <td class="w-20 pe-2 "><strong>Client Budget:</strong></td>
                                 <td class="text-muted">{{fbookingConfirmData?.client_budget.value}}</td>
-                            </tr>
-                            <tr>
-                                <td class="w-25 pe-2 "><strong>Guest:</strong></td>
-                                <td class="text-muted">{{fbookingConfirmData?.guest.value}}</td>
-                            </tr>
-                            <tr>
-                                <td class="w-25 pe-2 "><strong>Time:</strong></td>
-                                <td class="text-muted">{{fbookingConfirmData?.startDateObj.value | 
-                                    date : 'hh:mm:ss a'}} - {{fbookingConfirmData?.endDateObj.value| date : 'hh:mm:ss a'}}</td>
                             </tr>
                             <tr>
                                 <td class="w-25 pe-2 "><strong>Offer Budget:</strong></td>
@@ -143,9 +146,14 @@
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label for="nameBasic" class="form-label">Package Select</label>
                             <ng-select [items]="packageList" [multiple]="false" class="form-control p-0 me-3"
-                                bindLabel="packageName" bindValue="_id" formControlName="packageId"
+                                bindLabel="packageName" bindValue="_id" [clearable]="false" formControlName="packageId"
                                 (change)="onActivePackageChange($event)" placeholder="Select Package">
                             </ng-select>
+                            <div *ngIf="submittedPackageSelectedData && fbookingConfirmData.packageId.errors">
+                                <div *ngIf="fbookingConfirmData.packageId.errors.required">
+                                    <span class="error_msg">Please Select Package.</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -154,7 +162,7 @@
                             *ngFor=" let item of bookingDataForm.get('package')['controls']; let i = index">
                             <div class="text-center mt-3">
                                 <h5 class="mb-0">{{item.value.categoryName}}</h5>
-                                <span class="text-muted">{{item.value.categoryDescription}}</span>
+                                <!-- <span class="text-muted">{{item.value.categoryDescription}}</span> -->
                                 <!-- <button type="button" class="btn btn-primary">Edit</button> -->
                             </div>
                             <!-- <div class="row">
@@ -178,12 +186,12 @@
                                         <div class="row">
                                             <div class="col-lg-8">
                                                 <div>
-                                                    <label for="nameBasic"
-                                                        class="form-label">{{citem.value.item}}</label>
+                                                    <!-- <label for="nameBasic" class="form-label">&nbsp;</label> -->
+                                                    <h5 class="mb-0">{{x +1}} &nbsp;{{citem.value.item}}</h5>
                                                 </div>
-                                                <div>
+                                                <!-- <div>
                                                     <span class="text-muted">{{citem.value.description}}</span>
-                                                </div>
+                                                </div> -->
                                             </div>
 
                                             <!-- <div class="col-lg-4 col-md-6 mb-3">
@@ -198,7 +206,7 @@
                                                     placeholder="Description"></textarea>
                                             </div> -->
                                             <div class="col-lg-4 col-md-6 mb-3">
-                                                <label class="form-label" for="basic-default-company">Quantity</label>
+                                                <!-- <label class="form-label" for="basic-default-company">Quantity</label> -->
                                                 <input type="text" class="form-control" id="basic-default-company"
                                                     formControlName="quantity" placeholder="Enter Quantity" />
                                             </div>
@@ -213,42 +221,57 @@
                     <div class="card-header d-flex justify-content-between align-items-center px-0">
                         <h5 class="mb-0">Extra Item</h5>
                     </div>
-                    <div class="d-sm-block d-lg-flex align-items-center clear-fix" [formGroupName]="y"
-                        *ngFor="let citem of bookingDataForm.get('extradecoration')['controls']; let y = index;">
-                        <div class="w-100">
-                            <div class="row align-items-center clear-fix">
-                                <div class="col-lg-4 col-md-6 mb-3">
-                                    <label class="form-label" for="basic-default-company">Item</label>
-                                    <input type="text" formControlName="item" class="form-control"
-                                        id="basic-default-company" placeholder="Enter Guest Count" />
+                    <div formArrayName="extradecoration">
+                        <div class="d-sm-block d-lg-flex align-items-center clear-fix" [formGroupName]="y"
+                            *ngFor="let citem of bookingDataForm.get('extradecoration')['controls']; let y = index;">
+                            <div class="w-100">
+                                <div class="row align-items-center clear-fix">
+                                    <div class="col-lg-4 col-md-6 mb-3">
+                                        <label class="form-label" for="basic-default-company">Item</label>
+                                        <input type="text" formControlName="item" class="form-control"
+                                            id="basic-default-company" placeholder="Enter Guest Count" />
+                                        <div *ngIf="submittedExtraItemData[y] && citem.controls.item.errors">
+                                            <div *ngIf="citem.controls.item.errors.required">
+                                                <span class="error_msg">Item is Required.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 mb-3">
+                                        <label for="nameBasic" class="form-label">Description</label>
+                                        <textarea style="height:38px;" id="basic-default-message"
+                                            formControlName="description" class="form-control"
+                                            placeholder="Description"></textarea>
+                                    </div>
+                                    <div class="col-lg-2 col-md-6 mb-3">
+                                        <label class="form-label" for="basic-default-company">Quantity</label>
+                                        <input type="text" class="form-control" id="basic-default-company"
+                                            formControlName="quantity" placeholder="Enter Quantity" />
+                                        <div *ngIf="submittedExtraItemData[y] && citem.controls.quantity.errors">
+                                            <div *ngIf="citem.controls.quantity.errors.required">
+                                                <span class="error_msg">Quantity is Required.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 mt-3">
+                                        <button type="button" class="btn btn-label-danger" aria-label="Close"
+                                            (click)="deletCategoryList(y)">
+                                            <i class="bx bx-x"></i>
+                                            <span class="align-middle">Delete</span>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6 mb-3">
-                                    <label for="nameBasic" class="form-label">Description</label>
-                                    <textarea style="height:38px;" id="basic-default-message"
-                                        formControlName="description" class="form-control"
-                                        placeholder="Description"></textarea>
-                                </div>
-                                <div class="col-lg-2 col-md-6 mb-3">
-                                    <label class="form-label" for="basic-default-company">Quantity</label>
-                                    <input type="text" class="form-control" id="basic-default-company"
-                                        formControlName="quantity" placeholder="Enter Quantity" />
-                                </div>
-                                <div class="col-lg-2 mt-3">
-                                    <button type="button" class="btn btn-label-danger" aria-label="Close"
-                                        (click)="deletCategoryList(i)">
-                                        <i class="bx bx-x"></i>
-                                        <span class="align-middle">Delete</span>
-                                    </button>
-                                </div>
-                            </div>
 
-                            <hr class="my-3">
+                                <hr class="my-3">
+                            </div>
                         </div>
                     </div>
 
                 </div>
                 <div>
-                    <button type="button" class="btn btn-primary" (click)="addExtraItem()">Add Item</button>
+                    <button type="button" class="btn btn-primary"
+                        [ngClass]="fbookingConfirmData.extradecoration.invalid == true ? 'disabled' : ''"
+                        (click)="addExtraItem()">Add
+                        Item</button>
                 </div>
             </form>
             <div class="float-end">
