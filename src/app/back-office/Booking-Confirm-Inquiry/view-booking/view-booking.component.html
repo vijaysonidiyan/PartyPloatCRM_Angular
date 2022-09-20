@@ -1,1 +1,234 @@
-<p>view-booking works!</p>
+<div class="container-fluid flex-grow-1 container-p-y">
+    <!-- <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span>Add Package Master</h4>
+    </div> -->
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Booking Confirm</h5>
+            <!-- <button type="button" class="btn btn-primary">Edit</button> -->
+        </div>
+        <div class="card-body">
+            <div class="row p-sm-3 p-0">
+                <div class="col-md-6 col-sm-5 col-12 mb-sm-0 mb-4 ps-0">
+                    <!-- <h6 class="pb-2">Client Details:</h6> -->
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="w-20 pe-2 "><strong>Name:</strong> </td>
+                                <td class="text-muted">{{bookingConfirmList?.name}}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-20 pe-2 "><strong>Email:</strong></td>
+                                <td class="text-muted">{{bookingConfirmList?.email}}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-20 pe-2 "><strong>Contact:</strong></td>
+                                <td class="text-muted">{{bookingConfirmList?.primaryContact}}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-20 pe-2 "><strong>Contact-2:</strong></td>
+                                <td class="text-muted">{{bookingConfirmList?.secondryContact}}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-20 pe-2 "><strong>Address:</strong></td>
+                                <td class="text-muted">{{bookingConfirmList?.address}}</td>
+                            </tr>
+
+                            <tr>
+                                <td class="w-25 pe-2 "><strong>Reference Type:</strong></td>
+                                <td class="text-muted">{{bookingConfirmList?.referenceName}}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-25 pe-2 "><strong>Reference Details:</strong></td>
+                                <td class="text-muted">{{bookingConfirmList?.reference_detail}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6 col-sm-7 pe-0">
+                    <!-- <h6 class="pb-2">Bill To:</h6> -->
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="w-25 pe-2 "><strong>Party Plot:</strong></td>
+                                <td class="text-muted">{{bookingConfirmList?.partyPlotName}}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-20 pe-2 "><strong>Event Type:</strong></td>
+                                <td class="text-muted">{{bookingConfirmList?.eventName}}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-25 pe-2 "><strong>Guest:</strong></td>
+                                <td class="text-muted">{{bookingConfirmList?.guest}}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-20 pe-2 "><strong>Date:</strong></td>
+                                <td class="text-muted">{{bookingConfirmList?.startDateObj | date : 'dd/MM/yyyy'}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-25 pe-2 "><strong>Time:</strong></td>
+                                <td class="text-muted">{{bookingConfirmList?.startDateObj |
+                                    date : 'hh:mm:ss a'}}&nbsp;-&nbsp;{{bookingConfirmList?.endDateObj| date :
+                                    'hh:mm:ss
+                                    a'}}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-20 pe-2 "><strong>Client Budget:</strong></td>
+                                <td class="text-muted">{{bookingConfirmList?.client_budget}}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-25 pe-2 "><strong>Offer Budget:</strong></td>
+                                <td class="text-muted">{{bookingConfirmList?.offer_budget}}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-20 pe-2 "><strong>Remark:</strong></td>
+                                <td class="text-muted">{{bookingConfirmList?.remark}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr class="my-3">
+            <div class="row p-sm-3 p-0">
+                <div>
+                    <h5>Package</h5>
+
+                </div>
+                <table class="table">
+                    <tr>
+                        <th>Sr. No.</th>
+                        <th class="text-center">PARTICULAR</th>
+                        <th class="text-center">Qty/Size</th>
+                    </tr>
+                    <tr *ngFor="let bookingConfirmData of bookingConfirmList?.package">
+                        <td colspan="3" class="text-center">{{bookingConfirmData.categoryName}}
+                            <table class="w-100">
+                                <tr
+                                    *ngFor="let bookingConfirmCategoryPackageData of bookingConfirmData.packageCategoryList;let i=index;">
+                                    <td class="text-center">{{i+1}}</td>
+                                    <td class="text-center">{{bookingConfirmCategoryPackageData.item}}</td>
+                                    <td class="text-center">{{bookingConfirmCategoryPackageData.quantity}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="row p-sm-3 p-0">
+                <div>
+                    <h5> Extra Decoration</h5>
+                </div>
+                <table class="table">
+                    <tr>
+                        <th>Sr. No.</th>
+                        <th>Item</th>
+                        <th>Description</th>
+                        <th>Qty/Size</th>
+                    </tr>
+                    <tr
+                        *ngFor="let extradecorationData of bookingConfirmList?.extradecoration;let extraDecorationIndex=index">
+                        <td>{{extraDecorationIndex + 1}}</td>
+                        <td>{{extradecorationData.item}}</td>
+                        <td>{{extradecorationData.description}}</td>
+                        <td>{{extradecorationData.quantity}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="float-end">
+                <button type="submit" class="btn btn-primary" (click)="uploadDecorationModal()">Upload Decoration
+                    Image</button>
+            </div>
+            <div class="row p-sm-3 p-0">
+                <div>
+                    <h5>Decoration Images</h5>
+                </div>
+                <table class="table">
+                    <tr>
+                        <th>Sr. No.</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Decoration</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr *ngFor="let decorationData of imageDecorationList;let decorationIndex=index">
+                        <td>{{decorationIndex + 1}}</td>
+                        <td>{{decorationData.name}}</td>
+                        <td>{{decorationData.description}}</td>
+                        <td>
+                            <img src="{{decorationURLPath}}{{decorationData.Image[0]}}" width="50px" height="50px"
+                                alt="">
+                        </td>
+                        <td>
+                            <div class="d-flex">
+
+                                <button class="btn-bg"
+                                    (click)="editDecorationImages({id : decorationData._id, index : decorationIndex})"><i
+                                        class="bx bx-edit-alt" tooltip="Edit" placement="bottom" showDelay="100"></i>
+                                </button>
+                                <button title="Delete Decoration Image"
+                                    (confirm-click)="deleteDecorationImages({id :decorationData._id,index:decorationIndex, status:2})"
+                                    appConfirm [confirmTitle]="'Delete Decoration Image'"
+                                    [confirmContent]="'Are you sure to Delete this Decoration Image?'"
+                                    class="bg-label-danger btn-bg bg-label-danger" tooltip="Delete" placement="bottom"
+                                    showDelay="100">
+                                    <i class="bx bx-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="add-upload-decoration" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1"><strong>{{isEditDecorationImage == true ? 'Edit' :
+                        'Add'}} Decoration</strong></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="cancleUploadImage()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+                        <label for="nameBasic" class="form-label">Image Name</label>
+                        <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
+                            [(ngModel)]="imageName" />
+                        <div *ngIf="submittedUploadDecorationData && !imageName">
+                            <span class="error_msg text-danger">Image Name is Required.</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        <label for="nameBasic" class="form-label">Image Description</label>
+                        <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
+                            [(ngModel)]="imageDescription" />
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        <label for="nameBasic" class="form-label">Upload Decoration</label>
+                        <input type="file" #imageDecoration id="nameBasic" class="form-control" placeholder="Enter Name"
+                            (change)="onImageDecorationChange($event)" />
+                        <div *ngIf="imageDecorationURLFile" class="imgUpload">
+                            <img [src]="imageDecorationURLFile" alt="" width="100">
+                            <button type="button" class="btn-close ml-10" aria-label="Close"
+                                (click)="removeImageDecorationFile()"></button>
+                        </div>
+                        <div *ngIf="imageDecorationError === true">
+                            <span class="error_msg text-danger">Decoration Image is Required.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" *ngIf="isEditDecorationImage === false"
+                    (click)="createImageDecoration()">Save</button>
+                <button type="button" class="btn btn-primary" (click)="updateImageDecoration()"
+                    *ngIf="isEditDecorationImage === true">Update</button>
+            </div>
+        </div>
+    </div>
+</div>

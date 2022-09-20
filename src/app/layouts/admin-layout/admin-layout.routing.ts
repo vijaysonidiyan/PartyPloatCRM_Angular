@@ -40,7 +40,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "vendor-details", component: VendorDetailsComponent, data: { breadcrumb: 'Vendor Details' } },
   { path: "booking-confirm/:id", component: BookingConfirmComponent, data: { breadcrumb: 'Booking Confirm' } },
   { path: "booking-confirm-list", component: BookingConfirmListComponent, data: { breadcrumb: 'Booking Confirm List' } },
-  { path: "view-booking-confirm", component: ViewBookingComponent, data: { breadcrumb: 'View Booking Confirm' } },
+  { path: "view-booking-confirm/:id", component: ViewBookingComponent, data: { breadcrumb: 'View Booking Confirm' } },
   {
     path: "inquiry", component: InquiryComponent, data: { breadcrumb: 'Inquiry' },
     // children: [

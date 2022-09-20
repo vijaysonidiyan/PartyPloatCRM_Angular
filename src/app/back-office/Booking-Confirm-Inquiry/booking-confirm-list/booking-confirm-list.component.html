@@ -34,6 +34,7 @@
                             <th>Address</th>
                             <th>Date</th>
                             <th>Event</th>
+                            <th>Party Plot</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -43,9 +44,8 @@
                             <td>
                                 <div class="d-flex">
                                     <button class="btn-bg"
-                                        (click)="editvendorDetails({id : bookingConfirmData._id, index : bookingConfirmIndex})"><i
-                                            class="bx bx-edit-alt" tooltip="Edit" placement="bottom"
-                                            showDelay="100"></i>
+                                        (click)="viewBookingConfirm({id : bookingConfirmData._id, index : bookingConfirmIndex})"><i
+                                            class="bx bxs-show" tooltip="View" placement="bottom" showDelay="100"></i>
                                     </button>
                                 </div>
                             </td>
@@ -55,6 +55,7 @@
                             <td>{{ bookingConfirmData.address }}</td>
                             <td>{{ bookingConfirmData.startDateObj | date:'dd/MM/yyyy hh:mm:ss a' }}</td>
                             <td>{{ bookingConfirmData.eventname }}</td>
+                            <td>{{ bookingConfirmData.partyplotname }}</td>
                         </tr>
                         <tr *ngIf="noData">
                             <td colspan="8">

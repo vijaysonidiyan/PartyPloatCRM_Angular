@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AdminLayoutService } from 'app/layouts/admin-layout/admin-layout.service';
 import { CommonService } from 'app/shared/common.service';
 
@@ -22,7 +23,7 @@ export class BookingConfirmListComponent implements OnInit {
 
   constructor(public adminLayoutService: AdminLayoutService,
     private fb: FormBuilder,
-    public commonService: CommonService) { }
+    public commonService: CommonService, private router: Router) { }
 
   ngOnInit(): void {
     this.l = 10;
@@ -77,6 +78,10 @@ export class BookingConfirmListComponent implements OnInit {
     } else {
       this.noData = false;
     }
+  }
+
+  viewBookingConfirm(params: any) {
+    this.router.navigate(['/admin/view-booking-confirm/' + params.id])
   }
 
 }

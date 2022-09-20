@@ -629,7 +629,44 @@ export class AdminLayoutService {
     })
     return this.http.get(this.commonService.rootData.rootUrl + 'inquirybooking/inquirydeatilsbypartyplotID', { params: id, headers: headers });
   }
+  getBookingConfirmListByBookingID(id: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'inquirybooking/inquirybookinggetByID', { params: id, headers: headers });
+  }
 
+  // image decoration file upload and list
+  imageDecorationCreate(data: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'decoration/decorationCreate', data, { headers: headers });
+  }
+  imageDecorationUpdate(data: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'decoration/decorationUpdate', data, { headers: headers });
+  }
+  getImageDecorationListByBookingId(id: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'decoration/decorationListbyinquirybookingId', { params: id, headers: headers });
+  }
+  getDecorationImagebyId(id: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'decoration/decorationListByID', { params: id, headers: headers });
+  }
+  deleteDecorationbyId(id: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'decoration/decorationDelete', { params: id, headers: headers });
+  }
 }
 
 
