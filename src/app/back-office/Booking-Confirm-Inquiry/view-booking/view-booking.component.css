@@ -4,3 +4,13 @@
   border-bottom-width: 1px;
   box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
 }
+.table tr > td {
+  border-bottom: 1.5px solid #d9dee3 !important;
+  height: 60px !important;
+}
+.table > :not(:last-child), .table > :not(:first-child) {
+  border: none !important;
+}
+.qty-width {
+  width:15% ;
+}
