@@ -103,12 +103,12 @@
                     </tr>
                     <tr [formGroupName]="i"
                         *ngFor=" let item of viewBookingForm.get('package')['controls']; let i = index">
-                        <td colspan="3" class="text-center">{{item.categoryName.value}}
+                        <td colspan="3" class="text-center">{{item.controls.categoryName.value}}
                             <table class="w-100" formArrayName="packageCategoryList">
                                 <tr [formGroupName]="x"
                                     *ngFor="let citem of item.get('packageCategoryList')['controls']; let x = index;">
                                     <td class="text-center">{{x+1}}</td>
-                                    <td class="text-center">{{citem.item.value}}</td>
+                                    <td class="text-center">{{citem.controls.item.value}}</td>
                                     <td class="text-center">
                                         <input type="text" class="form-control" id="basic-default-company"
                                             formControlName="quantity" placeholder="Enter Quantity" />
@@ -133,9 +133,9 @@
                     <tr [formGroupName]="y"
                         *ngFor="let citem of viewBookingForm.get('extradecoration')['controls']; let y = index;">
                         <td>{{y + 1}}</td>
-                        <td>{{citem.item.value}}</td>
-                        <td>{{citem.description.value}}</td>
-                        <td>{{citem.quantity.value}}</td>
+                        <td>{{citem.controls.item.value}}</td>
+                        <td>{{citem.controls.description.value}}</td>
+                        <td>{{citem.controls.quantity.value}}</td>
                     </tr>
                 </table>
             </div>
