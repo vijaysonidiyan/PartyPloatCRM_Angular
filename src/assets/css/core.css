@@ -17584,7 +17584,11 @@ html:not(.layout-footer-fixed) .content-wrapper {
 .ng-select.ng-select-disabled>.ng-select-container {
   background-color: #eceef1 !important;
 }
-/* .ng-select.ng-select-multiple.ng-select-disabled>.ng-select-container .ng-value-container .ng-value {
-  background-color: #eceef1 !important;
-  border: 1px solid #cdcdcd !important;
-} */
+.custom-class {
+  min-width: 250px !important;
+}
+@media (max-width:768px) {
+  .custom-class {
+     margin-top:20px !important;
+   }
+}
