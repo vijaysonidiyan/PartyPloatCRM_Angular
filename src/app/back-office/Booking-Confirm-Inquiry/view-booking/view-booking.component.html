@@ -89,23 +89,26 @@
                     </table>
                 </div>
             </div>
-            
+
             <div class="row p-sm-3 p-0">
                 <div>
                     <h5>Package</h5>
 
                 </div>
-                <table class="table table-responsive" formArrayName="package">
-                    <tr>
-                        <th class="text-center w-5">Sr. No.</th>
-                        <th class="w-80">PARTICULAR</th>
-                        <th class="w-15">Qty/Size</th>
-                    </tr>
+                <table class=" table-responsive" formArrayName="package">
+                    <thead>
+                        <tr class="boader-bottom-1">
+                            <th class="text-center w-5">Sr. No.</th>
+                            <th class="w-80">Particular</th>
+                            <th class="qty-width">Qty/Size</th>
+                        </tr>
+                    </thead>
                     <tr [formGroupName]="i"
                         *ngFor=" let item of viewBookingForm.get('package')['controls']; let i = index">
-                        <td colspan="3" style="text-align:center;">{{item.controls.categoryName.value}}
-                            <table class="w-100 table" formArrayName="packageCategoryList">
-                                <tr [formGroupName]="x"
+                        <td colspan="3" style="text-align:center;">
+                            <div style="padding: 7px 0;">{{item.controls.categoryName.value}}</div>
+                            <table class="w-100 " formArrayName="packageCategoryList">
+                                <tr [formGroupName]="x" class="boader-top-1"
                                     *ngFor="let citem of item.get('packageCategoryList')['controls']; let x = index;">
                                     <td class="text-center w-5">{{x+1}}</td>
                                     <td class="text-start w-80">{{citem.controls.item.value}}</td>
@@ -123,72 +126,66 @@
                 <div>
                     <h5> Extra Decoration</h5>
                 </div>
-                <table class="table" formArrayName="extradecoration">
-                    <tbody class="table-responsive">
-                        <tr>
-                            <th class="text-center w-5">Sr. No.</th>
-                            <th class="text-center w-40">Item</th>
-                            <th class="text-center w-40">Description</th>
-                            <th class="text-center w-15">Qty/Size</th>
-                        </tr>
-                        <tr [formGroupName]="y"
-                            *ngFor="let citem of viewBookingForm.get('extradecoration')['controls']; let y = index;">
-                            <td class="text-center w-5">{{y + 1}}</td>
-                            <td class="text-center w-40">{{citem.controls.item.value}}</td>
-                            <td class="text-center w-40">{{citem.controls.description.value}}</td>
-                            <td class="qty-width">
-                                <input type="text" class="form-control" id="basic-default-company"
-                                                    formControlName="quantity" placeholder="Enter Quantity" />
-                            </td>
-                        </tr>
-                    </tbody>
+                <table class="" formArrayName="extradecoration">
+                    <tr class="boader-bottom-1">
+                        <th class="text-center w-5">Sr. No.</th>
+                        <th class=" w-80">Item</th>
+                        <th class="qty-width">Qty/Size</th>
+                    </tr>
+                    <tr [formGroupName]="y" class="boader-bottom-1"
+                        *ngFor="let citem of viewBookingForm.get('extradecoration')['controls']; let y = index;">
+                        <td class="text-center w-5">{{y + 1}}</td>
+                        <td class=" w-80">{{citem.controls.item.value}}</td>
+                        <td class="qty-width">
+                            <input type="text" class="form-control" id="basic-default-company"
+                                formControlName="quantity" placeholder="Enter Quantity" />
+                        </td>
+                    </tr>
                 </table>
             </div>
-            
+
             <div class="row p-sm-3 p-0">
                 <div class="d-flex justify-content-between mb-3">
                     <h5>Decoration Images</h5>
                     <!-- <div class="float-end"> -->
-                        <button type="submit" class="btn btn-primary" (click)="uploadDecorationModal()">Upload Decoration
-                            Image</button>
+                    <button type="submit" class="btn btn-primary" (click)="uploadDecorationModal()">Upload Decoration
+                        Image</button>
                     <!-- </div> -->
                 </div>
-                <table class="table">
-                    <tbody class="table-responsive">
-                        <tr>
-                            <th>Sr. No.</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Decoration</th>
-                            <th>Action</th>
-                        </tr>
-                        <tr *ngFor="let decorationData of imageDecorationList;let decorationIndex=index">
-                            <td>{{decorationIndex + 1}}</td>
-                            <td>{{decorationData.name}}</td>
-                            <td>{{decorationData.description}}</td>
-                            <td>
-                                <img src="{{decorationURLPath}}{{decorationData.Image[0]}}" width="50px" height="50px"
-                                    alt="">
-                            </td>
-                            <td>
-                                <div class="d-flex">
-    
-                                    <button class="btn-bg"
-                                        (click)="editDecorationImages({id : decorationData._id, index : decorationIndex})"><i
-                                            class="bx bx-edit-alt" tooltip="Edit" placement="bottom" showDelay="100"></i>
-                                    </button>
-                                    <button title="Delete Decoration Image"
-                                        (confirm-click)="deleteDecorationImages({id :decorationData._id,index:decorationIndex, status:2})"
-                                        appConfirm [confirmTitle]="'Delete Decoration Image'"
-                                        [confirmContent]="'Are you sure to Delete this Decoration Image?'"
-                                        class="bg-label-danger btn-bg bg-label-danger" tooltip="Delete" placement="bottom"
-                                        showDelay="100">
-                                        <i class="bx bx-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
+                <table class="">
+                    <tr class="boader-bottom-1">
+                        <th class="text-center w-5">Sr. No.</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Decoration</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr class="boader-bottom-1" *ngFor="let decorationData of imageDecorationList;let decorationIndex=index">
+                        <td class="text-center w-5">{{decorationIndex + 1}}</td>
+                        <td>{{decorationData.name}}</td>
+                        <td>{{decorationData.description}}</td>
+                        <td>
+                            <img src="{{decorationURLPath}}{{decorationData.Image[0]}}" width="50px" height="50px"
+                                alt="">
+                        </td>
+                        <td>
+                            <div class="d-flex">
+
+                                <button class="btn-bg"
+                                    (click)="editDecorationImages({id : decorationData._id, index : decorationIndex})"><i
+                                        class="bx bx-edit-alt" tooltip="Edit" placement="bottom" showDelay="100"></i>
+                                </button>
+                                <button title="Delete Decoration Image"
+                                    (confirm-click)="deleteDecorationImages({id :decorationData._id,index:decorationIndex, status:2})"
+                                    appConfirm [confirmTitle]="'Delete Decoration Image'"
+                                    [confirmContent]="'Are you sure to Delete this Decoration Image?'"
+                                    class="bg-label-danger btn-bg bg-label-danger" tooltip="Delete" placement="bottom"
+                                    showDelay="100">
+                                    <i class="bx bx-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>
