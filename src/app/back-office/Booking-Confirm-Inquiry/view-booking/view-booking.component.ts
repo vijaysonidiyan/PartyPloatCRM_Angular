@@ -1,7 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AdminLayoutService } from 'app/layouts/admin-layout/admin-layout.service';
 import { environment } from 'environments/environment';
+import { defaultFormat } from 'moment';
 declare const $: any;
 
 @Component({
@@ -24,15 +26,88 @@ export class ViewBookingComponent implements OnInit {
   imageDecorationError: boolean = false;
   decorationURLPath = environment.uploadedUrl;
   isEditDecorationImage: boolean = false;
+  viewBookingForm: FormGroup;
+  get fbookingConfirmData() {
+    return this.viewBookingForm.controls;
+  }
+  eventList: any;
 
-  constructor(private route: ActivatedRoute, private router: Router, private adminLayoutService: AdminLayoutService) {
+  constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private adminLayoutService: AdminLayoutService) {
     this.route.params.subscribe((x: Params) => {
       this.bookingConfirmId = x.id
     })
   }
 
   ngOnInit(): void {
-    this.getClientDetailsByEventId()
+    this.defaultForm();
+    this.eventList = this.viewBookingForm.get("extradecoration") as FormArray;
+    this.getClientDetailsByEventId();
+  }
+
+  defaultForm() {
+    this.viewBookingForm = this.fb.group({
+      name: [''],
+      email: [''],
+      primaryContact: [''],
+      secondryContact: [''],
+      address: [''],
+      eventType: [''],
+      guest: [''],
+      startDateObj: [''],
+      endDateObj: [''],
+      reference_ID: [''],
+      reference_detail: [''],
+      partyplot_ID: [''],
+      remark: [''],
+      clientInquiryId: [''],
+      client_budget: [''],
+      partyPlotName: [''],
+      eventName: [''],
+      referenceName: [''],
+      clientname: [''],
+      offer_budget: [''],
+      package: this.fb.array([]),
+      extradecoration: this.fb.array([])
+    })
+  }
+
+  addPackageItem(oItem?: any) {
+    let packageList: any;
+    packageList = this.viewBookingForm.get("package") as FormArray;
+    let IG = this.fb.group({
+      categoryName: [(oItem ? oItem['categoryName'] : ''),],
+      packageCategoryList: this.fb.array([]),
+    });
+
+    packageList.push(IG);
+
+    let menuIndex = packageList.length - 1;
+    if (!oItem) {
+      this.createCategoryItem(menuIndex);
+    }
+    else {
+      oItem.packageCategoryList.forEach(cItem => {
+        this.createCategoryItem(menuIndex, cItem);
+      });
+    }
+  }
+
+  createCategoryItem(oItem: number, cItem?: any) {
+    let cd = this.fb.group({
+      item: [(cItem ? cItem['item'] : '')],
+      description: [(cItem ? cItem['description'] : '')],
+      quantity: [(cItem ? cItem['quantity'] : '')],
+    });
+    (((this.viewBookingForm.controls['package'] as FormArray)
+      .controls[oItem] as FormGroup).controls['packageCategoryList'] as FormArray).push(cd);
+  }
+
+  createExtraItem(oItem?: any): FormGroup {
+    return this.fb.group({
+      item: [oItem["item"] ? oItem["item"] : "", [Validators.required]],
+      description: [oItem["description"] ? oItem["description"] : ""],
+      quantity: [oItem["quantity"] ? oItem["quantity"] : "", [Validators.required]],
+    });
   }
 
   getClientDetailsByEventId() {
@@ -42,6 +117,30 @@ export class ViewBookingComponent implements OnInit {
     this.adminLayoutService.getBookingConfirmListByBookingID(eventIDObj).subscribe((Response: any) => {
       if (Response.meta.code == 200) {
         this.bookingConfirmList = Response.data;
+        this.viewBookingForm.controls.name.setValue(Response.data.name);
+        this.viewBookingForm.controls.email.setValue(Response.data.email);
+        this.viewBookingForm.controls.primaryContact.setValue(Response.data.primaryContact);
+        this.viewBookingForm.controls.secondryContact.setValue(Response.data.secondryContact);
+        this.viewBookingForm.controls.address.setValue(Response.data.address);
+        this.viewBookingForm.controls.guest.setValue(Response.data.guest);
+        this.viewBookingForm.controls.startDateObj.setValue(Response.data.startDateObj);
+        this.viewBookingForm.controls.endDateObj.setValue(Response.data.endDateObj);
+        this.viewBookingForm.controls.reference_ID.setValue(Response.data.reference_ID);
+        this.viewBookingForm.controls.reference_detail.setValue(Response.data.reference_detail);
+        this.viewBookingForm.controls.remark.setValue(Response.data.remark);
+        this.viewBookingForm.controls.client_budget.setValue(Response.data.client_budget);
+        this.viewBookingForm.controls.partyPlotName.setValue(Response.data.partyPlotName);
+        this.viewBookingForm.controls.eventName.setValue(Response.data.eventName);
+        this.viewBookingForm.controls.referenceName.setValue(Response.data.referenceName);
+        this.viewBookingForm.controls.clientname.setValue(Response.data.clientname);
+        this.viewBookingForm.controls.offer_budget.setValue(Response.data.offer_budget);
+        Response.data.package.forEach((x: any) => {
+          this.addPackageItem(x)
+        })
+        Response.data.extradecoration.forEach((x: any) => {
+          this.eventList.push(this.createExtraItem(x))
+        })
+
         this.getImageDecorationList()
       }
     })

@@ -7,7 +7,7 @@
             <h5 class="mb-0">Booking Confirm</h5>
             <!-- <button type="button" class="btn btn-primary">Edit</button> -->
         </div>
-        <div class="card-body">
+        <div class="card-body" [formGroup]="viewBookingForm">
             <div class="row p-sm-3 p-0">
                 <div class="col-md-6 col-sm-5 col-12 mb-sm-0 mb-4 ps-0">
                     <!-- <h6 class="pb-2">Client Details:</h6> -->
@@ -15,32 +15,32 @@
                         <tbody>
                             <tr>
                                 <td class="w-20 pe-2 "><strong>Name:</strong> </td>
-                                <td class="text-muted">{{bookingConfirmList?.name}}</td>
+                                <td class="text-muted">{{fbookingConfirmData?.name.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-20 pe-2 "><strong>Email:</strong></td>
-                                <td class="text-muted">{{bookingConfirmList?.email}}</td>
+                                <td class="text-muted">{{fbookingConfirmData?.email.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-20 pe-2 "><strong>Contact:</strong></td>
-                                <td class="text-muted">{{bookingConfirmList?.primaryContact}}</td>
+                                <td class="text-muted">{{fbookingConfirmData?.primaryContact.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-20 pe-2 "><strong>Contact-2:</strong></td>
-                                <td class="text-muted">{{bookingConfirmList?.secondryContact}}</td>
+                                <td class="text-muted">{{fbookingConfirmData?.secondryContact.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-20 pe-2 "><strong>Address:</strong></td>
-                                <td class="text-muted">{{bookingConfirmList?.address}}</td>
+                                <td class="text-muted">{{fbookingConfirmData?.address.value}}</td>
                             </tr>
 
                             <tr>
                                 <td class="w-25 pe-2 "><strong>Reference Type:</strong></td>
-                                <td class="text-muted">{{bookingConfirmList?.referenceName}}</td>
+                                <td class="text-muted">{{fbookingConfirmData?.referenceName.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-25 pe-2 "><strong>Reference Details:</strong></td>
-                                <td class="text-muted">{{bookingConfirmList?.reference_detail}}</td>
+                                <td class="text-muted">{{fbookingConfirmData?.reference_detail.value}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -51,39 +51,39 @@
                         <tbody>
                             <tr>
                                 <td class="w-25 pe-2 "><strong>Party Plot:</strong></td>
-                                <td class="text-muted">{{bookingConfirmList?.partyPlotName}}</td>
+                                <td class="text-muted">{{fbookingConfirmData?.partyPlotName.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-20 pe-2 "><strong>Event Type:</strong></td>
-                                <td class="text-muted">{{bookingConfirmList?.eventName}}</td>
+                                <td class="text-muted">{{fbookingConfirmData?.eventName.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-25 pe-2 "><strong>Guest:</strong></td>
-                                <td class="text-muted">{{bookingConfirmList?.guest}}</td>
+                                <td class="text-muted">{{fbookingConfirmData?.guest.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-20 pe-2 "><strong>Date:</strong></td>
-                                <td class="text-muted">{{bookingConfirmList?.startDateObj | date : 'dd/MM/yyyy'}}
+                                <td class="text-muted">{{fbookingConfirmData?.startDateObj.value | date : 'dd/MM/yyyy'}}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="w-25 pe-2 "><strong>Time:</strong></td>
-                                <td class="text-muted">{{bookingConfirmList?.startDateObj |
-                                    date : 'hh:mm:ss a'}}&nbsp;-&nbsp;{{bookingConfirmList?.endDateObj| date :
+                                <td class="text-muted">{{fbookingConfirmData?.startDateObj.value |
+                                    date : 'hh:mm:ss a'}}&nbsp;-&nbsp;{{fbookingConfirmData?.endDateObj.value| date :
                                     'hh:mm:ss
                                     a'}}</td>
                             </tr>
                             <tr>
                                 <td class="w-20 pe-2 "><strong>Client Budget:</strong></td>
-                                <td class="text-muted">{{bookingConfirmList?.client_budget}}</td>
+                                <td class="text-muted">{{fbookingConfirmData?.client_budget.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-25 pe-2 "><strong>Offer Budget:</strong></td>
-                                <td class="text-muted">{{bookingConfirmList?.offer_budget}}</td>
+                                <td class="text-muted">{{fbookingConfirmData?.offer_budget.value}}</td>
                             </tr>
                             <tr>
                                 <td class="w-20 pe-2 "><strong>Remark:</strong></td>
-                                <td class="text-muted">{{bookingConfirmList?.remark}}</td>
+                                <td class="text-muted">{{fbookingConfirmData?.remark.value}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -95,20 +95,24 @@
                     <h5>Package</h5>
 
                 </div>
-                <table class="table">
+                <table class="table" formArrayName="package">
                     <tr>
                         <th>Sr. No.</th>
                         <th class="text-center">PARTICULAR</th>
                         <th class="text-center">Qty/Size</th>
                     </tr>
-                    <tr *ngFor="let bookingConfirmData of bookingConfirmList?.package">
-                        <td colspan="3" class="text-center">{{bookingConfirmData.categoryName}}
-                            <table class="w-100">
-                                <tr
-                                    *ngFor="let bookingConfirmCategoryPackageData of bookingConfirmData.packageCategoryList;let i=index;">
-                                    <td class="text-center">{{i+1}}</td>
-                                    <td class="text-center">{{bookingConfirmCategoryPackageData.item}}</td>
-                                    <td class="text-center">{{bookingConfirmCategoryPackageData.quantity}}</td>
+                    <tr [formGroupName]="i"
+                        *ngFor=" let item of viewBookingForm.get('package')['controls']; let i = index">
+                        <td colspan="3" class="text-center">{{item.categoryName.value}}
+                            <table class="w-100" formArrayName="packageCategoryList">
+                                <tr [formGroupName]="x"
+                                    *ngFor="let citem of item.get('packageCategoryList')['controls']; let x = index;">
+                                    <td class="text-center">{{x+1}}</td>
+                                    <td class="text-center">{{citem.item.value}}</td>
+                                    <td class="text-center">
+                                        <input type="text" class="form-control" id="basic-default-company"
+                                            formControlName="quantity" placeholder="Enter Quantity" />
+                                    </td>
                                 </tr>
                             </table>
                         </td>
@@ -119,19 +123,19 @@
                 <div>
                     <h5> Extra Decoration</h5>
                 </div>
-                <table class="table">
+                <table class="table" formArrayName="extradecoration">
                     <tr>
                         <th>Sr. No.</th>
                         <th>Item</th>
                         <th>Description</th>
                         <th>Qty/Size</th>
                     </tr>
-                    <tr
-                        *ngFor="let extradecorationData of bookingConfirmList?.extradecoration;let extraDecorationIndex=index">
-                        <td>{{extraDecorationIndex + 1}}</td>
-                        <td>{{extradecorationData.item}}</td>
-                        <td>{{extradecorationData.description}}</td>
-                        <td>{{extradecorationData.quantity}}</td>
+                    <tr [formGroupName]="y"
+                        *ngFor="let citem of viewBookingForm.get('extradecoration')['controls']; let y = index;">
+                        <td>{{y + 1}}</td>
+                        <td>{{citem.item.value}}</td>
+                        <td>{{citem.description.value}}</td>
+                        <td>{{citem.quantity.value}}</td>
                     </tr>
                 </table>
             </div>
