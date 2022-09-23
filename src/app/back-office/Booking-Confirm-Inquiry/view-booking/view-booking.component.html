@@ -91,9 +91,16 @@
             </div>
 
             <div class="row p-sm-3 p-0">
-                <div>
+                <div class="d-flex justify-content-between mb-3">
                     <h5>Package</h5>
-
+                    <div>
+                        <button type="submit" class="btn btn-primary" *ngIf="isEditPackageItem === false"
+                            (click)="editPackageItemFormArray()">Edit</button>
+                        <button type="submit" class="btn btn-primary" *ngIf="isEditPackageItem === true"
+                            (click)="updatePackageDecorationItem()">Save</button>
+                        <button type="submit" class="btn btn-primary ml-10" *ngIf="isEditPackageItem === true"
+                            (click)="canclePackageItemIsEdit()">Cancle</button>
+                    </div>
                 </div>
                 <table class=" table-responsive" formArrayName="package">
                     <thead>
@@ -106,15 +113,20 @@
                     <tr [formGroupName]="i"
                         *ngFor=" let item of viewBookingForm.get('package')['controls']; let i = index">
                         <td colspan="3" style="text-align:center;">
-                            <div style="padding: 7px 0;">{{item.controls.categoryName.value}}</div>
+                            <div style="padding: 7px 0;">
+                                <h5><strong>{{item.controls.categoryName.value}}</strong></h5>
+                            </div>
                             <table class="w-100 " formArrayName="packageCategoryList">
                                 <tr [formGroupName]="x" class="boader-top-1"
                                     *ngFor="let citem of item.get('packageCategoryList')['controls']; let x = index;">
                                     <td class="text-center w-5">{{x+1}}</td>
                                     <td class="text-start w-80">{{citem.controls.item.value}}</td>
                                     <td class="qty-width">
-                                        <input type="text" class="form-control" id="basic-default-company"
-                                            formControlName="quantity" placeholder="Enter Quantity" />
+                                        <span
+                                            *ngIf="isEditPackageItem === false">{{citem.controls.quantity.value}}</span>
+                                        <input type="text" *ngIf="isEditPackageItem === true" class="form-control"
+                                            id="basic-default-company" formControlName="quantity"
+                                            placeholder="Enter Quantity" />
                                     </td>
                                 </tr>
                             </table>
@@ -123,8 +135,16 @@
                 </table>
             </div>
             <div class="row p-sm-3 p-0">
-                <div>
+                <div class="d-flex justify-content-between mb-3">
                     <h5> Extra Decoration</h5>
+                    <div>
+                        <button type="submit" class="btn btn-primary" *ngIf="isEditExtraItem === false"
+                            (click)="editExtraItemFormArray()">Edit</button>
+                        <button type="submit" class="btn btn-primary" *ngIf="isEditExtraItem === true"
+                            (click)="updateExtraDecorationItem()">Save</button>
+                        <button type="submit" class="btn btn-primary ml-10" *ngIf="isEditExtraItem === true"
+                            (click)="cancleExtraItemIsEdit()">Cancle</button>
+                    </div>
                 </div>
                 <table class="" formArrayName="extradecoration">
                     <tr class="boader-bottom-1">
@@ -135,13 +155,31 @@
                     <tr [formGroupName]="y" class="boader-bottom-1"
                         *ngFor="let citem of viewBookingForm.get('extradecoration')['controls']; let y = index;">
                         <td class="text-center w-5">{{y + 1}}</td>
-                        <td class=" w-80">{{citem.controls.item.value}}</td>
+                        <td class=" w-80">
+                            <span *ngIf="isEditExtraItem === false">{{citem.controls.item.value}}</span>
+                            <input type="text" *ngIf="isEditExtraItem === true" class="form-control"
+                                id="basic-default-company" formControlName="item" placeholder="Enter Item Name" />
+                            <div *ngIf="submittedExtraItemData[y] && citem.controls.item.errors">
+                                <div *ngIf="citem.controls.item.errors.required">
+                                    <span class="error_msg">Item is Required.</span>
+                                </div>
+                            </div>
+                        </td>
                         <td class="qty-width">
-                            <input type="text" class="form-control" id="basic-default-company"
-                                formControlName="quantity" placeholder="Enter Quantity" />
+                            <span *ngIf="isEditExtraItem === false">{{citem.controls.quantity.value}}</span>
+                            <input type="text" *ngIf="isEditExtraItem === true" class="form-control"
+                                id="basic-default-company" formControlName="quantity" placeholder="Enter Quantity" />
+                            <div *ngIf="submittedExtraItemData[y] && citem.controls.quantity.errors">
+                                <div *ngIf="citem.controls.quantity.errors.required">
+                                    <span class="error_msg">Quantity is Required.</span>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 </table>
+            </div>
+            <div *ngIf="isEditExtraItem === true">
+                <button type="submit" class="btn btn-primary ml-10" (click)="addExtraItemArray()">Add</button>
             </div>
 
             <div class="row p-sm-3 p-0">
@@ -160,7 +198,8 @@
                         <th>Decoration</th>
                         <th>Action</th>
                     </tr>
-                    <tr class="boader-bottom-1" *ngFor="let decorationData of imageDecorationList;let decorationIndex=index">
+                    <tr class="boader-bottom-1"
+                        *ngFor="let decorationData of imageDecorationList;let decorationIndex=index">
                         <td class="text-center w-5">{{decorationIndex + 1}}</td>
                         <td>{{decorationData.name}}</td>
                         <td>{{decorationData.description}}</td>

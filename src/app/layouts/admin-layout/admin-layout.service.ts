@@ -636,6 +636,20 @@ export class AdminLayoutService {
     return this.http.get(this.commonService.rootData.rootUrl + 'inquirybooking/inquirybookinggetByID', { params: id, headers: headers });
   }
 
+  // view booking list and update package and extra item
+  updatePackageItemDataList(data: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'inquirybooking/packageUpdate', data, { headers: headers });
+  }
+  updateExtraItemDataList(data: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'inquirybooking/extradecorationUpdate', data, { headers: headers });
+  }
+
   // image decoration file upload and list
   imageDecorationCreate(data: any) {
     let headers = new HttpHeaders({

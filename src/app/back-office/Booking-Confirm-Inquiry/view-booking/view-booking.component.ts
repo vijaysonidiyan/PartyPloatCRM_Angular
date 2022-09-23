@@ -91,17 +91,15 @@ export class ViewBookingComponent implements OnInit {
       });
     }
   }
-
   createCategoryItem(oItem: number, cItem?: any) {
     let cd = this.fb.group({
-      item: [(cItem ? cItem['item'] : '')],
+      item: [(cItem ? cItem['item'] : ''), [Validators.required]],
       description: [(cItem ? cItem['description'] : '')],
-      quantity: [(cItem ? cItem['quantity'] : '')],
+      quantity: [(cItem ? cItem['quantity'] : ''), [Validators.required]],
     });
     (((this.viewBookingForm.controls['package'] as FormArray)
       .controls[oItem] as FormGroup).controls['packageCategoryList'] as FormArray).push(cd);
   }
-
   createExtraItem(oItem?: any): FormGroup {
     return this.fb.group({
       item: [oItem["item"] ? oItem["item"] : "", [Validators.required]],
@@ -109,6 +107,7 @@ export class ViewBookingComponent implements OnInit {
       quantity: [oItem["quantity"] ? oItem["quantity"] : "", [Validators.required]],
     });
   }
+
 
   getClientDetailsByEventId() {
     let eventIDObj = {
@@ -146,6 +145,7 @@ export class ViewBookingComponent implements OnInit {
     })
   }
 
+
   cancleUploadImage() {
     $("#add-upload-decoration").modal("hide");
     this.imageDescription = "";
@@ -158,7 +158,6 @@ export class ViewBookingComponent implements OnInit {
     this.imageDecorationError = false;
     this.isEditDecorationImage = false;
   }
-
   uploadDecorationModal() {
     this.imageDescription = "";
     this.imageName = "";
@@ -170,7 +169,6 @@ export class ViewBookingComponent implements OnInit {
     this.imageDecorationError = false;
     $("#add-upload-decoration").modal("show");
   }
-
   onImageDecorationChange(event: any) {
     this.imageDecorationFile = event.target.files[0];
     if (!this.imageDecorationFile) {
@@ -195,7 +193,6 @@ export class ViewBookingComponent implements OnInit {
     this.myInputVariableImageDecoration.nativeElement.value = "";
     this.imageDecorationError = true;
   }
-
   createImageDecoration() {
 
     if (!this.imageName || this.imageDecorationError === true) {
@@ -258,7 +255,6 @@ export class ViewBookingComponent implements OnInit {
     })
 
   }
-
   getImageDecorationList() {
     let BookingId = {
       inquirybookingID: this.bookingConfirmId
@@ -269,7 +265,6 @@ export class ViewBookingComponent implements OnInit {
       }
     })
   }
-
   editDecorationImages(params: any) {
     let Obj = {
       _id: params.id
@@ -286,9 +281,6 @@ export class ViewBookingComponent implements OnInit {
       }
     })
   }
-
-
-
   deleteDecorationImages(params: any) {
     let Obj = {
       _id: params.id
@@ -300,4 +292,105 @@ export class ViewBookingComponent implements OnInit {
     })
   }
 
+
+  // edit extra item form array start
+  isEditExtraItem: boolean = false;
+  submittedExtraItemData = {};
+  addExtraItemArray() {
+    this.eventList.push(this.createExtraItem({}));
+  }
+  editExtraItemFormArray() {
+    this.isEditExtraItem = true;
+  }
+  cancleExtraItemIsEdit() {
+    let eventIDObj = {
+      _id: this.bookingConfirmId
+    }
+    this.adminLayoutService.getBookingConfirmListByBookingID(eventIDObj).subscribe((Response: any) => {
+      if (Response.meta.code == 200) {
+        this.eventList.clear()
+        this.eventList = this.viewBookingForm.get("extradecoration") as FormArray;
+        Response.data.extradecoration.forEach((x: any) => {
+          this.eventList.push(this.createExtraItem(x))
+        })
+        this.isEditExtraItem = false;
+      }
+    })
+  }
+  updateExtraDecorationItem() {
+
+    if (this.viewBookingForm.controls['extradecoration'].invalid) {
+      (this.viewBookingForm.controls['extradecoration'] as FormArray).controls.map((x: any, index: any) => {
+        this.submittedExtraItemData[index] = true
+      });
+      return
+    }
+
+    let updateExtraDecorationItemObj = {
+      _id: this.bookingConfirmId,
+      extradecoration: this.viewBookingForm.controls.extradecoration.value
+    }
+    this.adminLayoutService.updateExtraItemDataList(updateExtraDecorationItemObj).subscribe((Response: any) => {
+      if (Response.meta.code == 200) {
+        let eventIDObj = {
+          _id: this.bookingConfirmId
+        }
+        this.adminLayoutService.getBookingConfirmListByBookingID(eventIDObj).subscribe((Response: any) => {
+          if (Response.meta.code == 200) {
+            this.eventList.clear()
+            this.eventList = this.viewBookingForm.get("extradecoration") as FormArray;
+            Response.data.extradecoration.forEach((x: any) => {
+              this.eventList.push(this.createExtraItem(x))
+            })
+            this.isEditExtraItem = false;
+          }
+        })
+      }
+    })
+  }
+  // edit extra item form array end
+
+  // edit Package item form array start
+  isEditPackageItem: boolean = false;
+
+  editPackageItemFormArray() {
+    this.isEditPackageItem = true;
+  }
+  canclePackageItemIsEdit() {
+    let eventIDObj = {
+      _id: this.bookingConfirmId
+    }
+    this.adminLayoutService.getBookingConfirmListByBookingID(eventIDObj).subscribe((Response: any) => {
+      if (Response.meta.code == 200) {
+        (this.viewBookingForm.get("package") as FormArray).clear()
+        Response.data.package.forEach((x: any) => {
+          this.addPackageItem(x)
+        })
+        this.isEditPackageItem = false;
+      }
+    })
+  }
+  updatePackageDecorationItem() {
+    let updatePackageDecorationItemObj = {
+      _id: this.bookingConfirmId,
+      package: this.viewBookingForm.controls.package.value
+    }
+    this.adminLayoutService.updatePackageItemDataList(updatePackageDecorationItemObj).subscribe((Response: any) => {
+      if (Response.meta.code == 200) {
+        let eventIDObj = {
+          _id: this.bookingConfirmId
+        }
+        this.adminLayoutService.getBookingConfirmListByBookingID(eventIDObj).subscribe((Response: any) => {
+          if (Response.meta.code == 200) {
+            (this.viewBookingForm.get("package") as FormArray).clear()
+            Response.data.package.forEach((x: any) => {
+              this.addPackageItem(x)
+            })
+            this.isEditPackageItem = false;
+          }
+        })
+      }
+    })
+  }
+  // edit Package item form array end
 }

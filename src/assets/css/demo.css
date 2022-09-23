@@ -112,3 +112,6 @@
   position: fixed;
   z-index: 9999;
 }
+.error_msg {
+  color: red;
+}
