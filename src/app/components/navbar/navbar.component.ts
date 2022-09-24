@@ -244,15 +244,145 @@ export class NavbarComponent implements OnInit {
 
   getTitle() {
     var titlee = this.location.prepareExternalUrl(this.location.path());
-    if (titlee.charAt(0) === "#") {
-      titlee = titlee.slice(1);
-    }
-
-    for (var item = 0; item < this.listTitles.length; item++) {
-      if (this.listTitles[item].path === titlee) {
-        return this.listTitles[item].title;
-      }
-    }
-    return "Dashboard";
+        if (titlee.charAt(0) === '#') {
+            titlee = titlee.slice(1);
+        }
+        if (titlee.charAt(0) === '?') {
+            titlee = titlee.slice(1);
+        }
+        if (titlee.includes('dashboard')) {
+            return {
+                pastPage: [],
+                currentPageName: 'Dashboard'
+            };
+        }
+        else if (titlee.includes('event-master')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            }],
+            currentPageName: 'Event Master'
+          };
+        }
+        else if (titlee.includes('party-plot-master')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            }],
+            currentPageName: 'Party Plot Master'
+          };
+        }
+        
+        else if (titlee.includes('add-package-master')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            },
+            {
+              pastUrl: 'package-master',
+              pastLinkName: 'Package Master',
+            }],
+            currentPageName: 'Add Package Master'
+          };
+        }
+        else if (titlee.includes('edit-package-master')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            },
+            {
+              pastUrl: 'package-master',
+              pastLinkName: 'Package Master',
+            }],
+            currentPageName: 'Edit Package Master'
+          };
+        }
+        else if (titlee.includes('package-master')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            }],
+            currentPageName: 'Package Master'
+          };
+        }
+        else if (titlee.includes('staff')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            }],
+            currentPageName: 'Staff'
+          };
+        }
+        else if (titlee.includes('vendor-details')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            }],
+            currentPageName: 'Vendor Details'
+          };
+        }
+        
+        else if (titlee.includes('view-inquiry')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            },{
+              pastUrl: 'inquiry',
+              pastLinkName: 'Inquiry',
+            }],
+            currentPageName: 'View Inquiry'
+          };
+        }
+        else if (titlee.includes('booking-confirm')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            },{
+              pastUrl: 'inquiry',
+              pastLinkName: 'Inquiry',
+            }],
+            currentPageName: 'Booking Confirm'
+          };
+        }
+        else if (titlee.includes('inquiry')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            }],
+            currentPageName: 'Inquiry'
+          };
+        }
+        else if (titlee.includes('booking-confirm-list')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            }],
+            currentPageName: 'Booking Confirm'
+          };
+        }
+        else if (titlee.includes('view-booking-confirm')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            },{
+              pastUrl: 'booking-confirm-list',
+              pastLinkName: 'Booking Confirm',
+            }],
+            currentPageName: 'View Booking Confirm'
+          };
+        }
   }
 }
+

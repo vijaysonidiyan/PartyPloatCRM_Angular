@@ -9,19 +9,13 @@
 
     
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-        <breadcrumb #parent> 
             <ol class="breadcrumb mb-0">
-                <li *ngIf="isDashboard === false" class="breadcrumb-item fs-6">
-                    <a routerLink="dashboard">Dashboard</a>
+                
+                <li class="breadcrumb-item fs-6" *ngFor="let pageData of getTitle()?.pastPage">
+                    <a routerLink="{{pageData.pastUrl}}">{{ pageData.pastLinkName }}</a>
                 </li>
-                <ng-template ngFor let-route [ngForOf]="parent.breadcrumbs">
-                <li *ngIf="!route.terminal" class="breadcrumb-item fs-6">
-                    <a href="" [routerLink]="[route.url]">{{ route.displayName }}</a>
-                </li>
-                <li *ngIf="route.terminal" class="breadcrumb-item fs-6 active">{{ route.displayName }}</li>
-                </ng-template>
+                <li class="breadcrumb-item fs-6 active">{{getTitle().currentPageName}}</li>
             </ol>
-        </breadcrumb>
         <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light">Home /</span> Event Master</h4> -->
         <!-- Search -->
         <!-- <div class="navbar-nav align-items-center">

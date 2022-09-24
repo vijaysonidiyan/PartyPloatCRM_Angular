@@ -121,7 +121,7 @@
                                     *ngFor="let citem of item.get('packageCategoryList')['controls']; let x = index;">
                                     <td class="text-center w-5">{{x+1}}</td>
                                     <td class="text-start w-80">{{citem.controls.item.value}}</td>
-                                    <td class="qty-width">
+                                    <td class="qty-width text-start">
                                         <span
                                             *ngIf="isEditPackageItem === false">{{citem.controls.quantity.value}}</span>
                                         <input type="text" *ngIf="isEditPackageItem === true" class="form-control"
@@ -183,14 +183,11 @@
             </div>
 
             <div class="row p-sm-3 p-0">
-                <div class="d-flex justify-content-between mb-3">
+                <div class="mb-3"  *ngIf="imageDecorationList?.length > 0">
                     <h5>Decoration Images</h5>
-                    <!-- <div class="float-end"> -->
-                    <button type="submit" class="btn btn-primary" (click)="uploadDecorationModal()">Upload Decoration
-                        Image</button>
-                    <!-- </div> -->
+                   
                 </div>
-                <table class="">
+                <table class="" *ngIf="imageDecorationList?.length > 0">
                     <tr class="boader-bottom-1">
                         <th class="text-center w-5">Sr. No.</th>
                         <th>Name</th>
@@ -226,6 +223,18 @@
                         </td>
                     </tr>
                 </table>
+
+                <div class=" mb-3">
+                    <!-- <div class="float-end"> -->
+                    <button type="submit" class="btn btn-primary" (click)="uploadDecorationModal()">Upload Decoration
+                        Image</button>
+                    <!-- </div> -->
+                </div>
+                <div class=" mb-3">
+                    <!-- <div class="float-end"> -->
+                    <button type="submit" class="btn btn-primary" (click)="downloadPdf()">PDF</button>
+                    <!-- </div> -->
+                </div>
             </div>
         </div>
     </div>
