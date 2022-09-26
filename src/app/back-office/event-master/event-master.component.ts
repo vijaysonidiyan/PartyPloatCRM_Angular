@@ -27,7 +27,7 @@ export class EventMasterComponent implements OnInit {
     public adminLayoutService: AdminLayoutService,
     private fb: FormBuilder,
     public commonService: CommonService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.noData = false;
@@ -39,7 +39,7 @@ export class EventMasterComponent implements OnInit {
   myTooltip = {
     'placement': 'bottom',
     'showDelay': 100
-}
+  }
   defaultForm() {
     this.eventmasterForm = this.fb.group({
       _id: [""],
@@ -74,7 +74,7 @@ export class EventMasterComponent implements OnInit {
           this.getEventmasterList();
           this.defaultForm();
           this.ISeditEventMaster = false;
-          this.commonService.notifier.notify("success", Response.meta.message);
+          this.commonService.notifier.notify("success", "Event Saved Successfully.");
           $("#add-menu-modal").modal("hide");
         } else {
           this.commonService.notifier.notify("error", Response.meta.message);
@@ -95,7 +95,7 @@ export class EventMasterComponent implements OnInit {
         this.eventmasterForm.controls.name.setValue(Response.data.name);
         $("#add-menu-modal").modal("show");
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -116,7 +116,7 @@ export class EventMasterComponent implements OnInit {
           this.getEventmasterList();
           this.defaultForm();
           this.ISeditEventMaster = false;
-          this.commonService.notifier.notify("success", Response.meta.message);
+          this.commonService.notifier.notify("success", "Event Updated Successfully.");
           $("#add-menu-modal").modal("hide");
         } else {
           this.commonService.notifier.notify("error", Response.meta.message);
@@ -143,10 +143,18 @@ export class EventMasterComponent implements OnInit {
             this.getEventmasterList();
             this.defaultForm();
             this.ISeditEventMaster = false;
-            this.commonService.notifier.notify(
-              "success",
-              Response.meta.message
-            );
+            if (paramsObj.status == 1) {
+              this.commonService.notifier.notify(
+                "success",
+                "Event Actived Successfully."
+              );
+            }
+            else {
+              this.commonService.notifier.notify(
+                "success",
+                "Event Deactived Successfully."
+              );
+            }
           } else {
             this.commonService.notifier.notify("error", Response.meta.message);
           }
@@ -179,13 +187,13 @@ export class EventMasterComponent implements OnInit {
   }
 
   search(value: string): void {
-    this.eventmasterList = this.alleventmaster.filter((val: any) => JSON.stringify(val).toLowerCase().includes(value.toLowerCase()));
+    this.eventmasterList = this.alleventmaster.filter((val: any) => val.name.toLowerCase().includes(value.toLowerCase()));
     this.p = 1;
     if (this.eventmasterList.length == 0) {
-        debugger
-        this.noData = true;
+      debugger
+      this.noData = true;
     } else {
-        this.noData = false;
+      this.noData = false;
     }
   }
 }

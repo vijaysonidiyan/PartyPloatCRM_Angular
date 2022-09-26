@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AdminLayoutService } from 'app/layouts/admin-layout/admin-layout.service';
+import { CommonService } from 'app/shared/common.service';
 import { environment } from 'environments/environment';
 import { defaultFormat } from 'moment';
 declare const $: any;
@@ -32,7 +33,7 @@ export class ViewBookingComponent implements OnInit {
   }
   eventList: any;
 
-  constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private adminLayoutService: AdminLayoutService) {
+  constructor(private route: ActivatedRoute, private commonService: CommonService, private router: Router, private fb: FormBuilder, private adminLayoutService: AdminLayoutService) {
     this.route.params.subscribe((x: Params) => {
       this.bookingConfirmId = x.id
     })
@@ -145,6 +146,10 @@ export class ViewBookingComponent implements OnInit {
     })
   }
 
+  removeExtraDecoration(index: any) {
+    this.eventList.removeAt(index)
+  }
+
 
   cancleUploadImage() {
     $("#add-upload-decoration").modal("hide");
@@ -195,7 +200,7 @@ export class ViewBookingComponent implements OnInit {
   }
   createImageDecoration() {
 
-    if (!this.imageName || this.imageDecorationError === true) {
+    if (!this.imageName || !this.imageDecorationFile === true) {
       this.submittedUploadDecorationData = true;
       this.imageDecorationError = true;
       return
@@ -219,6 +224,7 @@ export class ViewBookingComponent implements OnInit {
         this.imageDecorationError = false;
         this.myInputVariableImageDecoration.nativeElement.value = "";
         this.getImageDecorationList();
+        this.commonService.notifier.notify("success", "Decoration Image Uploaded Successfully.")
         $("#add-upload-decoration").modal("hide");
       }
     })
@@ -250,6 +256,7 @@ export class ViewBookingComponent implements OnInit {
         this.imageDecorationError = false;
         this.myInputVariableImageDecoration.nativeElement.value = "";
         this.getImageDecorationList();
+        this.commonService.notifier.notify("success", "Decoration Image Updated Successfully.")
         $("#add-upload-decoration").modal("hide");
       }
     })
@@ -288,6 +295,7 @@ export class ViewBookingComponent implements OnInit {
     this.adminLayoutService.deleteDecorationbyId(Obj).subscribe((Response: any) => {
       if (Response.meta.code == 200) {
         this.getImageDecorationList();
+        this.commonService.notifier.notify("success", "Decoration Image Deleted Successfully.")
       }
     })
   }
@@ -301,6 +309,9 @@ export class ViewBookingComponent implements OnInit {
   }
   editExtraItemFormArray() {
     this.isEditExtraItem = true;
+    if (this.eventList.length == 0) {
+      this.eventList.push(this.createExtraItem({}));
+    }
   }
   cancleExtraItemIsEdit() {
     let eventIDObj = {
@@ -337,6 +348,7 @@ export class ViewBookingComponent implements OnInit {
         }
         this.adminLayoutService.getBookingConfirmListByBookingID(eventIDObj).subscribe((Response: any) => {
           if (Response.meta.code == 200) {
+            this.commonService.notifier.notify("success", "Extra Decoration Items Updated Successfully.")
             this.eventList.clear()
             this.eventList = this.viewBookingForm.get("extradecoration") as FormArray;
             Response.data.extradecoration.forEach((x: any) => {
@@ -382,6 +394,7 @@ export class ViewBookingComponent implements OnInit {
         }
         this.adminLayoutService.getBookingConfirmListByBookingID(eventIDObj).subscribe((Response: any) => {
           if (Response.meta.code == 200) {
+            this.commonService.notifier.notify("success", "Package Details Updated Successfully.");
             (this.viewBookingForm.get("package") as FormArray).clear()
             Response.data.package.forEach((x: any) => {
               this.addPackageItem(x)

@@ -31,7 +31,7 @@ export class PartyPlotMasterComponent implements OnInit {
     public commonService: CommonService,
     public adminLayoutService: AdminLayoutService,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.noData = false;
@@ -125,7 +125,7 @@ export class PartyPlotMasterComponent implements OnInit {
           this.defaultForm();
           this.getEventActiveList();
           this.ISeditPartyplot = false;
-          this.commonService.notifier.notify("success", Response.meta.message);
+          this.commonService.notifier.notify("success", "Party Plot Saved Successfully.");
           $("#add-menu-modal").modal("hide");
         } else {
           this.commonService.notifier.notify("error", Response.meta.message);
@@ -148,7 +148,7 @@ export class PartyPlotMasterComponent implements OnInit {
         this.partyplotForm.controls.events.setValue(Response.data.events);
         $("#add-menu-modal").modal("show");
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -183,7 +183,7 @@ export class PartyPlotMasterComponent implements OnInit {
             this.ISeditPartyplot = false;
             this.commonService.notifier.notify(
               "success",
-              Response.meta.message
+              "Party Plot Updated Successfully."
             );
             $("#add-menu-modal").modal("hide");
           } else {
@@ -211,10 +211,18 @@ export class PartyPlotMasterComponent implements OnInit {
             this.getPartyplotList();
             this.defaultForm();
             this.ISeditPartyplot = false;
-            this.commonService.notifier.notify(
-              "success",
-              Response.meta.message
-            );
+            if (paramsObj.status == 1) {
+              this.commonService.notifier.notify(
+                "success",
+                "Party Plot Actived Successfully."
+              );
+            }
+            else {
+              this.commonService.notifier.notify(
+                "success",
+                "Party Plot Deactived Successfully."
+              );
+            }
           } else {
             this.commonService.notifier.notify("error", Response.meta.message);
           }
@@ -229,10 +237,10 @@ export class PartyPlotMasterComponent implements OnInit {
     this.partyplotList = this.allpartyplot.filter((val: any) => JSON.stringify(val).toLowerCase().includes(value.toLowerCase()));
     this.p = 1;
     if (this.partyplotList.length == 0) {
-        debugger
-        this.noData = true;
+      debugger
+      this.noData = true;
     } else {
-        this.noData = false;
+      this.noData = false;
     }
   }
 }

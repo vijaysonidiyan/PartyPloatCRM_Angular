@@ -7,7 +7,7 @@
                 <div class="card border-solid-primary flex-row align-items-center ps-2">
                     <i class="bx bx-search fs-4 lh-0"></i>
                     <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
-                        aria-label="Search..." (input)="search($event.target.value)"/>
+                        aria-label="Search..." (input)="search($event.target.value)" />
                 </div>
                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Party Plot Master</h4> -->
                 <div class="btn-cus">
@@ -24,7 +24,7 @@
                             <th class="w-10">Status</th>
                             <th class="w-15">Action</th>
                             <th>Name</th>
-                            <th>Event</th>
+                            <!-- <th>Event</th>/ -->
                             <th>Address</th>
                         </tr>
                     </thead>
@@ -42,29 +42,32 @@
                                 <div class="d-flex">
                                     <button class="btn-bg"
                                         (click)="editPartyplotmaster({id : partyplotmasterData._id, index : partyPlotIndex})">
-                                        <i class="bx bx-edit-alt " tooltip="Edit" placement="bottom" showDelay="100"></i>
+                                        <i class="bx bx-edit-alt " tooltip="Edit" placement="bottom"
+                                            showDelay="100"></i>
                                     </button>
                                     <button *ngIf="partyplotmasterData.status == 2" title="Active Party Plot"
                                         (confirm-click)="statusPartyplot({id :partyplotmasterData._id,index:partyPlotIndex, status:1})"
                                         appConfirm [confirmTitle]="'Active'"
                                         [confirmContent]="'Are you sure to Active this Party Plot Master?'"
-                                        class="btn-bg bg-label-success" tooltip="Add" placement="bottom" showDelay="100">
+                                        class="btn-bg bg-label-success" tooltip="Add" placement="bottom"
+                                        showDelay="100">
                                         <i class="bx bx-plus bg-label-success"></i>
                                     </button>
                                     <button *ngIf="partyplotmasterData.status == 1" title="Deactive Party Plot"
                                         (confirm-click)="statusPartyplot({id :partyplotmasterData._id,index:partyPlotIndex, status:2})"
                                         appConfirm [confirmTitle]="'Deactive'"
                                         [confirmContent]="'Are you sure to Deactive this Party Plot Master?'"
-                                        class="btn-bg bg-label-danger" tooltip="Delete" placement="bottom" showDelay="100">
+                                        class="btn-bg bg-label-danger" tooltip="Delete" placement="bottom"
+                                        showDelay="100">
                                         <i class="bx bx-trash bg-label-danger"></i>
                                     </button>
                                 </div>
                             </td>
                             <td><strong>{{ partyplotmasterData.name }}</strong></td>
-                            <td><span *ngFor="let eventsData of partyplotmasterData.events; let eventIndex = index"><span
-                                        *ngIf="eventIndex > 0">,&nbsp;</span>{{eventsData.name}}</span></td>
+                            <!-- <td><span *ngFor="let eventsData of partyplotmasterData.events; let eventIndex = index"><span
+                                        *ngIf="eventIndex > 0">,&nbsp;</span>{{eventsData.name}}</span></td> -->
                             <td>{{ partyplotmasterData.address }}</td>
-                            
+
                         </tr>
                         <tr *ngIf="noData">
                             <td colspan="6">
@@ -78,9 +81,9 @@
                 <pagination-controls (pageChange)="p = $event" *ngIf="partyplotList.length > l"></pagination-controls>
             </div>
         </div>
-        
+
     </div>
-    
+
     <div class="content-backdrop fade"></div>
 </div>
 <div class="modal fade" id="add-menu-modal" tabindex="-1" aria-hidden="true">
@@ -88,7 +91,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel1"><strong>{{ISeditPartyplot ?
-                    'Edit' : 'Add'}} Party Plot Details</strong></h5>
+                        'Edit' : 'Add'}} Party Plot Details</strong></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                     (click)="cancelPartyplot()"></button>
             </div>

@@ -621,7 +621,7 @@ export class RoleWiseMenuComponent implements OnInit {
                 this.submittedMenuData = false;
                 this.selectedRole = null;
                 this.onRoleChange();
-                this.commonService.notifier.notify('success', Response.meta.message);
+                this.commonService.notifier.notify('success', "Role Wise Menu Updated Successfully.");
             }
             else {
                 this.commonService.notifier.notify('error', Response.meta.message);

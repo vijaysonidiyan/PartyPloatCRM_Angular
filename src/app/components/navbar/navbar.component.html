@@ -7,15 +7,15 @@
         </a>
     </div>
 
-    
+
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-            <ol class="breadcrumb mb-0">
-                
-                <li class="breadcrumb-item fs-6" *ngFor="let pageData of getTitle()?.pastPage">
-                    <a routerLink="{{pageData.pastUrl}}">{{ pageData.pastLinkName }}</a>
-                </li>
-                <li class="breadcrumb-item fs-6 active">{{getTitle().currentPageName}}</li>
-            </ol>
+        <ol class="breadcrumb mb-0">
+
+            <li class="breadcrumb-item fs-6" *ngFor="let pageData of getTitle()?.pastPage">
+                <a routerLink="{{pageData.pastUrl}}">{{ pageData.pastLinkName }}</a>
+            </li>
+            <li class="breadcrumb-item fs-6 active">{{getTitle().currentPageName}}</li>
+        </ol>
         <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light">Home /</span> Event Master</h4> -->
         <!-- Search -->
         <!-- <div class="navbar-nav align-items-center">

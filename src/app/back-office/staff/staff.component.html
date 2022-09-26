@@ -43,12 +43,14 @@
                             </td>
                             <td>
                                 <div class="d-flex">
-                                    <button class="btn-bg" (click)="editStaff({id : staffData._id, index : staffIndex, action: 'view'});">
+                                    <button class="btn-bg"
+                                        (click)="editStaff({id : staffData._id, index : staffIndex, action: 'view'});">
                                         <i class="bx bxs-show" tooltip="View" placement="bottom" showDelay="100"></i>
                                     </button>
                                     <button class="btn-bg"
                                         (click)="editStaff({id : staffData._id, index : staffIndex, action: 'edit'})">
-                                        <i class="bx bx-edit-alt " tooltip="Edit" placement="bottom" showDelay="100"></i>
+                                        <i class="bx bx-edit-alt " tooltip="Edit" placement="bottom"
+                                            showDelay="100"></i>
                                     </button>
                                     <!-- <button class="btn-bg bg-label-danger" href="javascript:void(0);"><i
                                             class="bx bx-trash "></i>
@@ -59,13 +61,15 @@
                                         (confirm-click)="statusStaffmaster({id :staffData._id, index : staffIndex, status:1})"
                                         appConfirm [confirmTitle]="'Active'"
                                         [confirmContent]="'Are you sure to Active this Staff?'"
-                                        class="btn-bg bg-label-success" tooltip="Add" placement="bottom" showDelay="100"><i class="bx bx-plus"></i></button>
+                                        class="btn-bg bg-label-success" tooltip="Add" placement="bottom"
+                                        showDelay="100"><i class="bx bx-plus"></i></button>
                                     <button *ngIf="staffData.status == 1" class="dtl-btn btn bg-gradient-dark"
                                         title="Deactive Staff"
                                         (confirm-click)="statusStaffmaster({id :staffData._id, index : staffIndex, status:2})"
                                         appConfirm [confirmTitle]="'Deactive'"
                                         [confirmContent]="'Are you sure to Deactive this Staff?'"
-                                        class="btn-bg bg-label-danger" tooltip="Delete" placement="bottom" showDelay="100"><i class="bx bx-trash"></i></button>
+                                        class="btn-bg bg-label-danger" tooltip="Delete" placement="bottom"
+                                        showDelay="100"><i class="bx bx-trash"></i></button>
                                 </div>
                             </td>
                             <td><strong>{{staffData.name}}</strong></td>
@@ -99,7 +103,8 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" *ngIf="ISviewStaff === true" id="exampleModalLabel1"><strong>View Staff Details</strong></h5>
+                <h5 class="modal-title" *ngIf="ISviewStaff === true" id="exampleModalLabel1"><strong>View Staff
+                        Details</strong></h5>
                 <h5 class="modal-title" *ngIf="ISviewStaff === false" id="exampleModalLabel1"><strong>{{ISeditStaff ?
                         'Edit' : 'Add'}} Staff Details</strong></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
@@ -110,8 +115,8 @@
                     <div class="row">
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Name</label>
-                            <input type="text" id="nameBasic" class="form-control" [readonly]="ISviewStaff === true" placeholder="Enter Name"
-                                formControlName="name" />
+                            <input type="text" id="nameBasic" class="form-control" [readonly]="ISviewStaff === true"
+                                placeholder="Enter Name" formControlName="name" />
                             <div *ngIf="submittedStaffData && fnameData.name.errors">
                                 <div *ngIf="fnameData.name.errors.required">
                                     <span class="error_msg text-danger">Name is Required.</span>
@@ -120,9 +125,9 @@
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label class="form-label" for="basic-default-phone">Phone No</label>
-                            <input type="text" id="basic-default-phone" class="form-control phone-mask" [readonly]="ISviewStaff === true"
-                                placeholder="658 799 8941" formControlName="contact" maxlength="10" minlength="10"
-                                appNumbersOnly>
+                            <input type="text" id="basic-default-phone" class="form-control phone-mask"
+                                [readonly]="ISviewStaff === true" placeholder="658 799 8941" formControlName="contact"
+                                maxlength="10" minlength="10" appNumbersOnly>
                             <div *ngIf="submittedStaffData && fnameData.contact.errors">
                                 <div *ngIf="fnameData.contact.errors.required">
                                     <span class="error_msg text-danger">Contact is Required.</span>
@@ -134,8 +139,8 @@
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label class="form-label" for="basic-default-company">Reference</label>
-                            <input type="text" class="form-control" id="basic-default-company" placeholder="Reference" [readonly]="ISviewStaff === true"
-                                formControlName="reference">
+                            <input type="text" class="form-control" id="basic-default-company" placeholder="Reference"
+                                [readonly]="ISviewStaff === true" formControlName="reference">
                         </div>
                         <!-- <div class="col-lg-4 mb-3">
                             <label class="form-label" for="basic-default-phone">Aadhar Card</label>
@@ -144,8 +149,9 @@
                         </div> -->
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Email</label>
-                            <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe" [readonly]="ISviewStaff === true"
-                                aria-label="john.doe" aria-describedby="basic-default-email2" formControlName="email">
+                            <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
+                                [readonly]="ISviewStaff === true" aria-label="john.doe"
+                                aria-describedby="basic-default-email2" formControlName="email">
                             <div *ngIf="submittedStaffData && fnameData.email.errors">
                                 <div *ngIf="fnameData.email.errors.required">
                                     <span class="error_msg text-danger">Email is Required.</span>
@@ -157,8 +163,9 @@
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Designation</label>
-                            <ng-select [items]="activeroleList" class="form-control p-0" bindLabel="roleName" [readonly]="ISviewStaff === true"
-                                bindValue="_id" placeholder="Select Role" formControlName="roleId">
+                            <ng-select [items]="activeroleList" class="form-control p-0" bindLabel="roleName"
+                                [readonly]="ISviewStaff === true" bindValue="_id" placeholder="Select Role"
+                                formControlName="roleId">
                             </ng-select>
                             <div *ngIf="submittedStaffData && roleInvalid === true">
                                 <span class="error_msg text-danger">Designation is Required.</span>
@@ -166,9 +173,9 @@
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Select Party plot</label>
-                            <ng-select [items]="partyplotList" [multiple]="true" [closeOnSelect]="false" [readonly]="ISviewStaff === true"
-                                class="form-control p-0" bindLabel="name" bindValue="_id"
-                                formControlName="partyplotData" placeholder="Select Module">
+                            <ng-select [items]="partyplotList" [multiple]="true" [closeOnSelect]="false"
+                                [readonly]="ISviewStaff === true" class="form-control p-0" bindLabel="name"
+                                bindValue="_id" formControlName="partyplotData" placeholder="Select Module">
                             </ng-select>
                             <div *ngIf="submittedStaffData && partyplotInvalid === true">
                                 <span class="error_msg text-danger">Party plot is Required.</span>
@@ -177,7 +184,8 @@
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Is Login?</label>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" formControlName="isLogin" [readonly]="ISviewStaff === true"
+                                <input type="checkbox" class="form-check-input" formControlName="isLogin"
+                                    [readonly]="ISviewStaff === true"
                                     (change)="isloginOnchange({checked: $event.target.checked})" />
                             </div>
                         </div>
@@ -193,21 +201,25 @@
                                             [href]="this.commonService.rootData.uploadsUrl + 'documents/' + documentData.documents"
                                             target="_blank" [download]="documentData.documents"
                                             class="download-btn ml-10"></a>
-                                        <button type="button" *ngIf="ISeditStaff === true"
-                                            (click)="deletDocument(documentData._id)"
+                                        <button type="button" *ngIf="ISeditStaff === true" tooltip="Delete"
+                                            placement="bottom" showDelay="100"
+                                            (confirm-click)="deletDocument(documentData._id)" appConfirm
+                                            [confirmTitle]="'Delete'"
+                                            [confirmContent]="'Are you sure to Delete this Document?'"
                                             class="event-btn-close ml-10"></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="">
-                            <button type="button" *ngIf="ISviewStaff === false" (click)="addDoc()" class="btn btn-primary">Add</button>
+                            <button type="button" *ngIf="ISviewStaff === false" (click)="addDoc()"
+                                class="btn btn-primary">Add</button>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" *ngIf="ISeditStaff === false"
+                <button type="button" class="btn btn-primary" *ngIf="ISeditStaff === false && ISviewStaff === false"
                     (click)="savestaff()">Save</button>
                 <button type="button" class="btn btn-primary" *ngIf="ISeditStaff === true"
                     (click)="updatestaff()">Update</button>
@@ -237,8 +249,7 @@
                 </div> -->
                         <div class="doc-file form-control" *ngIf="!!userFile">
                             <p class="doc-text-ellipsis">{{userFile?.name}}</p>
-                            <button type="button" class="event-btn-close ml-10"
-                                (click)="removeDocument()"></button>
+                            <button type="button" class="event-btn-close ml-10" (click)="removeDocument()"></button>
                         </div>
                     </div>
                 </div>
