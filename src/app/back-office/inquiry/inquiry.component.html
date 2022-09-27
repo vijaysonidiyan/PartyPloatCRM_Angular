@@ -127,8 +127,8 @@
                                     <td>{{inquiryData.address}}</td>
                                     <td>{{inquiryData.eventName}}</td>
                                     <td>{{inquiryData.guest}}</td>
-                                    <td>{{inquiryData.startDateObj | date:'dd/MM/yyyy hh:MM:SS a'}}</td>
-                                    <td>{{inquiryData.endDateObj | date:'dd/MM/yyyy hh:MM:SS a'}}</td>
+                                    <td>{{inquiryData.startDateObj | date:'dd/MM/yyyy, hh:mm a':'+0000' }}</td>
+                                    <td>{{inquiryData.endDateObj | date:'dd/MM/yyyy, hh:mm a':'+0000' }}</td>
 
 
                                 </tr>
@@ -235,16 +235,16 @@
                                                                 <i class="bx bxs-calendar"></i>
                                                                 <div>
                                                                     <span>From Date1:</span>
-                                                                    <span>{{inquiryDataByDate.startDateObj | date :
-                                                                        'dd/MM/yyyy, hh:mm a'}}</span>
+                                                                    <span>{{inquiryDataByDate.startDateObj |
+                                                                        date:'dd/MM/yyyy, hh:mm a':'+0000'}}</span>
                                                                 </div>
                                                             </li>
                                                             <li class="mb-2 accordion-data">
                                                                 <i class="bx bxs-calendar"></i>
                                                                 <div>
                                                                     <span>To Date:</span>
-                                                                    <span>{{inquiryDataByDate.endDateObj | date :
-                                                                        'dd/MM/yyyy, hh:mm a'}}</span>
+                                                                    <span>{{inquiryDataByDate.endDateObj |
+                                                                        date:'dd/MM/yyyy, hh:mm a':'+0000'}}</span>
                                                                 </div>
                                                             </li>
                                                         </ul>

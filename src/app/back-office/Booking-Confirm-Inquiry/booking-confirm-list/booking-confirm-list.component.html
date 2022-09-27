@@ -53,7 +53,7 @@
                             <td>{{ bookingConfirmData.primaryContact }}</td>
                             <td>{{ bookingConfirmData.email }}</td>
                             <td>{{ bookingConfirmData.address }}</td>
-                            <td>{{ bookingConfirmData.startDateObj | date:'dd/MM/yyyy hh:mm:ss a' }}</td>
+                            <td>{{ bookingConfirmData.startDateObj | date:'dd/MM/yyyy':'+0000' }}</td>
                             <td>{{ bookingConfirmData.eventname }}</td>
                             <td>{{ bookingConfirmData.partyplotname }}</td>
                         </tr>

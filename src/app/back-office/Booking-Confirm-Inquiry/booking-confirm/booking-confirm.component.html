@@ -69,9 +69,8 @@
                             <tr>
                                 <td class="w-25 pe-2 "><strong>Time:</strong></td>
                                 <td class="text-muted">{{fbookingConfirmData?.startDateObj.value |
-                                    date : 'hh:mm:ss a'}}&nbsp;-&nbsp;{{fbookingConfirmData?.endDateObj.value| date :
-                                    'hh:mm:ss
-                                    a'}}</td>
+                                    date : 'hh:mm a':'+0000'}}&nbsp;-&nbsp;{{fbookingConfirmData?.endDateObj.value|
+                                    date:'hh:mm a':'+0000' }}</td>
                             </tr>
                             <tr>
                                 <td class="w-20 pe-2 "><strong>Client Budget:</strong></td>

@@ -276,8 +276,8 @@ export class AddInquiryComponent implements OnInit {
             setValueData.controls['client_budget'].setValue(x.data[0].client_budget);
             setValueData.controls['offer_budget'].setValue(x.data[0].offer_budget);
             setValueData.controls['remark'].setValue(x.data[0].remark);
-            setValueData.controls['startTimeObj'].setValue(moment(startDateTime).format('HH:mm'));
-            setValueData.controls['endTimeObj'].setValue(moment(endDateTime).format('HH:mm'));
+            setValueData.controls['startTimeObj'].setValue(moment(moment(startDateTime).subtract(5, 'hour').subtract(30, 'minute').toJSON()).format('HH:mm'));
+            setValueData.controls['endTimeObj'].setValue(moment(moment(endDateTime).subtract(5, 'hour').subtract(30, 'minute').toJSON()).format('HH:mm'));
 
             let validation = (this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup;
             validation.get('Date').setValidators([Validators.required]);
@@ -426,22 +426,24 @@ export class AddInquiryComponent implements OnInit {
     // })
 
     let eventObjList = [];
-    this.eventInquiryDataForm.controls.events.value.map((x: any) => {
+    this.eventInquiryDataForm.controls.events.controls.map((x: any) => {
 
-      let date = moment(x.Date).format('yyyy-MM-DD')
+      let date = moment(x.controls.Date.value).format('yyyy-MM-DD')
       let startDateObj: any
       let endDateObj: any;
 
-      startDateObj = new Date(date + ' ' + x.startTimeObj);
-      endDateObj = new Date(date + ' ' + x.endTimeObj);
+      startDateObj = new Date(date + ' ' + x.controls.startTimeObj.value);
+      endDateObj = new Date(date + ' ' + x.controls.endTimeObj.value);
+
+
       let eventObj = {
-        "eventType": x.eventType,
-        "startDateObj": startDateObj,
-        "endDateObj": endDateObj,
-        "guest": x.guest,
-        "client_budget": x.client_budget,
-        "offer_budget": x.offer_budget,
-        "remark": x.remark,
+        "eventType": x.controls.eventType.value,
+        "startDateObj": moment(startDateObj).add(5, 'hour').add(30, 'minute').toJSON(),
+        "endDateObj": moment(endDateObj).add(5, 'hour').add(30, 'minute').toJSON(),
+        "guest": x.controls.guest.value,
+        "client_budget": x.controls.client_budget.value,
+        "offer_budget": x.controls.offer_budget.value,
+        "remark": x.controls.remark.value,
       }
       eventObjList.push(eventObj);
     });
@@ -498,15 +500,16 @@ export class AddInquiryComponent implements OnInit {
         this.clientinquiryDataForm.controls.reference_detail.setValue(Response.data.reference_detail);
 
         Response.data.EventInquiryData.forEach((x: any, index: any) => {
+          let Dates = new Date(x.startDateObj);
           let startDateTime = new Date(x.startDateObj);
           let endDateTime = new Date(x.endDateObj);
           let eventObj = {
             _id: x._id,
             eventType: x.eventType,
             guest: x.guest,
-            Date: new Date(x.startDateObj),
-            startTimeObj: moment(startDateTime).format('HH:mm'),
-            endTimeObj: moment(endDateTime).format('HH:mm'),
+            Date: new Date(moment(Dates).subtract(5, 'hour').subtract(30, 'minute').toJSON()),
+            startTimeObj: moment(moment(startDateTime).subtract(5, 'hour').subtract(30, 'minute').toJSON()).format('HH:mm'),
+            endTimeObj: moment(moment(endDateTime).subtract(5, 'hour').subtract(30, 'minute').toJSON()).format('HH:mm'),
             offer_budget: x.offer_budget,
             client_budget: x.client_budget,
             remark: x.client_budget
@@ -598,8 +601,8 @@ export class AddInquiryComponent implements OnInit {
       let EventObj = {
         "clientInquiryId": this.inquiryId,
         "eventType": event.controls['eventType'].value,
-        "startDateObj": startDateObj,
-        "endDateObj": endDateObj,
+        "startDateObj": moment(startDateObj).add(5, 'hour').add(30, 'minute').toJSON(),
+        "endDateObj": moment(endDateObj).add(5, 'hour').add(30, 'minute').toJSON(),
         "guest": event.controls['guest'].value,
         "client_budget": event.controls['client_budget'].value,
         "offer_budget": event.controls['offer_budget'].value,
@@ -620,8 +623,8 @@ export class AddInquiryComponent implements OnInit {
       let EventObj = {
         "_id": event.controls['_id'].value,
         "eventType": event.controls['eventType'].value,
-        "startDateObj": startDateObj,
-        "endDateObj": endDateObj,
+        "startDateObj": moment(startDateObj).add(5, 'hour').add(30, 'minute').toJSON(),
+        "endDateObj": moment(endDateObj).add(5, 'hour').add(30, 'minute').toJSON(),
         "guest": event.controls['guest'].value,
         "client_budget": event.controls['client_budget'].value,
         "offer_budget": event.controls['offer_budget'].value,
