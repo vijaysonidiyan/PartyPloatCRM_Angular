@@ -383,6 +383,69 @@ export class NavbarComponent implements OnInit {
             currentPageName: 'View Booking Confirm'
           };
         }
+        else if (titlee.includes('menu-master')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            }],
+            currentPageName: 'Menu Master'
+          };
+        }
+        else if (titlee.includes('module-master')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            }],
+            currentPageName: 'Module Master'
+          };
+        }
+        else if (titlee.includes('role-master')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            }],
+            currentPageName: 'Role Master'
+          };
+        }
+        else if (titlee.includes('role-wise-menu')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            }],
+            currentPageName: 'Role Wise Menu'
+          };
+        }
+        else if (titlee.includes('user-wise-menu')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            }],
+            currentPageName: 'User Wise Menu'
+          };
+        }
+        else if (titlee.includes('company-setting')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            }],
+            currentPageName: 'Company Setting'
+          };
+        }
+        else if (titlee.includes('reference-master')) {
+          return {
+            pastPage: [{
+              pastUrl: 'dashboard',
+              pastLinkName: 'Dashboard',
+            }],
+            currentPageName: 'Reference Master'
+          };
+        }
   }
 }
 
