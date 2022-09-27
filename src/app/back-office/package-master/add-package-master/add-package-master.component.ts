@@ -19,6 +19,7 @@ export class AddPackageMasterComponent implements OnInit {
   packageData: boolean = false;
   PackageId: any;
   assignpartyplotList: any[] = [];
+  submittedPackageData: boolean = false;
 
   get fclientinquiryData() {
     return this.packageDataForm.controls;
@@ -90,7 +91,7 @@ export class AddPackageMasterComponent implements OnInit {
 
   createCategoryItem(oItem: number, cItem?: any) {
     let cd = this.fb.group({
-      item: [(cItem ? cItem['item'] : '')],
+      item: [(cItem ? cItem['item'] : ''), [Validators.required]],
       quantity: [(cItem ? cItem['quantity'] : '')],
     });
     (((this.packageDataForm.controls['package'] as FormArray)
@@ -108,6 +109,7 @@ export class AddPackageMasterComponent implements OnInit {
 
   savePackageMaster() {
     if (this.packageDataForm.invalid) {
+      this.submittedPackageData = true;
       return;
     }
     if (this.packageData === false) {

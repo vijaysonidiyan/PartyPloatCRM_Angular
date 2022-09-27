@@ -82,7 +82,7 @@ export class VendorDetailsComponent implements OnInit {
           this.getVendordetailsList();
           this.defaultForm();
           this.ISeditVendorDetails = false;
-          this.commonService.notifier.notify("success", Response.meta.message);
+          this.commonService.notifier.notify("success", "Vendor Details Saved Successfully.");
           $("#add-menu-modal").modal("hide");
         } else {
           this.commonService.notifier.notify("error", Response.meta.message);
@@ -133,7 +133,7 @@ export class VendorDetailsComponent implements OnInit {
           this.getVendordetailsList();
           this.defaultForm();
           this.ISeditVendorDetails = false;
-          this.commonService.notifier.notify("success", Response.meta.message);
+          this.commonService.notifier.notify("success", "Vendor Details Updated Successfully.");
           $("#add-menu-modal").modal("hide");
         } else {
           this.commonService.notifier.notify("error", Response.meta.message);
@@ -160,10 +160,18 @@ export class VendorDetailsComponent implements OnInit {
             this.getVendordetailsList();
             this.defaultForm();
             this.ISeditVendorDetails = false;
-            this.commonService.notifier.notify(
-              "success",
-              Response.meta.message
-            );
+            if (paramsObj.status === 1) {
+              this.commonService.notifier.notify(
+                "success",
+                "Vendor Details Actived Successfully."
+              );
+            }
+            else {
+              this.commonService.notifier.notify(
+                "success",
+                "Vendor Details Deactived Successfully."
+              );
+            }
           } else {
             this.commonService.notifier.notify("error", Response.meta.message);
           }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Output, EventEmitter} from "@angular/core";
+import { Component, OnInit, ElementRef, Output, EventEmitter } from "@angular/core";
 import { ROUTES } from "../sidebar/sidebar.component";
 import {
   Location,
@@ -38,26 +38,26 @@ export class NavbarComponent implements OnInit {
   isDashboard = true;
   get fLoginData() { return this.changePasswordForm.controls; }
 
-  constructor(public location: Location, private element: ElementRef, public storageService: StorageService, private router: Router, private fb: FormBuilder,  private coreHelper: CoreHelperService,  public commonService: CommonService, public adminLayoutService: AdminLayoutService,  private breadcrumbService: BreadcrumbService, private titleService: Title) {
+  constructor(public location: Location, private element: ElementRef, public storageService: StorageService, private router: Router, private fb: FormBuilder, private coreHelper: CoreHelperService, public commonService: CommonService, public adminLayoutService: AdminLayoutService, private breadcrumbService: BreadcrumbService, private titleService: Title) {
     this.location = location;
     this.sidebarVisible = false;
   }
-  @Output() navbarEvent = new EventEmitter<{navbarNativeElement:any}>()
+  @Output() navbarEvent = new EventEmitter<{ navbarNativeElement: any }>()
   ngOnInit() {
-    if (this.breadcrumbService.breadcrumbs[0].displayName  == "Dashboard"){
+    if (this.breadcrumbService.breadcrumbs[0].displayName == "Dashboard") {
       this.isDashboard = true;
     }
-    else{
+    else {
       this.isDashboard = false;
     }
-    this.breadcrumbService.breadcrumbChanged.subscribe((crumbs :any) => {
+    this.breadcrumbService.breadcrumbChanged.subscribe((crumbs: any) => {
       this.titleService.setTitle(this.createTitle(crumbs));
     })
-    this.userName = this.storageService.getValue(StorageKey.full_name) ? this.storageService.getValue(StorageKey.full_name) : this.storageService.getValue(StorageKey.email); 
+    this.userName = this.storageService.getValue(StorageKey.full_name) ? this.storageService.getValue(StorageKey.full_name) : this.storageService.getValue(StorageKey.email);
     this.listTitles = ROUTES.filter((listTitle) => listTitle);
     //debugger
     const navbar: HTMLElement = this.element.nativeElement;
-    this.navbarEvent.emit({navbarNativeElement:navbar});
+    this.navbarEvent.emit({ navbarNativeElement: navbar });
     this.defaultChangePasswordForm();
     this.toggleButton = navbar.getElementsByClassName("layout-menu-toggle")[0];
     this.router.events.subscribe((event) => {
@@ -78,18 +78,18 @@ export class NavbarComponent implements OnInit {
 
     const routeTitle = this.titlesToString(titles);
     return `${routeTitle} ${title}`;
-}
+  }
 
   private titlesToString(titles) {
-      return titles.reduce((prev, curr) => {
-          if (curr.displayName  == "Dashboard"){
-            this.isDashboard = true;
-          }
-          else{
-            this.isDashboard = false;
-          }
-          return `${curr.displayName} - ${prev}`;
-      }, '');
+    return titles.reduce((prev, curr) => {
+      if (curr.displayName == "Dashboard") {
+        this.isDashboard = true;
+      }
+      else {
+        this.isDashboard = false;
+      }
+      return `${curr.displayName} - ${prev}`;
+    }, '');
   }
   getAnimationData(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
@@ -149,7 +149,7 @@ export class NavbarComponent implements OnInit {
     var $toggle = document.getElementsByClassName("layout-menu-toggle")[0];
 
     //if (this.sidebarVisible === false) {
-      this.sidebarOpen();
+    this.sidebarOpen();
     // } else {
     //   this.sidebarClose();
     // }
@@ -224,7 +224,7 @@ export class NavbarComponent implements OnInit {
       else {
         this.commonService.notifier.notify('error', Response.meta.message);
       }
-    }, (error : any) => {
+    }, (error: any) => {
       console.log(error);
     });
   }
@@ -244,208 +244,208 @@ export class NavbarComponent implements OnInit {
 
   getTitle() {
     var titlee = this.location.prepareExternalUrl(this.location.path());
-        if (titlee.charAt(0) === '#') {
-            titlee = titlee.slice(1);
-        }
-        if (titlee.charAt(0) === '?') {
-            titlee = titlee.slice(1);
-        }
-        if (titlee.includes('dashboard')) {
-            return {
-                pastPage: [],
-                currentPageName: 'Dashboard'
-            };
-        }
-        else if (titlee.includes('event-master')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            }],
-            currentPageName: 'Event Master'
-          };
-        }
-        else if (titlee.includes('party-plot-master')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            }],
-            currentPageName: 'Party Plot Master'
-          };
-        }
-        
-        else if (titlee.includes('add-package-master')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            },
-            {
-              pastUrl: 'package-master',
-              pastLinkName: 'Package Master',
-            }],
-            currentPageName: 'Add Package Master'
-          };
-        }
-        else if (titlee.includes('edit-package-master')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            },
-            {
-              pastUrl: 'package-master',
-              pastLinkName: 'Package Master',
-            }],
-            currentPageName: 'Edit Package Master'
-          };
-        }
-        else if (titlee.includes('package-master')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            }],
-            currentPageName: 'Package Master'
-          };
-        }
-        else if (titlee.includes('staff')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            }],
-            currentPageName: 'Staff'
-          };
-        }
-        else if (titlee.includes('vendor-details')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            }],
-            currentPageName: 'Vendor Details'
-          };
-        }
-        
-        else if (titlee.includes('view-inquiry')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            },{
-              pastUrl: 'inquiry',
-              pastLinkName: 'Inquiry',
-            }],
-            currentPageName: 'View Inquiry'
-          };
-        }
-        else if (titlee.includes('booking-confirm')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            },{
-              pastUrl: 'inquiry',
-              pastLinkName: 'Inquiry',
-            }],
-            currentPageName: 'Booking Confirm'
-          };
-        }
-        else if (titlee.includes('inquiry')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            }],
-            currentPageName: 'Inquiry'
-          };
-        }
-        else if (titlee.includes('booking-confirm-list')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            }],
-            currentPageName: 'Booking Confirm'
-          };
-        }
-        else if (titlee.includes('view-booking-confirm')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            },{
-              pastUrl: 'booking-confirm-list',
-              pastLinkName: 'Booking Confirm',
-            }],
-            currentPageName: 'View Booking Confirm'
-          };
-        }
-        else if (titlee.includes('menu-master')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            }],
-            currentPageName: 'Menu Master'
-          };
-        }
-        else if (titlee.includes('module-master')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            }],
-            currentPageName: 'Module Master'
-          };
-        }
-        else if (titlee.includes('role-master')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            }],
-            currentPageName: 'Role Master'
-          };
-        }
-        else if (titlee.includes('role-wise-menu')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            }],
-            currentPageName: 'Role Wise Menu'
-          };
-        }
-        else if (titlee.includes('user-wise-menu')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            }],
-            currentPageName: 'User Wise Menu'
-          };
-        }
-        else if (titlee.includes('company-setting')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            }],
-            currentPageName: 'Company Setting'
-          };
-        }
-        else if (titlee.includes('reference-master')) {
-          return {
-            pastPage: [{
-              pastUrl: 'dashboard',
-              pastLinkName: 'Dashboard',
-            }],
-            currentPageName: 'Reference Master'
-          };
-        }
+    if (titlee.charAt(0) === '#') {
+      titlee = titlee.slice(1);
+    }
+    if (titlee.charAt(0) === '?') {
+      titlee = titlee.slice(1);
+    }
+    if (titlee.includes('dashboard')) {
+      return {
+        pastPage: [],
+        currentPageName: 'Dashboard'
+      };
+    }
+    else if (titlee.includes('event-master')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }],
+        currentPageName: 'Event Master'
+      };
+    }
+    else if (titlee.includes('party-plot-master')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }],
+        currentPageName: 'Party Plot Master'
+      };
+    }
+
+    else if (titlee.includes('add-package-master')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        },
+        {
+          pastUrl: 'package-master',
+          pastLinkName: 'Package Master',
+        }],
+        currentPageName: 'Add Package Master'
+      };
+    }
+    else if (titlee.includes('edit-package-master')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        },
+        {
+          pastUrl: 'package-master',
+          pastLinkName: 'Package Master',
+        }],
+        currentPageName: 'Edit Package Master'
+      };
+    }
+    else if (titlee.includes('package-master')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }],
+        currentPageName: 'Package Master'
+      };
+    }
+    else if (titlee.includes('staff')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }],
+        currentPageName: 'Staff'
+      };
+    }
+    else if (titlee.includes('vendor-details')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }],
+        currentPageName: 'Vendor Details'
+      };
+    }
+
+    else if (titlee.includes('view-inquiry')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }, {
+          pastUrl: 'inquiry',
+          pastLinkName: 'Inquiry',
+        }],
+        currentPageName: 'View Inquiry'
+      };
+    }
+    else if (titlee.includes('booking-confirm')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }, {
+          pastUrl: 'inquiry',
+          pastLinkName: 'Inquiry',
+        }],
+        currentPageName: 'Booking Confirm'
+      };
+    }
+    else if (titlee.includes('inquiry')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }],
+        currentPageName: 'Inquiry'
+      };
+    }
+    else if (titlee.includes('booking-confirm-list')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }],
+        currentPageName: 'Booking Confirm'
+      };
+    }
+    else if (titlee.includes('view-booking-confirm')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }, {
+          pastUrl: 'booking-confirm-list',
+          pastLinkName: 'Booking Confirm',
+        }],
+        currentPageName: 'View Booking Confirm'
+      };
+    }
+    else if (titlee.includes('menu-master')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }],
+        currentPageName: 'Menu Master'
+      };
+    }
+    else if (titlee.includes('module-master')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }],
+        currentPageName: 'Module Master'
+      };
+    }
+    else if (titlee.includes('role-master')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }],
+        currentPageName: 'Role Master'
+      };
+    }
+    else if (titlee.includes('role-wise-menu')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }],
+        currentPageName: 'Role Wise Menu'
+      };
+    }
+    else if (titlee.includes('user-wise-menu')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }],
+        currentPageName: 'User Wise Menu'
+      };
+    }
+    else if (titlee.includes('company-setting')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }],
+        currentPageName: 'Company Setting'
+      };
+    }
+    else if (titlee.includes('reference-master')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }],
+        currentPageName: 'Reference Master'
+      };
+    }
   }
 }
 

@@ -247,8 +247,16 @@ export class AddInquiryComponent implements OnInit {
   disableClientInquiryEventIndexWise(index: any) {
 
     if ((((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['_id'].value) == '0') {
+      let validation = (this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup;
+      validation.get('Date').clearValidators();
+      validation.get('eventType').clearValidators();
+      validation.get('guest').clearValidators();
+      validation.get('startTimeObj').clearValidators();
+      validation.get('endTimeObj').clearValidators();
+      validation.get('offer_budget').clearValidators();
+      validation.get('client_budget').clearValidators();
       const remove = this.eventList;
-      remove.removeAt(index)
+      remove.removeAt(index);
     }
     else {
       let EventId = {
@@ -457,7 +465,7 @@ export class AddInquiryComponent implements OnInit {
           this.defaultForm();
           this.defaultEventForm();
           this.ISeditClientInquiry = false;
-          this.commonService.notifier.notify("success", Response.meta.message);
+          this.commonService.notifier.notify("success", "Inquiry Saved Successfully.");
           this.router.navigate(["/admin/inquiry"])
         } else {
           this.commonService.notifier.notify("error", Response.meta.message);
@@ -549,6 +557,7 @@ export class AddInquiryComponent implements OnInit {
       (Response: any) => {
         if (Response.meta.code == 200) {
           this.diableOnlyClientInquiryInput();
+          this.commonService.notifier.notify("success", "Inquiry Details Updated Successfully.")
         }
       })
   }
@@ -561,6 +570,7 @@ export class AddInquiryComponent implements OnInit {
     this.adminLayoutService.deleteEventByID(deleteIdObj).subscribe(
       (Response: any) => {
         if (Response.meta.code == 200) {
+          this.commonService.notifier.notify("success", "Event Details Deleted Successfully.")
           const remove = this.eventList;
           remove.removeAt(index)
           this.disableClientInquiryEventIndexWise(index);
@@ -598,6 +608,7 @@ export class AddInquiryComponent implements OnInit {
       this.adminLayoutService.saveEventInquiryData(EventObj).subscribe(
         (Response: any) => {
           if (Response.meta.code == 200) {
+            this.commonService.notifier.notify("success", "Event Details Saved Successfully.")
             let setValueData = (this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup
             setValueData.controls['_id'].setValue(Response.data._id);
             this.disableClientInquiryEventIndexWise(index);
@@ -620,6 +631,7 @@ export class AddInquiryComponent implements OnInit {
         (Response: any) => {
           if (Response.meta.code == 200) {
             this.disableClientInquiryEventIndexWise(index);
+            this.commonService.notifier.notify("success", "Event Details Updated Successfully.")
           }
         }
       )

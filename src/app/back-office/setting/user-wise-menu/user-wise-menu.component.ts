@@ -642,7 +642,7 @@ export class UserWiseMenuComponent implements OnInit {
         this.selectedRole = null;
         this.selectedUser = null;
         this.onUserChange();
-        this.commonService.notifier.notify('success', Response.meta.message);
+        this.commonService.notifier.notify('success', "User Wise Menu Updated Successfully.");
       }
       else {
         this.commonService.notifier.notify('error', Response.meta.message);

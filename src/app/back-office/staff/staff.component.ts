@@ -188,6 +188,7 @@ export class StaffComponent implements OnInit {
         if (Response.meta.code == 200) {
           this.userFile = null;
           this.getStaffDocument();
+          this.commonService.notifier.notify("success", "Document Uploaded Successfully.");
           $("#add-staff-modal").modal("show");
           $("#add-document-modal").modal("hide");
         }
@@ -234,7 +235,7 @@ export class StaffComponent implements OnInit {
           this.StaffDocumentList = [];
           this.ISeditStaff = false;
           this.ISviewStaff = false;
-          this.commonService.notifier.notify("success", Response.meta.message);
+          this.commonService.notifier.notify("success", "Staff Details Saved Successfully.");
           $("#add-staff-modal").modal("hide");
         } else {
           this.commonService.notifier.notify("error", Response.meta.message);
@@ -247,9 +248,9 @@ export class StaffComponent implements OnInit {
   }
 
   editStaff(paramsObj) {
-    if(paramsObj.action == 'edit') {
+    if (paramsObj.action == 'edit') {
       this.ISeditStaff = true;
-    } else if(paramsObj.action == 'view') {
+    } else if (paramsObj.action == 'view') {
       this.ISviewStaff = true;
     }
     let Id: any = { staffId: paramsObj.id };
@@ -323,7 +324,7 @@ export class StaffComponent implements OnInit {
           this.StaffDocumentList = [];
           this.ISeditStaff = false;
           this.ISviewStaff = false;
-          this.commonService.notifier.notify("success", Response.meta.message);
+          this.commonService.notifier.notify("success", "Staff Details Updated Successfully.");
           $("#add-staff-modal").modal("hide");
         } else {
           this.commonService.notifier.notify("error", Response.meta.message);
@@ -345,7 +346,7 @@ export class StaffComponent implements OnInit {
       if (Response.meta.code == 200) {
         this.submittedStaffData = false;
         this.getStaffDocument();
-        this.commonService.notifier.notify('success', Response.meta.message);
+        this.commonService.notifier.notify('success', "Document Deleted Successfully.");
       }
       else {
         this.commonService.notifier.notify('error', Response.meta.message);
@@ -370,7 +371,12 @@ export class StaffComponent implements OnInit {
         this.defaultForm();
         this.ISeditStaff = false;
         this.ISviewStaff = false;
-        this.commonService.notifier.notify('success', Response.meta.message);
+        if (paramsObj.status == 1) {
+          this.commonService.notifier.notify("success", "Staff Actived Successfully.");
+        }
+        else {
+          this.commonService.notifier.notify("success", "Staff Deactived Successfully.");
+        }
       }
       else {
         this.commonService.notifier.notify('error', Response.meta.message);

@@ -138,8 +138,12 @@
                 <div class="d-flex justify-content-between mb-3">
                     <h5> Extra Decoration</h5>
                     <div>
-                        <button type="submit" class="btn btn-primary" *ngIf="isEditExtraItem === false"
+                        <button type="submit" class="btn btn-primary"
+                            *ngIf="isEditExtraItem === false && eventList.length != 0"
                             (click)="editExtraItemFormArray()">Edit</button>
+                        <button type="submit" class="btn btn-primary"
+                            *ngIf="isEditExtraItem === false && eventList.length == 0"
+                            (click)="editExtraItemFormArray()">Add</button>
                         <button type="submit" class="btn btn-primary" *ngIf="isEditExtraItem === true"
                             (click)="updateExtraDecorationItem()">Save</button>
                         <button type="submit" class="btn btn-primary ml-10" *ngIf="isEditExtraItem === true"
@@ -147,10 +151,11 @@
                     </div>
                 </div>
                 <table class="" formArrayName="extradecoration">
-                    <tr class="boader-bottom-1">
+                    <tr class="boader-bottom-1" *ngIf="eventList.length != 0">
                         <th class="text-center w-5">Sr. No.</th>
                         <th class=" w-80">Item</th>
                         <th class="qty-width">Qty/Size</th>
+                        <th class="qty-width" *ngIf="isEditExtraItem === true">Action</th>
                     </tr>
                     <tr [formGroupName]="y" class="boader-bottom-1"
                         *ngFor="let citem of viewBookingForm.get('extradecoration')['controls']; let y = index;">
@@ -175,6 +180,12 @@
                                 </div>
                             </div>
                         </td>
+                        <td *ngIf="isEditExtraItem === true">
+                            <button (click)="removeExtraDecoration(y)" class="bg-label-danger btn-bg bg-label-danger"
+                                tooltip="Delete" placement="bottom" showDelay="100">
+                                <i class="bx bx-trash"></i>
+                            </button>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -183,9 +194,9 @@
             </div>
 
             <div class="row p-sm-3 p-0">
-                <div class="mb-3"  *ngIf="imageDecorationList?.length > 0">
+                <div class="mb-3 d-flex justify-content-between">
                     <h5>Decoration Images</h5>
-                   
+                    <button type="submit" class="btn btn-primary" (click)="uploadDecorationModal()">Add</button>
                 </div>
                 <table class="" *ngIf="imageDecorationList?.length > 0">
                     <tr class="boader-bottom-1">
@@ -224,12 +235,10 @@
                     </tr>
                 </table>
 
-                <div class=" mb-3">
-                    <!-- <div class="float-end"> -->
+                <!-- <div class=" mb-3">
                     <button type="submit" class="btn btn-primary" (click)="uploadDecorationModal()">Upload Decoration
                         Image</button>
-                    <!-- </div> -->
-                </div>
+                </div> -->
                 <div class=" mb-3">
                     <!-- <div class="float-end"> -->
                     <button type="submit" class="btn btn-primary" (click)="downloadPdf()">PDF</button>

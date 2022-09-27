@@ -64,7 +64,7 @@ export class ReferenceMasterComponent implements OnInit {
                 this.getReferencemasterList();
                 this.defaultForm();
                 this.ISeditReferenceMaster = false;
-                this.commonService.notifier.notify('success', Response.meta.message);
+                this.commonService.notifier.notify('success', "Reference Details Saved Successfully.");
                 $("#add-reference-modal").modal("hide");
             }
             else {
@@ -103,7 +103,7 @@ export class ReferenceMasterComponent implements OnInit {
                 this.getReferencemasterList();
                 this.defaultForm();
                 this.ISeditReferenceMaster = false;
-                this.commonService.notifier.notify('success', Response.meta.message);
+                this.commonService.notifier.notify('success', "Reference Details Updated Successfully.");
                 $("#add-reference-modal").modal("hide");
             }
             else {
@@ -128,7 +128,12 @@ export class ReferenceMasterComponent implements OnInit {
                 this.getReferencemasterList();
                 this.defaultForm();
                 this.ISeditReferenceMaster = false;
-                this.commonService.notifier.notify('success', Response.meta.message);
+                if (paramsObj.status == 1) {
+                    this.commonService.notifier.notify('success', "Reference Details Actived Successfully.");
+                }
+                else {
+                    this.commonService.notifier.notify('success', "Reference Details Deactived Successfully.");
+                }
             }
             else {
                 this.commonService.notifier.notify('error', Response.meta.message);

@@ -177,7 +177,7 @@ export class MenuMasterComponent implements OnInit {
         this.defaultForm();
         this.getPerentList();
         this.ISeditMenu = false;
-        this.commonService.notifier.notify('success', Response.meta.message);
+        this.commonService.notifier.notify('success', "Menu Details Saved Successfully.");
         $("#add-menu-modal").modal("hide");
       }
       else {
@@ -264,7 +264,7 @@ export class MenuMasterComponent implements OnInit {
         this.defaultForm();
         this.getPerentList();
         this.ISeditMenu = false;
-        this.commonService.notifier.notify('success', Response.meta.message);
+        this.commonService.notifier.notify('success', "Menu Details Updated Successfully.");
         $("#add-menu-modal").modal("hide");
       }
       else {
@@ -287,11 +287,16 @@ export class MenuMasterComponent implements OnInit {
     this.adminLayoutService.Statusmenu(statusmenuModelObj).subscribe((Response: any) => {
 
       if (Response.meta.code == 200) {
+        if (paramsObj.status == 1) {
+          this.commonService.notifier.notify('success', "Menu Details Actived Successfully.");
+        }
+        else {
+          this.commonService.notifier.notify('success', "Menu Details Deactived Successfully.");
+        }
         this.submittedMenuData = false;
         this.getMenuList();
         this.defaultForm();
         this.ISeditMenu = false;
-        this.commonService.notifier.notify('success', Response.meta.message);
       }
       else {
         this.commonService.notifier.notify('error', Response.meta.message);

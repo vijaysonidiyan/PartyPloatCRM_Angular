@@ -123,8 +123,8 @@ export class CompanySettingComponent implements OnInit {
         this.comapnyForm.disable();
         this.storageService.setValue(StorageKey.utsav_decor_logo, Response.data.logo);
         this.isEditing = false;
+        this.commonService.notifier.notify('success', "Company Details Updates Successfully.");
         window.location.reload();
-        this.commonService.notifier.notify('success', Response.meta.message);
       } else {
         this.commonService.notifier.notify('error', Response.meta.message);
       }

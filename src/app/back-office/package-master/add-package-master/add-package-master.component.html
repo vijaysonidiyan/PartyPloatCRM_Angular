@@ -46,13 +46,18 @@
                                             <label class="form-label" for="basic-default-company">Item</label>
                                             <input type="text" formControlName="item" class="form-control"
                                                 id="basic-default-company" placeholder="Enter Guest Count" />
+                                            <div *ngIf="submittedPackageData && citem.controls.item.errors">
+                                                <div *ngIf="citem.controls.item.errors.required">
+                                                    <span class="error_msg">Item Name is Required.</span>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 mb-3">
                                             <label class="form-label" for="basic-default-company">Quantity</label>
                                             <input type="text" class="form-control" id="basic-default-company"
                                                 formControlName="quantity" placeholder="Enter Quantity" />
                                         </div>
-                                        <div class="col-lg-2 mt-2">
+                                        <div class="col-lg-2 mt-2" *ngIf="x != 0">
                                             <!-- <button type="button" class="btn btn-primary me-3">Edit</button> -->
                                             <button type="button" class="btn btn-label-danger " aria-label="Close"
                                                 (click)="deletepackageCategoryList(i,x)">
@@ -66,9 +71,11 @@
                         </div>
 
                         <div>
-                            <button type="button" class="btn btn-primary" (click)="createCategoryItem(i)">Add
+                            <button type="button" class="btn btn-primary"
+                                [ngClass]="item.controls.packageCategoryList.invalid == true ? 'disabled':''"
+                                (click)="createCategoryItem(i)">Add
                                 Item</button>
-                            <button type="button" class="btn btn-label-danger float-end "
+                            <button type="button" class="btn btn-label-danger float-end " *ngIf="i != 0"
                                 (click)="deleteCategoryListData(i)">Delete
                                 Category</button>
                         </div>

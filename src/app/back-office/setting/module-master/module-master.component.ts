@@ -70,7 +70,7 @@ export class ModuleMasterComponent implements OnInit {
         this.getModulemasterList();
         this.defaultForm();
         this.ISeditModuleMaster = false;
-        this.commonService.notifier.notify('success', Response.meta.message);
+        this.commonService.notifier.notify('success', "Module Master Saved Successfully.");
         $("#add-module-modal").modal("hide");
       }
       else {
@@ -111,7 +111,7 @@ export class ModuleMasterComponent implements OnInit {
         this.getModulemasterList();
         this.defaultForm();
         this.ISeditModuleMaster = false;
-        this.commonService.notifier.notify('success', Response.meta.message);
+        this.commonService.notifier.notify('success', "Module Master Updated Successfully.");
         $("#add-module-modal").modal("hide");
       }
       else {
@@ -136,7 +136,18 @@ export class ModuleMasterComponent implements OnInit {
         this.getModulemasterList();
         this.defaultForm();
         this.ISeditModuleMaster = false;
-        this.commonService.notifier.notify('success', Response.meta.message);
+        if (paramsObj.status == 1) {
+          this.commonService.notifier.notify(
+            "success",
+            "Module Master Actived Successfully."
+          );
+        }
+        else {
+          this.commonService.notifier.notify(
+            "success",
+            "Module Master Deactived Successfully."
+          );
+        }
       }
       else {
         this.commonService.notifier.notify('error', Response.meta.message);
