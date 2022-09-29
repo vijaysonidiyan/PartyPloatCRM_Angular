@@ -9,7 +9,7 @@
   cursor: pointer;
 }
 .border-left-div.green::after {
-  border-color: #71dd37  !important;
+  border-color: #71dd37 !important;
 }
 .border-left-div.red::after {
   border-color: #ff3e1d !important;
@@ -54,7 +54,7 @@
 .dropdown-search {
   position: absolute;
   top: 1.5rem;
-  right: 100px;
+  right: 23px;
   max-width: 300px;
   width: 100%;
 }
@@ -82,7 +82,7 @@
     margin-bottom: 0rem !important;
   }
   .dropdown-search {
-    max-width: 100% ;
+    max-width: 100%;
   }
 }
 @media (min-width: 768px) {

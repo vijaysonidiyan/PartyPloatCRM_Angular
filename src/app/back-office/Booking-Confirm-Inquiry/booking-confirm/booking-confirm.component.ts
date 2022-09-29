@@ -213,7 +213,10 @@ export class BookingConfirmComponent implements OnInit {
     this.adminLayoutService.confirmBookingInquiryEvent(bookInquiryConfirmEvent).subscribe((Response: any) => {
       if (Response.meta.code == 200) {
         this.commonService.notifier.notify("success", "Booking Confirm Successfully.")
-        this.router.navigate(['admin/inquiry']);
+        this.router.navigate(['admin/booking-confirm-list']);
+      }
+      else {
+        this.commonService.notifier.notify("error", Response.meta.message);
       }
     })
   }

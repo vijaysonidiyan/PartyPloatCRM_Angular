@@ -378,6 +378,15 @@ export class NavbarComponent implements OnInit {
         currentPageName: 'Inquiry'
       };
     }
+    else if (titlee.includes('calender')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }],
+        currentPageName: 'Inquiry'
+      };
+    }
     else if (titlee.includes('booking-confirm-list')) {
       return {
         pastPage: [{
