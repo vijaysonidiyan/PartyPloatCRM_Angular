@@ -192,6 +192,7 @@
                                             <span class="error_msg">End Time is Required.</span>
                                         </div>
                                     </div>
+                                    <div *ngIf="invailidTime[i] === true"><span class="error_msg">Please Select Valid Time.</span></div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-3">
                                     <label class="form-label required" for="basic-default-company">Client budget</label>

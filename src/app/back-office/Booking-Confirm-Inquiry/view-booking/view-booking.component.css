@@ -14,7 +14,7 @@
 .qty-width {
   width:15% ;
 }
-.boader-top-1 {
+/* .boader-top-1 {
   border-top: 2px solid #d9dee3;
 }
 .boader-top-1:last-child {
@@ -25,10 +25,12 @@
 }
 .boader-bottom-1:last-child {
   border-bottom: none;
-}
+} */
 table tr:last-child .boader-top-1:last-child {
   border-bottom: none;
 }
-table tr th , table tr td {
-  padding: 0.5rem 0 0.5rem 0.5rem;
+
+.table-border tr td , thead tr th , .table-border tr th {
+  border: 1px solid #d9dee3;
+  padding: 0.5rem;
 }

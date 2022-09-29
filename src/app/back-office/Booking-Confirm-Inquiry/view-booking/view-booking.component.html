@@ -89,19 +89,34 @@
                     </table>
                 </div>
             </div>
-
-            <div class="row p-sm-3 p-0">
-                <div class="d-flex justify-content-between mb-3">
-                    <h5>Package</h5>
-                    <div>
-                        <button type="submit" class="btn btn-primary" *ngIf="isEditPackageItem === false"
-                            (click)="editPackageItemFormArray()">Edit</button>
-                        <button type="submit" class="btn btn-primary" *ngIf="isEditPackageItem === true"
-                            (click)="updatePackageDecorationItem()">Save</button>
-                        <button type="submit" class="btn btn-primary ml-10" *ngIf="isEditPackageItem === true"
-                            (click)="canclePackageItemIsEdit()">Cancle</button>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-0">Package</h5>
+            </div>
+                <div>
+                    <button type="submit" class="btn-bg" *ngIf="isEditPackageItem === false"
+                        (click)="editPackageItemFormArray()"><i
+                        class="bx bx-edit-alt" tooltip="Edit" placement="bottom"
+                        showDelay="100"></i></button>
+                    <div class="d-flex">
+                        <button type="submit" class="bg-label-success btn-bg bg-label-success" *ngIf="isEditPackageItem === true"
+                        (click)="updatePackageDecorationItem()"><i
+                        class="bx bx-check" tooltip="Save" placement="bottom"
+                        showDelay="100"></i></button>
+                    <button type="submit" class="bg-label-danger btn-bg bg-label-danger ml-10" *ngIf="isEditPackageItem === true"
+                        (click)="canclePackageItemIsEdit()"><i
+                        class="bx bx-x" tooltip="Cancle" placement="bottom"
+                        showDelay="100"></i></button>
                     </div>
-                </div>
+            </div>
+            <!-- <button type="button" class="btn btn-primary">Edit</button> -->
+        </div>
+        <div class="card-body" [formGroup]="viewBookingForm">
+            <div class="row p-sm-3 p-0">
+                
                 <table class=" table-responsive" formArrayName="package">
                     <thead>
                         <tr class="boader-bottom-1">
@@ -110,20 +125,18 @@
                             <th class="qty-width">Qty/Size</th>
                         </tr>
                     </thead>
-                    <tr [formGroupName]="i"
-                        *ngFor=" let item of viewBookingForm.get('package')['controls']; let i = index">
+                    <tr [formGroupName]="i" *ngFor=" let item of viewBookingForm.get('package')['controls']; let i = index">
                         <td colspan="3" style="text-align:center;">
                             <div style="padding: 7px 0;">
                                 <h5><strong>{{item.controls.categoryName.value}}</strong></h5>
                             </div>
-                            <table class="w-100" formArrayName="packageCategoryList">
+                            <table class="w-100 table-border" formArrayName="packageCategoryList">
                                 <tr [formGroupName]="x" class="boader-top-1"
                                     *ngFor="let citem of item.get('packageCategoryList')['controls']; let x = index;">
                                     <td class="text-center w-5">{{x+1}}</td>
                                     <td class="text-start w-80">{{citem.controls.item.value}}</td>
                                     <td class="qty-width text-start">
-                                        <span
-                                            *ngIf="isEditPackageItem === false">{{citem.controls.quantity.value}}</span>
+                                        <span *ngIf="isEditPackageItem === false">{{citem.controls.quantity.value}}</span>
                                         <input type="text" *ngIf="isEditPackageItem === true" class="form-control"
                                             id="basic-default-company" formControlName="quantity"
                                             placeholder="Enter Quantity" />
@@ -134,23 +147,38 @@
                     </tr>
                 </table>
             </div>
-            <div class="row p-sm-3 p-0">
-                <div class="d-flex justify-content-between mb-3">
-                    <h5>Extra Decoration</h5>
-                    <div>
-                        <button type="submit" class="btn btn-primary"
-                            *ngIf="isEditExtraItem === false && eventList.length != 0"
-                            (click)="editExtraItemFormArray()">Edit</button>
-                        <button type="submit" class="btn btn-primary"
-                            *ngIf="isEditExtraItem === false && eventList.length == 0"
-                            (click)="editExtraItemFormArray()">Add</button>
-                        <button type="submit" class="btn btn-primary" *ngIf="isEditExtraItem === true"
-                            (click)="updateExtraDecorationItem()">Save</button>
-                        <button type="submit" class="btn btn-primary ml-10" *ngIf="isEditExtraItem === true"
-                            (click)="cancleExtraItemIsEdit()">Cancle</button>
-                    </div>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-0">Extra Decoration</h5>
+            </div>
+            <div>
+                <button type="submit" class="btn-bg " *ngIf="isEditExtraItem === false && eventList.length != 0"
+                    (click)="editExtraItemFormArray()"><i
+                    class="bx bx-edit-alt" tooltip="Edit" placement="bottom"
+                    showDelay="100"></i></button>
+                <div class="d-flex">
+                    <button type="submit" class="bg-label-success btn-bg bg-label-success" *ngIf="isEditExtraItem === false && eventList.length == 0"
+                    (click)="editExtraItemFormArray()"><i
+                    class="bx bx-plus" tooltip="Add" placement="bottom"
+                    showDelay="100"></i></button>
+                <button type="submit" class="bg-label-success btn-bg bg-label-success" *ngIf="isEditExtraItem === true"
+                    (click)="updateExtraDecorationItem()"><i
+                    class="bx bx-check" tooltip="Save" placement="bottom"
+                    showDelay="100"></i></button>
+                <button type="submit" class="bg-label-danger btn-bg bg-label-danger ml-10" *ngIf="isEditExtraItem === true"
+                    (click)="cancleExtraItemIsEdit()"><i
+                    class="bx bx-x" tooltip="Edit" placement="bottom"
+                    showDelay="100"></i></button>
                 </div>
-                <table class="" formArrayName="extradecoration">
+            </div>
+            <!-- <button type="button" class="btn btn-primary">Edit</button> -->
+        </div>
+        <div class="card-body" [formGroup]="viewBookingForm">
+            <div class="row p-sm-3 p-0">
+                <table class="table-border" formArrayName="extradecoration">
                     <tr class="boader-bottom-1" *ngIf="eventList.length != 0">
                         <th class="text-center w-5">Sr. No.</th>
                         <th class=" w-80 required">Item</th>
@@ -162,8 +190,8 @@
                         <td class="text-center w-5">{{y + 1}}</td>
                         <td class=" w-80">
                             <span *ngIf="isEditExtraItem === false">{{citem.controls.item.value}}</span>
-                            <input type="text" *ngIf="isEditExtraItem === true" class="form-control"
-                                id="basic-default-company" formControlName="item" placeholder="Enter Item Name" />
+                            <input type="text" *ngIf="isEditExtraItem === true" class="form-control" id="basic-default-company"
+                                formControlName="item" placeholder="Enter Item Name" />
                             <div *ngIf="submittedExtraItemData[y] && citem.controls.item.errors">
                                 <div *ngIf="citem.controls.item.errors.required">
                                     <span class="error_msg">Item is Required.</span>
@@ -172,8 +200,8 @@
                         </td>
                         <td class="qty-width">
                             <span *ngIf="isEditExtraItem === false">{{citem.controls.quantity.value}}</span>
-                            <input type="text" *ngIf="isEditExtraItem === true" class="form-control"
-                                id="basic-default-company" formControlName="quantity" placeholder="Enter Quantity" />
+                            <input type="text" *ngIf="isEditExtraItem === true" class="form-control" id="basic-default-company"
+                                formControlName="quantity" placeholder="Enter Quantity" />
                             <div *ngIf="submittedExtraItemData[y] && citem.controls.quantity.errors">
                                 <div *ngIf="citem.controls.quantity.errors.required">
                                     <span class="error_msg">Quantity is Required.</span>
@@ -190,26 +218,38 @@
                 </table>
             </div>
             <div *ngIf="isEditExtraItem === true" class="mb-3">
-                <button type="submit" class="btn btn-primary ml-10" (click)="addExtraItemArray()">Add</button>
+                <button type="submit" class="bg-label-success btn-bg bg-label-success ml-10" (click)="addExtraItemArray()"><i
+                    class="bx bx-plus" tooltip="Add" placement="bottom"
+                    showDelay="100"></i></button>
             </div>
             <div *ngIf="eventList.length != 0">
+                <hr class="mb-3" *ngIf="isEditExtraItem === false">
                 <div class="col-lg-4 col-md-6 mb-3">
-                    <label class="form-label" for="basic-default-company">Extra Decor Budget</label>
-                    <span *ngIf="isEditExtraItem === false">&nbsp; :&nbsp;
-                        {{fbookingConfirmData.extraDecorBudget.value}}</span>
+                    <h5 *ngIf="isEditExtraItem === false">Extra Decoration <span>&nbsp; :&nbsp;
+                            {{fbookingConfirmData.extraDecorBudget.value}}</span></h5>
+                    <label *ngIf="isEditExtraItem === true" class="form-label" for="basic-default-company">Extra Decor
+                        Budget</label>
+        
                     <input type="text" *ngIf="isEditExtraItem === true" appNumbersOnly class="form-control"
-                        id="basic-default-company" placeholder="Extra Decor Budget"
-                        formControlName="extraDecorBudget" />
+                        id="basic-default-company" placeholder="Extra Decor Budget" formControlName="extraDecorBudget" />
                 </div>
             </div>
-
-            <hr class="mb-3">
+        </div>
+    </div>
+    
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Client Selected Decor</h5>
+            <!-- <button type="button" class="btn btn-primary">Edit</button> -->
+        </div>
+        <div class="card-body" [formGroup]="viewBookingForm">
             <div class="row p-sm-3 p-0">
                 <div class="mb-3 d-flex justify-content-between">
-                    <h5>Client Selected Decor</h5>
-                    <button type="submit" class="btn btn-primary" (click)="uploadDecorationModal()">Add</button>
+                    <button type="submit" class="bg-label-success btn-bg bg-label-success ml-10" (click)="uploadDecorationModal()"><i
+                        class="bx bx-plus" tooltip="Add" placement="bottom"
+                        showDelay="100"></i></button>
                 </div>
-                <table class="" *ngIf="imageDecorationList?.length > 0">
+                <table class="table-border" *ngIf="imageDecorationList?.length > 0">
                     <tr class="boader-bottom-1">
                         <th class="text-center w-5">Sr. No.</th>
                         <th>Name</th>
@@ -217,18 +257,16 @@
                         <th>Decoration</th>
                         <th>Action</th>
                     </tr>
-                    <tr class="boader-bottom-1"
-                        *ngFor="let decorationData of imageDecorationList;let decorationIndex=index">
+                    <tr class="boader-bottom-1" *ngFor="let decorationData of imageDecorationList;let decorationIndex=index">
                         <td class="text-center w-5">{{decorationIndex + 1}}</td>
                         <td>{{decorationData.name}}</td>
                         <td>{{decorationData.description}}</td>
                         <td>
-                            <img src="{{decorationURLPath}}{{decorationData.Image[0]}}" width="50px" height="50px"
-                                alt="">
+                            <img src="{{decorationURLPath}}{{decorationData.Image[0]}}" width="50px" height="50px" alt="">
                         </td>
                         <td>
                             <div class="d-flex">
-
+        
                                 <button class="btn-bg"
                                     (click)="editDecorationImages({id : decorationData._id, index : decorationIndex})"><i
                                         class="bx bx-edit-alt" tooltip="Edit" placement="bottom" showDelay="100"></i>
@@ -245,14 +283,17 @@
                         </td>
                     </tr>
                 </table>
-
+        
                 <!-- <div class=" mb-3">
-                    <button type="submit" class="btn btn-primary" (click)="uploadDecorationModal()">Upload Decoration
-                        Image</button>
-                </div> -->
+                            <button type="submit" class="btn btn-primary" (click)="uploadDecorationModal()">Upload Decoration
+                                Image</button>
+                        </div> -->
                 <div class=" mb-3">
                     <!-- <div class="float-end"> -->
-                    <button type="submit" class="btn btn-primary" (click)="downloadPdf()">PDF</button>
+                        <button type="submit" class="bg-label-danger btn-bg bg-label-danger ml-10" (click)="downloadPdf()"><i
+                            class="bx bxs-file-pdf" tooltip="PDF" placement="bottom"
+                            showDelay="100" style="font-size: 40px ;"></i></button>
+                    <!-- <button type="submit" class="btn btn-primary" (click)="downloadPdf()">PDF</button> -->
                     <!-- </div> -->
                 </div>
             </div>

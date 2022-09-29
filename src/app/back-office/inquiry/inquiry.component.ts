@@ -132,8 +132,7 @@ export class InquiryComponent implements OnInit {
 
   // calender view list data
   getInquiryListForCalenderView(data: any) {
-    let calendarApi = this.calendarComponent.getApi();
-    calendarApi.gotoDate(new Date(this.currentMonth + '-01-' + this.currentYear));
+    
 
     let inquiryObj = {
       month: data.month ? data.month : null,
@@ -150,6 +149,7 @@ export class InquiryComponent implements OnInit {
       else {
         this.inquiryEvent = [];
       }
+      
       this.calendarOptions = {
         initialView: 'dayGridMonth',
         headerToolbar: {
@@ -179,8 +179,12 @@ export class InquiryComponent implements OnInit {
           }
         },
       }
+    //   let calendarApi = this.calendarComponent.getApi();
+    // calendarApi.gotoDate(new Date(this.currentMonth + '-01-' + this.currentYear));
     })
     debugger
+    //let calendarApi = this.calendarComponent.getApi();
+    //calendarApi.gotoDate(new Date(this.currentMonth + '-01-' + this.currentYear));
     this.calendarOptions = {
       initialView: 'dayGridMonth',
       headerToolbar: {
@@ -207,9 +211,10 @@ export class InquiryComponent implements OnInit {
         }
       },
     }
+
     // let calendarApi = this.calendarComponent.getApi();
-    // calendarApi.gotoDate(this.datePipe.transform(new Date(this.currentYearForCalender + '-' + this.currentMonthForCalender), 'MM-dd-yyyy'));
-  }
+    // calendarApi.gotoDate(new Date(this.currentMonth + '-01-' + this.currentYear));
+    }
 
   viewInquiry(id: any, status: any, bookingId: any) {
     $('#inquiry-details-by-date-modal').modal('hide');

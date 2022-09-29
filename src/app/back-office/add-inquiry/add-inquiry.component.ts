@@ -34,6 +34,7 @@ export class AddInquiryComponent implements OnInit {
   clientinquiryDataForm: FormGroup | any;
   eventInquiryDataForm: FormGroup | any;
   submittedAddInquiryData = {};
+  invailidTime = {};
   eventList: any;
   eventActiveList: any;
   ISeditClientInquiry = false;
@@ -366,7 +367,25 @@ export class AddInquiryComponent implements OnInit {
 
   }
   saveClientInquiry() {
-    if (this.clientinquiryDataForm.invalid || this.eventInquiryDataForm.invalid) {
+    let invailidTimeCount = 0;
+    (this.eventInquiryDataForm.controls['events'] as FormArray).controls.map((x: any, index: any) => {
+      debugger
+      let date = moment(x.controls.Date.value).format('yyyy-MM-DD')
+      let startDateObj: any
+      let endDateObj: any;
+      let startTime = x.controls.startTimeObj.value
+      let endTime = x.controls.endTimeObj.value
+
+      startDateObj = new Date(date + ' ' + startTime);
+      endDateObj = new Date(date + ' ' + endTime);
+      if(startDateObj > endDateObj) {
+        invailidTimeCount = invailidTimeCount + 1
+        this.invailidTime[index] = true;
+      } else {
+        this.invailidTime[index] = false;
+      }
+    })
+    if (this.clientinquiryDataForm.invalid || this.eventInquiryDataForm.invalid || invailidTimeCount > 0) {
       this.submittedclientInquiryData = true;
       (this.eventInquiryDataForm.controls['events'] as FormArray).controls.map((x: any, index: any) => {
         this.submittedAddInquiryData[index] = true;
