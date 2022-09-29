@@ -70,22 +70,22 @@ export class SidebarComponent implements OnInit {
   private toggleButton: any;
   navbar: any;
 
-  constructor(public commonService: CommonService,private element: ElementRef, public adminLayoutService: AdminLayoutService, public storageService: StorageService) {
+  constructor(public commonService: CommonService, private element: ElementRef, public adminLayoutService: AdminLayoutService, public storageService: StorageService) {
     this.uploadsUrl = environment.uploadedUrl
     this.utsav_logo_img = this.storageService.getValue(StorageKey.utsav_decor_logo);
   }
-  @ Input() set navbarNativeElement(value: any) {
+  @Input() set navbarNativeElement(value: any) {
     //debugger
-    if(!!value) {
+    if (!!value) {
       this.navbar = value.navbarNativeElement;
     }
-   }
+  }
   iconDefaultURL = environment.uploadsUrl + 'default_icon/'
   iconActiveURL = environment.uploadsUrl + 'active_icon/'
 
 
   ngOnInit() {
-    
+
     // this.utsav_logo_img = environment.uploadedUrl + this.storageService.getValue(StorageKey.utsav_decor_logo)
     this.getSideMenuList();
     // this.menuItems = ROUTES.filter((menuItem) => menuItem);
@@ -124,6 +124,16 @@ export class SidebarComponent implements OnInit {
       (Response: any) => {
         if (Response.meta.code == 200) {
           this.menuItems = Response.data.sort((a, b) => a.order - b.order);
+
+          this.menuItems.filter((x) => {
+            if (x.children.length > 0) {
+              x.children.sort((a, b) => a.order - b.order)
+            }
+            else {
+              return;
+            }
+          })
+
           this.noData = false;
         } else {
           this.noData = true;

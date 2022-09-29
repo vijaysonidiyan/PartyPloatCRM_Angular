@@ -415,6 +415,13 @@ export class AdminLayoutService {
     return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/eventinquiryList', data, { headers: headers });
   }
 
+  getCheckInquiryListData(data: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'inquirybooking/dateviseinquirybookingList', data, { headers: headers });
+  }
+
   getInquiryById(data: any) {
     let headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
@@ -653,7 +660,7 @@ export class AdminLayoutService {
     let headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
-    return this.http.post(this.commonService.rootData.rootUrl + 'inquirybooking/inquirybookinggetByIDpdf',{}, { params: ID, headers: headers });
+    return this.http.post(this.commonService.rootData.rootUrl + 'inquirybooking/inquirybookinggetByIDpdf', {}, { params: ID, headers: headers });
   }
 
   // image decoration file upload and list

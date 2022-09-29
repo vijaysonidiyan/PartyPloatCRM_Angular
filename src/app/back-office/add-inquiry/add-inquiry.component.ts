@@ -487,7 +487,7 @@ export class AddInquiryComponent implements OnInit {
           this.defaultEventForm();
           this.ISeditClientInquiry = false;
           this.commonService.notifier.notify("success", "Inquiry Saved Successfully.");
-          this.router.navigate(["/admin/inquiry"])
+          this.router.navigate(["/admin/calender"])
         } else {
           this.commonService.notifier.notify("error", Response.meta.message);
         }

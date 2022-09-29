@@ -32,6 +32,7 @@ export class InquiryComponent implements OnInit {
   currentMonth = (this.date.getMonth() + 1).toString();
   currentYear = this.date.getFullYear();
   inquiryList: any[] = [];
+  inquiryCalenderCheckEventList: any[] = [];
   inquiryForm: FormGroup;
   eventActiveList: any[] = [];
   assignpartyplotList: any[] = [];
@@ -46,27 +47,37 @@ export class InquiryComponent implements OnInit {
   cancelRemark = '';
   cancelInquiryForm: FormGroup;
   gotoDate: any;
+  isInquiryTab: boolean = false;
 
-  tabClick(tab) {
-    this.activeTab = tab;
-    if (this.activeTab == 1) {
-      debugger
+  // tabClick(tab) {
+  //   this.activeTab = tab;
+  //   if (this.activeTab == 1) {
+
+
+  //   }
+  //   else if (this.activeTab == 2) {
+
+  //     this.searchedMonth = this.currentMonth;
+  //     this.searchedYear = this.currentYear;
+  //     this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear, partyplot_ID: this.searchedPartyplot })
+
+  //   }
+  // }
+
+  constructor(private adminLayoutService: AdminLayoutService, private commonService: CommonService, private fb: FormBuilder, private router: Router) {
+    const url = this.router.url;
+    if (url.includes('inquiry')) {
+      this.isInquiryTab = true;
       this.searchedMonth = this.currentMonth;
       this.searchedYear = this.currentYear;
       this.getInquiryList({ month: parseInt(this.searchedMonth), year: this.searchedYear, name: this.searchedName, partyplot_ID: this.searchedPartyplot })
     }
-    else if (this.activeTab == 2) {
-
+    else if (url.includes('calender')) {
+      this.isInquiryTab = false;
       this.searchedMonth = this.currentMonth;
       this.searchedYear = this.currentYear;
       this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear, partyplot_ID: this.searchedPartyplot })
-
-
     }
-  }
-
-  constructor(private adminLayoutService: AdminLayoutService, private commonService: CommonService, private fb: FormBuilder, private router: Router) {
-
   }
 
   ngOnInit(): void {
@@ -141,7 +152,7 @@ export class InquiryComponent implements OnInit {
     }
 
     this.adminLayoutService.getInquiryListForCalenderView(inquiryObj).subscribe((response: any) => {
-      debugger
+
       if (response.meta.code == 200) {
         this.inquiryEvent = [];
         this.inquiryEvent = response.data;
@@ -149,13 +160,15 @@ export class InquiryComponent implements OnInit {
       else {
         this.inquiryEvent = [];
       }
-      
+
+      this.getCalenderCheckingInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName, partyplot_ID: this.searchedPartyplot })
+
       this.calendarOptions = {
         initialView: 'dayGridMonth',
         headerToolbar: {
           left: 'prev,next title',
           center: '',
-          right: 'myCustomButton'
+          right: ''
         },
 
         initialDate: new Date(this.searchedYear + '-' + this.searchedMonth),
@@ -167,10 +180,10 @@ export class InquiryComponent implements OnInit {
         events: this.inquiryEvent,
         eventClick: this.eventClickFunction.bind(this),
         customButtons: {
-          myCustomButton: {
-            text: 'List',
-            click: this.customeButton.bind(this)
-          },
+          // myCustomButton: {
+          //   text: 'List',
+          //   click: this.customeButton.bind(this)
+          // },
           next: {
             click: this.nextMonth.bind(this)
           },
@@ -182,15 +195,13 @@ export class InquiryComponent implements OnInit {
     //   let calendarApi = this.calendarComponent.getApi();
     // calendarApi.gotoDate(new Date(this.currentMonth + '-01-' + this.currentYear));
     })
-    debugger
-    //let calendarApi = this.calendarComponent.getApi();
-    //calendarApi.gotoDate(new Date(this.currentMonth + '-01-' + this.currentYear));
+
     this.calendarOptions = {
       initialView: 'dayGridMonth',
       headerToolbar: {
         left: 'prev,next title',
         center: '',
-        right: 'myCustomButton'
+        right: ''
       },
       businessHours: false, // display business hours
       editable: true,
@@ -199,10 +210,10 @@ export class InquiryComponent implements OnInit {
       events: this.inquiryEvent,
       eventClick: this.eventClickFunction.bind(this),
       customButtons: {
-        myCustomButton: {
-          text: 'List',
-          click: this.customeButton.bind(this)
-        },
+        // myCustomButton: {
+        //   text: 'List',
+        //   click: this.customeButton.bind(this)
+        // },
         next: {
           click: this.nextMonth.bind(this)
         },
@@ -237,7 +248,7 @@ export class InquiryComponent implements OnInit {
 
   addInquiryByDate() {
     if (!!this.startDateObj) {
-      debugger
+
       // if (!!this.startDateObj && !!this.endDateObj) {
       $('#add-inquiry-modal').modal('hide');
       this.router.navigate(["/admin/add-inquiry"], {
@@ -254,27 +265,102 @@ export class InquiryComponent implements OnInit {
   }
 
   customeButton(customButton) {
-    this.tabClick(1);
+    // this.tabClick(1);
   }
 
   // date selction through open popup
   handleDateClick(arg) {
-    debugger
-    // this.startDateObj = arg.date
-    if (new Date() < arg.date) {
-      this.router.navigate(["/admin/inquiry/add-inquiry"], {
-        queryParams: {
-          startDate: arg.date,
-          // endDate: this.endDateObj
-        }
-      })
+
+    // let firstDateOfMonth = new Date(this.searchedYear, this.searchedMonth - 1, 1);
+    // let lastDateOfMonth = new Date(this.searchedYear, this.searchedMonth, 0);
+
+    // for (let i = 0; i < this.inquiryCalenderCheckEventList.length; i++) {
+    //   let checkDate = moment(this.inquiryCalenderCheckEventList[i].startDateObj).format("yyyy-MM-DD");
+    //   let ArgDate = moment(arg.date).format("yyyy-MM-DD");
+
+    //   if (checkDate == ArgDate) {
+    //     if (this.inquiryCalenderCheckEventList[i].approvestatus == 2) {
+    //       break;
+    //     }
+    //     else {
+    //       if (firstDateOfMonth < arg.date) {
+    //         if (new Date() <= arg.date && arg.date <= lastDateOfMonth) {
+    //           this.router.navigate(["/admin/inquiry/add-inquiry"], {
+    //             queryParams: {
+    //               startDate: arg.date,
+    //             }
+    //           })
+    //         }
+    //       }
+    //     }
+    //   }
+    //   else {
+    //     if (firstDateOfMonth < arg.date) {
+    //       if (new Date() < arg.date && arg.date <= lastDateOfMonth) {
+    //         this.router.navigate(["/admin/inquiry/add-inquiry"], {
+    //           queryParams: {
+    //             startDate: arg.date,
+    //           }
+    //         })
+    //       }
+    //     }
+    //   }
+
+    // }
+
+    // if (firstDateOfMonth < arg.date) {
+    //   if (new Date() < arg.date && arg.date <= lastDateOfMonth) {
+    //     this.router.navigate(["/admin/inquiry/add-inquiry"], {
+    //       queryParams: {
+    //         startDate: arg.date,
+    //       }
+    //     })
+    //   }
+    // }
+
+    let obj = {
+      date: moment(arg.date).add(5, 'hour').add(30, 'minute').toJSON()
     }
+
+    this.adminLayoutService.getCheckInquiryListData(obj).subscribe((Response: any) => {
+      if (Response.meta.code == 2010) {
+        // not inquiry  
+        if (new Date() < arg.date) {
+          this.router.navigate(["/admin/inquiry/add-inquiry"], {
+            queryParams: {
+              startDate: arg.date,
+              // endDate: this.endDateObj
+            }
+          })
+        }
+      }
+      else if (Response.meta.code == 2011) {
+        // available inquiry
+        return;
+      }
+
+    })
+
+    // if (new Date() < arg.date) {
+    //   this.router.navigate(["/admin/inquiry/add-inquiry"], {
+    //     queryParams: {
+    //       startDate: arg.date,
+    //       // endDate: this.endDateObj
+    //     }
+    //   })
+    // }
+
+
+
+
+    // this.startDateObj = arg.date
+
     // $('#add-inquiry-modal').modal('show');
   }
 
   // For Next Month Click
   nextMonth(): void {
-    debugger
+
     let calendarApi = this.calendarComponent.getApi();
     calendarApi.next();
     let month = calendarApi.currentData.currentDate.toJSON();
@@ -307,7 +393,7 @@ export class InquiryComponent implements OnInit {
 
   // all data get by date wise given thorugh api 
   eventClickFunction(eventInformation) {
-    debugger
+
     let inquiryObj = {
 
       date: eventInformation.event._def.extendedProps.date,
@@ -408,6 +494,28 @@ export class InquiryComponent implements OnInit {
     })
 
   }
+  getCalenderCheckingInquiryList(data: any) {
+
+    let inquiryObj = {
+      month: data.month ? data.month : null,
+      year: data.year ? data.year : null,
+      name: data.name ? data.name : null,
+      partyplot_ID: data.partyplot_ID ? data.partyplot_ID : null
+    }
+
+    this.inquiryCalenderCheckEventList = [];
+    this.adminLayoutService.getInquiryList(inquiryObj).subscribe((response: any) => {
+      if (response.meta.code == 200) {
+        this.inquiryCalenderCheckEventList = response.data;
+        this.noData = false;
+      }
+      else {
+        this.inquiryCalenderCheckEventList = [];
+        this.noData = true;
+      }
+    })
+
+  }
 
   searchFilterInquiryList() {
     this.currentYear = this.searchedYear;
@@ -477,7 +585,7 @@ export class InquiryComponent implements OnInit {
       if (Response.meta.code == 200) {
         this.assignpartyplotList = Response.data;
         this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
-        this.tabClick(this.activeTab);
+        // this.tabClick(this.activeTab);
       }
       //for select sub industry step
     },
@@ -514,7 +622,7 @@ export class InquiryComponent implements OnInit {
     // );
     this.defaultForm();
     console.log(data);
-    debugger
+
     // set value in form
     this.inquiryForm.controls._id.setValue(data._id)
     this.inquiryForm.controls.name.setValue(data.name)
@@ -601,7 +709,7 @@ export class InquiryComponent implements OnInit {
 
 
 
-        this.tabClick(this.activeTab);
+        // this.tabClick(this.activeTab);
         $('#cancel-booking-modal').modal('hide');
       }
     })
