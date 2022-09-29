@@ -29,3 +29,6 @@
 table tr:last-child .boader-top-1:last-child {
   border-bottom: none;
 }
+table tr th , table tr td {
+  padding: 0.5rem 0 0.5rem 0.5rem;
+}

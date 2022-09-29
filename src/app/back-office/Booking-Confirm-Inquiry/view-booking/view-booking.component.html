@@ -116,7 +116,7 @@
                             <div style="padding: 7px 0;">
                                 <h5><strong>{{item.controls.categoryName.value}}</strong></h5>
                             </div>
-                            <table class="w-100 " formArrayName="packageCategoryList">
+                            <table class="w-100" formArrayName="packageCategoryList">
                                 <tr [formGroupName]="x" class="boader-top-1"
                                     *ngFor="let citem of item.get('packageCategoryList')['controls']; let x = index;">
                                     <td class="text-center w-5">{{x+1}}</td>
