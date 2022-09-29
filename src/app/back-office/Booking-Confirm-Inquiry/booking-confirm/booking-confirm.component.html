@@ -88,8 +88,14 @@
                     </table>
                 </div>
             </div>
-            <hr class="my-3">
-
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Package</h5>
+            <!-- <button type="button" class="btn btn-primary">Edit</button> -->
+        </div>
+        <div class="card-body">
             <form role="form" class="add-employee-form" autocomplete="off" [formGroup]="bookingDataForm">
                 <div>
                     <!-- <div class="row">
@@ -217,53 +223,7 @@
                         </span>
                     </div>
                     <hr class="my-3">
-                    <div class="card-header d-flex justify-content-between align-items-center px-0">
-                        <h5 class="mb-0">Extra Item</h5>
-                    </div>
-                    <div formArrayName="extradecoration">
-                        <div class="d-sm-block d-lg-flex align-items-center clear-fix" [formGroupName]="y"
-                            *ngFor="let citem of bookingDataForm.get('extradecoration')['controls']; let y = index;">
-                            <div class="w-100">
-                                <div class="row align-items-center clear-fix">
-                                    <div class="col-lg-4 col-md-6 mb-3">
-                                        <label class="form-label required" for="basic-default-company">Item</label>
-                                        <input type="text" formControlName="item" class="form-control"
-                                            id="basic-default-company" placeholder="Enter Guest Count" />
-                                        <div *ngIf="submittedExtraItemData[y] && citem.controls.item.errors">
-                                            <div *ngIf="citem.controls.item.errors.required">
-                                                <span class="error_msg">Item is Required.</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 mb-3">
-                                        <label for="nameBasic" class="form-label">Description</label>
-                                        <textarea style="height:38px;" id="basic-default-message"
-                                            formControlName="description" class="form-control"
-                                            placeholder="Description"></textarea>
-                                    </div>
-                                    <div class="col-lg-2 col-md-6 mb-3">
-                                        <label class="form-label required" for="basic-default-company">Quantity</label>
-                                        <input type="text" class="form-control" id="basic-default-company"
-                                            formControlName="quantity" placeholder="Enter Quantity" />
-                                        <div *ngIf="submittedExtraItemData[y] && citem.controls.quantity.errors">
-                                            <div *ngIf="citem.controls.quantity.errors.required">
-                                                <span class="error_msg">Quantity is Required.</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 mt-3">
-                                        <button type="button" class="btn btn-label-danger" aria-label="Close"
-                                            (click)="deletCategoryList(y)">
-                                            <i class="bx bx-x"></i>
-                                            <span class="align-middle">Delete</span>
-                                        </button>
-                                    </div>
-                                </div>
 
-                                <hr class="my-3">
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
                 <div>
@@ -273,13 +233,64 @@
                         Item</button>
                 </div>
             </form>
-            <div class="float-end">
-                <button type="submit" class="btn btn-primary" (click)="saveBookingConfirmInquiryEvent()">Save
-                    Booking</button>
-            </div>
-            <!-- <div>
-                <button type="button" class="btn btn-primary mt-3">Add Category</button>
-            </div> -->
         </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Extra Item</h5>
+            <!-- <button type="button" class="btn btn-primary">Edit</button> -->
+        </div>
+        <div class="card-body">
+            <form role="form" class="add-employee-form" autocomplete="off" [formGroup]="bookingDataForm">
+                <div formArrayName="extradecoration">
+                    <div class="d-sm-block d-lg-flex align-items-center clear-fix" [formGroupName]="y"
+                        *ngFor="let citem of bookingDataForm.get('extradecoration')['controls']; let y = index;">
+                        <div class="w-100">
+                            <div class="row align-items-center clear-fix">
+                                <div class="col-lg-4 col-md-6 mb-3">
+                                    <label class="form-label required" for="basic-default-company">Item</label>
+                                    <input type="text" formControlName="item" class="form-control"
+                                        id="basic-default-company" placeholder="Enter Guest Count" />
+                                    <div *ngIf="submittedExtraItemData[y] && citem.controls.item.errors">
+                                        <div *ngIf="citem.controls.item.errors.required">
+                                            <span class="error_msg">Item is Required.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 mb-3">
+                                    <label for="nameBasic" class="form-label">Description</label>
+                                    <textarea style="height:38px;" id="basic-default-message"
+                                        formControlName="description" class="form-control"
+                                        placeholder="Description"></textarea>
+                                </div>
+                                <div class="col-lg-2 col-md-6 mb-3">
+                                    <label class="form-label required" for="basic-default-company">Quantity</label>
+                                    <input type="text" class="form-control" id="basic-default-company"
+                                        formControlName="quantity" placeholder="Enter Quantity" />
+                                    <div *ngIf="submittedExtraItemData[y] && citem.controls.quantity.errors">
+                                        <div *ngIf="citem.controls.quantity.errors.required">
+                                            <span class="error_msg">Quantity is Required.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 mt-3">
+                                    <button type="button" class="btn btn-label-danger" aria-label="Close"
+                                        (click)="deletCategoryList(y)">
+                                        <i class="bx bx-x"></i>
+                                        <span class="align-middle">Delete</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <hr class="my-3">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="float-end">
+        <button type="submit" class="btn btn-primary" (click)="saveBookingConfirmInquiryEvent()">Save
+            Booking</button>
     </div>
 </div>
