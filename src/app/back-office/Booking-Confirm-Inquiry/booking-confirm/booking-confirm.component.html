@@ -143,7 +143,7 @@
 
                     <div class="row">
                         <div class="col-lg-6 col-md-6 mb-3">
-                            <label for="nameBasic" class="form-label">Package Select</label>
+                            <label for="nameBasic" class="form-label required">Package Select</label>
                             <ng-select [items]="packageList" [multiple]="false" class="form-control p-0 me-3"
                                 bindLabel="packageName" bindValue="_id" [clearable]="false" formControlName="packageId"
                                 (change)="onActivePackageChange($event)" placeholder="Select Package">
@@ -226,7 +226,7 @@
                             <div class="w-100">
                                 <div class="row align-items-center clear-fix">
                                     <div class="col-lg-4 col-md-6 mb-3">
-                                        <label class="form-label" for="basic-default-company">Item</label>
+                                        <label class="form-label required" for="basic-default-company">Item</label>
                                         <input type="text" formControlName="item" class="form-control"
                                             id="basic-default-company" placeholder="Enter Guest Count" />
                                         <div *ngIf="submittedExtraItemData[y] && citem.controls.item.errors">
@@ -242,7 +242,7 @@
                                             placeholder="Description"></textarea>
                                     </div>
                                     <div class="col-lg-2 col-md-6 mb-3">
-                                        <label class="form-label" for="basic-default-company">Quantity</label>
+                                        <label class="form-label required" for="basic-default-company">Quantity</label>
                                         <input type="text" class="form-control" id="basic-default-company"
                                             formControlName="quantity" placeholder="Enter Quantity" />
                                         <div *ngIf="submittedExtraItemData[y] && citem.controls.quantity.errors">

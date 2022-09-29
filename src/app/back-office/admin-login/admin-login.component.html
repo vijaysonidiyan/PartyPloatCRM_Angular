@@ -40,8 +40,8 @@
                                         <label class="form-label" for="password">Password</label>
                                     </div>
                                     <div class="input-group input-group-merge">
-                                        <input [type]="hide1 ? 'text' : 'password'" (keyup.enter)="handleKeyUp($event)"
-                                            formControlName="pwd" id="password" class="form-control" name="password"
+                                        <input [type]="hide1 ? 'text' : 'password'" formControlName="pwd" id="password"
+                                            class="form-control" name="password"
                                             placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                             aria-describedby="password" />
                                         <span (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'"
@@ -92,6 +92,10 @@
                                         <div *ngIf="fForgotpwdData.email.errors.required">
                                             <span class="error_msg">Email ID is Required.</span>
                                         </div>
+                                        <div
+                                            *ngIf="!fForgotpwdData.email.errors.valid && !fForgotpwdData.email.errors.required">
+                                            <span class="error_msg">Please Enter Valid Email ID.</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="mb-3">
@@ -127,7 +131,8 @@
                             <form id="formAuthentication" class="mb-3" method="POST" [formGroup]="otpForm">
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Enter 4 Digit OTP</label>
-                                    <ng-otp-input [config]="config" (onInputChange)="onOtpChange($event)"></ng-otp-input>
+                                    <ng-otp-input [config]="config" (onInputChange)="onOtpChange($event)">
+                                    </ng-otp-input>
                                     <div class=""><span class="error_msg">{{otpMessage}}</span></div>
                                 </div>
                                 <div class="mb-3">
@@ -142,13 +147,14 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <button class="btn btn-primary d-grid w-100" type="submit" (click)="otpVerify()">Submit</button>
+                                    <button class="btn btn-primary d-grid w-100" type="submit"
+                                        (click)="otpVerify()">Submit</button>
                                 </div>
                                 <div class="text-center">
-                                    
+
                                 </div>
                             </form>
-                       </div>
+                        </div>
                         <div class="card-body" *ngIf="activeTab == 4">
                             <!-- Logo -->
                             <div class="app-brand justify-content-center">
@@ -162,24 +168,29 @@
                             <h4 class="mb-4">Reset Password</h4>
 
                             <form class="mb-3" [formGroup]="resetpwdForm">
-                                <input type="hidden" formControlName="user_id"/>
+                                <input type="hidden" formControlName="user_id" />
                                 <div class="mb-3 form-password-toggle">
                                     <div class="d-flex justify-content-between">
                                         <label class="form-label" for="password">Password</label>
                                     </div>
                                     <div class="input-group input-group-merge">
                                         <input [type]="hide1 ? 'text' : 'password'" (keyup.enter)="handleKeyUp($event)"
-                                        formControlName="pwd" id="password" class="form-control" name="password"
-                                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        aria-describedby="password" />
+                                            formControlName="pwd" id="password" class="form-control" name="password"
+                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                            aria-describedby="password" />
                                         <span (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'"
                                             [attr.aria-pressed]="hide1" class="input-group-text cursor-pointer"><i
                                                 class="bx {{hide1 ? 'bx-show' : 'bx-hide'}}"></i></span>
-                                        <div *ngIf="submittedresetpwdFormData && fResetpwdData.pwd.errors" class="text-right">
-                                            <div *ngIf="fResetpwdData.pwd.errors.required">
-                                                <span class="error_msg">Password is Required.</span>
-                                            </div>
+                                    </div>
+                                    <div *ngIf="submittedresetpwdFormData && fResetpwdData.pwd.errors"
+                                        class="text-right">
+                                        <div *ngIf="fResetpwdData.pwd.errors.required">
+                                            <span class="error_msg">Password is Required.</span>
                                         </div>
+                                        <div *ngIf="fResetpwdData.pwd.errors?.invalidPassword" class="error_msg">
+                                            Password
+                                            must contain atleast one number,one Alphabetic character and special
+                                            characters.</div>
                                     </div>
                                 </div>
                                 <div class="mb-3 form-password-toggle">
@@ -188,21 +199,27 @@
                                     </div>
                                     <div class="input-group input-group-merge">
                                         <input [type]="hide2 ? 'text' : 'password'" (keyup.enter)="handleKeyUp($event)"
-                                            formControlName="confirmPwd" id="password" class="form-control" name="password"
+                                            formControlName="confirmPwd" id="password" class="form-control"
+                                            name="password"
                                             placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                             aria-describedby="password" />
                                         <span (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'"
                                             [attr.aria-pressed]="hide2" class="input-group-text cursor-pointer"><i
                                                 class="bx {{hide2 ? 'bx-show' : 'bx-hide'}}"></i></span>
-                                        <div *ngIf="submittedresetpwdFormData && fResetpwdData.confirmPwd.errors" class="text-right">
-                                            <div *ngIf="fResetpwdData.confirmPwd.errors.required">
-                                                <span class="error_msg">Password is Required.</span>
-                                            </div>
+                                    </div>
+                                    <div *ngIf="submittedresetpwdFormData && fResetpwdData.confirmPwd.errors"
+                                        class="text-right">
+                                        <div *ngIf="fResetpwdData.confirmPwd.errors.required">
+                                            <span class="error_msg">Confirm Password is Required.</span>
                                         </div>
+                                        <div *ngIf="fResetpwdData.confirmPwd.errors?.mustMatch" class="error_msg">
+                                            Passwords
+                                            must match</div>
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <button class="btn btn-primary d-grid w-100" type="submit" (click)="resetpassword()">Submit</button>
+                                    <button class="btn btn-primary d-grid w-100" type="submit"
+                                        (click)="resetpassword()">Submit</button>
                                 </div>
                                 <div class="text-center">
                                     <a href="javascript:void(0);" (click)="backtoLogin()">
@@ -211,7 +228,7 @@
                                     </a>
                                 </div>
                             </form>
-                        </div> 
+                        </div>
                         <div class="card-body" *ngIf="activeTab == 5">
                             <!-- Logo -->
                             <div class="app-brand justify-content-center">
@@ -271,7 +288,8 @@
                                     </div>
                                 </div> -->
                                 <div class="mb-3">
-                                    <button class="btn btn-primary d-grid w-100" type="submit" (click)="newPassword()">Submit</button>
+                                    <button class="btn btn-primary d-grid w-100" type="submit"
+                                        (click)="newPassword()">Submit</button>
                                 </div>
                                 <div class="text-center">
                                     <a href="javascript:void(0);" (click)="backtoLogin()">
@@ -280,7 +298,7 @@
                                     </a>
                                 </div>
                             </form>
-                        </div> 
+                        </div>
                     </div>
                     <!-- /Register -->
                 </div>

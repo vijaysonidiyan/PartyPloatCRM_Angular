@@ -234,7 +234,7 @@
                                                             <li class="mb-2 accordion-data">
                                                                 <i class="bx bxs-calendar"></i>
                                                                 <div>
-                                                                    <span>From Date1:</span>
+                                                                    <span>From Date:</span>
                                                                     <span>{{inquiryDataByDate.startDateObj |
                                                                         date:'dd/MM/yyyy, hh:mm a':'+0000'}}</span>
                                                                 </div>
@@ -259,7 +259,7 @@
                                                             <div class="dropdown-menu dropdown-menu-end"
                                                                 aria-labelledby="cardOpt6">
                                                                 <a class="dropdown-item"
-                                                                    (click)="viewInquiry(inquiryDataByDate.clientInquiryId)">
+                                                                    (click)="viewInquiry(inquiryDataByDate.clientInquiryId,inquiryDataByDate.approvestatus,inquiryDataByDate.inquirybookingId)">
                                                                     View More
                                                                 </a>
                                                                 <a class="dropdown-item"

@@ -3,14 +3,15 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginLayoutRoutes } from './login-layout.routing';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatRippleModule} from '@angular/material/core';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatSelectModule} from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatRippleModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
 import { AdminLoginComponent } from 'app/back-office/admin-login/admin-login.component';
 import { NgOtpInputModule } from 'ng-otp-input';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { NgOtpInputModule } from 'ng-otp-input';
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    NgxSpinnerModule,
     NgOtpInputModule
   ],
   declarations: [
@@ -31,4 +33,4 @@ import { NgOtpInputModule } from 'ng-otp-input';
   ]
 })
 
-export class LoginLayoutModule {}
+export class LoginLayoutModule { }

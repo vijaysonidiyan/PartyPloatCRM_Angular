@@ -50,8 +50,8 @@ export class AddPackageMasterComponent implements OnInit {
   defaultForm() {
     this.packageDataForm = this.fb.group({
       _id: [''],
-      packageName: [''],
-      partyplot_ID: [null],
+      packageName: ['', [Validators.required]],
+      partyplot_ID: [null, [Validators.required]],
       package: this.fb.array([]),
     });
   }

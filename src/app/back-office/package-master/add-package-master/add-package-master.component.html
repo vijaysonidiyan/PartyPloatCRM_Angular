@@ -14,16 +14,26 @@
             <form role="form" class="add-employee-form" autocomplete="off" [formGroup]="packageDataForm">
                 <div class="row">
                     <div class="col-lg-4 col-md-6 mb-3">
-                        <label for="nameBasic" class="form-label">Package Name</label>
+                        <label for="nameBasic" class="form-label required">Package Name</label>
                         <input type="text" class="form-control" id="basic-default-company"
                             placeholder="Enter Package Name" formControlName="packageName" />
+                        <div *ngIf="submittedPackageData && fclientinquiryData.packageName.errors">
+                            <div *ngIf="fclientinquiryData.packageName.errors.required">
+                                <span class="error_msg">Package Name is Required.</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-4 col-md-6 mb-3">
-                        <label for="nameBasic" class="form-label">Party Plot</label>
+                        <label for="nameBasic" class="form-label required">Party Plot</label>
                         <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0 me-3"
                             bindLabel="name" bindValue="_id" formControlName="partyplot_ID"
                             placeholder="Select Party Plot">
                         </ng-select>
+                        <div *ngIf="submittedPackageData && fclientinquiryData.partyplot_ID.errors">
+                            <div *ngIf="fclientinquiryData.partyplot_ID.errors.required">
+                                <span class="error_msg">Party Plot is Required.</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <hr class="my-3">
@@ -43,7 +53,7 @@
                                 <div class="w-100">
                                     <div class="row align-items-center clear-fix">
                                         <div class="col-lg-4 col-md-6 mb-3">
-                                            <label class="form-label" for="basic-default-company">Item</label>
+                                            <label class="form-label required" for="basic-default-company">Item</label>
                                             <input type="text" formControlName="item" class="form-control"
                                                 id="basic-default-company" placeholder="Enter Guest Count" />
                                             <div *ngIf="submittedPackageData && citem.controls.item.errors">

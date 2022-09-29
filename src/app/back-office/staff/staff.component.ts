@@ -30,6 +30,7 @@ export class StaffComponent implements OnInit {
 
   @ViewChild('filedocument') fileDocument: ElementRef;
   StaffDocumentList: any;
+  documentError: boolean = false;
 
   get fnameData() {
     return this.staffForm.controls;
@@ -61,6 +62,12 @@ export class StaffComponent implements OnInit {
   onDocumentChange(event) {
     debugger
     this.userFile = event.target.files[0];
+    if (!!this.userFile) {
+      this.documentError = false;
+    }
+    else {
+      this.documentError = true
+    }
     this.filedocument = this.userFile.name;
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
@@ -84,10 +91,10 @@ export class StaffComponent implements OnInit {
       name: ["", [Validators.required]],
       email: ["", [Validators.required, Validators.email]],
       contact: ["", [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
-      roleId: [null],
+      roleId: [null, [Validators.required]],
       reference: [""],
       // aadharcardNo: [""],
-      partyplotData: [""],
+      partyplotData: ["", [Validators.required]],
       roleName: [""],
       isLogin: false
     });
@@ -97,6 +104,7 @@ export class StaffComponent implements OnInit {
     $("#add-staff-modal").modal("show");
     this.ISeditStaff = false;
     this.ISviewStaff = false;
+    this.submittedStaffData = false;
   }
 
   cancelStaff() {
@@ -104,14 +112,17 @@ export class StaffComponent implements OnInit {
     this.defaultForm();
     this.ISeditStaff = false;
     this.ISviewStaff = false;
+    this.submittedStaffData = false;
     this.StaffDocumentList = [];
   }
   addDoc() {
+    this.documentError = false;
     $("#add-staff-modal").modal("hide");
     $("#add-document-modal").modal("show");
   }
 
   cancelDoc() {
+    this.documentError = false;
     $("#add-staff-modal").modal("show");
     $("#add-document-modal").modal("hide");
   }
@@ -176,6 +187,7 @@ export class StaffComponent implements OnInit {
   }
   savedoc() {
     if (this.userFile == null) {
+      this.documentError = true;
       return
     }
     let staffDocumentModelObj: FormData = new FormData();
@@ -198,19 +210,8 @@ export class StaffComponent implements OnInit {
       });
   }
   savestaff() {
-    if (this.staffForm.value.partyplotData.length === 0) {
-      this.partyplotInvalid = true;
-    } else {
-      this.partyplotInvalid = false;
-    }
 
-    if (this.staffForm.value.roleId === null) {
-      this.roleInvalid = true;
-    } else {
-      this.roleInvalid = false;
-    }
-
-    if (this.staffForm.invalid || this.partyplotInvalid === true || this.roleInvalid === true) {
+    if (this.staffForm.invalid) {
       this.submittedStaffData = true;
       return;
     }
@@ -286,19 +287,7 @@ export class StaffComponent implements OnInit {
 
   updatestaff() {
 
-    if (this.staffForm.value.partyplotData.length === 0) {
-      this.partyplotInvalid = true;
-    } else {
-      this.partyplotInvalid = false;
-    }
-
-    if (this.staffForm.value.roleId === null) {
-      this.roleInvalid = true;
-    } else {
-      this.roleInvalid = false;
-    }
-
-    if (this.staffForm.invalid || this.partyplotInvalid === true || this.roleInvalid === true) {
+    if (this.staffForm.invalid) {
       this.submittedStaffData = true;
       return;
     }

@@ -36,19 +36,22 @@ export class RoleMasterComponent implements OnInit {
     defaultForm() {
         this.rolemasterForm = this.fb.group({
             _id: [''],
-            roleName: ['', [Validators.required, Validators.pattern('([a-z]|[A-Z])*')]],
+            roleName: ['', [Validators.required]],
         });
     }
 
     addRole() {
         $("#add-role-modal").modal("show");
         this.ISeditRoleMaster = false;
+        this.defaultForm();
+        this.submittedroleMasterData = false;
     }
 
     cancelRolemaster() {
         $("#add-role-modal").modal("hide");
         this.defaultForm();
         this.ISeditRoleMaster = false;
+        this.submittedroleMasterData = false;
     }
 
     saveRolemaster() {

@@ -114,7 +114,7 @@
                 <form role="form" class="add-employee-form" [formGroup]="staffForm" autocomplete="off">
                     <div class="row">
                         <div class="col-lg-4 mb-3">
-                            <label for="nameBasic" class="form-label">Name</label>
+                            <label for="nameBasic" class="form-label required">Name</label>
                             <input type="text" id="nameBasic" class="form-control" [readonly]="ISviewStaff === true"
                                 placeholder="Enter Name" formControlName="name" />
                             <div *ngIf="submittedStaffData && fnameData.name.errors">
@@ -124,7 +124,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 mb-3">
-                            <label class="form-label" for="basic-default-phone">Phone No</label>
+                            <label class="form-label required" for="basic-default-phone">Phone No</label>
                             <input type="text" id="basic-default-phone" class="form-control phone-mask"
                                 [readonly]="ISviewStaff === true" placeholder="658 799 8941" formControlName="contact"
                                 maxlength="10" minlength="10" appNumbersOnly>
@@ -148,7 +148,7 @@
                                 mask="0000 0000 0000" placeholder="9999 9999 9999" formControlName="aadharcardNo">
                         </div> -->
                         <div class="col-lg-4 mb-3">
-                            <label for="nameBasic" class="form-label">Email</label>
+                            <label for="nameBasic" class="form-label required">Email</label>
                             <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
                                 [readonly]="ISviewStaff === true" aria-label="john.doe"
                                 aria-describedby="basic-default-email2" formControlName="email">
@@ -162,23 +162,30 @@
                             </div>
                         </div>
                         <div class="col-lg-4 mb-3">
-                            <label for="nameBasic" class="form-label">Designation</label>
+                            <label for="nameBasic" class="form-label required">Designation</label>
                             <ng-select [items]="activeroleList" class="form-control p-0" bindLabel="roleName"
                                 [readonly]="ISviewStaff === true" bindValue="_id" placeholder="Select Role"
                                 formControlName="roleId">
                             </ng-select>
-                            <div *ngIf="submittedStaffData && roleInvalid === true">
+                            <!-- <div *ngIf="submittedStaffData && roleInvalid === true">
                                 <span class="error_msg text-danger">Designation is Required.</span>
+                            </div> -->
+                            <div *ngIf="submittedStaffData && fnameData.roleId.errors">
+                                <div *ngIf="fnameData.roleId.errors.required">
+                                    <span class="error_msg text-danger">Designation is Required.</span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-4 mb-3">
-                            <label for="nameBasic" class="form-label">Select Party plot</label>
+                            <label for="nameBasic" class="form-label required">Select Party plot</label>
                             <ng-select [items]="partyplotList" [multiple]="true" [closeOnSelect]="false"
                                 [readonly]="ISviewStaff === true" class="form-control p-0" bindLabel="name"
                                 bindValue="_id" formControlName="partyplotData" placeholder="Select Module">
                             </ng-select>
-                            <div *ngIf="submittedStaffData && partyplotInvalid === true">
-                                <span class="error_msg text-danger">Party plot is Required.</span>
+                            <div *ngIf="submittedStaffData && fnameData.partyplotData.errors">
+                                <div *ngIf="fnameData.partyplotData.errors.required">
+                                    <span class="error_msg text-danger">Party Plot is Required.</span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-4 mb-3">
@@ -238,7 +245,7 @@
             </div>
             <div class="modal-body">
                 <div class="col-lg-12">
-                    <label for="formFile" class="form-label">Upload Documemt</label>
+                    <label for="formFile" class="form-label required">Upload Documemt</label>
                     <input class="form-control" type="file" accept="image/* , .pdf" #filedocument
                         (change)="onDocumentChange($event)">
                     <!-- for new document remove and show  -->
@@ -250,6 +257,9 @@
                         <div class="doc-file form-control" *ngIf="!!userFile">
                             <p class="doc-text-ellipsis">{{userFile?.name}}</p>
                             <button type="button" class="event-btn-close ml-10" (click)="removeDocument()"></button>
+                        </div>
+                        <div *ngIf="documentError == true">
+                            <span class="error_msg text-danger">Please Upload Document.</span>
                         </div>
                     </div>
                 </div>

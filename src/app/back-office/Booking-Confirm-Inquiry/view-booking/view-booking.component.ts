@@ -67,6 +67,7 @@ export class ViewBookingComponent implements OnInit {
       referenceName: [''],
       clientname: [''],
       offer_budget: [''],
+      extraDecorBudget: [''],
       package: this.fb.array([]),
       extradecoration: this.fb.array([])
     })
@@ -134,6 +135,7 @@ export class ViewBookingComponent implements OnInit {
         this.viewBookingForm.controls.referenceName.setValue(Response.data.referenceName);
         this.viewBookingForm.controls.clientname.setValue(Response.data.clientname);
         this.viewBookingForm.controls.offer_budget.setValue(Response.data.offer_budget);
+        this.viewBookingForm.controls.extraDecorBudget.setValue(Response.data.extraDecorBudget);
         Response.data.package.forEach((x: any) => {
           this.addPackageItem(x)
         })
@@ -324,6 +326,7 @@ export class ViewBookingComponent implements OnInit {
         Response.data.extradecoration.forEach((x: any) => {
           this.eventList.push(this.createExtraItem(x))
         })
+        this.viewBookingForm.controls.extraDecorBudget.setValue(Response.data.extraDecorBudget);
         this.isEditExtraItem = false;
       }
     })
@@ -339,7 +342,8 @@ export class ViewBookingComponent implements OnInit {
 
     let updateExtraDecorationItemObj = {
       _id: this.bookingConfirmId,
-      extradecoration: this.viewBookingForm.controls.extradecoration.value
+      extradecoration: this.viewBookingForm.controls.extradecoration.value,
+      extraDecorBudget: this.viewBookingForm.controls.extraDecorBudget.value
     }
     this.adminLayoutService.updateExtraItemDataList(updateExtraDecorationItemObj).subscribe((Response: any) => {
       if (Response.meta.code == 200) {

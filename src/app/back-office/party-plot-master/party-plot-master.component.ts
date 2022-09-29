@@ -47,18 +47,20 @@ export class PartyPlotMasterComponent implements OnInit {
       _id: ["0"],
       name: ["", [Validators.required]],
       address: ["", [Validators.required]],
-      events: [""],
+      events: ["", [Validators.required]],
     });
   }
 
   addPartyplot() {
     $("#add-menu-modal").modal("show");
     this.ISeditPartyplot = false;
+    this.submittedPartyplotData = false;
   }
 
   cancelPartyplot() {
     $("#add-menu-modal").modal("hide");
     this.defaultForm();
+    this.submittedPartyplotData = false;
     this.ISeditPartyplot = false;
   }
 
@@ -100,13 +102,8 @@ export class PartyPlotMasterComponent implements OnInit {
   }
 
   savePartyplot() {
-    if (this.partyplotForm.value.events.length === 0) {
-      this.eventInvalid = true;
-    } else {
-      this.eventInvalid = false;
-    }
 
-    if (this.partyplotForm.invalid || this.eventInvalid === true) {
+    if (this.partyplotForm.invalid) {
       this.submittedPartyplotData = true;
       return;
     }
@@ -153,13 +150,8 @@ export class PartyPlotMasterComponent implements OnInit {
   }
 
   updatePartyplot() {
-    if (this.partyplotForm.value.events.length === 0) {
-      this.eventInvalid = true;
-    } else {
-      this.eventInvalid = false;
-    }
 
-    if (this.partyplotForm.invalid || this.eventInvalid === true) {
+    if (this.partyplotForm.invalid) {
       this.submittedPartyplotData = true;
       return;
     }

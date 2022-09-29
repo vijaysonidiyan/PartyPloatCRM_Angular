@@ -53,12 +53,14 @@ export class VendorDetailsComponent implements OnInit {
   addMenu() {
     $("#add-menu-modal").modal("show");
     this.ISeditVendorDetails = false;
+    this.submittvendordetailsData = false;
   }
 
   cancelMenu() {
     $("#add-menu-modal").modal("hide");
     this.defaultForm();
     this.ISeditVendorDetails = false;
+    this.submittvendordetailsData = false;
   }
 
   saveVendorDetails() {

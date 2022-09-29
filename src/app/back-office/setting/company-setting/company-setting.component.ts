@@ -160,6 +160,7 @@ export class CompanySettingComponent implements OnInit {
   canclecompanySetting() {
     this.comapnyForm.disable();
     this.isEditing = false;
+    this.getcomapnySetting()
   }
   editcompanySetting() {
     this.comapnyForm.enable();

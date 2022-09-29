@@ -15,7 +15,7 @@
                 <div class="card border-solid-primary flex-row align-items-center ps-2">
                     <i class="bx bx-search fs-4 lh-0"></i>
                     <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
-                        aria-label="Search..."  (input)="search($event.target.value)"/>
+                        aria-label="Search..." (input)="search($event.target.value)" />
                 </div>
                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Vendor Details</h4> -->
                 <div class="btn-cus">
@@ -39,27 +39,32 @@
                             *ngFor="let rolemasterData of rolemasterList | paginate: { itemsPerPage: l, currentPage: p }; let roleMasterIndex = index">
                             <td>{{ l * (p - 1) + roleMasterIndex + 1 }}</td>
                             <td>
-                                <span *ngIf="rolemasterData.status == 1" class="badge bg-label-success me-1">Active</span>
-                                <span *ngIf="rolemasterData.status == 2" class="badge bg-label-danger me-1">Deactive</span>
+                                <span *ngIf="rolemasterData.status == 1"
+                                    class="badge bg-label-success me-1">Active</span>
+                                <span *ngIf="rolemasterData.status == 2"
+                                    class="badge bg-label-danger me-1">Deactive</span>
                             </td>
                             <td>
                                 <div class="d-flex" *ngIf="rolemasterData.isEditable === true">
                                     <button class="btn-bg"
                                         (click)="editRolemaster({id : rolemasterData._id, index : roleMasterIndex})"><i
-                                            class="bx bx-edit-alt " tooltip="Edit" placement="bottom" showDelay="100"tooltip="Edit" placement="bottom" showDelay="100"></i>
+                                            class="bx bx-edit-alt " tooltip="Edit" placement="bottom" showDelay="100"
+                                            tooltip="Edit" placement="bottom" showDelay="100"></i>
                                     </button>
                                     <button *ngIf="rolemasterData.status == 2" class="dtl-btn btn bg-gradient-dark"
                                         title="Active Role"
                                         (confirm-click)="statusRolemaster({id :rolemasterData._id,index:roleMasterIndex, status:1})"
                                         appConfirm [confirmTitle]="'Active'"
                                         [confirmContent]="'Are you sure to Active this Role Master?'"
-                                        class="btn-bg bg-label-success" tooltip="Add" placement="bottom" showDelay="100"><i class="bx bx-plus"></i></button>
+                                        class="btn-bg bg-label-success" tooltip="Add" placement="bottom"
+                                        showDelay="100"><i class="bx bx-plus"></i></button>
                                     <button *ngIf="rolemasterData.status == 1" class="dtl-btn btn bg-gradient-dark"
                                         title="Deactive Role"
                                         (confirm-click)="statusRolemaster({id :rolemasterData._id,index:roleMasterIndex, status:2})"
                                         appConfirm [confirmTitle]="'Deactive'"
                                         [confirmContent]="'Are you sure to Deactive this Role Master?'"
-                                        class="btn-bg bg-label-danger" tooltip="Delete" placement="bottom" showDelay="100"><i class="bx bx-trash"></i></button>
+                                        class="btn-bg bg-label-danger" tooltip="Delete" placement="bottom"
+                                        showDelay="100"><i class="bx bx-trash"></i></button>
                                 </div>
                             </td>
                             <td>{{ rolemasterData.roleName }}</td>
@@ -84,7 +89,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel1"><strong>{{ISeditRoleMaster ?
-                    'Edit' : 'Add New'}} Role Master</strong></h5>
+                        'Edit' : 'Add New'}} Role Master</strong></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                     (click)="cancelRolemaster()"></button>
             </div>
@@ -92,15 +97,12 @@
                 <form role="form" class="add-employee-form" [formGroup]="rolemasterForm" autocomplete="off">
                     <div class="row">
                         <div class="col mb-3">
-                            <label for="nameBasic" class="form-label">Role Name</label>
+                            <label for="nameBasic" class="form-label required">Role Name</label>
                             <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
                                 formControlName="roleName" />
                             <div *ngIf="submittedroleMasterData && fRolenameData.roleName.errors">
                                 <div *ngIf="fRolenameData.roleName.errors.required">
                                     <span class="error_msg">Role Name is Required.</span>
-                                </div>
-                                <div *ngIf="fRolenameData.roleName.errors.pattern">
-                                    <span class="error_msg text-danger">Email must be a valid email address.</span>
                                 </div>
                             </div>
                         </div>

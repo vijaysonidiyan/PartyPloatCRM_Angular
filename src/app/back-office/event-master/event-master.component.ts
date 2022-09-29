@@ -50,12 +50,14 @@ export class EventMasterComponent implements OnInit {
   addEventmaster() {
     $("#add-menu-modal").modal("show");
     this.ISeditEventMaster = false;
+    this.submittedeventMasterData = false;
   }
 
   cancelEventmaster() {
     $("#add-menu-modal").modal("hide");
     this.defaultForm();
     this.ISeditEventMaster = false;
+    this.submittedeventMasterData = false;
   }
 
   saveEventmaster() {

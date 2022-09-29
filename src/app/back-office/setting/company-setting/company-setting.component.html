@@ -2,7 +2,8 @@
     <div class="d-md-flex justify-content-end align-items-center mb-3">
         <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Comapny Setting</h4> -->
         <div class="btn-cus">
-            <button type="button" class="btn btn-primary m-0" *ngIf="isEditing === false" (click)="editcompanySetting()">
+            <button type="button" class="btn btn-primary m-0" *ngIf="isEditing === false"
+                (click)="editcompanySetting()">
                 Edit Company
             </button>
         </div>
@@ -15,7 +16,7 @@
             <form [formGroup]='comapnyForm' role="form" class="add-employee-form" autocomplete="off">
                 <div class="row">
                     <div class="col-lg-6 mb-3">
-                        <label for="nameBasic" class="form-label">Name</label>
+                        <label for="nameBasic" class="form-label required">Name</label>
                         <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
                             formControlName="name" />
                         <div *ngIf="submittedCompanyData && fnameData.name.errors">
@@ -25,11 +26,10 @@
                         </div>
                     </div>
                     <div class="col-lg-6 mb-3">
-                        <label class="form-label" for="basic-default-email">Comapny Email</label>
+                        <label class="form-label required" for="basic-default-email">Comapny Email</label>
                         <div class="input-group input-group-merge">
                             <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
-                                aria-label="john.doe" aria-describedby="basic-default-email2"
-                                formControlName="email" />
+                                aria-label="john.doe" aria-describedby="basic-default-email2" formControlName="email" />
                             <span class="input-group-text" id="basic-default-email2">@example.com</span>
                         </div>
                         <div *ngIf="submittedCompanyData && fnameData.email.errors">
@@ -43,9 +43,10 @@
                     </div>
 
                     <div class="col-lg-6 mb-3">
-                        <label class="form-label" for="basic-default-phone">Mobile No</label>
+                        <label class="form-label required" for="basic-default-phone">Mobile No</label>
                         <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                            placeholder="658 799 8941" formControlName="Telephone1" maxlength="10"  minlength="10" appNumbersOnly/>
+                            placeholder="658 799 8941" formControlName="Telephone1" maxlength="10" minlength="10"
+                            appNumbersOnly />
                         <div *ngIf="submittedCompanyData && fnameData.Telephone1.errors">
                             <div *ngIf="fnameData.Telephone1.errors.required">
                                 <span class="error_msg text-danger">Mobile is Required.</span>
@@ -58,23 +59,28 @@
                     <div class="col-lg-6 mb-3">
                         <label class="form-label" for="basic-default-phone">Tel No</label>
                         <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                            placeholder="658 799 8941" formControlName="Telephone2" maxlength="10"  minlength="10" appNumbersOnly/>
+                            placeholder="658 799 8941" formControlName="Telephone2" maxlength="10" minlength="10"
+                            appNumbersOnly />
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label for="formFile" class="form-label">Logo</label>
-                        <input class="form-control" type="file" [multiple]=false accept="image/*" formControlName="logo" #filelogo (change)="onLogoChange($event)">
+                        <input class="form-control" type="file" [multiple]=false accept="image/*" formControlName="logo"
+                            #filelogo (change)="onLogoChange($event)">
                         <div *ngIf="imgURLlogo" class="imgUpload">
                             <img [src]="imgURLlogo" alt="" width="100">
-                            <button *ngIf="isEditing === true" type="button" class="btn-close ml-10" data-bs-dismiss="modal" aria-label="Close" (click)="removeURLlogo()"></button>
+                            <button *ngIf="isEditing === true" type="button" class="btn-close ml-10"
+                                data-bs-dismiss="modal" aria-label="Close" (click)="removeURLlogo()"></button>
                         </div>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label class="form-label" for="basic-default-company">Signature</label>
-                        <input #filesignature type="file" class="form-control" id="basic-default-company" placeholder="ACME Inc." formControlName="signature" [multiple]=false accept="image/*" (change)="onSignatureChange($event)"/>
+                        <input #filesignature type="file" class="form-control" id="basic-default-company"
+                            placeholder="ACME Inc." formControlName="signature" [multiple]=false accept="image/*"
+                            (change)="onSignatureChange($event)" />
                         <div *ngIf="imgURLsignature" class="imgUpload">
                             <img [src]="imgURLsignature" alt="" width="100">
-                            <button *ngIf="isEditing === true" type="button" class="btn-close ml-10" data-bs-dismiss="modal" aria-label="Close"
-                                (click)="removeURLsignature()"></button>
+                            <button *ngIf="isEditing === true" type="button" class="btn-close ml-10"
+                                data-bs-dismiss="modal" aria-label="Close" (click)="removeURLsignature()"></button>
                         </div>
                     </div>
                 </div>
@@ -84,10 +90,11 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-6 mb-3">
-                        <label class="form-label" for="basic-default-email">Email</label>
+                        <label class="form-label required" for="basic-default-email">Email</label>
                         <div class="input-group input-group-merge">
                             <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
-                                aria-label="john.doe" aria-describedby="basic-default-email2" formControlName="SMTP_email" />
+                                aria-label="john.doe" aria-describedby="basic-default-email2"
+                                formControlName="SMTP_email" />
                             <span class="input-group-text" id="basic-default-email2">@example.com</span>
                         </div>
                         <div *ngIf="submittedCompanyData && fnameData.SMTP_email.errors">
@@ -100,10 +107,13 @@
                         </div>
                     </div>
                     <div class="col-lg-6 mb-3">
-                        <label for="html5-password-input" class="col-md-2 col-form-label">Password</label>
+                        <label for="html5-password-input" class="col-md-2 required col-form-label">Password</label>
                         <div class="input-group input-group-merge">
-                            <input class="form-control" type="password" value="password" id="html5-password-input" formControlName="SMTP_password" [type]="hide1 ? 'text' : 'password'">
-                            <span (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1" class="input-group-text cursor-pointer"><i class="bx {{hide1 ? 'bx-show' : 'bx-hide'}}"></i></span>
+                            <input class="form-control" type="password" value="password" id="html5-password-input"
+                                formControlName="SMTP_password" [type]="hide1 ? 'text' : 'password'">
+                            <span (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'"
+                                [attr.aria-pressed]="hide1" class="input-group-text cursor-pointer"><i
+                                    class="bx {{hide1 ? 'bx-show' : 'bx-hide'}}"></i></span>
                         </div>
                         <div *ngIf="submittedCompanyData && fnameData.SMTP_password.errors">
                             <div *ngIf="fnameData.SMTP_password.errors.required">
@@ -112,7 +122,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 mb-3">
-                        <label class="form-label" for="basic-default-company">Service</label>
+                        <label class="form-label required" for="basic-default-company">Service</label>
                         <input type="text" class="form-control" id="basic-default-company" placeholder="Service Select"
                             formControlName="service" />
                         <div *ngIf="submittedCompanyData && fnameData.service.errors">
@@ -122,7 +132,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 mb-3">
-                        <label class="form-label" for="basic-default-phone">Port</label>
+                        <label class="form-label required" for="basic-default-phone">Port</label>
                         <input type="text" id="basic-default-phone" class="form-control phone-mask"
                             placeholder="658 799" formControlName="port" />
                         <div *ngIf="submittedCompanyData && fnameData.port.errors">
@@ -132,7 +142,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 mb-3">
-                        <label class="form-label" for="basic-default-phone">SMTP</label>
+                        <label class="form-label required" for="basic-default-phone">SMTP</label>
                         <input type="text" id="basic-default-phone" class="form-control phone-mask" placeholder=""
                             formControlName="SMTP" />
                         <div *ngIf="submittedCompanyData && fnameData.SMTP.errors">

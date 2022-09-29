@@ -50,14 +50,17 @@
                                 <div class="d-flex">
                                     <button class="btn-bg"
                                         (click)="editMenumaster({id : menuData._id, index:menuIndex})"><i
-                                            class="bx bx-edit-alt" tooltip="Edit" placement="bottom" showDelay="100"></i>
+                                            class="bx bx-edit-alt" tooltip="Edit" placement="bottom"
+                                            showDelay="100"></i>
                                     </button>
-                                    <button *ngIf="menuData.status == 2" class="btn-bg bg-label-success" tooltip="Add" placement="bottom" showDelay="100"
+                                    <button *ngIf="menuData.status == 2" class="btn-bg bg-label-success" tooltip="Add"
+                                        placement="bottom" showDelay="100"
                                         (confirm-click)="statusMenu({id :menuData._id,index:menuIndex, status:1})"
                                         appConfirm [confirmTitle]="'Active'"
                                         [confirmContent]="'Are you sure to Active this Menu Master?'">
                                         <i class="bx bx-plus"></i></button>
-                                    <button *ngIf="menuData.status == 1" class="btn-bg bg-label-danger" tooltip="Delete" placement="bottom" showDelay="100"
+                                    <button *ngIf="menuData.status == 1" class="btn-bg bg-label-danger" tooltip="Delete"
+                                        placement="bottom" showDelay="100"
                                         (confirm-click)="statusMenu({id :menuData._id,index:menuIndex, status:2})"
                                         appConfirm [confirmTitle]="'Deactive'"
                                         [confirmContent]="'Are you sure to Deactive this Menu Master?'">
@@ -85,7 +88,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel1"><strong>{{ISeditMenu ?
-                    'Edit' : 'Add'}} Menu</strong></h5>
+                        'Edit' : 'Add'}} Menu</strong></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                     (click)="cancelMenu()"></button>
             </div>
@@ -93,7 +96,7 @@
                 <form role="form" class="menu-master-form" [formGroup]="menuForm" autocomplete="off">
                     <div class="row">
                         <div class="col-lg-4 mb-3">
-                            <label for="nameBasic" class="form-label">Title</label>
+                            <label for="nameBasic" class="form-label required">Title</label>
                             <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
                                 formControlName="title" />
                             <div *ngIf="submittedMenuData && fTitleData.title.errors">

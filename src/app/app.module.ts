@@ -1,7 +1,7 @@
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { AppRoutingModule } from "./app.routing";
 import { ComponentsModule } from "./components/components.module";
@@ -11,15 +11,21 @@ import { LoginLayoutComponent } from "./layouts/login-layout/login-layout.compon
 import { NotifierModule } from "angular-notifier";
 import { NgOtpInputModule } from 'ng-otp-input';
 import { BreadcrumbModule } from "angular-crumbs";
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { InterceptorService } from './Providers/core-interceptor/core-interceptor.service';
+import { CoreModule } from './Providers/core.module';
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    CoreModule,
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
+    NgxSpinnerModule,
     NgOtpInputModule,
     BreadcrumbModule,
     NotifierModule.withConfig({
@@ -41,7 +47,11 @@ import { BreadcrumbModule } from "angular-crumbs";
     }),
   ],
   declarations: [AppComponent, AdminLayoutComponent, LoginLayoutComponent],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

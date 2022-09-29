@@ -34,28 +34,28 @@ export class AdminLoginComponent implements OnInit {
 
   otp: string = "";
   config = {
-      allowNumbersOnly: false,
-      length: 4,
-      isPasswordInput: false,
-      disableAutoFocus: false,
-      placeholder: '',
-      inputStyles: {
-          'width': '50px',
-          'height': '50px'
-      }
+    allowNumbersOnly: false,
+    length: 4,
+    isPasswordInput: false,
+    disableAutoFocus: false,
+    placeholder: '',
+    inputStyles: {
+      'width': '50px',
+      'height': '50px'
+    }
   };
 
   otpForm: FormGroup;
   submittedOtpFormData = false;
   otpMessage: string = "";
-  get fOtpData() { 
-    return this.otpForm.controls; 
+  get fOtpData() {
+    return this.otpForm.controls;
   }
 
   resetpwdForm: FormGroup | any;
   submittedresetpwdFormData = false;
   get fResetpwdData() {
-    return this.forgotpwdForm.controls;
+    return this.resetpwdForm.controls;
   }
 
   constructor(
@@ -163,32 +163,34 @@ export class AdminLoginComponent implements OnInit {
 
   defaultForgotpwdForm() {
     this.forgotpwdForm = this.fb.group({
-      email: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.pattern(
+        /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/
+      )]],
     });
   }
 
   sendOtp() {
     this.forgotpwdData = true;
-    
+
     if (this.forgotpwdForm.invalid) {
       return;
-      
+
     }
     let forgotpwdObj = {
       "email": this.forgotpwdForm.value.email
-    }  
-    this.adminLayoutService.forgotPassword(forgotpwdObj).subscribe((Response: any) => {  
+    }
+    this.adminLayoutService.forgotPassword(forgotpwdObj).subscribe((Response: any) => {
       if (Response.meta.code == 200) {
         this.otpForm.controls._id.setValue(Response.data)
         this.forgotpwdData = false;
         this.defaultForgotpwdForm();
-        this.commonService.notifier.notify('success', Response.meta.message);
+        this.commonService.notifier.notify('success', "OTP Send Successfully.");
         this.activeTab = 3;
       }
       else {
         this.commonService.notifier.notify('error', Response.meta.message);
-    }
-    }, (error : any) => {
+      }
+    }, (error: any) => {
       console.log(error);
     });
   }
@@ -199,25 +201,25 @@ export class AdminLoginComponent implements OnInit {
     });
   }
 
-  resendOtp() { 
+  resendOtp() {
     debugger
     let otpFormObj = {
       "_id": this.otpForm.controls._id.value,
-    }  
-    this.adminLayoutService.reSendOtp(otpFormObj).subscribe((Response: any) => {  
+    }
+    this.adminLayoutService.reSendOtp(otpFormObj).subscribe((Response: any) => {
       debugger
-        if (Response.meta.code == 200) {
-          this.commonService.notifier.notify('success', Response.meta.message);
+      if (Response.meta.code == 200) {
+        this.commonService.notifier.notify('success', Response.meta.message);
       }
       else {
         this.commonService.notifier.notify('error', Response.meta.message);
-    }
-    }, (error : any) => {
+      }
+    }, (error: any) => {
       console.log(error);
     });
   }
 
-  otpVerify(){
+  otpVerify() {
     this.submittedOtpFormData = true;
     this.otp.length;
     if (this.otp.length != 4) {
@@ -233,19 +235,19 @@ export class AdminLoginComponent implements OnInit {
       "user_id": this.otpForm.controls._id.value,
       "OTP": this.otp
     };
-    
-    this.adminLayoutService.otpVerification(otpObj).subscribe((Response: any) => {  
+
+    this.adminLayoutService.otpVerification(otpObj).subscribe((Response: any) => {
       if (Response.meta.code == 200) {
         this.submittedOtpFormData = false;
         this.defaultForgotpwdForm();
         this.resetpwdForm.controls.user_id.setValue(Response.data)
-        this.commonService.notifier.notify('success', Response.meta.message);
+        this.commonService.notifier.notify('success', "OTP Verify Successfully.");
         this.activeTab = 4;
       }
       else {
         this.commonService.notifier.notify('error', Response.meta.message);
-    }
-    }, (error : any) => {
+      }
+    }, (error: any) => {
       console.log(error);
     });
   }
@@ -259,49 +261,49 @@ export class AdminLoginComponent implements OnInit {
 
   defaultresetpwdForm() {
     this.resetpwdForm = this.fb.group({
-        user_id: [''],
-        pwd: ['', [Validators.required, this.coreHelper.patternPasswordValidator()]],
-        confirmPwd: ['', [Validators.required]],
+      user_id: [''],
+      pwd: ['', [Validators.required, this.coreHelper.patternPasswordValidator()]],
+      confirmPwd: ['', [Validators.required]],
     }, {
-        validator: [this.coreHelper.MustMatch('pwd', 'confirmPwd')]
+      validator: [this.coreHelper.MustMatch('pwd', 'confirmPwd')]
     });
-}
+  }
 
   resetpassword() {
     debugger
     this.submittedresetpwdFormData = true;
-        if (this.resetpwdForm.invalid) {
-            return;
-        }
-        let resetpwdObj = {
-            "user_id": this.resetpwdForm.value.user_id,
-            "pwd": this.resetpwdForm.value.pwd
-        }
-        this.adminLayoutService.resetPassword(resetpwdObj).subscribe((Response: any) => {
-            if (Response.meta.code == 200) {
-                this.submittedresetpwdFormData = false;
-                this.defaultresetpwdForm();
-                this.commonService.notifier.notify('success', Response.meta.message);
-                this.activeTab = 1;
-            }
-            else {
-                this.commonService.notifier.notify('error', Response.meta.message);
-            }
-        }, (error) => {
-            console.log(error);
-        });
+    if (this.resetpwdForm.invalid) {
+      return;
+    }
+    let resetpwdObj = {
+      "user_id": this.resetpwdForm.value.user_id,
+      "pwd": this.resetpwdForm.value.pwd
+    }
+    this.adminLayoutService.resetPassword(resetpwdObj).subscribe((Response: any) => {
+      if (Response.meta.code == 200) {
+        this.submittedresetpwdFormData = false;
+        this.defaultresetpwdForm();
+        this.commonService.notifier.notify('success', "Password Reset Successfully.");
+        this.activeTab = 1;
+      }
+      else {
+        this.commonService.notifier.notify('error', Response.meta.message);
+      }
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   handleKeyUp(e: any) {
     if (e.keyCode === 13) {
       if (this.activeTab === 1) {
         this.login();
-    } else if (this.activeTab === 3) {
+      } else if (this.activeTab === 3) {
         this.sendOtp();
-        
-    }else if (this.activeTab === 5) {
+
+      } else if (this.activeTab === 5) {
         this.otpVerify();
-    }
+      }
     }
   }
 }

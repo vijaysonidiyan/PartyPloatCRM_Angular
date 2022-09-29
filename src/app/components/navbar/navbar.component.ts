@@ -117,9 +117,13 @@ export class NavbarComponent implements OnInit {
     $("#add-myprofile-modal").modal("show");
   }
   changePassword() {
+    this.submittedChangePasswordData = false;
+    this.defaultChangePasswordForm();
     $("#change-password-modal").modal("show");
   }
   cancelchangePassword() {
+    this.submittedChangePasswordData = false;
+    this.defaultChangePasswordForm();
     $("#change-password-modal").modal("hide");
   }
 

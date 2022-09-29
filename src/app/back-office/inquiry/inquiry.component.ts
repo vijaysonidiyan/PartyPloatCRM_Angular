@@ -86,22 +86,24 @@ export class InquiryComponent implements OnInit {
   inquiryEvent = [];
   // inquiryEvent = [
   //   {
-  //     borderColor: "#FFF0",
-  //     color: "#e7e7ff",
-  //     date: "10-8-2022",
-  //     textColor: "#00adef",
-  //     title: "1 Inquiry Pendding",
+  //     // backgroundColor: "#e8fadf",
+  //     borderColor: "#e8fadf",
+  //     color: "#e8fadf",
+  //     date: "2022-09-26",
+  //     textColor: "#71dd37",
+  //     title: "2 Inquiry Confirm",
+  //     display: 'background',
   //   }
   // ];
   // inquiryEvent = [
   //   {
-  //     'id': '123', 'title': '10 Inquiry', 'start': '2022-08-01', 'end': '2022-08-02', 'textColor': '#378006', 'borderColor': '#FFF0', 'color': '#37800666'
+  //     'id': '123', 'title': '10 Inquiry', 'start': '2022-09-01', 'end': '2022-09-02', 'backgroundColor': 'green', 'display': 'background', 'textColor': '#378006', 'borderColor': '#FFF0', 'color': '#37800666'
   //   },
   //   // {
   //   //   'id': '123', 'title': 'Hardik Event', 'start': '2022-08-01', 'constraint': "availableForMeeting", 'end': '2022-08-02', 'display': "background", 'color': 'red'
   //   // },
   //   {
-  //     'id': '124', 'title': 'dharmesh Event', 'start': '2022-08-04', 'end': '2022-08-06', 'color': '#37800666', extendedProps: {
+  //     'id': '124', 'title': 'dharmesh Event', 'start': '2022-09-04', 'end': '2022-09-06', 'color': '#37800666', extendedProps: {
   //       id: 13,
   //       department: 'IT',
   //       course: 'BE'
@@ -140,6 +142,7 @@ export class InquiryComponent implements OnInit {
     }
 
     this.adminLayoutService.getInquiryListForCalenderView(inquiryObj).subscribe((response: any) => {
+      debugger
       if (response.meta.code == 200) {
         this.inquiryEvent = [];
         this.inquiryEvent = response.data;
@@ -154,9 +157,11 @@ export class InquiryComponent implements OnInit {
           center: '',
           right: 'myCustomButton'
         },
+
         initialDate: new Date(this.searchedYear + '-' + this.searchedMonth),
         businessHours: false, // display business hours
         editable: true,
+        navLinks: true,
         selectable: true,
         dateClick: this.handleDateClick.bind(this),
         events: this.inquiryEvent,
@@ -175,7 +180,7 @@ export class InquiryComponent implements OnInit {
         },
       }
     })
-
+    debugger
     this.calendarOptions = {
       initialView: 'dayGridMonth',
       headerToolbar: {
@@ -206,9 +211,14 @@ export class InquiryComponent implements OnInit {
     // calendarApi.gotoDate(this.datePipe.transform(new Date(this.currentYearForCalender + '-' + this.currentMonthForCalender), 'MM-dd-yyyy'));
   }
 
-  viewInquiry(id: any) {
+  viewInquiry(id: any, status: any, bookingId: any) {
     $('#inquiry-details-by-date-modal').modal('hide');
-    this.router.navigate(["admin/inquiry/view-inquiry/" + id])
+    if (status == 2) {
+      this.router.navigate(['admin/view-booking-confirm/' + bookingId]);
+    }
+    else {
+      this.router.navigate(["admin/inquiry/view-inquiry/" + id])
+    }
   }
   bookingConfirmNavigation(id: any) {
     $('#inquiry-details-by-date-modal').modal('hide');

@@ -12,7 +12,7 @@ export class CoreHelperService {
     return (control: AbstractControl): any => {
       if (control.value) {
 
-        const regex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})')
+        const regex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})')
         const valid = regex.test(control.value);
         if (!valid) {
           return { invalidPassword: true };

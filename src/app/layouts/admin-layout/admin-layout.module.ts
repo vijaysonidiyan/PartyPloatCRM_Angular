@@ -36,7 +36,7 @@ import { FullCalendarModule } from "@fullcalendar/angular";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { ReferenceMasterComponent } from 'app/back-office/setting/reference-master/reference-master.component';
-
+import { NgxSpinnerModule } from 'ngx-spinner';
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
   interactionPlugin
@@ -66,6 +66,7 @@ import { ViewBookingComponent } from "app/back-office/Booking-Confirm-Inquiry/vi
     DirectivesModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
+    NgxSpinnerModule,
     MatDatepickerModule,
     MatNativeDateModule,
     NgxMatMomentModule,

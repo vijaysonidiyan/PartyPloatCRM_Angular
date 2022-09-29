@@ -136,7 +136,7 @@
             </div>
             <div class="row p-sm-3 p-0">
                 <div class="d-flex justify-content-between mb-3">
-                    <h5> Extra Decoration</h5>
+                    <h5>Extra Decoration</h5>
                     <div>
                         <button type="submit" class="btn btn-primary"
                             *ngIf="isEditExtraItem === false && eventList.length != 0"
@@ -153,8 +153,8 @@
                 <table class="" formArrayName="extradecoration">
                     <tr class="boader-bottom-1" *ngIf="eventList.length != 0">
                         <th class="text-center w-5">Sr. No.</th>
-                        <th class=" w-80">Item</th>
-                        <th class="qty-width">Qty/Size</th>
+                        <th class=" w-80 required">Item</th>
+                        <th class="qty-width required">Qty/Size</th>
                         <th class="qty-width" *ngIf="isEditExtraItem === true">Action</th>
                     </tr>
                     <tr [formGroupName]="y" class="boader-bottom-1"
@@ -189,13 +189,24 @@
                     </tr>
                 </table>
             </div>
-            <div *ngIf="isEditExtraItem === true">
+            <div *ngIf="isEditExtraItem === true" class="mb-3">
                 <button type="submit" class="btn btn-primary ml-10" (click)="addExtraItemArray()">Add</button>
             </div>
+            <div *ngIf="eventList.length != 0">
+                <div class="col-lg-4 col-md-6 mb-3">
+                    <label class="form-label" for="basic-default-company">Extra Decor Budget</label>
+                    <span *ngIf="isEditExtraItem === false">&nbsp; :&nbsp;
+                        {{fbookingConfirmData.extraDecorBudget.value}}</span>
+                    <input type="text" *ngIf="isEditExtraItem === true" appNumbersOnly class="form-control"
+                        id="basic-default-company" placeholder="Extra Decor Budget"
+                        formControlName="extraDecorBudget" />
+                </div>
+            </div>
 
+            <hr class="mb-3">
             <div class="row p-sm-3 p-0">
                 <div class="mb-3 d-flex justify-content-between">
-                    <h5>Decoration Images</h5>
+                    <h5>Client Selected Decor</h5>
                     <button type="submit" class="btn btn-primary" (click)="uploadDecorationModal()">Add</button>
                 </div>
                 <table class="" *ngIf="imageDecorationList?.length > 0">
@@ -262,7 +273,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-6 mb-3">
-                        <label for="nameBasic" class="form-label">Image Name</label>
+                        <label for="nameBasic" class="form-label required">Image Name</label>
                         <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
                             [(ngModel)]="imageName" />
                         <div *ngIf="submittedUploadDecorationData && !imageName">
@@ -275,7 +286,7 @@
                             [(ngModel)]="imageDescription" />
                     </div>
                     <div class="col-lg-6 mb-3">
-                        <label for="nameBasic" class="form-label">Upload Decoration</label>
+                        <label for="nameBasic" class="form-label required">Upload Decoration</label>
                         <input type="file" #imageDecoration id="nameBasic" class="form-control" placeholder="Enter Name"
                             (change)="onImageDecorationChange($event)" />
                         <div *ngIf="imageDecorationURLFile" class="imgUpload">

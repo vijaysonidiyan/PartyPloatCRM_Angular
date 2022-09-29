@@ -48,20 +48,23 @@
                                 <div class="d-flex">
                                     <button class="btn-bg"
                                         (click)="editReferencemaster({id : referencemasterData._id, index : referenceMasterIndex})"><i
-                                            class="bx bx-edit-alt " tooltip="Edit" placement="bottom" showDelay="100"></i>
+                                            class="bx bx-edit-alt " tooltip="Edit" placement="bottom"
+                                            showDelay="100"></i>
                                     </button>
                                     <button *ngIf="referencemasterData.status == 2" class="dtl-btn btn bg-gradient-dark"
                                         title="Active Reference"
                                         (confirm-click)="statusReferencemaster({id :referencemasterData._id,index:referenceMasterIndex, status:1})"
                                         appConfirm [confirmTitle]="'Active'"
                                         [confirmContent]="'Are you sure to Active this Reference Master?'"
-                                        class="btn-bg bg-label-success" tooltip="Add" placement="bottom" showDelay="100"><i class="bx bx-plus"></i></button>
+                                        class="btn-bg bg-label-success" tooltip="Add" placement="bottom"
+                                        showDelay="100"><i class="bx bx-plus"></i></button>
                                     <button *ngIf="referencemasterData.status == 1" class="dtl-btn btn bg-gradient-dark"
                                         title="Deactive Reference"
                                         (confirm-click)="statusReferencemaster({id :referencemasterData._id,index:referenceMasterIndex, status:2})"
                                         appConfirm [confirmTitle]="'Deactive'"
                                         [confirmContent]="'Are you sure to Deactive this Reference Master?'"
-                                        class="btn-bg bg-label-danger" tooltip="Delete" placement="bottom" showDelay="100"><i class="bx bx-trash"></i></button>
+                                        class="btn-bg bg-label-danger" tooltip="Delete" placement="bottom"
+                                        showDelay="100"><i class="bx bx-trash"></i></button>
                                 </div>
                             </td>
                             <td>{{ referencemasterData.referenceName }}</td>
@@ -95,7 +98,7 @@
                 <form reference="form" class="add-employee-form" [formGroup]="referencemasterForm" autocomplete="off">
                     <div class="row">
                         <div class="col mb-3">
-                            <label for="nameBasic" class="form-label">Reference Type</label>
+                            <label for="nameBasic" class="form-label required">Reference Type</label>
                             <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
                                 formControlName="referenceName" />
                             <div *ngIf="submittedreferenceMasterData && fReferencenameData.referenceName.errors">

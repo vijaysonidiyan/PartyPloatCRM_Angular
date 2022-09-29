@@ -99,7 +99,7 @@
                 <form role="form" class="add-employee-form" [formGroup]="partyplotForm" autocomplete="off">
                     <div class="row">
                         <div class="col-lg-12 mb-3">
-                            <label for="nameBasic" class="form-label">Name</label>
+                            <label for="nameBasic" class="form-label required">Name</label>
                             <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
                                 formControlName="name" />
                             <div *ngIf="submittedPartyplotData && fnameData.name.errors">
@@ -109,17 +109,19 @@
                             </div>
                         </div>
                         <div class="col-lg-12 mb-3">
-                            <label for="nameBasic" class="form-label">Event Select</label>
+                            <label for="nameBasic" class="form-label required">Event Select</label>
                             <ng-select [items]="activeeventList" [multiple]="true" class="form-control p-0"
                                 bindLabel="name" bindValue="_id" placeholder="Select Module" formControlName="events"
                                 [closeOnSelect]="false">
                             </ng-select>
-                            <div *ngIf="submittedPartyplotData && eventInvalid === true">
-                                <span class="error_msg text-danger">Event is Required.</span>
+                            <div *ngIf="submittedPartyplotData && fnameData.events.errors">
+                                <div *ngIf="fnameData.events.errors.required">
+                                    <span class="error_msg text-danger">Event is Required.</span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-12 mb-3">
-                            <label for="nameBasic" class="form-label">Address</label>
+                            <label for="nameBasic" class="form-label required">Address</label>
                             <textarea id="basic-default-message" class="form-control" placeholder=""
                                 formControlName="address"></textarea>
                             <div *ngIf="submittedPartyplotData && fnameData.address.errors">

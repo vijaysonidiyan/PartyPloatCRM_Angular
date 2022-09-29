@@ -7,7 +7,7 @@
                 <div class="card border-solid-primary flex-row align-items-center ps-2">
                     <i class="bx bx-search fs-4 lh-0"></i>
                     <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
-                        aria-label="Search..." (input)="search($event.target.value)"/>
+                        aria-label="Search..." (input)="search($event.target.value)" />
                 </div>
                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Event Master</h4> -->
                 <div class="btn-cus">
@@ -31,27 +31,32 @@
                             *ngFor="let eventmasterData of eventmasterList | paginate: { itemsPerPage: l, currentPage: p }; let eventMasterIndex = index">
                             <td>{{ l * (p - 1) + eventMasterIndex + 1 }}</td>
                             <td>
-                                <span *ngIf="eventmasterData.status == 1" class="badge bg-label-success me-1">Active</span>
-                                <span *ngIf="eventmasterData.status == 2" class="badge bg-label-danger me-1">Deactive</span>
+                                <span *ngIf="eventmasterData.status == 1"
+                                    class="badge bg-label-success me-1">Active</span>
+                                <span *ngIf="eventmasterData.status == 2"
+                                    class="badge bg-label-danger me-1">Deactive</span>
                             </td>
                             <td>
                                 <div class=" d-flex">
                                     <button class="btn-bg"
                                         (click)="editEventmaster({id : eventmasterData._id, index : eventMasterIndex})"><i
-                                            class="bx bx-edit-alt" tooltip="Edit" placement="bottom" showDelay="100"></i>
+                                            class="bx bx-edit-alt" tooltip="Edit" placement="bottom"
+                                            showDelay="100"></i>
                                     </button>
                                     <button *ngIf="eventmasterData.status == 2" title="Active Event"
                                         (confirm-click)="statusEventmaster({id :eventmasterData._id,index:eventMasterIndex, status:1})"
                                         appConfirm [confirmTitle]="'Active'"
                                         [confirmContent]="'Are you sure to Active this Event Master?'"
-                                        class="bg-label-success btn-bg bg-label-success" tooltip="Add" placement="bottom" showDelay="100">
+                                        class="bg-label-success btn-bg bg-label-success" tooltip="Add"
+                                        placement="bottom" showDelay="100">
                                         <i class="bx bx-plus"></i>
                                     </button>
                                     <button *ngIf="eventmasterData.status == 1" title="Deactive Event"
                                         (confirm-click)="statusEventmaster({id :eventmasterData._id,index:eventMasterIndex, status:2})"
                                         appConfirm [confirmTitle]="'Deactive'"
                                         [confirmContent]="'Are you sure to Deactive this Event Master?'"
-                                        class="bg-label-danger btn-bg bg-label-danger" tooltip="Delete" placement="bottom" showDelay="100">
+                                        class="bg-label-danger btn-bg bg-label-danger" tooltip="Delete"
+                                        placement="bottom" showDelay="100">
                                         <i class="bx bx-trash"></i>
                                     </button>
                                 </div>
@@ -78,7 +83,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel1"><strong>{{ISeditEventMaster ?
-                    'Edit' : 'Add'}} Event</strong></h5>
+                        'Edit' : 'Add'}} Event</strong></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                     (click)="cancelEventmaster()"></button>
             </div>
@@ -86,7 +91,7 @@
                 <form role="form" class="add-employee-form" [formGroup]="eventmasterForm" autocomplete="off">
                     <div class="row">
                         <div class="col mb-3">
-                            <label for="nameBasic" class="form-label">Name</label>
+                            <label for="nameBasic" class="form-label required">Name</label>
                             <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
                                 formControlName="name" />
                             <div *ngIf="submittedeventMasterData && fnameData.name.errors">

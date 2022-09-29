@@ -6,9 +6,9 @@ declare const $: any;
   styleUrls: ["./product-master.component.css"],
 })
 export class ProductMasterComponent implements OnInit {
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
   addMenu() {
     $("#add-menu-modal").modal("show");
   }
