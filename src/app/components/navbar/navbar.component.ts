@@ -333,6 +333,18 @@ export class NavbarComponent implements OnInit {
       };
     }
 
+    else if (titlee.includes('add-inquiry')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }, {
+          pastUrl: 'inquiry',
+          pastLinkName: 'Inquiry',
+        }],
+        currentPageName: 'Add Inquiry'
+      };
+    }
     else if (titlee.includes('view-inquiry')) {
       return {
         pastPage: [{
