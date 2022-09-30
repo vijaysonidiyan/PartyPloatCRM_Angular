@@ -122,7 +122,7 @@ export class RoleWiseMenuComponent implements OnInit {
     }
 
     isSelectedAllData(paramsObj: any) {
-        debugger
+
         let menuListDataFormGroup = ((this.rolewisemenuForm.controls['menuList'] as FormArray).controls[paramsObj.index] as FormGroup)
 
         if (paramsObj.checked === true) {
@@ -205,7 +205,7 @@ export class RoleWiseMenuComponent implements OnInit {
     }
 
     isCreatedAllchildrenData(paramsObj) {
-        debugger
+
         let menuIndex = paramsObj.index
         let checked = paramsObj.checked
 

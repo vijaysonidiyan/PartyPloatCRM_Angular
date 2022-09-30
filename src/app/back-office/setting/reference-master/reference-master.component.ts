@@ -115,7 +115,7 @@ export class ReferenceMasterComponent implements OnInit {
     }
 
     statusReferencemaster(paramsObj) {
-        debugger
+
         let statusreferencemasterModelObj = {
             "_id": paramsObj.id,
             "status": paramsObj.status
@@ -165,7 +165,7 @@ export class ReferenceMasterComponent implements OnInit {
         this.referencemasterList = this.allreferencemaster.filter((val: any) => val.referenceName.toLowerCase().includes(value.toLowerCase()));
         this.p = 1;
         if (this.referencemasterList.length == 0) {
-            debugger
+
             this.noData = true;
         } else {
             this.noData = false;

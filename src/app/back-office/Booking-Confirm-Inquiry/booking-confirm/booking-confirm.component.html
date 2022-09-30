@@ -161,7 +161,8 @@
                             </div>
                         </div>
                     </div>
-                    <table class=" table-responsive" formArrayName="package">
+                    <table class=" table-responsive" formArrayName="package"
+                        *ngIf="!!fbookingConfirmData.packageId.value">
                         <thead>
                             <tr class="boader-bottom-1">
                                 <th class="text-center w-5">Sr. No.</th>
@@ -196,7 +197,7 @@
             </form>
         </div>
     </div>
-    <div class="card mb-4">
+    <div class="card mb-4" *ngIf="!!fbookingConfirmData.packageId.value">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Extra Item</h5>
             <!-- <button type="button" class="btn btn-primary">Edit</button> -->
@@ -216,8 +217,8 @@
                             *ngFor="let citem of bookingDataForm.get('extradecoration')['controls']; let y = index;">
                             <td class="text-center w-5">{{y + 1}}</td>
                             <td class="w-30">
-                                <input type="text" formControlName="item" class="form-control" id="basic-default-company"
-                                    placeholder="Enter Guest Count" />
+                                <input type="text" formControlName="item" class="form-control"
+                                    id="basic-default-company" placeholder="Enter Guest Count" />
                                 <div *ngIf="submittedExtraItemData[y] && citem.controls.item.errors">
                                     <div *ngIf="citem.controls.item.errors.required">
                                         <span class="error_msg">Item is Required.</span>
@@ -248,10 +249,10 @@
                 </form>
             </div>
             <div class="mb-3">
-                <button type="submit" class="bg-label-success btn-bg bg-label-success ml-10"
-                [ngClass]="fbookingConfirmData.extradecoration.invalid == true ? 'disabled' : ''"
-                (click)="addExtraItem()"><i class="bx bx-plus" tooltip="Add" placement="bottom"
-                showDelay="100"></i></button>
+                <button type="button" class="btn bg-label-success btn-bg bg-label-success"
+                    [ngClass]="fbookingConfirmData.extradecoration.invalid == true ? 'disabled' : ''"
+                    (click)="addExtraItem()"><i class="bx bx-plus" tooltip="Add" placement="bottom"
+                        showDelay="100"></i></button>
             </div>
         </div>
     </div>

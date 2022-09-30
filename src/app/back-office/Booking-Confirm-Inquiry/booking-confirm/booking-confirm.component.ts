@@ -189,6 +189,12 @@ export class BookingConfirmComponent implements OnInit {
     // validation.get('quantity').setValidators([Validators.required]);
   }
   deletCategoryList(index: number) {
+    let validation = (this.bookingDataForm.controls['extradecoration'] as FormArray).controls;
+    validation.map((x: any, index: any) => {
+      x.controls.item.clearValidators();
+      x.controls.quantity.clearValidators();
+      this.submittedExtraItemData[index] = false;
+    })
     const remove = this.eventList;
     remove.removeAt(index);
   }

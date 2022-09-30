@@ -60,7 +60,7 @@ export class StaffComponent implements OnInit {
   }
 
   onDocumentChange(event) {
-    debugger
+
     this.userFile = event.target.files[0];
     if (!!this.userFile) {
       this.documentError = false;
@@ -346,7 +346,7 @@ export class StaffComponent implements OnInit {
   }
 
   statusStaffmaster(paramsObj) {
-    debugger
+
     let statusstaffmasterModelObj = {
       "_id": paramsObj.id,
       "status": paramsObj.status
@@ -379,7 +379,7 @@ export class StaffComponent implements OnInit {
     this.staffList = this.allstaffList.filter((val: any) => JSON.stringify(val).toLowerCase().includes(value.toLowerCase()));
     this.p = 1;
     if (this.staffList.length == 0) {
-      debugger
+
       this.noData = true;
     } else {
       this.noData = false;

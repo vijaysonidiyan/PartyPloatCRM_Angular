@@ -229,7 +229,7 @@ export class PartyPlotMasterComponent implements OnInit {
     this.partyplotList = this.allpartyplot.filter((val: any) => JSON.stringify(val).toLowerCase().includes(value.toLowerCase()));
     this.p = 1;
     if (this.partyplotList.length == 0) {
-      debugger
+
       this.noData = true;
     } else {
       this.noData = false;

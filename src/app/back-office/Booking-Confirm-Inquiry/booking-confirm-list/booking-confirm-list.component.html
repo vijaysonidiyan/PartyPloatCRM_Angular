@@ -45,7 +45,15 @@
                                 <div class="d-flex">
                                     <button class="btn-bg"
                                         (click)="viewBookingConfirm({id : bookingConfirmData._id, index : bookingConfirmIndex})"><i
-                                            class="bx bxs-show" tooltip="View" placement="bottom" showDelay="100"></i>
+                                            class="bx bxs-show" tooltip="View Booking" placement="bottom"
+                                            showDelay="100"></i>
+                                    </button>
+                                    <button class="btn-bg bg-label-danger"
+                                        (confirm-click)="cancelBookingConfirm({id : bookingConfirmData._id, index : bookingConfirmIndex})"
+                                        appConfirm [confirmTitle]="'Deactive'"
+                                        [confirmContent]="'Are you sure to Deactive this Event Master?'"><i
+                                            class="bx bx-x" tooltip="Cancel Booking" placement="bottom"
+                                            showDelay="100"></i>
                                     </button>
                                 </div>
                             </td>

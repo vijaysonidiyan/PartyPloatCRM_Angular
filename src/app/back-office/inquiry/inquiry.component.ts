@@ -48,6 +48,7 @@ export class InquiryComponent implements OnInit {
   cancelInquiryForm: FormGroup;
   gotoDate: any;
   isInquiryTab: boolean = false;
+  isBookedOrNot = {};
 
   // tabClick(tab) {
   //   this.activeTab = tab;
@@ -65,29 +66,18 @@ export class InquiryComponent implements OnInit {
   // }
 
   constructor(private adminLayoutService: AdminLayoutService, private commonService: CommonService, private fb: FormBuilder, private router: Router) {
-    const url = this.router.url;
-    if (url.includes('inquiry')) {
-      this.isInquiryTab = true;
-      this.searchedMonth = this.currentMonth;
-      this.searchedYear = this.currentYear;
-      this.getInquiryList({ month: parseInt(this.searchedMonth), year: this.searchedYear, name: this.searchedName, partyplot_ID: this.searchedPartyplot })
-    }
-    else if (url.includes('calender')) {
-      this.isInquiryTab = false;
-      this.searchedMonth = this.currentMonth;
-      this.searchedYear = this.currentYear;
-      this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear, partyplot_ID: this.searchedPartyplot })
-    }
+    this.getAssignPartyplotList();
   }
 
   ngOnInit(): void {
     this.l = 10;
     this.defaultForm();
     this.defaultCancelInquiryForm();
-    this.getAssignPartyplotList();
     this.getEventActiveList();
     this.getYear();
     this.minEndDate = new Date();
+
+
   }
 
 
@@ -143,7 +133,7 @@ export class InquiryComponent implements OnInit {
 
   // calender view list data
   getInquiryListForCalenderView(data: any) {
-    
+
 
     let inquiryObj = {
       month: data.month ? data.month : null,
@@ -160,8 +150,6 @@ export class InquiryComponent implements OnInit {
       else {
         this.inquiryEvent = [];
       }
-
-      this.getCalenderCheckingInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName, partyplot_ID: this.searchedPartyplot })
 
       this.calendarOptions = {
         initialView: 'dayGridMonth',
@@ -192,8 +180,8 @@ export class InquiryComponent implements OnInit {
           }
         },
       }
-    //   let calendarApi = this.calendarComponent.getApi();
-    // calendarApi.gotoDate(new Date(this.currentMonth + '-01-' + this.currentYear));
+      //   let calendarApi = this.calendarComponent.getApi();
+      // calendarApi.gotoDate(new Date(this.currentMonth + '-01-' + this.currentYear));
     })
 
     this.calendarOptions = {
@@ -225,7 +213,7 @@ export class InquiryComponent implements OnInit {
 
     // let calendarApi = this.calendarComponent.getApi();
     // calendarApi.gotoDate(new Date(this.currentMonth + '-01-' + this.currentYear));
-    }
+  }
 
   viewInquiry(id: any, status: any, bookingId: any) {
     $('#inquiry-details-by-date-modal').modal('hide');
@@ -271,61 +259,17 @@ export class InquiryComponent implements OnInit {
   // date selction through open popup
   handleDateClick(arg) {
 
-    // let firstDateOfMonth = new Date(this.searchedYear, this.searchedMonth - 1, 1);
-    // let lastDateOfMonth = new Date(this.searchedYear, this.searchedMonth, 0);
-
-    // for (let i = 0; i < this.inquiryCalenderCheckEventList.length; i++) {
-    //   let checkDate = moment(this.inquiryCalenderCheckEventList[i].startDateObj).format("yyyy-MM-DD");
-    //   let ArgDate = moment(arg.date).format("yyyy-MM-DD");
-
-    //   if (checkDate == ArgDate) {
-    //     if (this.inquiryCalenderCheckEventList[i].approvestatus == 2) {
-    //       break;
-    //     }
-    //     else {
-    //       if (firstDateOfMonth < arg.date) {
-    //         if (new Date() <= arg.date && arg.date <= lastDateOfMonth) {
-    //           this.router.navigate(["/admin/inquiry/add-inquiry"], {
-    //             queryParams: {
-    //               startDate: arg.date,
-    //             }
-    //           })
-    //         }
-    //       }
-    //     }
-    //   }
-    //   else {
-    //     if (firstDateOfMonth < arg.date) {
-    //       if (new Date() < arg.date && arg.date <= lastDateOfMonth) {
-    //         this.router.navigate(["/admin/inquiry/add-inquiry"], {
-    //           queryParams: {
-    //             startDate: arg.date,
-    //           }
-    //         })
-    //       }
-    //     }
-    //   }
-
-    // }
-
-    // if (firstDateOfMonth < arg.date) {
-    //   if (new Date() < arg.date && arg.date <= lastDateOfMonth) {
-    //     this.router.navigate(["/admin/inquiry/add-inquiry"], {
-    //       queryParams: {
-    //         startDate: arg.date,
-    //       }
-    //     })
-    //   }
-    // }
-
     let obj = {
-      date: moment(arg.date).add(5, 'hour').add(30, 'minute').toJSON()
+      date: moment(arg.date).format('DD/MM/yyyy'),
+      partyplot_ID: this.searchedPartyplot
     }
 
     this.adminLayoutService.getCheckInquiryListData(obj).subscribe((Response: any) => {
       if (Response.meta.code == 2010) {
-        // not inquiry  
-        if (new Date() < arg.date) {
+        // not inquiry
+        let todayDate = moment(new Date()).format('yyyy-MM-DD');
+        let argDate = moment(arg.date).format('yyyy-MM-DD');
+        if (todayDate <= argDate) {
           this.router.navigate(["/admin/inquiry/add-inquiry"], {
             queryParams: {
               startDate: arg.date,
@@ -336,7 +280,13 @@ export class InquiryComponent implements OnInit {
       }
       else if (Response.meta.code == 2011) {
         // available inquiry
-        return;
+        let inquiryObj = {
+
+          date: moment(arg.date).format('DD/MM/yyyy'),
+          partyplot_ID: this.searchedPartyplot
+        }
+
+        this.getInquiryListByDateWise(inquiryObj);
       }
 
     })
@@ -393,17 +343,42 @@ export class InquiryComponent implements OnInit {
 
   // all data get by date wise given thorugh api 
   eventClickFunction(eventInformation) {
-
     let inquiryObj = {
-
       date: eventInformation.event._def.extendedProps.date,
       partyplot_ID: this.searchedPartyplot
     }
+    this.getInquiryListByDateWise(inquiryObj);
+  }
 
-    this.adminLayoutService.getInquiryListByDate(inquiryObj).subscribe((response: any) => {
+  getInquiryListByDateWise(params) {
+
+    this.adminLayoutService.getInquiryListByDate(params).subscribe((response: any) => {
       this.inquiryListByDate = [];
       if (response.meta.code == 200) {
         this.inquiryListByDate = response.data;
+        let bookingConfirmData = [];
+        bookingConfirmData = response.data.filter((x: any) => x.approvestatus === 2)
+
+        if (bookingConfirmData.length > 0) {
+          this.inquiryListByDate.filter((x: any, index: any) => {
+            bookingConfirmData.filter((y: any, yIndex: any) => {
+              if (x.clientInquiryId == y.clientInquiryId) {
+                this.isBookedOrNot[index] = true
+              }
+              else {
+                this.isBookedOrNot[index] = false
+              }
+            })
+          })
+        }
+        else {
+          this.inquiryListByDate.filter((x: any, index: any) => {
+            this.isBookedOrNot[index] = true
+          })
+        }
+
+
+
         for (let i = 0; i < this.inquiryListByDate.length; i++) {
           this.collapse[i] = false;
         }
@@ -413,10 +388,8 @@ export class InquiryComponent implements OnInit {
         this.noData = true;
       }
     })
-    console.log(eventInformation.event.extendedProps);
     $('#inquiry-details-by-date-modal').modal('show')
   }
-
 
 
   // get month and year wise api call and get data
@@ -452,7 +425,7 @@ export class InquiryComponent implements OnInit {
     }
     return this.yearArray;
   }
-
+  isBookedOrNotForListView = {}
   getInquiryList(data: any) {
 
     let inquiryObj = {
@@ -465,26 +438,54 @@ export class InquiryComponent implements OnInit {
     this.inquiryList = [];
     this.adminLayoutService.getInquiryList(inquiryObj).subscribe((response: any) => {
       if (response.meta.code == 200) {
-        // response.data.forEach((x: any) => {
-        //   let Obj = {
-        //     _id: x._id,
-        //     eventType: x.eventType,
-        //     guest: x.guest,
-        //     startDateObj: moment(x.startDateObj).format('DD/MM/yyyy hh:MM:ss a'),
-        //     // startDateObj: x.startDateObj,
-        //     endDateObj: x.endDateObj,
-        //     name: x.name,
-        //     email: x.email,
-        //     primaryContact: x.primaryContact,
-        //     secondryContact: x.secondryContact,
-        //     address: x.address,
-        //     approvalStatus: x.approvalStatus,
-        //     status: x.status,
-        //     eventName: x.eventName,
-        //   }
-        //   this.inquiryList.push(Obj);
-        // })
+
         this.inquiryList = response.data;
+
+        let bookingConfirmData = [];
+        bookingConfirmData = response.data.filter((x: any) => x.approvestatus === 2)
+
+        if (bookingConfirmData.length > 0) {
+          this.inquiryList.filter((x: any, index: any) => {
+            bookingConfirmData.filter((y: any, yIndex: any) => {
+
+              let xDate = moment(x.startDateObj).format("yyyy-mm-dd");
+              let yDate = moment(y.startDateObj).format("yyyy-mm-dd")
+
+              if (xDate == yDate) {
+                if (x.partyplot_ID == y.partyplot_ID) {
+                  if (x.clientInquiryId != y.clientInquiryId) {
+                    this.isBookedOrNotForListView[index] = false;
+                  }
+                  else {
+                    this.isBookedOrNotForListView[index] = true;
+                  }
+                }
+                else {
+                  this.isBookedOrNotForListView[index] = true;
+                }
+              }
+              else {
+                this.isBookedOrNotForListView[index] = true;
+              }
+
+
+
+              if (x.clientInquiryId == y.clientInquiryId && x.partyplot_ID == y.partyplot_ID) {
+                this.isBookedOrNotForListView[index] = true
+              }
+              else {
+                this.isBookedOrNotForListView[index] = false
+              }
+            })
+          })
+        }
+        else {
+          this.inquiryList.filter((x: any, index: any) => {
+            this.isBookedOrNotForListView[index] = true
+          })
+        }
+
+
         this.noData = false;
       }
       else {
@@ -494,28 +495,7 @@ export class InquiryComponent implements OnInit {
     })
 
   }
-  getCalenderCheckingInquiryList(data: any) {
 
-    let inquiryObj = {
-      month: data.month ? data.month : null,
-      year: data.year ? data.year : null,
-      name: data.name ? data.name : null,
-      partyplot_ID: data.partyplot_ID ? data.partyplot_ID : null
-    }
-
-    this.inquiryCalenderCheckEventList = [];
-    this.adminLayoutService.getInquiryList(inquiryObj).subscribe((response: any) => {
-      if (response.meta.code == 200) {
-        this.inquiryCalenderCheckEventList = response.data;
-        this.noData = false;
-      }
-      else {
-        this.inquiryCalenderCheckEventList = [];
-        this.noData = true;
-      }
-    })
-
-  }
 
   searchFilterInquiryList() {
     this.currentYear = this.searchedYear;
@@ -585,6 +565,20 @@ export class InquiryComponent implements OnInit {
       if (Response.meta.code == 200) {
         this.assignpartyplotList = Response.data;
         this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
+
+        const url = this.router.url;
+        if (url.includes('inquiry')) {
+          this.isInquiryTab = true;
+          this.searchedMonth = this.currentMonth;
+          this.searchedYear = this.currentYear;
+          this.getInquiryList({ month: parseInt(this.searchedMonth), year: this.searchedYear, name: this.searchedName, partyplot_ID: this.searchedPartyplot })
+        }
+        else if (url.includes('calender')) {
+          this.isInquiryTab = false;
+          this.searchedMonth = this.currentMonth;
+          this.searchedYear = this.currentYear;
+          this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear, partyplot_ID: this.searchedPartyplot })
+        }
         // this.tabClick(this.activeTab);
       }
       //for select sub industry step
@@ -688,10 +682,6 @@ export class InquiryComponent implements OnInit {
 
       }
     })
-  }
-
-  viewInquiryDetails(id: any) {
-
   }
 
   defaultCancelInquiryForm() {

@@ -67,7 +67,7 @@ export class ViewBookingComponent implements OnInit {
       referenceName: [''],
       clientname: [''],
       offer_budget: [''],
-      extraDecorBudget: [''],
+      extraDecorBudget: ["0"],
       package: this.fb.array([]),
       extradecoration: this.fb.array([])
     })
@@ -135,7 +135,7 @@ export class ViewBookingComponent implements OnInit {
         this.viewBookingForm.controls.referenceName.setValue(Response.data.referenceName);
         this.viewBookingForm.controls.clientname.setValue(Response.data.clientname);
         this.viewBookingForm.controls.offer_budget.setValue(Response.data.offer_budget);
-        this.viewBookingForm.controls.extraDecorBudget.setValue(Response.data.extraDecorBudget);
+        this.viewBookingForm.controls.extraDecorBudget.setValue(Response.data.extraDecorBudget ? Response.data.extraDecorBudget : '0');
         Response.data.package.forEach((x: any) => {
           this.addPackageItem(x)
         })
@@ -326,8 +326,16 @@ export class ViewBookingComponent implements OnInit {
         Response.data.extradecoration.forEach((x: any) => {
           this.eventList.push(this.createExtraItem(x))
         })
-        this.viewBookingForm.controls.extraDecorBudget.setValue(Response.data.extraDecorBudget);
+        this.viewBookingForm.controls.extraDecorBudget.setValue(Response.data.extraDecorBudget ? Response.data.extraDecorBudget : '0');
         this.isEditExtraItem = false;
+
+        let validation = (this.viewBookingForm.controls['extradecoration'] as FormArray).controls;
+        validation.map((x: any, index: any) => {
+          x.controls.item.clearValidators();
+          x.controls.quantity.clearValidators();
+          this.submittedExtraItemData[index] = false;
+        })
+
       }
     })
   }
@@ -420,7 +428,7 @@ export class ViewBookingComponent implements OnInit {
 
 
     this.adminLayoutService.bookingPdf(downloadInvoiceObj).subscribe((Response: any) => {
-      debugger
+
       if (Response.meta.code == 200) {
         const base64URL = Response.data.body.data;
         const binary = base64URL;

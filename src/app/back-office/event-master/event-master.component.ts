@@ -192,7 +192,7 @@ export class EventMasterComponent implements OnInit {
     this.eventmasterList = this.alleventmaster.filter((val: any) => val.name.toLowerCase().includes(value.toLowerCase()));
     this.p = 1;
     if (this.eventmasterList.length == 0) {
-      debugger
+
       this.noData = true;
     } else {
       this.noData = false;

@@ -55,7 +55,7 @@ export class NavbarComponent implements OnInit {
     })
     this.userName = this.storageService.getValue(StorageKey.full_name) ? this.storageService.getValue(StorageKey.full_name) : this.storageService.getValue(StorageKey.email);
     this.listTitles = ROUTES.filter((listTitle) => listTitle);
-    //debugger
+
     const navbar: HTMLElement = this.element.nativeElement;
     this.navbarEvent.emit({ navbarNativeElement: navbar });
     this.defaultChangePasswordForm();
@@ -140,7 +140,7 @@ export class NavbarComponent implements OnInit {
   }
 
   sidebarClose() {
-    //debugger
+
     const body = document.getElementsByTagName("body")[0];
     this.toggleButton.classList.remove("toggled");
     this.sidebarVisible = false;
@@ -338,9 +338,6 @@ export class NavbarComponent implements OnInit {
         pastPage: [{
           pastUrl: 'dashboard',
           pastLinkName: 'Dashboard',
-        }, {
-          pastUrl: 'inquiry',
-          pastLinkName: 'Inquiry',
         }],
         currentPageName: 'Add Inquiry'
       };
