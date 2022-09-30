@@ -161,76 +161,37 @@
                             </div>
                         </div>
                     </div>
-
-                    <div formArrayName="package">
-                        <span [formGroupName]="i"
+                    <table class=" table-responsive" formArrayName="package">
+                        <thead>
+                            <tr class="boader-bottom-1">
+                                <th class="text-center w-5">Sr. No.</th>
+                                <th class="w-80">Particular</th>
+                                <th class="qty-width">Qty/Size</th>
+                            </tr>
+                        </thead>
+                        <tr [formGroupName]="i"
                             *ngFor=" let item of bookingDataForm.get('package')['controls']; let i = index">
-                            <div class="text-center mt-3">
-                                <h5 class="mb-0">{{item.value.categoryName}}</h5>
-                                <!-- <span class="text-muted">{{item.value.categoryDescription}}</span> -->
-                                <!-- <button type="button" class="btn btn-primary">Edit</button> -->
-                            </div>
-                            <!-- <div class="row">
-                                <div class="col-lg-6 col-md-6 mb-3">
-                                    <label for="nameBasic" class="form-label">Category Name</label>
-                                    <input type="text" class="form-control" disabled id="basic-default-company"
-                                        placeholder="Enter Category Name" formControlName="categoryName" />
+                            <td colspan="3" style="text-align:center;">
+                                <div class="text-center my-3">
+                                    <h5 class="mb-0"><strong>{{item.value.categoryName}}</strong></h5>
+                                    <!-- <span class="text-muted">{{item.value.categoryDescription}}</span> -->
+                                    <!-- <button type="button" class="btn btn-primary">Edit</button> -->
                                 </div>
-                                <div class="col-lg-6 col-md-6 mb-3">
-                                    <label for="nameBasic" class="form-label">Category Description</label>
-                                    <textarea id="basic-default-message" style="height:38px;" class="form-control"
-                                        placeholder="Description" disabled
-                                        formControlName="categoryDescription"></textarea>
-                                </div>
-                            </div> -->
-                            <div formArrayName="packageCategoryList">
-                                <div class="d-sm-block d-lg-flex align-items-center clear-fix" [formGroupName]="x"
-                                    *ngFor="let citem of item.get('packageCategoryList')['controls']; let x = index;">
-
-                                    <div class="w-100">
-                                        <div class="row">
-                                            <div class="col-lg-8">
-                                                <div>
-                                                    <!-- <label for="nameBasic" class="form-label">&nbsp;</label> -->
-                                                    <h5 class="mb-0">{{x +1}} &nbsp;{{citem.value.item}}</h5>
-                                                </div>
-                                                <!-- <div>
-                                                    <span class="text-muted">{{citem.value.description}}</span>
-                                                </div> -->
-                                            </div>
-
-                                            <!-- <div class="col-lg-4 col-md-6 mb-3">
-                                                <label class="form-label" for="basic-default-company">Item</label>
-                                                <input type="text" disabled formControlName="item" class="form-control"
-                                                    id="basic-default-company" placeholder="Enter Guest Count" />
-                                            </div>
-                                            <div class="col-lg-4 col-md-6 mb-3">
-                                                <label for="nameBasic" class="form-label">Description</label>
-                                                <textarea style="height:38px;" disabled id="basic-default-message"
-                                                    formControlName="description" class="form-control"
-                                                    placeholder="Description"></textarea>
-                                            </div> -->
-                                            <div class="col-lg-4 col-md-6 mb-3">
-                                                <!-- <label class="form-label" for="basic-default-company">Quantity</label> -->
-                                                <input type="text" class="form-control" id="basic-default-company"
-                                                    formControlName="quantity" placeholder="Enter Quantity" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr class="my-3" *ngIf="i+1 != bookingDataForm.get('package')['controls'].length">
-                        </span>
-                    </div>
-                    <hr class="my-3">
-
-
-                </div>
-                <div>
-                    <button type="button" class="btn btn-primary"
-                        [ngClass]="fbookingConfirmData.extradecoration.invalid == true ? 'disabled' : ''"
-                        (click)="addExtraItem()">Add
-                        Item</button>
+                                <table class="w-100 table-border" formArrayName="packageCategoryList">
+                                    <tr [formGroupName]="x" class="boader-top-1"
+                                        *ngFor="let citem of item.get('packageCategoryList')['controls']; let x = index;">
+                                        <td class="text-center w-5">{{x +1}}</td>
+                                        <td class="text-start w-80">{{citem.value.item}}</td>
+                                        <td class="qty-width text-start">
+                                            <input type="text" class="form-control" id="basic-default-company"
+                                                formControlName="quantity" placeholder="Enter Quantity" />
+                                        </td>
+                                    </tr>
+                                    <!-- <hr class="my-3" *ngIf="i+1 != bookingDataForm.get('package')['controls'].length"> -->
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </form>
         </div>
@@ -241,52 +202,57 @@
             <!-- <button type="button" class="btn btn-primary">Edit</button> -->
         </div>
         <div class="card-body">
-            <form role="form" class="add-employee-form" autocomplete="off" [formGroup]="bookingDataForm">
-                <div formArrayName="extradecoration">
-                    <div class="d-sm-block d-lg-flex align-items-center clear-fix" [formGroupName]="y"
-                        *ngFor="let citem of bookingDataForm.get('extradecoration')['controls']; let y = index;">
-                        <div class="w-100">
-                            <div class="row align-items-center clear-fix">
-                                <div class="col-lg-4 col-md-6 mb-3">
-                                    <label class="form-label required" for="basic-default-company">Item</label>
-                                    <input type="text" formControlName="item" class="form-control"
-                                        id="basic-default-company" placeholder="Enter Guest Count" />
-                                    <div *ngIf="submittedExtraItemData[y] && citem.controls.item.errors">
-                                        <div *ngIf="citem.controls.item.errors.required">
-                                            <span class="error_msg">Item is Required.</span>
-                                        </div>
+            <div class="row p-sm-3 p-0">
+                <form role="form" class="p-0 add-employee-form" autocomplete="off" [formGroup]="bookingDataForm">
+                    <table class="table-border" formArrayName="extradecoration">
+                        <tr class="boader-bottom-1">
+                            <th class="text-center w-5">Sr. No.</th>
+                            <th class=" w-30 required">Item</th>
+                            <th class=" w-50 required">Description</th>
+                            <th class="qty-width required">Qty/Size</th>
+                            <th class="qty-width">Action</th>
+                        </tr>
+                        <tr class="" [formGroupName]="y"
+                            *ngFor="let citem of bookingDataForm.get('extradecoration')['controls']; let y = index;">
+                            <td class="text-center w-5">{{y + 1}}</td>
+                            <td class="w-30">
+                                <input type="text" formControlName="item" class="form-control" id="basic-default-company"
+                                    placeholder="Enter Guest Count" />
+                                <div *ngIf="submittedExtraItemData[y] && citem.controls.item.errors">
+                                    <div *ngIf="citem.controls.item.errors.required">
+                                        <span class="error_msg">Item is Required.</span>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6 mb-3">
-                                    <label for="nameBasic" class="form-label">Description</label>
-                                    <textarea style="height:38px;" id="basic-default-message"
-                                        formControlName="description" class="form-control"
-                                        placeholder="Description"></textarea>
-                                </div>
-                                <div class="col-lg-2 col-md-6 mb-3">
-                                    <label class="form-label required" for="basic-default-company">Quantity</label>
-                                    <input type="text" class="form-control" id="basic-default-company"
-                                        formControlName="quantity" placeholder="Enter Quantity" />
-                                    <div *ngIf="submittedExtraItemData[y] && citem.controls.quantity.errors">
-                                        <div *ngIf="citem.controls.quantity.errors.required">
-                                            <span class="error_msg">Quantity is Required.</span>
-                                        </div>
+                            </td>
+                            <td class="w-50">
+                                <textarea style="height:38px;" id="basic-default-message" formControlName="description"
+                                    class="form-control" placeholder="Description"></textarea>
+                            </td>
+                            <td class="qty-width">
+                                <input type="text" class="form-control" id="basic-default-company"
+                                    formControlName="quantity" placeholder="Enter Quantity" />
+                                <div *ngIf="submittedExtraItemData[y] && citem.controls.quantity.errors">
+                                    <div *ngIf="citem.controls.quantity.errors.required">
+                                        <span class="error_msg">Quantity is Required.</span>
                                     </div>
                                 </div>
-                                <div class="col-lg-2 mt-3">
-                                    <button type="button" class="btn btn-label-danger" aria-label="Close"
-                                        (click)="deletCategoryList(y)">
-                                        <i class="bx bx-x"></i>
-                                        <span class="align-middle">Delete</span>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <hr class="my-3">
-                        </div>
-                    </div>
-                </div>
-            </form>
+                            </td>
+                            <td>
+                                <button (click)="deletCategoryList(y)" class="bg-label-danger btn-bg bg-label-danger"
+                                    tooltip="Delete" placement="bottom" showDelay="100">
+                                    <i class="bx bx-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="bg-label-success btn-bg bg-label-success ml-10"
+                [ngClass]="fbookingConfirmData.extradecoration.invalid == true ? 'disabled' : ''"
+                (click)="addExtraItem()"><i class="bx bx-plus" tooltip="Add" placement="bottom"
+                showDelay="100"></i></button>
+            </div>
         </div>
     </div>
     <div class="float-end">

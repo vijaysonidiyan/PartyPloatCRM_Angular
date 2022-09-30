@@ -1,0 +1,12 @@
+/* table tr:last-child .boader-top-1:last-child {
+  border-bottom: none;
+} */
+.qty-width {
+  width: 15%;
+}
+.table-border tr td,
+thead tr th,
+.table-border tr th {
+  border: 1px solid #d9dee3;
+  padding: 0.5rem;
+}
