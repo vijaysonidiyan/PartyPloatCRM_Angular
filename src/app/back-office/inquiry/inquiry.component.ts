@@ -161,9 +161,8 @@ export class InquiryComponent implements OnInit {
 
         initialDate: new Date(this.searchedYear + '-' + this.searchedMonth),
         businessHours: false, // display business hours
-        editable: true,
+
         navLinks: true,
-        selectable: true,
         dateClick: this.handleDateClick.bind(this),
         events: this.inquiryEvent,
         eventClick: this.eventClickFunction.bind(this),
