@@ -166,7 +166,7 @@
                             tooltip="Save" placement="bottom" showDelay="100"></i></button>
                     <button type="submit" class="bg-label-danger btn-bg bg-label-danger ml-10"
                         *ngIf="isEditExtraItem === true" (click)="cancleExtraItemIsEdit()"><i class="bx bx-x"
-                            tooltip="Edit" placement="bottom" showDelay="100"></i></button>
+                            tooltip="Cancel" placement="bottom" showDelay="100"></i></button>
                 </div>
             </div>
             <!-- <button type="button" class="btn btn-primary">Edit</button> -->
@@ -279,18 +279,30 @@
                         </td>
                     </tr>
                 </table>
-
-                <!-- <div class=" mb-3">
-                            <button type="submit" class="btn btn-primary" (click)="uploadDecorationModal()">Upload Decoration
-                                Image</button>
-                        </div> -->
-                <div class=" mb-3">
-                    <!-- <div class="float-end"> -->
-                    <button type="submit" class="bg-label-danger btn-bg bg-label-danger ml-10"
-                        (click)="downloadPdf()"><i class="bx bxs-file-pdf" tooltip="Download PDF" placement="bottom"
-                            showDelay="100" style="font-size: 40px ;"></i></button>
-                    <!-- <button type="submit" class="btn btn-primary" (click)="downloadPdf()">PDF</button> -->
-                    <!-- </div> -->
+            </div>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Download PDF</h5>
+        </div>
+        <div class="card-body">
+            <div class="row p-sm-3 p-0">
+                <div class="p-0">
+                    <button class="dt-button buttons-collection btn btn-label-danger me-2 mb-3" (click)="downloadPdf()">
+                        <span>
+                            <i class="bx bxs-file-pdf me-sm-2" tooltip="Download PDF" placement="bottom"
+                                showDelay="100"></i>
+                            <span>Download Booking Details</span>
+                        </span>
+                    </button>
+                    <button class="dt-button buttons-collection btn btn-label-danger me-2 mb-3" (click)="downloadPdf()">
+                        <span>
+                            <i class="bx bxs-file-pdf me-sm-2" tooltip="Download PDF" placement="bottom"
+                                showDelay="100"></i>
+                            <span>Download Client Selected Decor</span>
+                        </span>
+                    </button>
                 </div>
             </div>
         </div>
