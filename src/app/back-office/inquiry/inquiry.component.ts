@@ -224,6 +224,14 @@ export class InquiryComponent implements OnInit {
       this.router.navigate(["admin/inquiry/view-inquiry/" + id])
     }
   }
+  viewInquiryBooking(clientIdForNavigation: any, status: any, inquiryBookingId: any) {
+    if (status == 2) {
+      this.router.navigate(['admin/view-booking-confirm/' + inquiryBookingId]);
+    }
+    else {
+      this.router.navigate(["admin/inquiry/view-inquiry/" + clientIdForNavigation])
+    }
+  }
   bookingConfirmNavigation(id: any) {
     $('#inquiry-details-by-date-modal').modal('hide');
     this.router.navigate(['admin/booking-confirm/' + id]);
