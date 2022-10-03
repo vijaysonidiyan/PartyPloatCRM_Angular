@@ -237,6 +237,7 @@ export class InquiryComponent implements OnInit {
     this.router.navigate(['admin/booking-confirm/' + id]);
   }
   cancelBooking(id: any) {
+    this.defaultCancelInquiryForm();
     this.cancelInquiryForm.controls._id.setValue(id);
     $('#cancel-booking-modal').modal('show');
     $('#inquiry-details-by-date-modal').modal('hide')
@@ -705,7 +706,8 @@ export class InquiryComponent implements OnInit {
     this.adminLayoutService.cancelBookingInquiry(remarkBookingObj).subscribe((Response: any) => {
       if (Response.meta.code == 200) {
 
-
+        this.defaultCancelInquiryForm();
+        this.getAssignPartyplotList();
 
         // this.tabClick(this.activeTab);
         $('#cancel-booking-modal').modal('hide');
