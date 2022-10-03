@@ -42,13 +42,13 @@ export const AdminLayoutRoutes: Routes = [
   { path: "booking-confirm-list", component: BookingConfirmListComponent, data: { breadcrumb: 'Booking Confirm List' } },
   { path: "view-booking-confirm/:id", component: ViewBookingComponent, data: { breadcrumb: 'View Booking Confirm' } },
   {
-    path: "inquiry", component: InquiryComponent, data: { breadcrumb: 'Inquiry' },
+    path: "inquiry/list-view", component: InquiryComponent, data: { breadcrumb: 'Inquiry' },
     // children: [
     //   { path: 'add-inquiry', component: AddInquiryComponent, data: { breadcrumb: "Add Inquiry" } }
     // ]
   },
   {
-    path: "calender", component: InquiryComponent, data: { breadcrumb: 'Inquiry' },
+    path: "inquiry/calender-view", component: InquiryComponent, data: { breadcrumb: 'Inquiry' },
   },
   { path: "inquiry/add-inquiry", component: AddInquiryComponent, data: { breadcrumb: 'Add Inquiry' } },
   { path: "inquiry/view-inquiry/:id", component: AddInquiryComponent, data: { breadcrumb: 'View Inquiry' } },
