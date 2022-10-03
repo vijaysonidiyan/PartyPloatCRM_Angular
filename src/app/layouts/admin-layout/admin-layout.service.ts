@@ -668,6 +668,12 @@ export class AdminLayoutService {
     })
     return this.http.post(this.commonService.rootData.rootUrl + 'inquirybooking/inquirybookinggetByIDpdf', {}, { params: ID, headers: headers });
   }
+  bookingDecorationPdf(ID: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'decoration/decorationListbyinquirybookingIdPDF', { params: ID, headers: headers });
+  }
 
   // image decoration file upload and list
   imageDecorationCreate(data: any) {

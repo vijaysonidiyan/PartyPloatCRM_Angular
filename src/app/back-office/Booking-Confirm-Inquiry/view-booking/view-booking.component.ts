@@ -456,6 +456,43 @@ export class ViewBookingComponent implements OnInit {
       console.log(error);
     });
   }
+  downloadDecorationPdf() {
+
+
+    let downloadInvoiceObj = {
+      "inquirybookingID": this.bookingConfirmId,
+    };
+
+
+    this.adminLayoutService.bookingDecorationPdf(downloadInvoiceObj).subscribe((Response: any) => {
+
+      if (Response.meta.code == 200) {
+        const base64URL = Response.data.body.data;
+        const binary = base64URL;
+        const len = binary.length;
+        const buffer = new ArrayBuffer(len);
+        const view = new Uint8Array(binary);
+        var byteArrays = [];
+        byteArrays.push(view);
+        const blob = new Blob(byteArrays, { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+
+        const downloadLink = document.createElement('a');
+        document.body.appendChild(downloadLink);
+        downloadLink.href = url;
+        var extension = "booking.pdf";
+        downloadLink.download = new Date().getTime() + extension;
+        downloadLink.target = '_blank';
+        downloadLink.click();
+
+      }
+      else {
+        //this.commonService.notifier.notify('error', Response.meta.message);
+      }
+    }, (error) => {
+      console.log(error);
+    });
+  }
 
 
 

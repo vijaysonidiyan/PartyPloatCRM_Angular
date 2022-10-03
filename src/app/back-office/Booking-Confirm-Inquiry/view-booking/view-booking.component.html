@@ -296,7 +296,8 @@
                             <span>Download Booking Details</span>
                         </span>
                     </button>
-                    <button class="dt-button buttons-collection btn btn-label-danger me-2 mb-3" (click)="downloadPdf()">
+                    <button class="dt-button buttons-collection btn btn-label-danger me-2 mb-3"
+                        *ngIf="imageDecorationList.length > 0" (click)="downloadDecorationPdf()">
                         <span>
                             <i class="bx bxs-file-pdf me-sm-2" tooltip="Download PDF" placement="bottom"
                                 showDelay="100"></i>
