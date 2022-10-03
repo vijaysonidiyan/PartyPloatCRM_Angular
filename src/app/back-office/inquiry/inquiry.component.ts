@@ -158,11 +158,10 @@ export class InquiryComponent implements OnInit {
           center: '',
           right: ''
         },
-
+        expandRows: true,
+        showNonCurrentDates: false,
         initialDate: new Date(this.searchedYear + '-' + this.searchedMonth),
         businessHours: false, // display business hours
-
-        navLinks: true,
         dateClick: this.handleDateClick.bind(this),
         events: this.inquiryEvent,
         eventClick: this.eventClickFunction.bind(this),
@@ -191,8 +190,10 @@ export class InquiryComponent implements OnInit {
         right: ''
       },
       businessHours: false, // display business hours
-      editable: true,
-      selectable: true,
+      // editable: true,
+      // selectable: true,
+      expandRows: true,
+      showNonCurrentDates: false,
       dateClick: this.handleDateClick.bind(this),
       events: this.inquiryEvent,
       eventClick: this.eventClickFunction.bind(this),
@@ -575,13 +576,13 @@ export class InquiryComponent implements OnInit {
         this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
 
         const url = this.router.url;
-        if (url.includes('inquiry')) {
+        if (url.includes('inquiry/list-view')) {
           this.isInquiryTab = true;
           this.searchedMonth = this.currentMonth;
           this.searchedYear = this.currentYear;
           this.getInquiryList({ month: parseInt(this.searchedMonth), year: this.searchedYear, name: this.searchedName, partyplot_ID: this.searchedPartyplot })
         }
-        else if (url.includes('calender')) {
+        else if (url.includes('calender-view')) {
           this.isInquiryTab = false;
           this.searchedMonth = this.currentMonth;
           this.searchedYear = this.currentYear;

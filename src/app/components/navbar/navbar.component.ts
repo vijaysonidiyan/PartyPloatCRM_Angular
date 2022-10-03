@@ -360,7 +360,7 @@ export class NavbarComponent implements OnInit {
           pastUrl: 'dashboard',
           pastLinkName: 'Dashboard',
         }, {
-          pastUrl: 'inquiry',
+          pastUrl: 'inquiry/calender-view',
           pastLinkName: 'Inquiry',
         }],
         currentPageName: 'Booking Confirm'

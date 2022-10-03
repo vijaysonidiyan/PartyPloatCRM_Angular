@@ -203,8 +203,8 @@
             <!-- <button type="button" class="btn btn-primary">Edit</button> -->
         </div>
         <div class="card-body">
-            <div class="row p-sm-3 p-0">
-                <form role="form" class="p-0 add-employee-form" autocomplete="off" [formGroup]="bookingDataForm">
+            <form role="form" class="p-0 add-employee-form" autocomplete="off" [formGroup]="bookingDataForm">
+                <div class="row p-sm-3 p-0">
                     <table class="table-border" formArrayName="extradecoration">
                         <tr class="boader-bottom-1">
                             <th class="text-center w-5">Sr. No.</th>
@@ -246,14 +246,24 @@
                             </td>
                         </tr>
                     </table>
-                </form>
-            </div>
-            <div class="mb-3">
-                <button type="button" class="btn bg-label-success btn-bg bg-label-success"
-                    [ngClass]="fbookingConfirmData.extradecoration.invalid == true ? 'disabled' : ''"
-                    (click)="addExtraItem()"><i class="bx bx-plus" tooltip="Add" placement="bottom"
-                        showDelay="100"></i></button>
-            </div>
+                </div>
+                <div class="mb-3">
+                    <button type="button" class="btn bg-label-success btn-bg bg-label-success"
+                        [ngClass]="fbookingConfirmData.extradecoration.invalid == true ? 'disabled' : ''"
+                        (click)="addExtraItem()"><i class="bx bx-plus" tooltip="Add" placement="bottom"
+                            showDelay="100"></i></button>
+                </div>
+                <div *ngIf="eventList.length != 0">
+                    <hr class="mb-3" *ngIf="eventList.length != 0">
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <label class="form-label" for="basic-default-company">Extra Decor
+                            Budget</label>
+
+                        <input type="text" appNumbersOnly class="form-control" id="basic-default-company"
+                            placeholder="Extra Decor Budget" formControlName="extraDecorBudget" />
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <div class="float-end mb-3">
