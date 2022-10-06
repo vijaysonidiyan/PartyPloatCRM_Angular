@@ -165,6 +165,7 @@ export class AddInquiryComponent implements OnInit {
       offer_budget: [(oItem['offer_budget'] ? oItem['offer_budget'] : '')],
       client_budget: [(oItem['client_budget'] ? oItem['client_budget'] : '')],
       remark: [(oItem['remark'] ? oItem['remark'] : '')],
+      approvestatus: [(oItem['approvestatus'] ? oItem['approvestatus'] : 1)],
     });
   }
   timeRange = [];
@@ -277,6 +278,7 @@ export class AddInquiryComponent implements OnInit {
             setValueData.controls['client_budget'].setValue(x.data[0].client_budget);
             setValueData.controls['offer_budget'].setValue(x.data[0].offer_budget);
             setValueData.controls['remark'].setValue(x.data[0].remark);
+            setValueData.controls['approvestatus'].setValue(x.data[0].approvestatus);
             setValueData.controls['startTimeObj'].setValue(moment(moment(startDateTime).subtract(5, 'hour').subtract(30, 'minute').toJSON()).format('HH:mm'));
             setValueData.controls['endTimeObj'].setValue(moment(moment(endDateTime).subtract(5, 'hour').subtract(30, 'minute').toJSON()).format('HH:mm'));
 
@@ -530,7 +532,8 @@ export class AddInquiryComponent implements OnInit {
             endTimeObj: moment(moment(endDateTime).subtract(5, 'hour').subtract(30, 'minute').toJSON()).format('HH:mm'),
             offer_budget: x.offer_budget,
             client_budget: x.client_budget,
-            remark: x.client_budget
+            remark: x.remark,
+            approvestatus: x.approvestatus
           }
           this.selectedDate = new Date(x.startDateObj)
           this.viewInquiryFormArray[index] = true
@@ -584,6 +587,10 @@ export class AddInquiryComponent implements OnInit {
   }
 
   deletEventList(index: number) {
+    if((this.eventInquiryDataForm.controls['events'] as FormArray).length <= 1) {
+      this.commonService.notifier.notify("error", "Event Details ")
+      return
+    }
     let _id = (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['_id'].value);
     let deleteIdObj = {
       _id: _id

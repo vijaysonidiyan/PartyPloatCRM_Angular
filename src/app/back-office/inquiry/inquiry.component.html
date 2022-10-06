@@ -7,9 +7,9 @@
                         <div class="row">
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3">
                                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Inquiry</h4> -->
-                                <ng-select [items]="assignpartyplotList" [multiple]="false"
+                                <ng-select [items]="assignpartyplotList" [multiple]="false" 
                                     class="form-control p-0 me-3" bindLabel="name" bindValue="_id"
-                                    [(ngModel)]="searchedPartyplot" placeholder="Select Party Plot">
+                                    [(ngModel)]="searchedPartyplot"  placeholder="Select Party Plot">
                                 </ng-select>
                             </div>
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3">
@@ -57,15 +57,15 @@
                                     <th class="w-5">No</th>
                                     <th class="w-10">Action</th>
                                     <th class="w-15">Status</th>
+                                    <th>Date</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Contact</th>
                                     <th>Contact-2</th>
-                                    <th>Address</th>
                                     <th>Event Type</th>
                                     <th>Guest</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
+                                    <th>Party Plot</th>
+                                    <th>Address</th>
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0"
@@ -76,7 +76,7 @@
                                         <div class="d-flex">
                                             <button class="btn-bg"
                                                 (click)="viewInquiryBooking(inquiryData.clientInquiryId,inquiryData.approvestatus,inquiryData.inquirybooking_id)">
-                                                <i class="bx bxs-show" tooltip="View" placement="bottom"
+                                                <i class="bx bxs-show" tooltip="Booking View" placement="bottom"
                                                     showDelay="100"></i>
                                             </button>
                                             <button class="btn-bg badge bg-label-success"
@@ -87,7 +87,9 @@
                                             </button>
                                             <button class="btn-bg badge bg-label-danger" tooltip="Booking Cancel"
                                                 *ngIf="inquiryData.approvestatus != 3" placement="bottom"
-                                                showDelay="100" (click)="cancelBooking(inquiryData.eventinquiry_id)">
+                                                showDelay="100" (confirm-click)="cancelBooking(inquiryData.eventinquiry_id)"
+                                                appConfirm [confirmTitle]="'Cancel Booking'"
+                                        [confirmContent]="'Are you sure to Cancel Booking?'">
                                                 <i class="bx bx-x"></i>
                                             </button>
                                         </div>
@@ -100,15 +102,15 @@
                                         <span *ngIf="inquiryData.approvestatus == 3"
                                             class="badge bg-label-danger me-1">Cancel</span>
                                     </td>
+                                    <td>{{inquiryData.startDateObj | date:'dd/MM/yyyy':'+0000' }}</td>
                                     <td><strong>{{inquiryData.name}}</strong></td>
                                     <td>{{inquiryData.email}}</td>
                                     <td>{{inquiryData.primaryContact}}</td>
                                     <td>{{inquiryData.secondryContact}}</td>
-                                    <td>{{inquiryData.address}}</td>
                                     <td>{{inquiryData.eventName}}</td>
                                     <td>{{inquiryData.guest}}</td>
-                                    <td>{{inquiryData.startDateObj | date:'dd/MM/yyyy, hh:mm a':'+0000' }}</td>
-                                    <td>{{inquiryData.endDateObj | date:'dd/MM/yyyy, hh:mm a':'+0000' }}</td>
+                                    <td>{{inquiryData.partyplot_name}}</td>
+                                    <td>{{inquiryData.address}}</td>
 
 
                                 </tr>
@@ -129,7 +131,7 @@
                         <div class="dropdown-search">
 
                             <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0 me-3"
-                                bindLabel="name" bindValue="_id" [(ngModel)]="searchedPartyplot"
+                                bindLabel="name" bindValue="_id"  [(ngModel)]="searchedPartyplot" [clearable]="false"
                                 (change)="partyplotChange()" placeholder="Select Party Plot">
                             </ng-select>
 

@@ -17592,3 +17592,7 @@ html:not(.layout-footer-fixed) .content-wrapper {
      margin-top:20px !important;
    }
 }
+a.fc-event, a.fc-event:hover,.fc td.fc-daygrid-day:not(.fc-day-disabled) .fc-daygrid-day-frame {
+  cursor: pointer;
+}
+

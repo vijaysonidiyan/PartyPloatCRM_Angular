@@ -49,6 +49,9 @@ export class BookingConfirmListComponent implements OnInit {
     let Obj = {
       partyplot_ID: this.searchedPartyplot
     }
+    this.bookingConfirmList = []
+    this.bookingconfirmList = []
+    this.allbookingconfirmList = []
     this.adminLayoutService.getBookingConfirmListDetails(Obj).subscribe(
       (Response: any) => {
         if (Response.meta.code == 200) {

@@ -11,7 +11,7 @@
                 </div>
                 <div>
                     <ng-select [items]="assignpartyplotList" [multiple]="false" class="custom-class form-control p-0"
-                        bindLabel="name" bindValue="_id" [(ngModel)]="searchedPartyplot" (change)="partyplotChange()"
+                        bindLabel="name" bindValue="_id" [(ngModel)]="searchedPartyplot" (change)="partyplotChange()" [clearable]="false"
                         placeholder="Select Party Plot">
                     </ng-select>
                 </div>
@@ -28,13 +28,13 @@
                         <tr class="text-nowrap">
                             <th class="w-5">No</th>
                             <th class="w-15">Action</th>
+                            <th>Date</th>
                             <th>Name</th>
                             <th>Contact</th>
                             <th>Email ID</th>
-                            <th>Address</th>
-                            <th>Date</th>
                             <th>Event</th>
                             <th>Party Plot</th>
+                            <th>Address</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -45,25 +45,25 @@
                                 <div class="d-flex">
                                     <button class="btn-bg"
                                         (click)="viewBookingConfirm({id : bookingConfirmData._id, index : bookingConfirmIndex})"><i
-                                            class="bx bxs-show" tooltip="View Booking" placement="bottom"
+                                            class="bx bxs-show" tooltip="Booking View" placement="bottom"
                                             showDelay="100"></i>
                                     </button>
                                     <button class="btn-bg bg-label-danger"
                                         (confirm-click)="cancelBookingConfirm({id : bookingConfirmData._id, index : bookingConfirmIndex})"
-                                        appConfirm [confirmTitle]="'Deactive'"
-                                        [confirmContent]="'Are you sure to Deactive this Event Master?'"><i
+                                        appConfirm [confirmTitle]="'Cancel Booking'"
+                                        [confirmContent]="'Are you sure to Cancel Booking?'"><i
                                             class="bx bx-x" tooltip="Cancel Booking" placement="bottom"
                                             showDelay="100"></i>
                                     </button>
                                 </div>
                             </td>
+                            <td>{{ bookingConfirmData.startDateObj | date:'dd/MM/yyyy':'+0000' }}</td>
                             <td><strong>{{ bookingConfirmData.name }}</strong></td>
                             <td>{{ bookingConfirmData.primaryContact }}</td>
                             <td>{{ bookingConfirmData.email }}</td>
-                            <td>{{ bookingConfirmData.address }}</td>
-                            <td>{{ bookingConfirmData.startDateObj | date:'dd/MM/yyyy':'+0000' }}</td>
                             <td>{{ bookingConfirmData.eventname }}</td>
                             <td>{{ bookingConfirmData.partyplotname }}</td>
+                            <td>{{ bookingConfirmData.address }}</td>
                         </tr>
                         <tr *ngIf="noData">
                             <td colspan="8">

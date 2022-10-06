@@ -158,12 +158,12 @@ export class InquiryComponent implements OnInit {
           center: '',
           right: ''
         },
-        expandRows: true,
         showNonCurrentDates: false,
         initialDate: new Date(this.searchedYear + '-' + this.searchedMonth),
         businessHours: false, // display business hours
         dateClick: this.handleDateClick.bind(this),
         events: this.inquiryEvent,
+        expandRows: true,
         eventClick: this.eventClickFunction.bind(this),
         customButtons: {
           // myCustomButton: {
@@ -189,11 +189,10 @@ export class InquiryComponent implements OnInit {
         center: '',
         right: ''
       },
+      showNonCurrentDates: false,
       businessHours: false, // display business hours
       // editable: true,
       // selectable: true,
-      expandRows: true,
-      showNonCurrentDates: false,
       dateClick: this.handleDateClick.bind(this),
       events: this.inquiryEvent,
       eventClick: this.eventClickFunction.bind(this),

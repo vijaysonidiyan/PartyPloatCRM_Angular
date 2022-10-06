@@ -42,18 +42,18 @@
                                     <button class="btn-bg" (click)="editPackageMaster(packageMasterData._id)"><i
                                             class="bx bx-edit-alt" tooltip="Edit" placement="bottom" showDelay="100"></i>
                                     </button>
-                                    <button *ngIf="packageMasterData.status == 2" title="Active Package"
+                                    <button *ngIf="packageMasterData.status == 2"
                                         (confirm-click)="statusPackage({id :packageMasterData._id, status:1})"
                                         appConfirm [confirmTitle]="'Active'"
                                         [confirmContent]="'Are you sure to Active this Package Master?'"
-                                        class="bg-label-success btn-bg bg-label-success" tooltip="Add" placement="bottom" showDelay="100">
+                                        class="bg-label-success btn-bg bg-label-success" tooltip="Active" placement="bottom" showDelay="100">
                                         <i class="bx bx-plus"></i>
                                     </button>
-                                    <button *ngIf="packageMasterData.status == 1" title="Deactive Package"
+                                    <button *ngIf="packageMasterData.status == 1"
                                         (confirm-click)="statusPackage({id :packageMasterData._id, status:2})"
                                         appConfirm [confirmTitle]="'Deactive'"
                                         [confirmContent]="'Are you sure to Deactive this Package Master?'"
-                                        class="bg-label-danger btn-bg bg-label-danger" tooltip="Delete" placement="bottom" showDelay="100">
+                                        class="bg-label-danger btn-bg bg-label-danger" tooltip="Deactive" placement="bottom" showDelay="100">
                                         <i class="bx bx-trash"></i>
                                     </button>
                                 </div>
