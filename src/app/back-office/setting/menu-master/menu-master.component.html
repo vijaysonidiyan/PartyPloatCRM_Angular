@@ -132,13 +132,13 @@
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Parent Name</label>
-                            <ng-select [items]="perentList" class="form-control p-0" bindLabel="title" bindValue="_id"
+                            <ng-select [items]="perentList" class="form-control p-0" bindLabel="title" bindValue="_id" [searchable]="false"
                                 placeholder="Select Parent Name" formControlName="parentId">
                             </ng-select>
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Module List</label>
-                            <ng-select [items]="moduleList" class="form-control p-0" bindLabel="name" bindValue="value"
+                            <ng-select [items]="moduleList" class="form-control p-0" bindLabel="name" bindValue="value" [searchable]="false"
                                 placeholder="Select Module" formControlName="module">
                             </ng-select>
                         </div>

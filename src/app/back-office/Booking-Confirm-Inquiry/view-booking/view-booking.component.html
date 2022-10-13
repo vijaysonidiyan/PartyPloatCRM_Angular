@@ -146,6 +146,27 @@
                     </tr>
                 </table>
             </div>
+            <div class="row">
+                <hr class="mb-3" *ngIf="isEditPackageItem === false">
+                <div class="col-lg-4 col-md-6 mb-3">
+                    <h5 *ngIf="isEditPackageItem === false">Basic Package <span>&nbsp; :&nbsp;
+                            {{fbookingConfirmData.basicPackage.value}}</span></h5>
+                    <label *ngIf="isEditPackageItem === true" class="form-label" for="basic-default-company">Basic Packege</label>
+
+                    <input type="text" *ngIf="isEditPackageItem === true" appNumbersOnly class="form-control"
+                        id="basic-default-company" placeholder="Basic Packege"
+                        formControlName="basicPackage" />
+                </div>
+                <div class="col-lg-4 col-md-6 mb-3">
+                    <h5 *ngIf="isEditPackageItem === false">Discount <span>&nbsp; :&nbsp;
+                        {{fbookingConfirmData.discount.value}}</span></h5>
+                    <label *ngIf="isEditPackageItem === true" class="form-label" for="basic-default-company">Discount</label>
+
+                    <input type="text" *ngIf="isEditPackageItem === true" appNumbersOnly class="form-control"
+                        id="basic-default-company" value="0" placeholder="Enter Discount"
+                        formControlName="discount" />
+                </div>
+            </div>
         </div>
     </div>
     <div class="card mb-4">
@@ -220,13 +241,12 @@
             <div *ngIf="eventList.length != 0">
                 <hr class="mb-3" *ngIf="isEditExtraItem === false">
                 <div class="col-lg-4 col-md-6 mb-3">
-                    <h5 *ngIf="isEditExtraItem === false">Extra Decoration <span>&nbsp; :&nbsp;
+                    <h5 *ngIf="isEditExtraItem === false">Extra Cost <span>&nbsp; :&nbsp;
                             {{fbookingConfirmData.extraDecorBudget.value}}</span></h5>
-                    <label *ngIf="isEditExtraItem === true" class="form-label" for="basic-default-company">Extra Decor
-                        Budget</label>
+                    <label *ngIf="isEditExtraItem === true" class="form-label" for="basic-default-company">Extra Cost</label>
 
                     <input type="text" *ngIf="isEditExtraItem === true" appNumbersOnly class="form-control"
-                        id="basic-default-company" placeholder="Extra Decor Budget"
+                        id="basic-default-company" placeholder="Extra Cost"
                         formControlName="extraDecorBudget" />
                 </div>
             </div>

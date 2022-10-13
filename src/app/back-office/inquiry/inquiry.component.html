@@ -7,7 +7,7 @@
                         <div class="row">
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3">
                                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Inquiry</h4> -->
-                                <ng-select [items]="assignpartyplotList" [multiple]="false" 
+                                <ng-select [items]="assignpartyplotList" [multiple]="false"  [searchable]="false"
                                     class="form-control p-0 me-3" bindLabel="name" bindValue="_id"
                                     [(ngModel)]="searchedPartyplot"  placeholder="Select Party Plot">
                                 </ng-select>
@@ -27,13 +27,13 @@
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3">
                                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Inquiry</h4> -->
                                 <ng-select [items]="monthArray" [multiple]="false" class="form-control p-0 me-3"
-                                    bindLabel="month" bindValue="value" [(ngModel)]="searchedMonth"
+                                    bindLabel="month" bindValue="value" [(ngModel)]="searchedMonth" [searchable]="false"
                                     placeholder="Select Month">
                                 </ng-select>
                             </div>
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <ng-select [items]="yearArray" [multiple]="false" class="form-control p-0 me-3"
-                                    bindLabel="yearArray" bindValue="yearArray" [(ngModel)]="searchedYear"
+                                    bindLabel="yearArray" bindValue="yearArray" [(ngModel)]="searchedYear" [searchable]="false"
                                     placeholder="Select Year">
                                 </ng-select>
                                 <div *ngIf="invaildSearchList === true" class="error_msg">Please select Year.</div>
@@ -129,7 +129,7 @@
                         <div class="dropdown-search">
 
                             <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0 me-3"
-                                bindLabel="name" bindValue="_id"  [(ngModel)]="searchedPartyplot" [clearable]="false"
+                                bindLabel="name" bindValue="_id"  [(ngModel)]="searchedPartyplot" [clearable]="false" [searchable]="false"
                                 (change)="partyplotChange()" placeholder="Select Party Plot">
                             </ng-select>
 
@@ -437,7 +437,7 @@
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label for="nameBasic" class="form-label">Event Type</label>
                             <ng-select [items]="eventActiveList" [readonly]="isEditViewInquiryDetails == false"
-                                class="form-control p-0" bindLabel="name" bindValue="_id" placeholder="Select Event"
+                                class="form-control p-0" bindLabel="name" bindValue="_id" placeholder="Select Event" [searchable]="false"
                                 formControlName="eventType">
                             </ng-select>
                         </div>

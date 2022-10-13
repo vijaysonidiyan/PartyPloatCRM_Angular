@@ -19,7 +19,7 @@
                         <label class="form-label">Role</label>
                     </div>
                     <ng-select [items]="activeroleList" [(ngModel)]="selectedRole" class="form-control p-0"
-                        bindLabel="roleName" bindValue="_id" placeholder="Select Role"
+                        bindLabel="roleName" bindValue="_id" placeholder="Select Role" [searchable]="false"
                         (ngModelChange)="getUserActiveListByRoleId();">
                     </ng-select>
                 </div>
@@ -30,7 +30,7 @@
                     <div>
                         <label class="form-label">User</label>
                     </div>
-                    <ng-select [items]="activeuserList" [(ngModel)]="selectedUser" class="form-control p-0"
+                    <ng-select [items]="activeuserList" [(ngModel)]="selectedUser" class="form-control p-0" [searchable]="false"
                         bindLabel="name" bindValue="_id" placeholder="Select User" (ngModelChange)="onUserChange()">
                     </ng-select>
                 </div>

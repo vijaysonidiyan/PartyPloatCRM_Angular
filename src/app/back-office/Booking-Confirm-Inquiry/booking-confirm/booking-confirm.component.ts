@@ -70,6 +70,8 @@ export class BookingConfirmComponent implements OnInit {
       client_budget: [''],
       guest: [''],
       offer_budget: [''],
+      basicPackage: [''],
+      discount: [''],
       remark: [''],
       extraDecorBudget: ['0'],
       packageId: [null, [Validators.required]],
@@ -141,6 +143,8 @@ export class BookingConfirmComponent implements OnInit {
         this.bookingDataForm.controls.guest.setValue(Response.data[0].guest);
         this.bookingDataForm.controls.extraDecorBudget.setValue(Response.data[0].extraDecorBudget ? Response.data[0].extraDecorBudget : '0');
         this.bookingDataForm.controls.offer_budget.setValue(Response.data[0].offer_budget);
+        this.bookingDataForm.controls.basicPackage.setValue(Response.data[0].offer_budget);
+        this.bookingDataForm.controls.discount.setValue(0);
         this.bookingDataForm.controls.remark.setValue(Response.data[0].remark);
         this.getPackageActiveList();
       }
@@ -215,7 +219,9 @@ export class BookingConfirmComponent implements OnInit {
       _id: this.inquiryEventId,
       extraDecorBudget: this.bookingDataForm.controls.extraDecorBudget.value,
       package: this.bookingDataForm.controls.package.value,
-      extradecoration: this.bookingDataForm.controls.extradecoration.value
+      extradecoration: this.bookingDataForm.controls.extradecoration.value,
+      basicPackage: this.bookingDataForm.controls.basicPackage.value,
+      discount: this.bookingDataForm.controls.discount.value
     }
     // console.log(bookInquiryConfirmEvent)
     // return

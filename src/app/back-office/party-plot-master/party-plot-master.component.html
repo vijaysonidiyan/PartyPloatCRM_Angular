@@ -111,7 +111,7 @@
                         <div class="col-lg-12 mb-3">
                             <label for="nameBasic" class="form-label required">Event Select</label>
                             <ng-select [items]="activeeventList" [multiple]="true" class="form-control p-0"
-                                bindLabel="name" bindValue="_id" placeholder="Select Event" formControlName="events"
+                                bindLabel="name" bindValue="_id" placeholder="Select Event" formControlName="events" [searchable]="false"
                                 [closeOnSelect]="false">
                             </ng-select>
                             <div *ngIf="submittedPartyplotData && fnameData.events.errors">
