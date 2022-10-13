@@ -75,7 +75,7 @@ export class SidebarComponent implements OnInit {
     this.utsav_logo_img = this.storageService.getValue(StorageKey.utsav_decor_logo);
   }
   @Input() set navbarNativeElement(value: any) {
-    //debugger
+
     if (!!value) {
       this.navbar = value.navbarNativeElement;
     }
@@ -94,7 +94,7 @@ export class SidebarComponent implements OnInit {
     // }, 0);
   }
   childrenMenu(index: any) {
-    debugger
+
     this.isSettingOpen[index] = !this.isSettingOpen[index];
   }
   toggle() {
@@ -148,7 +148,7 @@ export class SidebarComponent implements OnInit {
   }
 
   sidebarClose() {
-    debugger
+
 
     //const navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = this.navbar.getElementsByClassName("layout-menu-toggle")[0];

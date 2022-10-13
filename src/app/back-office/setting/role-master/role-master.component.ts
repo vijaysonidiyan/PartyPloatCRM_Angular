@@ -120,7 +120,7 @@ export class RoleMasterComponent implements OnInit {
     }
 
     statusRolemaster(paramsObj) {
-        debugger
+
         let statusrolemasterModelObj = {
             "_id": paramsObj.id,
             "status": paramsObj.status
@@ -176,7 +176,7 @@ export class RoleMasterComponent implements OnInit {
         this.rolemasterList = this.allrolemaster.filter((val: any) => JSON.stringify(val).toLowerCase().includes(value.toLowerCase()));
         this.p = 1;
         if (this.rolemasterList.length == 0) {
-            debugger
+
             this.noData = true;
         } else {
             this.noData = false;

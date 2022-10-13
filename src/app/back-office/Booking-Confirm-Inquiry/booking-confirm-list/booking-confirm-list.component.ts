@@ -49,10 +49,13 @@ export class BookingConfirmListComponent implements OnInit {
     let Obj = {
       partyplot_ID: this.searchedPartyplot
     }
+    this.bookingConfirmList = []
+    this.bookingconfirmList = []
+    this.allbookingconfirmList = []
     this.adminLayoutService.getBookingConfirmListDetails(Obj).subscribe(
       (Response: any) => {
         if (Response.meta.code == 200) {
-          this.bookingConfirmList = Response.data.inquirybookingData;
+          this.bookingConfirmList = Response.data.filter((x: any) => x.approvestatus == 2);
           this.bookingconfirmList = this.bookingConfirmList;
           this.allbookingconfirmList = this.bookingconfirmList;
           this.bookingconfirmList = this.bookingConfirmList.slice();
@@ -73,7 +76,7 @@ export class BookingConfirmListComponent implements OnInit {
     this.bookingConfirmList = this.allbookingconfirmList.filter((val: any) => JSON.stringify(val).toLowerCase().includes(value.toLowerCase()));
     this.p = 1;
     if (this.bookingConfirmList.length == 0) {
-      debugger
+
       this.noData = true;
     } else {
       this.noData = false;
@@ -82,6 +85,21 @@ export class BookingConfirmListComponent implements OnInit {
 
   viewBookingConfirm(params: any) {
     this.router.navigate(['/admin/view-booking-confirm/' + params.id])
+  }
+
+  cancelBookingConfirm(params: any) {
+    let Obj = {
+      _id: params.id,
+      approvestatus: 3
+    }
+    this.adminLayoutService.cancleBookingConfirmInquiry(Obj).subscribe(
+      (Response: any) => {
+        if (Response.meta.code == 200) {
+          this.partyplotChange();
+          this.commonService.notifier.notify('success', Response.meta.message)
+        }
+      }
+    )
   }
 
 }

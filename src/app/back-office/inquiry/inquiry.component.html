@@ -7,9 +7,9 @@
                         <div class="row">
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3">
                                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Inquiry</h4> -->
-                                <ng-select [items]="assignpartyplotList" [multiple]="false"
+                                <ng-select [items]="assignpartyplotList" [multiple]="false" 
                                     class="form-control p-0 me-3" bindLabel="name" bindValue="_id"
-                                    [(ngModel)]="searchedPartyplot" placeholder="Select Party Plot">
+                                    [(ngModel)]="searchedPartyplot"  placeholder="Select Party Plot">
                                 </ng-select>
                             </div>
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3">
@@ -36,17 +36,15 @@
                                     bindLabel="yearArray" bindValue="yearArray" [(ngModel)]="searchedYear"
                                     placeholder="Select Year">
                                 </ng-select>
+                                <div *ngIf="invaildSearchList === true" class="error_msg">Please select Year.</div>
                             </div>
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12"></div>
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <div class="text-end">
                                     <button type="button" (click)="searchFilterInquiryList()"
-                                        class="btn btn-primary me-3">
+                                        class="btn btn-primary ">
                                         Search
                                     </button>
-                                    <!-- <button type="button" class="btn btn-primary" (click)="tabClick(1)" *ngIf="activeTab === 2">
-                                            Table View
-                                        </button> -->
                                 </div>
                             </div>
                         </div>
@@ -60,53 +58,40 @@
                                     <th class="w-5">No</th>
                                     <th class="w-10">Action</th>
                                     <th class="w-15">Status</th>
+                                    <th>Date</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Contact</th>
                                     <th>Contact-2</th>
-                                    <th>Address</th>
                                     <th>Event Type</th>
                                     <th>Guest</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
+                                    <th>Party Plot</th>
+                                    <th>Address</th>
                                 </tr>
                             </thead>
-                            <tbody class="table-border-bottom-0"
-                                *ngFor="let inquiryData of inquiryList | paginate: { itemsPerPage: l, currentPage: p }; let inquiryIndex = index">
-                                <tr>
+                            <tbody class="table-border-bottom-0">
+                                <tr *ngFor="let inquiryData of inquiryList | paginate: { itemsPerPage: l, currentPage: p }; let inquiryIndex = index">
                                     <td>{{ l * (p - 1) + inquiryIndex + 1 }}</td>
                                     <td>
                                         <div class="d-flex">
                                             <button class="btn-bg"
-                                                routerLink="/admin/inquiry/view-inquiry/{{inquiryData.clientInquiryId}}">
-                                                <i class="bx bxs-show" tooltip="View" placement="bottom"
+                                                (click)="viewInquiryBooking(inquiryData.clientInquiryId,inquiryData.approvestatus,inquiryData.inquirybooking_id)">
+                                                <i class="bx bxs-show" tooltip="Booking View" placement="bottom"
                                                     showDelay="100"></i>
                                             </button>
                                             <button class="btn-bg badge bg-label-success"
-                                                *ngIf="inquiryData.approvestatus != 2" tooltip="Booking Confirm"
-                                                placement="bottom" showDelay="100"
+                                                *ngIf="inquiryData.approvestatus == 1 && isBookedOrNotForListView[inquiryIndex] === true"
+                                                tooltip="Booking Confirm" placement="bottom" showDelay="100"
                                                 (click)="bookingConfirmNavigation(inquiryData.eventinquiry_id)">
                                                 <i class="bx bx-check"></i>
                                             </button>
                                             <button class="btn-bg badge bg-label-danger" tooltip="Booking Cancel"
-                                                *ngIf="inquiryData.approvestatus != 2" placement="bottom"
-                                                showDelay="100" (click)="cancelBooking(inquiryData.eventinquiry_id)">
+                                                *ngIf="inquiryData.approvestatus != 3" placement="bottom"
+                                                showDelay="100" (confirm-click)="cancelBooking(inquiryData.eventinquiry_id)"
+                                                appConfirm [confirmTitle]="'Cancel Booking'"
+                                        [confirmContent]="'Are you sure to Cancel Booking?'">
                                                 <i class="bx bx-x"></i>
                                             </button>
-                                            <!-- <button *ngIf="inquiryData.status == 2" title="Active Event"
-                                                (confirm-click)="inquiryStatus({id :inquiryData._id,index:inquiryIndex, status:1})"
-                                                appConfirm [confirmTitle]="'Active'"
-                                                [confirmContent]="'Are you sure to Active this Inquiry?'"
-                                                class="bg-label-success btn-bg bg-label-success">
-                                                <i class="bx bx-plus"></i>
-                                            </button>
-                                            <button *ngIf="inquiryData.status == 1" title="Deactive Event"
-                                                (confirm-click)="inquiryStatus({id :inquiryData._id,index:inquiryIndex, status:2})"
-                                                appConfirm [confirmTitle]="'Deactive'"
-                                                [confirmContent]="'Are you sure to Deactive this Inquiry?'"
-                                                class="bg-label-danger btn-bg bg-label-danger">
-                                                <i class="bx bx-trash"></i>
-                                            </button> -->
                                         </div>
                                     </td>
                                     <td>
@@ -117,17 +102,15 @@
                                         <span *ngIf="inquiryData.approvestatus == 3"
                                             class="badge bg-label-danger me-1">Cancel</span>
                                     </td>
+                                    <td>{{inquiryData.startDateObj | date:'dd/MM/yyyy':'+0000' }}</td>
                                     <td><strong>{{inquiryData.name}}</strong></td>
                                     <td>{{inquiryData.email}}</td>
                                     <td>{{inquiryData.primaryContact}}</td>
                                     <td>{{inquiryData.secondryContact}}</td>
-                                    <td>{{inquiryData.address}}</td>
                                     <td>{{inquiryData.eventName}}</td>
                                     <td>{{inquiryData.guest}}</td>
-                                    <td>{{inquiryData.startDateObj | date:'dd/MM/yyyy, hh:mm a':'+0000' }}</td>
-                                    <td>{{inquiryData.endDateObj | date:'dd/MM/yyyy, hh:mm a':'+0000' }}</td>
-
-
+                                    <td>{{inquiryData.partyplot_name}}</td>
+                                    <td>{{inquiryData.address}}</td>
                                 </tr>
                                 <tr *ngIf="noData">
                                     <td colspan="12">
@@ -137,7 +120,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="footer-pagination float-end mt-3 p-4">
+                    <div class="footer-pagination float-end mt-3 p-4" *ngIf="inquiryList?.length > l">
                         <pagination-controls (pageChange)="p = $event"></pagination-controls>
                     </div>
                 </div>
@@ -146,7 +129,7 @@
                         <div class="dropdown-search">
 
                             <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0 me-3"
-                                bindLabel="name" bindValue="_id" [(ngModel)]="searchedPartyplot"
+                                bindLabel="name" bindValue="_id"  [(ngModel)]="searchedPartyplot" [clearable]="false"
                                 (change)="partyplotChange()" placeholder="Select Party Plot">
                             </ng-select>
 
@@ -256,11 +239,11 @@
                                                             <div class="dropdown-menu dropdown-menu-end"
                                                                 aria-labelledby="cardOpt6">
                                                                 <a class="dropdown-item"
-                                                                    (click)="viewInquiry(inquiryDataByDate.clientInquiryId,inquiryDataByDate.approvestatus,inquiryDataByDate.inquirybookingId)">
+                                                                    (click)="viewInquiry(inquiryDataByDate.clientInquiryId,inquiryDataByDate.approvestatus,inquiryDataByDate.inquirybooking_id)">
                                                                     View More
                                                                 </a>
                                                                 <a class="dropdown-item"
-                                                                    *ngIf="inquiryDataByDate.approvestatus == 1"
+                                                                    *ngIf="inquiryDataByDate.approvestatus == 1 && isBookedOrNot[inquiryIndex] == true"
                                                                     (click)="bookingConfirmNavigation(inquiryDataByDate._id)">Booking
                                                                     Confirm</a>
                                                                 <a class=" dropdown-item"
@@ -280,74 +263,6 @@
                     </div>
                 </div>
 
-                <!-- <div class="table-responsive text-nowrap">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Contact</th>
-                                <th>Contact-2</th>
-                                <th>Address</th>
-                                <th>Event Type</th>
-                                <th>Guest</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-border-bottom-0"
-                            *ngFor="let inquiryData of inquiryListByDate | paginate: { itemsPerPage: l, currentPage: p }; let inquiryIndex = index">
-                            <tr>
-                                <td>{{ l * (p - 1) + inquiryIndex + 1 }}</td>
-                                <td><strong>{{inquiryData.name | titlecase }}</strong></td>
-                                <td>{{inquiryData.email}}</td>
-                                <td>{{inquiryData.primaryContact}}</td>
-                                <td>{{inquiryData.secondryContact}}</td>
-                                <td>{{inquiryData.address}}</td>
-                                <td>{{inquiryData.eventName}}</td>
-                                <td>{{inquiryData.guest}}</td>
-                                <td>{{inquiryData.startDateObj | date:'dd/MM/yyyy hh:MM:SS a'}}</td>
-                                <td>{{inquiryData.endDateObj | date:'dd/MM/yyyy hh:MM:SS a'}}</td>
-                                <td>
-                                    <span *ngIf="inquiryData.status == 1"
-                                        class="badge bg-label-success me-1">Active</span>
-                                    <span *ngIf="inquiryData.status == 2"
-                                        class="badge bg-label-danger me-1">Deactive</span>
-                                </td>
-                                <td>
-                                    <div class="d-flex">
-                                        <button class="btn-bg"
-                                            (click)="editStaff({id : inquiryData._id, index : inquiryIndex})">
-                                            <i class="bx bx-edit-alt "></i>
-                                        </button>
-                                        <button *ngIf="inquiryData.status == 2" title="Active Event"
-                                            (confirm-click)="inquiryStatus({id :inquiryData._id,index:inquiryIndex, status:1})"
-                                            appConfirm [confirmTitle]="'Active'"
-                                            [confirmContent]="'Are you sure to Active this Inquiry?'"
-                                            class="bg-label-success btn-bg bg-label-success">
-                                            <i class="bx bx-plus"></i>
-                                        </button>
-                                        <button *ngIf="inquiryData.status == 1" title="Deactive Event"
-                                            (confirm-click)="inquiryStatus({id :inquiryData._id,index:inquiryIndex, status:2})"
-                                            appConfirm [confirmTitle]="'Deactive'"
-                                            [confirmContent]="'Are you sure to Deactive this Inquiry?'"
-                                            class="bg-label-danger btn-bg bg-label-danger">
-                                            <i class="bx bx-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr *ngIf="noData">
-                                <td colspan="12">
-                                    <h4 class="text-center mt-3">No Data Found</h4>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div> -->
             </div>
             <div class="modal-footer">
 

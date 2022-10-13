@@ -48,19 +48,19 @@
                                             class="bx bx-edit-alt" tooltip="Edit" placement="bottom"
                                             showDelay="100"></i>
                                     </button>
-                                    <button *ngIf="vendorDetailsData.status == 2" title="Active Vendor"
+                                    <button *ngIf="vendorDetailsData.status == 2"
                                         (confirm-click)="satusvendorDetails({id :vendorDetailsData._id,index:vendorDetailsIndex, status:1})"
                                         appConfirm [confirmTitle]="'Active'"
                                         [confirmContent]="'Are you sure to Active this Vendor?'"
-                                        class="bg-label-success btn-bg bg-label-success" tooltip="Add"
+                                        class="bg-label-success btn-bg bg-label-success" tooltip="Active"
                                         placement="bottom" showDelay="100">
                                         <i class="bx bx-plus"></i>
                                     </button>
-                                    <button *ngIf="vendorDetailsData.status == 1" title="Deactive Vendor"
+                                    <button *ngIf="vendorDetailsData.status == 1"
                                         (confirm-click)="satusvendorDetails({id :vendorDetailsData._id,index:vendorDetailsIndex, status:2})"
                                         appConfirm [confirmTitle]="'Deactive'"
                                         [confirmContent]="'Are you sure to Deactive this Vendor?'"
-                                        class="bg-label-danger btn-bg bg-label-danger" tooltip="Delete"
+                                        class="bg-label-danger btn-bg bg-label-danger" tooltip="Deactive"
                                         placement="bottom" showDelay="100">
                                         <i class="bx bx-trash"></i>
                                     </button>
@@ -81,7 +81,7 @@
                 </table>
             </div>
             <div class="footer-pagination float-end mt-3 p-4" *ngIf="!noData">
-                <pagination-controls (pageChange)="p = $event" *ngIf="vendorDetailsList.length > l">
+                <pagination-controls (pageChange)="p = $event" *ngIf="vendorDetailsList?.length > l">
                 </pagination-controls>
             </div>
         </div>
@@ -126,7 +126,7 @@
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label required">Email</label>
-                            <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
+                            <input type="text" id="basic-default-email" class="form-control" placeholder="Enter Email"
                                 aria-label="john.doe" aria-describedby="basic-default-email2" formControlName="email">
                             <div *ngIf="submittvendordetailsData && fvendorData.email.errors">
                                 <div *ngIf="fvendorData.email.errors.required">

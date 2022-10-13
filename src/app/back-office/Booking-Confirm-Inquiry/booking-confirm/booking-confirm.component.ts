@@ -45,7 +45,7 @@ export class BookingConfirmComponent implements OnInit {
     this.defaultForm();
     this.getClientDetailsByEventId();
     this.eventList = this.bookingDataForm.get("extradecoration") as FormArray;
-    this.eventList.push(this.createExtraItem({}));
+    //this.eventList.push(this.createExtraItem({}));
     // let validation = (this.bookingDataForm.controls['extradecoration'] as FormArray).controls[this.eventList.controls.length - 1] as FormGroup;
     // validation.get('item').setValidators([Validators.required]);
     // validation.get('quantity').setValidators([Validators.required]);
@@ -71,6 +71,7 @@ export class BookingConfirmComponent implements OnInit {
       guest: [''],
       offer_budget: [''],
       remark: [''],
+      extraDecorBudget: ['0'],
       packageId: [null, [Validators.required]],
       package: this.fb.array([]),
       extradecoration: this.fb.array([]),
@@ -138,6 +139,7 @@ export class BookingConfirmComponent implements OnInit {
         this.bookingDataForm.controls.endDateObj.setValue(Response.data[0].endDateObj);
         this.bookingDataForm.controls.client_budget.setValue(Response.data[0].client_budget);
         this.bookingDataForm.controls.guest.setValue(Response.data[0].guest);
+        this.bookingDataForm.controls.extraDecorBudget.setValue(Response.data[0].extraDecorBudget ? Response.data[0].extraDecorBudget : '0');
         this.bookingDataForm.controls.offer_budget.setValue(Response.data[0].offer_budget);
         this.bookingDataForm.controls.remark.setValue(Response.data[0].remark);
         this.getPackageActiveList();
@@ -189,6 +191,12 @@ export class BookingConfirmComponent implements OnInit {
     // validation.get('quantity').setValidators([Validators.required]);
   }
   deletCategoryList(index: number) {
+    let validation = (this.bookingDataForm.controls['extradecoration'] as FormArray).controls;
+    validation.map((x: any, index: any) => {
+      x.controls.item.clearValidators();
+      x.controls.quantity.clearValidators();
+      this.submittedExtraItemData[index] = false;
+    })
     const remove = this.eventList;
     remove.removeAt(index);
   }
@@ -205,6 +213,7 @@ export class BookingConfirmComponent implements OnInit {
 
     let bookInquiryConfirmEvent = {
       _id: this.inquiryEventId,
+      extraDecorBudget: this.bookingDataForm.controls.extraDecorBudget.value,
       package: this.bookingDataForm.controls.package.value,
       extradecoration: this.bookingDataForm.controls.extradecoration.value
     }

@@ -334,5 +334,15 @@ export class MenuMasterComponent implements OnInit {
     });
   }
 
+  search(value: string): void {
+    this.menuList = this.allmenu.filter((val: any) => JSON.stringify(val).toLowerCase().includes(value.toLowerCase()));
+    this.p = 1;
+    if (this.menuList.length == 0) {
+
+      this.noData = true;
+    } else {
+      this.noData = false;
+    }
+  }
 
 }

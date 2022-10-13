@@ -209,7 +209,7 @@ export class VendorDetailsComponent implements OnInit {
     this.vendorDetailsList = this.allvendordetails.filter((val: any) => JSON.stringify(val).toLowerCase().includes(value.toLowerCase()));
     this.p = 1;
     if (this.vendorDetailsList.length == 0) {
-      debugger
+
       this.noData = true;
     } else {
       this.noData = false;

@@ -123,7 +123,7 @@ export class ModuleMasterComponent implements OnInit {
   }
 
   statusModulemaster(paramsObj) {
-    debugger
+
     let statusmodulemasterModelObj = {
       "_id": paramsObj.id,
       "status": paramsObj.status

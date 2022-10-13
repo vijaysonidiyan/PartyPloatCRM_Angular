@@ -40,7 +40,7 @@
                         <label class="form-label required" for="basic-default-email">Email</label>
                         <div class="input-group input-group-merge">
                             <input type="text" [readonly]="viewInquiry === true" id="basic-default-email"
-                                class="form-control" placeholder="john.doe" aria-label="john.doe"
+                                class="form-control" placeholder="Enter Email" aria-label="john.doe"
                                 aria-describedby="basic-default-email2" formControlName="email" />
                             <span class="input-group-text" id="basic-default-email2">@example.com</span>
                         </div>
@@ -86,7 +86,8 @@
                     <div class="col-lg-6 mb-3">
                         <label for="nameBasic" class="form-label required">Select Party Plot</label>
                         <ng-select [items]="assignpartyplotList" [readonly]="viewInquiry === true" [multiple]="false"
-                            class="form-control p-0 me-3" bindLabel="name" bindValue="_id"
+                            class="form-control p-0 me-3" bindLabel="name" bindValue="_id" [clearable]="false"
+                            (change)="getEventList()"
                             formControlName="partyplot_ID" placeholder="Select Party Plot">
                         </ng-select>
                         <div *ngIf="submittedclientInquiryData && fclientinquiryData.partyplot_ID.errors">
@@ -129,10 +130,18 @@
                     <div class="d-sm-block d-lg-flex align-items-center clear-fix" [formGroupName]="i"
                         *ngFor="let item of eventInquiryDataForm.get('events')['controls']; let i = index;">
                         <div class="w-100">
+                            <div class="mb-3"> Status :&nbsp;
+                                <span *ngIf="item.controls.approvestatus.value == 1"
+                                            class="badge bg-label-primary me-1">Pending</span>
+                                        <span *ngIf="item.controls.approvestatus.value == 2"
+                                            class="badge bg-label-success me-1">Confirm</span>
+                                        <span *ngIf="item.controls.approvestatus.value == 3"
+                                            class="badge bg-label-danger me-1">Cancel</span>
+                            </div>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                                     <label for="nameBasic" class="form-label required">Event Type</label>
-                                    <ng-select [items]="eventActiveList" class="form-control p-0" bindLabel="name"
+                                    <ng-select [items]="eventListbyPartyplot" class="form-control p-0" bindLabel="name"
                                         bindValue="_id" placeholder="Select Event" formControlName="eventType">
                                     </ng-select>
                                     <div *ngIf="submittedAddInquiryData[i] && item.controls.eventType.errors">
@@ -197,7 +206,7 @@
                                 <div class="col-lg-6 col-md-6 mb-3">
                                     <label class="form-label required" for="basic-default-company">Client budget</label>
                                     <input type="text" appNumbersOnly class="form-control" id="basic-default-company"
-                                        placeholder="Enter budget" formControlName="client_budget" />
+                                        placeholder="Enter Client budget" formControlName="client_budget" />
                                     <div *ngIf="submittedAddInquiryData[i] && item.controls.client_budget.errors">
                                         <div *ngIf="item.controls.client_budget.errors.required">
                                             <span class="error_msg">Event Type is Required.</span>
@@ -207,7 +216,7 @@
                                 <div class="col-lg-6 col-md-6 mb-3">
                                     <label class="form-label required" for="basic-default-company">Offer budget</label>
                                     <input type="text" appNumbersOnly class="form-control" id="basic-default-company"
-                                        placeholder="Enter budget" formControlName="offer_budget" />
+                                        placeholder="Enter Offer budget" formControlName="offer_budget" />
                                     <div *ngIf="submittedAddInquiryData[i] && item.controls.offer_budget.errors">
                                         <div *ngIf="item.controls.offer_budget.errors.required">
                                             <span class="error_msg">Offer Budget is Required.</span>
@@ -225,7 +234,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-3" *ngIf="fclientinquiryData._id.value != '0'">
+                            <div class="mb-3" *ngIf="fclientinquiryData._id.value != '0' && item.controls.approvestatus.value == 1">
                                 <button type="button" class="btn btn-primary me-3"
                                     *ngIf="viewInquiryFormArray[i] == true"
                                     (click)="enableClientInquiryEventIndexWise(i)">Edit</button>
@@ -244,7 +253,7 @@
                                 </button>
                             </div>
                             <div class="mb-3" *ngIf="updateInquiry == false">
-                                <button type="button" class="btn btn-label-danger me-3"
+                                <button type="button" class="btn btn-label-danger me-3" *ngIf="i > 0"
                                     (click)="disableClientInquiryEventIndexWise(i)">Cancel</button>
                             </div>
                             <hr class="my-3">

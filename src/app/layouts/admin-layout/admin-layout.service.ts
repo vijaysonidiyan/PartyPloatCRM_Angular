@@ -218,6 +218,12 @@ export class AdminLayoutService {
     })
     return this.http.get(this.commonService.rootData.rootUrl + 'event/ActiveEventList', { headers: headers });
   }
+  geteventListbyPartyplot(params) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'partyplot/eventListbypartyplotID', {params: params, headers: headers });
+  }
 
   // ============== Party Plot Master =========== //
 
@@ -642,6 +648,12 @@ export class AdminLayoutService {
     })
     return this.http.get(this.commonService.rootData.rootUrl + 'inquirybooking/inquirybookinggetByID', { params: id, headers: headers });
   }
+  cancleBookingConfirmInquiry(data: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'inquirybooking/inquirybookingcancle', data, { headers: headers });
+  }
 
   // view booking list and update package and extra item
   updatePackageItemDataList(data: any) {
@@ -661,6 +673,12 @@ export class AdminLayoutService {
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
     return this.http.post(this.commonService.rootData.rootUrl + 'inquirybooking/inquirybookinggetByIDpdf', {}, { params: ID, headers: headers });
+  }
+  bookingDecorationPdf(ID: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'decoration/decorationListbyinquirybookingIdPDF', { params: ID, headers: headers });
   }
 
   // image decoration file upload and list

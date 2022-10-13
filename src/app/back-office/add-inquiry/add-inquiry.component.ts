@@ -64,6 +64,8 @@ export class AddInquiryComponent implements OnInit {
   updateInquiry: boolean = false;
   viewInquiryFormArray = {};
   assignpartyplotList: any[] = [];
+  selectedPartyplot: any;
+  eventListbyPartyplot: any;
   //calender done
 
   get fclientinquiryData() {
@@ -84,6 +86,8 @@ export class AddInquiryComponent implements OnInit {
     } else if (currentUrl.includes('add-inquiry')) {
       this.route.queryParams.subscribe((queryParams) => {
         this.updateInquiry = false;
+        this.selectedPartyplot = queryParams.partyplotId;
+
         if (!!queryParams.startDate) {
           // if (!!queryParams.startDate && !!queryParams.endDate) {
           this.selectedDate = queryParams.startDate;
@@ -107,7 +111,6 @@ export class AddInquiryComponent implements OnInit {
     this.defaultEventForm();
     this.getTimeRanges();
     this.getAssignPartyplotList();
-    this.getEventActiveList();
     this.activeReferenceList();
     this.minEndDate[0] = new Date();
     this.eventList = this.eventInquiryDataForm.get("events") as FormArray;
@@ -165,13 +168,14 @@ export class AddInquiryComponent implements OnInit {
       offer_budget: [(oItem['offer_budget'] ? oItem['offer_budget'] : '')],
       client_budget: [(oItem['client_budget'] ? oItem['client_budget'] : '')],
       remark: [(oItem['remark'] ? oItem['remark'] : '')],
+      approvestatus: [(oItem['approvestatus'] ? oItem['approvestatus'] : 1)],
     });
   }
   timeRange = [];
   getTimeRanges() {
     let date = new Date();
     for (let minutes = 0; minutes < 24 * 60; minutes = minutes + 30) {
-      date.setHours(0);
+      date.setHours(6);
       date.setMinutes(minutes);
       let time = {
         value: moment(date).format('HH:mm'),
@@ -185,7 +189,13 @@ export class AddInquiryComponent implements OnInit {
     this.adminLayoutService.assignpartyplotUserWiseList().subscribe((Response: any) => {
       if (Response.meta.code == 200) {
         this.assignpartyplotList = Response.data;
-        this.clientinquiryDataForm.controls.partyplot_ID.setValue(Response.data[0]._id);
+        if (!!this.selectedPartyplot) {
+          this.clientinquiryDataForm.controls.partyplot_ID.setValue(this.selectedPartyplot);
+        } else {
+          this.clientinquiryDataForm.controls.partyplot_ID.setValue(Response.data[0]._id);
+        }
+        this.getEventList();
+
       }
       //for select sub industry step
     },
@@ -277,6 +287,8 @@ export class AddInquiryComponent implements OnInit {
             setValueData.controls['client_budget'].setValue(x.data[0].client_budget);
             setValueData.controls['offer_budget'].setValue(x.data[0].offer_budget);
             setValueData.controls['remark'].setValue(x.data[0].remark);
+            setValueData.controls['status'].setValue(x.data[0].status);
+            setValueData.controls['approvestatus'].setValue(x.data[0].approvestatus);
             setValueData.controls['startTimeObj'].setValue(moment(moment(startDateTime).subtract(5, 'hour').subtract(30, 'minute').toJSON()).format('HH:mm'));
             setValueData.controls['endTimeObj'].setValue(moment(moment(endDateTime).subtract(5, 'hour').subtract(30, 'minute').toJSON()).format('HH:mm'));
 
@@ -330,11 +342,14 @@ export class AddInquiryComponent implements OnInit {
     // this.minEndTime[index] = time.target.value
   }
 
-  getEventActiveList() {
-    this.adminLayoutService.geteventActiveList().subscribe(
+  getEventList() {
+    let obj = {
+      _id: this.clientinquiryDataForm.controls.partyplot_ID.value
+    }
+    this.adminLayoutService.geteventListbyPartyplot(obj).subscribe(
       (Response: any) => {
         if (Response.meta.code == 200) {
-          this.eventActiveList = Response.data;
+          this.eventListbyPartyplot = Response.data.eventsData;
         } else {
         }
         //for select sub industry step
@@ -369,7 +384,6 @@ export class AddInquiryComponent implements OnInit {
   saveClientInquiry() {
     let invailidTimeCount = 0;
     (this.eventInquiryDataForm.controls['events'] as FormArray).controls.map((x: any, index: any) => {
-      debugger
       let date = moment(x.controls.Date.value).format('yyyy-MM-DD')
       let startDateObj: any
       let endDateObj: any;
@@ -378,7 +392,7 @@ export class AddInquiryComponent implements OnInit {
 
       startDateObj = new Date(date + ' ' + startTime);
       endDateObj = new Date(date + ' ' + endTime);
-      if(startDateObj > endDateObj) {
+      if (startDateObj > endDateObj) {
         invailidTimeCount = invailidTimeCount + 1
         this.invailidTime[index] = true;
       } else {
@@ -482,12 +496,12 @@ export class AddInquiryComponent implements OnInit {
       (Response: any) => {
         if (Response.meta.code == 200) {
           this.submittedclientInquiryData = false;
-          this.getEventActiveList();
+          this.getEventList();
           this.defaultForm();
           this.defaultEventForm();
           this.ISeditClientInquiry = false;
           this.commonService.notifier.notify("success", "Inquiry Saved Successfully.");
-          this.router.navigate(["/admin/calender"])
+          this.router.navigate(["/admin/inquiry/calender-view"])
         } else {
           this.commonService.notifier.notify("error", Response.meta.message);
         }
@@ -531,7 +545,8 @@ export class AddInquiryComponent implements OnInit {
             endTimeObj: moment(moment(endDateTime).subtract(5, 'hour').subtract(30, 'minute').toJSON()).format('HH:mm'),
             offer_budget: x.offer_budget,
             client_budget: x.client_budget,
-            remark: x.client_budget
+            remark: x.remark,
+            approvestatus: x.approvestatus
           }
           this.selectedDate = new Date(x.startDateObj)
           this.viewInquiryFormArray[index] = true
@@ -585,6 +600,10 @@ export class AddInquiryComponent implements OnInit {
   }
 
   deletEventList(index: number) {
+    if ((this.eventInquiryDataForm.controls['events'] as FormArray).length <= 1) {
+      this.commonService.notifier.notify("error", "Event Details is Required.")
+      return
+    }
     let _id = (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['_id'].value);
     let deleteIdObj = {
       _id: _id

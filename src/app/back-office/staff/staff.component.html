@@ -57,18 +57,16 @@
                                     </button> -->
 
                                     <button *ngIf="staffData.status == 2" class="dtl-btn btn bg-gradient-dark"
-                                        title="Active Staff"
                                         (confirm-click)="statusStaffmaster({id :staffData._id, index : staffIndex, status:1})"
                                         appConfirm [confirmTitle]="'Active'"
                                         [confirmContent]="'Are you sure to Active this Staff?'"
-                                        class="btn-bg bg-label-success" tooltip="Add" placement="bottom"
+                                        class="btn-bg bg-label-success" tooltip="Active" placement="bottom"
                                         showDelay="100"><i class="bx bx-plus"></i></button>
                                     <button *ngIf="staffData.status == 1" class="dtl-btn btn bg-gradient-dark"
-                                        title="Deactive Staff"
                                         (confirm-click)="statusStaffmaster({id :staffData._id, index : staffIndex, status:2})"
                                         appConfirm [confirmTitle]="'Deactive'"
                                         [confirmContent]="'Are you sure to Deactive this Staff?'"
-                                        class="btn-bg bg-label-danger" tooltip="Delete" placement="bottom"
+                                        class="btn-bg bg-label-danger" tooltip="Deactive" placement="bottom"
                                         showDelay="100"><i class="bx bx-trash"></i></button>
                                 </div>
                             </td>
@@ -149,7 +147,7 @@
                         </div> -->
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label required">Email</label>
-                            <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
+                            <input type="text" id="basic-default-email" class="form-control" placeholder="Enter Email"
                                 [readonly]="ISviewStaff === true" aria-label="john.doe"
                                 aria-describedby="basic-default-email2" formControlName="email">
                             <div *ngIf="submittedStaffData && fnameData.email.errors">
@@ -164,7 +162,7 @@
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label required">Designation</label>
                             <ng-select [items]="activeroleList" class="form-control p-0" bindLabel="roleName"
-                                [readonly]="ISviewStaff === true" bindValue="_id" placeholder="Select Role"
+                                [readonly]="ISviewStaff === true" bindValue="_id" placeholder="Select Designation"
                                 formControlName="roleId">
                             </ng-select>
                             <!-- <div *ngIf="submittedStaffData && roleInvalid === true">
@@ -180,7 +178,7 @@
                             <label for="nameBasic" class="form-label required">Select Party plot</label>
                             <ng-select [items]="partyplotList" [multiple]="true" [closeOnSelect]="false"
                                 [readonly]="ISviewStaff === true" class="form-control p-0" bindLabel="name"
-                                bindValue="_id" formControlName="partyplotData" placeholder="Select Module">
+                                bindValue="_id" formControlName="partyplotData" placeholder="Select Party plot">
                             </ng-select>
                             <div *ngIf="submittedStaffData && fnameData.partyplotData.errors">
                                 <div *ngIf="fnameData.partyplotData.errors.required">

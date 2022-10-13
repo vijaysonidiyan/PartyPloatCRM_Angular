@@ -15,7 +15,7 @@
                 <div class="card border-solid-primary flex-row align-items-center ps-2">
                     <i class="bx bx-search fs-4 lh-0"></i>
                     <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
-                        aria-label="Search..." />
+                        aria-label="Search..." (input)="search($event.target.value)" />
                 </div>
                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Vendor Details</h4> -->
                 <div class="btn-cus">
@@ -73,10 +73,15 @@
                             <td>{{ menuData.order }}</td>
                             <td><img src="{{iconActiveURL}}{{menuData.active_icon}}" class="icon-png" alt=""></td>
                         </tr>
+                        <tr *ngIf="noData">
+                            <td colspan="8">
+                                <h4 class="text-center mt-3">No Data Found</h4>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="footer-pagination float-end mt-3 p-4">
+            <div class="footer-pagination float-end mt-3 p-4" *ngIf="menuList?.length > l">
                 <pagination-controls (pageChange)="p = $event"></pagination-controls>
             </div>
         </div>
@@ -97,7 +102,7 @@
                     <div class="row">
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label required">Title</label>
-                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
+                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Title"
                                 formControlName="title" />
                             <div *ngIf="submittedMenuData && fTitleData.title.errors">
                                 <div *ngIf="fTitleData.title.errors.required">
@@ -107,12 +112,12 @@
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Path</label>
-                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
+                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Path"
                                 formControlName="path" />
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Class</label>
-                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
+                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Class"
                                 formControlName="class" />
                         </div>
                         <!-- <div class="col-lg-4 mb-3">
@@ -122,7 +127,7 @@
                         </div> -->
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Order</label>
-                            <input type="number" id="nameBasic" class="form-control" placeholder="Enter Name"
+                            <input type="number" id="nameBasic" class="form-control" placeholder="Enter Order"
                                 formControlName="order" />
                         </div>
                         <div class="col-lg-4 mb-3">

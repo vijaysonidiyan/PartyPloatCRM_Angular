@@ -161,7 +161,8 @@
                             </div>
                         </div>
                     </div>
-                    <table class="w-100 table-responsive" formArrayName="package">
+                    <table class="w-100 table-responsive" formArrayName="package"
+                        *ngIf="!!fbookingConfirmData.packageId.value">
                         <thead>
                             <tr class="boader-bottom-1">
                                 <th class="text-center w-5">Sr. No.</th>
@@ -196,38 +197,38 @@
             </form>
         </div>
     </div>
-    <div class="card mb-4">
+    <div class="card mb-4" *ngIf="!!fbookingConfirmData.packageId.value">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Extra Item</h5>
             <!-- <button type="button" class="btn btn-primary">Edit</button> -->
         </div>
         <div class="card-body">
-            <div class="row p-sm-3 p-0">
-                <form role="form" class="p-0 add-employee-form" autocomplete="off" [formGroup]="bookingDataForm">
-                    <table class="table-border w-100" formArrayName="extradecoration">
+            <form role="form" class="p-0 add-employee-form" autocomplete="off" [formGroup]="bookingDataForm">
+                <div class="row p-sm-3 p-0">
+                    <table class="w-100 table-border" formArrayName="extradecoration" *ngIf="eventList.length != 0">
                         <tr class="boader-bottom-1">
                             <th class="text-center w-5">Sr. No.</th>
                             <th class=" w-30 required">Item</th>
-                            <th class=" w-50 required">Description</th>
+                            <!-- <th class=" w-50 ">Description</th> -->
                             <th class="qty-width required">Qty/Size</th>
                             <th class="qty-width">Action</th>
                         </tr>
-                        <tr class="" [formGroupName]="y"
+                        <tr class="" [formGroupName]="y" 
                             *ngFor="let citem of bookingDataForm.get('extradecoration')['controls']; let y = index;">
                             <td class="text-center w-5">{{y + 1}}</td>
                             <td class="w-30">
-                                <input type="text" formControlName="item" class="form-control" id="basic-default-company"
-                                    placeholder="Enter Guest Count" />
+                                <input type="text" formControlName="item" class="form-control"
+                                    id="basic-default-company" placeholder="Enter Item" />
                                 <div *ngIf="submittedExtraItemData[y] && citem.controls.item.errors">
                                     <div *ngIf="citem.controls.item.errors.required">
                                         <span class="error_msg">Item is Required.</span>
                                     </div>
                                 </div>
                             </td>
-                            <td class="w-50">
+                            <!-- <td class="w-50">
                                 <textarea style="height:38px;" id="basic-default-message" formControlName="description"
                                     class="form-control" placeholder="Description"></textarea>
-                            </td>
+                            </td> -->
                             <td class="qty-width">
                                 <input type="text" class="form-control" id="basic-default-company"
                                     formControlName="quantity" placeholder="Enter Quantity" />
@@ -245,17 +246,27 @@
                             </td>
                         </tr>
                     </table>
-                </form>
-            </div>
-            <div class="mb-3">
-                <button type="submit" class="bg-label-success btn-bg bg-label-success ml-10"
-                [ngClass]="fbookingConfirmData.extradecoration.invalid == true ? 'disabled' : ''"
-                (click)="addExtraItem()"><i class="bx bx-plus" tooltip="Add" placement="bottom"
-                showDelay="100"></i></button>
-            </div>
+                </div>
+                <div class="mb-3">
+                    <button type="button" class="btn bg-label-success btn-bg bg-label-success"
+                        [ngClass]="fbookingConfirmData.extradecoration.invalid == true ? 'disabled' : ''"
+                        (click)="addExtraItem()"><i class="bx bx-plus" tooltip="Add" placement="bottom"
+                            showDelay="100"></i></button>
+                </div>
+                <div *ngIf="eventList.length != 0">
+                    <hr class="mb-3" *ngIf="eventList.length != 0">
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <label class="form-label" for="basic-default-company">Extra Decor
+                            Budget</label>
+
+                        <input type="text" appNumbersOnly class="form-control" id="basic-default-company"
+                            placeholder="Extra Decor Budget" formControlName="extraDecorBudget" />
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-    <div class="float-end">
+    <div class="float-end mb-3">
         <button type="submit" class="btn btn-primary" (click)="saveBookingConfirmInquiryEvent()">Save
             Booking</button>
     </div>

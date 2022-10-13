@@ -111,7 +111,7 @@ export class AdminLoginComponent implements OnInit {
       (Response: any) => {
         console.log(loginObj);
         if (Response.meta.code == 200) {
-          debugger
+
           localStorage.setItem("LoginUserData", JSON.stringify(Response.data));
           this.storageService.setValue(
             StorageKey.myToken,
@@ -202,12 +202,12 @@ export class AdminLoginComponent implements OnInit {
   }
 
   resendOtp() {
-    debugger
+
     let otpFormObj = {
       "_id": this.otpForm.controls._id.value,
     }
     this.adminLayoutService.reSendOtp(otpFormObj).subscribe((Response: any) => {
-      debugger
+
       if (Response.meta.code == 200) {
         this.commonService.notifier.notify('success', Response.meta.message);
       }
@@ -270,7 +270,7 @@ export class AdminLoginComponent implements OnInit {
   }
 
   resetpassword() {
-    debugger
+
     this.submittedresetpwdFormData = true;
     if (this.resetpwdForm.invalid) {
       return;
