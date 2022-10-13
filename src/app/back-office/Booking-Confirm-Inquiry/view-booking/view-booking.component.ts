@@ -177,7 +177,9 @@ export class ViewBookingComponent implements OnInit {
     $("#add-upload-decoration").modal("show");
   }
   onImageDecorationChange(event: any) {
+    debugger
     this.imageDecorationFile = event.target.files[0];
+    let mimeType = this.imageDecorationFile.type
     if (!this.imageDecorationFile) {
       this.imageDecorationError = true;
     }

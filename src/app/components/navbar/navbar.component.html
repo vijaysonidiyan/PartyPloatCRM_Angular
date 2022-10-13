@@ -101,47 +101,44 @@
                     (click)="cancelmyProfile()"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-4 mb-3">
-                        <label for="nameBasic" class="form-label">Name</label>
-                        <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name" />
+                <form role="form" class="add-employee-form" [formGroup]="staffForm" autocomplete="off">
+                    <div class="row">
+                        <div class="col-lg-4 mb-3">
+                            <label for="nameBasic" class="form-label">Name</label>
+                            <input type="text" id="nameBasic" class="form-control" formControlName="name" readonly placeholder="Enter Name" />
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label class="form-label" for="basic-default-phone">Phone No</label>
+                            <input type="text" id="basic-default-phone" class="form-control phone-mask" formControlName="contact" readonly
+                                placeholder="658 799 8941">
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label class="form-label" for="basic-default-company">Reference</label>
+                            <input type="text" class="form-control" id="basic-default-company" formControlName="reference" readonly placeholder="Reference">
+                        </div>
+
+                        <div class="col-lg-4 mb-3">
+                            <label for="nameBasic" class="form-label">Email</label>
+                            <input type="text" id="basic-default-email" class="form-control" placeholder="Enter Email" formControlName="email" readonly
+                                aria-label="john.doe" aria-describedby="basic-default-email2">
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label for="nameBasic" class="form-label">Designation</label>
+                            <ng-select [items]="activeroleList" class="form-control p-0" bindLabel="roleName" bindValue="_id" formControlName="roleId" [readonly]="true"
+                                placeholder="Select Designation">
+                            </ng-select>
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label for="nameBasic" class="form-label">Select Party plot</label>
+                            <ng-select [items]="partyplotList" [multiple]="true" [closeOnSelect]="false"
+                                [readonly]="true" class="form-control p-0" bindLabel="name"
+                                bindValue="_id" formControlName="partyplotData" placeholder="Select Party plot">
+                            </ng-select>
+                        </div>
                     </div>
-                    <div class="col-lg-4 mb-3">
-                        <label class="form-label" for="basic-default-phone">Phone No</label>
-                        <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                            placeholder="658 799 8941">
-                    </div>
-                    <div class="col-lg-4 mb-3">
-                        <label class="form-label" for="basic-default-company">Reference</label>
-                        <input type="text" class="form-control" id="basic-default-company" placeholder="Reference">
-                    </div>
-                    <div class="col-lg-4 mb-3">
-                        <label class="form-label" for="basic-default-phone">Aadhar Card</label>
-                        <input type="text" id="basic-default-aadhar-card" class="form-control phone-mask"
-                            placeholder="9999 9999 9999">
-                    </div>
-                    <div class="col-lg-4 mb-3">
-                        <label for="nameBasic" class="form-label">Email</label>
-                        <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
-                            aria-label="john.doe" aria-describedby="basic-default-email2">
-                    </div>
-                    <div class="col-lg-4 mb-3">
-                        <label for="nameBasic" class="form-label">Designation</label>
-                        <ng-select [items]="staffList" class="form-control p-0" bindLabel="name" bindValue="value"
-                            placeholder="Select Module">
-                        </ng-select>
-                    </div>
-                    <div class="col-lg-4 mb-3">
-                        <label for="nameBasic" class="form-label">Select Party plot</label>
-                        <ng-select [items]="partyplotList" class="form-control p-0" bindLabel="name" bindValue="value"
-                            placeholder="Select Module">
-                        </ng-select>
-                    </div>
-                </div>
+                </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save</button>
-            </div>
+            
         </div>
     </div>
 </div>

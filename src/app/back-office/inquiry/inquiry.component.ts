@@ -49,6 +49,7 @@ export class InquiryComponent implements OnInit {
   gotoDate: any;
   isInquiryTab: boolean = false;
   isBookedOrNot = {};
+  invaildSearchList: boolean = false;
 
   // tabClick(tab) {
   //   this.activeTab = tab;
@@ -280,6 +281,7 @@ export class InquiryComponent implements OnInit {
         if (todayDate <= argDate) {
           this.router.navigate(["/admin/inquiry/add-inquiry"], {
             queryParams: {
+              partyplotId: this.searchedPartyplot,
               startDate: arg.date,
               // endDate: this.endDateObj
             }
@@ -508,6 +510,12 @@ export class InquiryComponent implements OnInit {
   searchFilterInquiryList() {
     this.currentYear = this.searchedYear;
     this.currentMonth = this.searchedMonth;
+    if(this.searchedMonth != null && this.searchedYear == null) {
+      this.invaildSearchList = true;
+      return
+    } else {
+      this.invaildSearchList = false;
+    }
     this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName, partyplot_ID: this.searchedPartyplot })
   }
 

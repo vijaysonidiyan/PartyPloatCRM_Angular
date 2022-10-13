@@ -13,6 +13,7 @@ import { CommonService } from "app/shared/common.service";
 import { AdminLayoutService } from "app/layouts/admin-layout/admin-layout.service";
 import { Breadcrumb, BreadcrumbService } from "angular-crumbs";
 import { Title } from "@angular/platform-browser";
+import { parseJSON } from "jquery";
 
 declare const $: any;
 @Component({
@@ -36,6 +37,9 @@ export class NavbarComponent implements OnInit {
   hide3 = false;
   submittedChangePasswordData = false;
   isDashboard = true;
+  StaffDocumentList: any[];
+  staffForm: FormGroup;
+  activeroleList: any;
   get fLoginData() { return this.changePasswordForm.controls; }
 
   constructor(public location: Location, private element: ElementRef, public storageService: StorageService, private router: Router, private fb: FormBuilder, private coreHelper: CoreHelperService, public commonService: CommonService, public adminLayoutService: AdminLayoutService, private breadcrumbService: BreadcrumbService, private titleService: Title) {
@@ -44,6 +48,9 @@ export class NavbarComponent implements OnInit {
   }
   @Output() navbarEvent = new EventEmitter<{ navbarNativeElement: any }>()
   ngOnInit() {
+    this.defaultForm();
+    this.getpartyplotActiveList();
+    this.getRoleActiveList();
     if (this.breadcrumbService.breadcrumbs[0].displayName == "Dashboard") {
       this.isDashboard = true;
     }
@@ -69,7 +76,47 @@ export class NavbarComponent implements OnInit {
       // }
     });
   }
-
+  defaultForm() {
+    this.staffForm = this.fb.group({
+      _id: ["0"],
+      name: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.email]],
+      contact: ["", [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
+      roleId: [null, [Validators.required]],
+      reference: [""],
+      // aadharcardNo: [""],
+      partyplotData: ["", [Validators.required]],
+      roleName: [""],
+      isLogin: false
+    });
+  }
+  getpartyplotActiveList() {
+    this.adminLayoutService.getPartyplotActiveList().subscribe(
+      (Response: any) => {
+        if (Response.meta.code == 200) {
+          this.partyplotList = Response.data;
+        } else {
+        }
+        //for select sub industry step
+      },
+      (error) => {
+        console.log(error.error.Message);
+      }
+    );
+  }
+  getRoleActiveList() {
+    this.adminLayoutService.getRoleActiveList().subscribe(
+      (Response: any) => {
+        if (Response.meta.code == 200) {
+          this.activeroleList = Response.data;
+        } else {
+        }
+        //for select sub industry step
+      },
+      (error) => {
+        console.log(error.error.Message);
+      });
+  }
   createTitle(routesCollection: Breadcrumb[]) {
     const title = 'Dashboard';
     const titles = routesCollection.filter((route) => route.displayName);
@@ -113,9 +160,30 @@ export class NavbarComponent implements OnInit {
   cancelmyProfile() {
     $("#add-myprofile-modal").modal("hide");
   }
+ 
   myProfile() {
-    $("#add-myprofile-modal").modal("show");
+    let id = parseJSON(localStorage.getItem('LoginUserData'))._id
+    
+    let Id: any = { staffId: id };
+    this.StaffDocumentList = [];
+    this.adminLayoutService.getstaffId(Id).subscribe(
+      (Response: any) => {
+        this.staffForm.controls._id.setValue(Response.data._id);
+        this.staffForm.controls.name.setValue(Response.data.name);
+        this.staffForm.controls.email.setValue(Response.data.email);
+        this.staffForm.controls.contact.setValue(Response.data.contact);
+        this.staffForm.controls.roleId.setValue(Response.data.roleId);
+        this.staffForm.controls.reference.setValue(Response.data.reference);
+        //this.staffForm.controls.aadharcardNo.setValue(Response.data.aadharcardNo);
+        this.staffForm.controls.partyplotData.setValue(Response.data.partyplotData);
+        this.staffForm.controls.isLogin.setValue(Response.data.isLogin);
+        this.StaffDocumentList = Response.data.Staff_documentData;
+        $("#add-myprofile-modal").modal("show");
+      },
+      (error) => { }
+    );
   }
+
   changePassword() {
     this.submittedChangePasswordData = false;
     this.defaultChangePasswordForm();
@@ -338,6 +406,9 @@ export class NavbarComponent implements OnInit {
         pastPage: [{
           pastUrl: 'dashboard',
           pastLinkName: 'Dashboard',
+        }, {
+          pastUrl: 'inquiry/calender-view',
+          pastLinkName: 'Inquiry',
         }],
         currentPageName: 'Add Inquiry'
       };
@@ -348,7 +419,7 @@ export class NavbarComponent implements OnInit {
           pastUrl: 'dashboard',
           pastLinkName: 'Dashboard',
         }, {
-          pastUrl: 'inquiry',
+          pastUrl: 'inquiry/calender-view',
           pastLinkName: 'Inquiry',
         }],
         currentPageName: 'View Inquiry'
@@ -366,7 +437,7 @@ export class NavbarComponent implements OnInit {
         currentPageName: 'Booking Confirm'
       };
     }
-    else if (titlee.includes('inquiry')) {
+    else if (titlee.includes('list-view')) {
       return {
         pastPage: [{
           pastUrl: 'dashboard',
@@ -375,7 +446,7 @@ export class NavbarComponent implements OnInit {
         currentPageName: 'Inquiry'
       };
     }
-    else if (titlee.includes('calender')) {
+    else if (titlee.includes('calender-view')) {
       return {
         pastPage: [{
           pastUrl: 'dashboard',

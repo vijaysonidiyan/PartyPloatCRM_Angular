@@ -218,6 +218,12 @@ export class AdminLayoutService {
     })
     return this.http.get(this.commonService.rootData.rootUrl + 'event/ActiveEventList', { headers: headers });
   }
+  geteventListbyPartyplot(params) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'partyplot/eventListbypartyplotID', {params: params, headers: headers });
+  }
 
   // ============== Party Plot Master =========== //
 

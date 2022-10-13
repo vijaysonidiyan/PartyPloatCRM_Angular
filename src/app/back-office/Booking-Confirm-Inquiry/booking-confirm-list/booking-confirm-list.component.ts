@@ -55,7 +55,7 @@ export class BookingConfirmListComponent implements OnInit {
     this.adminLayoutService.getBookingConfirmListDetails(Obj).subscribe(
       (Response: any) => {
         if (Response.meta.code == 200) {
-          this.bookingConfirmList = Response.data.inquirybookingData.filter((x: any) => x.approvestatus == 2);
+          this.bookingConfirmList = Response.data.filter((x: any) => x.approvestatus == 2);
           this.bookingconfirmList = this.bookingConfirmList;
           this.allbookingconfirmList = this.bookingconfirmList;
           this.bookingconfirmList = this.bookingConfirmList.slice();

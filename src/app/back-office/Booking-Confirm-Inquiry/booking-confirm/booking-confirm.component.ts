@@ -45,7 +45,7 @@ export class BookingConfirmComponent implements OnInit {
     this.defaultForm();
     this.getClientDetailsByEventId();
     this.eventList = this.bookingDataForm.get("extradecoration") as FormArray;
-    this.eventList.push(this.createExtraItem({}));
+    //this.eventList.push(this.createExtraItem({}));
     // let validation = (this.bookingDataForm.controls['extradecoration'] as FormArray).controls[this.eventList.controls.length - 1] as FormGroup;
     // validation.get('item').setValidators([Validators.required]);
     // validation.get('quantity').setValidators([Validators.required]);

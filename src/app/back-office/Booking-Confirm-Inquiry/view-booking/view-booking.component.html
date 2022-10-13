@@ -324,7 +324,7 @@
                 <div class="row">
                     <div class="col-lg-6 mb-3">
                         <label for="nameBasic" class="form-label required">Image Name</label>
-                        <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
+                        <input type="text" id="nameBasic" class="form-control" placeholder="Enter Image Name"
                             [(ngModel)]="imageName" />
                         <div *ngIf="submittedUploadDecorationData && !imageName">
                             <span class="error_msg text-danger">Image Name is Required.</span>
@@ -332,12 +332,12 @@
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label for="nameBasic" class="form-label">Image Description</label>
-                        <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
+                        <input type="text" id="nameBasic" class="form-control" placeholder="Enter Image Description"
                             [(ngModel)]="imageDescription" />
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label for="nameBasic" class="form-label required">Upload Decoration</label>
-                        <input type="file" #imageDecoration id="nameBasic" class="form-control" placeholder="Enter Name"
+                        <input type="file" #imageDecoration accept="image/*" id="nameBasic" class="form-control" placeholder="Enter Decoration"
                             (change)="onImageDecorationChange($event)" />
                         <div *ngIf="imageDecorationURLFile" class="imgUpload">
                             <img [src]="imageDecorationURLFile" alt="" width="100">

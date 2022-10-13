@@ -36,12 +36,13 @@
                                     bindLabel="yearArray" bindValue="yearArray" [(ngModel)]="searchedYear"
                                     placeholder="Select Year">
                                 </ng-select>
+                                <div *ngIf="invaildSearchList === true" class="error_msg">Please select Year.</div>
                             </div>
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12"></div>
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <div class="text-end">
                                     <button type="button" (click)="searchFilterInquiryList()"
-                                        class="btn btn-primary me-3">
+                                        class="btn btn-primary ">
                                         Search
                                     </button>
                                 </div>
@@ -68,9 +69,8 @@
                                     <th>Address</th>
                                 </tr>
                             </thead>
-                            <tbody class="table-border-bottom-0"
-                                *ngFor="let inquiryData of inquiryList | paginate: { itemsPerPage: l, currentPage: p }; let inquiryIndex = index">
-                                <tr>
+                            <tbody class="table-border-bottom-0">
+                                <tr *ngFor="let inquiryData of inquiryList | paginate: { itemsPerPage: l, currentPage: p }; let inquiryIndex = index">
                                     <td>{{ l * (p - 1) + inquiryIndex + 1 }}</td>
                                     <td>
                                         <div class="d-flex">
@@ -111,8 +111,6 @@
                                     <td>{{inquiryData.guest}}</td>
                                     <td>{{inquiryData.partyplot_name}}</td>
                                     <td>{{inquiryData.address}}</td>
-
-
                                 </tr>
                                 <tr *ngIf="noData">
                                     <td colspan="12">
@@ -122,7 +120,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="footer-pagination float-end mt-3 p-4">
+                    <div class="footer-pagination float-end mt-3 p-4" *ngIf="inquiryList?.length > l">
                         <pagination-controls (pageChange)="p = $event"></pagination-controls>
                     </div>
                 </div>
