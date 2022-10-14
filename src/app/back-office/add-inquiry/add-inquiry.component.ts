@@ -116,6 +116,9 @@ export class AddInquiryComponent implements OnInit {
     this.eventList = this.eventInquiryDataForm.get("events") as FormArray;
     if (this.viewInquiry !== true) {
       this.eventList.push(this.createeventItem({}));
+      (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[0] as FormGroup).controls['fullday_event'].setValue(true));
+      (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[0] as FormGroup).controls['startTimeObj'].disable());
+      (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[0] as FormGroup).controls['endTimeObj'].disable());
       this.eventList.value.forEach((x: any, index: any) => {
         let validation = (this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup;
         validation.get('Date').setValidators([Validators.required]);
@@ -126,6 +129,7 @@ export class AddInquiryComponent implements OnInit {
         validation.get('offer_budget').setValidators([Validators.required]);
         validation.get('client_budget').setValidators([Validators.required]);
         validation.get('Date').disable();
+        
       })
     } else if (this.viewInquiry === true) {
       this.editClientInquiry();
@@ -163,8 +167,9 @@ export class AddInquiryComponent implements OnInit {
       Date: [(oItem['Date'] ? oItem['Date'] : !!this.selectedDate ? new Date(this.selectedDate) : '')],
       // startDateObj: [(oItem['startDateObj'] ? oItem['startDateObj'] : !!this.selectedDate ? new Date(this.selectedDate) : '')],
       // endDateObj: [(oItem['endDateObj'] ? oItem['endDateObj'] : !!this.selectedDate ? new Date(this.selectedDate) : '')],
-      startTimeObj: [(oItem['startTimeObj'] ? oItem['startTimeObj'] : null)],
-      endTimeObj: [(oItem['endTimeObj'] ? oItem['endTimeObj'] : null)],
+      fullday_event: [(oItem['fullday_event'] ? oItem['fullday_event'] : false)],
+      startTimeObj: [(oItem['startTimeObj'] ? oItem['startTimeObj'] : '06:00')],
+      endTimeObj: [(oItem['endTimeObj'] ? oItem['endTimeObj'] : '22:00')],
       offer_budget: [(oItem['offer_budget'] ? oItem['offer_budget'] : '')],
       client_budget: [(oItem['client_budget'] ? oItem['client_budget'] : '')],
       remark: [(oItem['remark'] ? oItem['remark'] : '')],
@@ -205,6 +210,18 @@ export class AddInquiryComponent implements OnInit {
     );
   }
 
+  dayTypeEvent({checked,index}) {
+    let eventInquiryFormGroup = (this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup
+    if(checked === true) {
+      eventInquiryFormGroup.controls['startTimeObj'].setValue('06:00');
+      eventInquiryFormGroup.controls['endTimeObj'].setValue('22:00');
+      eventInquiryFormGroup.controls['startTimeObj'].disable();
+      eventInquiryFormGroup.controls['endTimeObj'].disable();
+    } else {
+      eventInquiryFormGroup.controls['startTimeObj'].enable();
+      eventInquiryFormGroup.controls['endTimeObj'].enable();
+    }
+  }
   enableOnlyClientInquiryInput() {
     this.clientinquiryDataForm.controls['name'].enable();
     this.clientinquiryDataForm.controls['email'].enable();
@@ -247,9 +264,14 @@ export class AddInquiryComponent implements OnInit {
   enableClientInquiryEventIndexWise(index: any) {
     (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['eventType'].enable());
     (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['guest'].enable());
-    // (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['Date'].enable());
-    (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['startTimeObj'].enable());
-    (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['endTimeObj'].enable());
+    (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['fullday_event'].enable());
+    if(((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['fullday_event'].value === true) {
+      (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['startTimeObj'].disable());
+      (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['endTimeObj'].disable());
+    } else {
+      (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['startTimeObj'].enable());
+      (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['endTimeObj'].enable());
+    }
     (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['offer_budget'].enable());
     (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['client_budget'].enable());
     (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['remark'].enable());
@@ -287,8 +309,9 @@ export class AddInquiryComponent implements OnInit {
             setValueData.controls['client_budget'].setValue(x.data[0].client_budget);
             setValueData.controls['offer_budget'].setValue(x.data[0].offer_budget);
             setValueData.controls['remark'].setValue(x.data[0].remark);
-            setValueData.controls['status'].setValue(x.data[0].status);
+            //setValueData.controls['status'].setValue(x.data[0].status);
             setValueData.controls['approvestatus'].setValue(x.data[0].approvestatus);
+            setValueData.controls['fullday_event'].setValue(x.data[0].fullday_event);
             setValueData.controls['startTimeObj'].setValue(moment(moment(startDateTime).subtract(5, 'hour').subtract(30, 'minute').toJSON()).format('HH:mm'));
             setValueData.controls['endTimeObj'].setValue(moment(moment(endDateTime).subtract(5, 'hour').subtract(30, 'minute').toJSON()).format('HH:mm'));
 
@@ -310,6 +333,7 @@ export class AddInquiryComponent implements OnInit {
       (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['eventType'].disable());
       (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['guest'].disable());
       (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['Date'].disable());
+      (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['fullday_event'].disable());
       (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['startTimeObj'].disable());
       (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['endTimeObj'].disable());
       (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['offer_budget'].disable());
@@ -366,6 +390,10 @@ export class AddInquiryComponent implements OnInit {
     this.eventList.push(this.createeventItem({}));
     this.viewInquiryFormArray[this.eventList.length - 1] = false;
     (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[this.eventList.length - 1] as FormGroup).controls['Date'].disable());
+    (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[this.eventList.length - 1] as FormGroup).controls['fullday_event'].setValue(true));
+    (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[this.eventList.length - 1] as FormGroup).controls['startTimeObj'].disable());
+    (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[this.eventList.length - 1] as FormGroup).controls['endTimeObj'].disable());
+    
     if (this.viewInquiry == true) {
       (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[this.eventList.length - 1] as FormGroup).controls['Date'].setValue(this.selectedDate));
     }
@@ -473,6 +501,7 @@ export class AddInquiryComponent implements OnInit {
         "eventType": x.controls.eventType.value,
         "startDateObj": moment(startDateObj).add(5, 'hour').add(30, 'minute').toJSON(),
         "endDateObj": moment(endDateObj).add(5, 'hour').add(30, 'minute').toJSON(),
+        "fullday_event": x.controls.fullday_event.value,
         "guest": x.controls.guest.value,
         "client_budget": x.controls.client_budget.value,
         "offer_budget": x.controls.offer_budget.value,
@@ -540,6 +569,7 @@ export class AddInquiryComponent implements OnInit {
             _id: x._id,
             eventType: x.eventType,
             guest: x.guest,
+            fullday_event: x.fullday_event,
             Date: new Date(moment(Dates).subtract(5, 'hour').subtract(30, 'minute').toJSON()),
             startTimeObj: moment(moment(startDateTime).subtract(5, 'hour').subtract(30, 'minute').toJSON()).format('HH:mm'),
             endTimeObj: moment(moment(endDateTime).subtract(5, 'hour').subtract(30, 'minute').toJSON()).format('HH:mm'),
@@ -639,6 +669,7 @@ export class AddInquiryComponent implements OnInit {
       let EventObj = {
         "clientInquiryId": this.inquiryId,
         "eventType": event.controls['eventType'].value,
+        "fullday_event": event.controls['fullday_event'].value,
         "startDateObj": moment(startDateObj).add(5, 'hour').add(30, 'minute').toJSON(),
         "endDateObj": moment(endDateObj).add(5, 'hour').add(30, 'minute').toJSON(),
         "guest": event.controls['guest'].value,
@@ -661,6 +692,7 @@ export class AddInquiryComponent implements OnInit {
       let EventObj = {
         "_id": event.controls['_id'].value,
         "eventType": event.controls['eventType'].value,
+        "fullday_event": event.controls['fullday_event'].value,
         "startDateObj": moment(startDateObj).add(5, 'hour').add(30, 'minute').toJSON(),
         "endDateObj": moment(endDateObj).add(5, 'hour').add(30, 'minute').toJSON(),
         "guest": event.controls['guest'].value,

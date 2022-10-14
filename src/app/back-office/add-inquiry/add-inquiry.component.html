@@ -87,8 +87,7 @@
                         <label for="nameBasic" class="form-label required">Select Party Plot</label>
                         <ng-select [items]="assignpartyplotList" [readonly]="viewInquiry === true" [multiple]="false"
                             class="form-control p-0 me-3" bindLabel="name" bindValue="_id" [clearable]="false"
-                            (change)="getEventList()"
-                            formControlName="partyplot_ID" placeholder="Select Party Plot">
+                            (change)="getEventList()" formControlName="partyplot_ID" placeholder="Select Party Plot">
                         </ng-select>
                         <div *ngIf="submittedclientInquiryData && fclientinquiryData.partyplot_ID.errors">
                             <div *ngIf="fclientinquiryData.partyplot_ID.errors.required">
@@ -132,11 +131,11 @@
                         <div class="w-100">
                             <div class="mb-3"> Status :&nbsp;
                                 <span *ngIf="item.controls.approvestatus.value == 1"
-                                            class="badge bg-label-primary me-1">Pending</span>
-                                        <span *ngIf="item.controls.approvestatus.value == 2"
-                                            class="badge bg-label-success me-1">Confirm</span>
-                                        <span *ngIf="item.controls.approvestatus.value == 3"
-                                            class="badge bg-label-danger me-1">Cancel</span>
+                                    class="badge bg-label-primary me-1">Pending</span>
+                                <span *ngIf="item.controls.approvestatus.value == 2"
+                                    class="badge bg-label-success me-1">Confirm</span>
+                                <span *ngIf="item.controls.approvestatus.value == 3"
+                                    class="badge bg-label-danger me-1">Cancel</span>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
@@ -179,6 +178,14 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-3">
+                                    <label class="form-label" for="basic-default-company">&nbsp;</label>
+                                    <label for="nameBasic" class="form-label">Full Day</label>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" formControlName="fullday_event"
+                                        (change)="dayTypeEvent({checked: $event.target.checked, index:i})" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 mb-3">
                                     <label class="form-label required" for="basic-default-company">Start Time</label>
                                     <ng-select [items]="timeRange" [multiple]="false" class="form-control p-0"
                                         bindLabel="name" bindValue="value" formControlName="startTimeObj"
@@ -201,7 +208,8 @@
                                             <span class="error_msg">End Time is Required.</span>
                                         </div>
                                     </div>
-                                    <div *ngIf="invailidTime[i] === true"><span class="error_msg">Please Select Valid Time.</span></div>
+                                    <div *ngIf="invailidTime[i] === true"><span class="error_msg">Please Select Valid
+                                            Time.</span></div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-3">
                                     <label class="form-label required" for="basic-default-company">Client budget</label>
@@ -234,7 +242,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-3" *ngIf="fclientinquiryData._id.value != '0' && item.controls.approvestatus.value == 1">
+                            <div class="mb-3"
+                                *ngIf="fclientinquiryData._id.value != '0' && item.controls.approvestatus.value == 1">
                                 <button type="button" class="btn btn-primary me-3"
                                     *ngIf="viewInquiryFormArray[i] == true"
                                     (click)="enableClientInquiryEventIndexWise(i)">Edit</button>
