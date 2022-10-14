@@ -98,6 +98,7 @@ eventActiveList: any[] = [];
         businessHours: false, // display business hours
         events: this.inquiryEvent,
         expandRows: true,
+        contentHeight:"auto",
         customButtons: {
           // myCustomButton: {
           //   text: 'List',

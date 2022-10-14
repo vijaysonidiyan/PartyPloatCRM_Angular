@@ -166,6 +166,7 @@ export class InquiryComponent implements OnInit {
         events: this.inquiryEvent,
         expandRows: true,
         eventClick: this.eventClickFunction.bind(this),
+        contentHeight:"auto",
         customButtons: {
           // myCustomButton: {
           //   text: 'List',
