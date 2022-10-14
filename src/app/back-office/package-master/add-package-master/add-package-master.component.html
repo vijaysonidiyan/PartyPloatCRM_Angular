@@ -26,7 +26,7 @@
                     <div class="col-lg-4 col-md-6 mb-3">
                         <label for="nameBasic" class="form-label required">Party Plot</label>
                         <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0 me-3"
-                            bindLabel="name" bindValue="_id" formControlName="partyplot_ID"
+                            bindLabel="name" bindValue="_id" formControlName="partyplot_ID" [searchable]="false"
                             placeholder="Select Party Plot">
                         </ng-select>
                         <div *ngIf="submittedPackageData && fclientinquiryData.partyplot_ID.errors">

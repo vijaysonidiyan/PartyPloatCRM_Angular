@@ -131,7 +131,7 @@
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Select Party plot</label>
                             <ng-select [items]="partyplotList" [multiple]="true" [closeOnSelect]="false"
-                                [readonly]="true" class="form-control p-0" bindLabel="name"
+                                [readonly]="true" class="form-control p-0" bindLabel="name" [searchable]="false"
                                 bindValue="_id" formControlName="partyplotData" placeholder="Select Party plot">
                             </ng-select>
                         </div>

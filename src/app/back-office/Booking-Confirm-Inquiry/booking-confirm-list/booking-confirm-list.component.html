@@ -10,7 +10,7 @@
                         aria-label="Search..." (input)="search($event.target.value)" />
                 </div>
                 <div>
-                    <ng-select [items]="assignpartyplotList" [multiple]="false" class="custom-class form-control p-0"
+                    <ng-select [items]="assignpartyplotList" [multiple]="false" class="custom-class form-control p-0" [searchable]="false"
                         bindLabel="name" bindValue="_id" [(ngModel)]="searchedPartyplot" (change)="partyplotChange()" [clearable]="false"
                         placeholder="Select Party Plot">
                     </ng-select>

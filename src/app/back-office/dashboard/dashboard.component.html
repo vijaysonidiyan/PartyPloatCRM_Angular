@@ -142,3 +142,30 @@
 
     <div class="content-backdrop fade"></div>
 </div> -->
+<div class="container-fluid flex-grow-1 container-p-y">
+    <div>
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
+                <div class="card">
+                    <div class="card-body p-0">
+                        <div class="">
+                            <div class="p-4 btn-cus position-relative">
+                                <div class="dropdown-search mb-3">
+
+                                    <ng-select [items]="activepartyplotList" [multiple]="false"
+                                        class="form-control p-0 me-3" bindLabel="name" bindValue="_id" [searchable]="false" [searchable]="false"
+                                        [(ngModel)]="searchedPartyplot"  [clearable]="false" (change)="partyplotChange()"
+                                        placeholder="Select Party Plot">
+                                    </ng-select>
+
+                                </div>
+                                <full-calendar #calendar [options]="calendarOptions">
+                                </full-calendar>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

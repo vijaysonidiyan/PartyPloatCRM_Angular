@@ -151,7 +151,7 @@
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label for="nameBasic" class="form-label required">Package Select</label>
                             <ng-select [items]="packageList" [multiple]="false" class="form-control p-0 me-3"
-                                bindLabel="packageName" bindValue="_id" [clearable]="false" formControlName="packageId"
+                                bindLabel="packageName" bindValue="_id" [clearable]="false" formControlName="packageId" [searchable]="false"
                                 (change)="onActivePackageChange($event)" placeholder="Select Package">
                             </ng-select>
                             <div *ngIf="submittedPackageSelectedData && fbookingConfirmData.packageId.errors">
@@ -193,8 +193,28 @@
                             </td>
                         </tr>
                     </table>
+                    <hr class="mb-3" *ngIf="!!fbookingConfirmData.packageId.value">
+                    <div class="row" *ngIf="!!fbookingConfirmData.packageId.value">
+                        <div class="col-lg-4 col-md-6 mb-3">
+                            <!-- <h5>Basic Package <span>&nbsp; :&nbsp;
+                                    {{fbookingConfirmData.basicPackage.value}}</span></h5> -->
+                            <label class="form-label" for="basic-default-company">Basic Packege</label>
+        
+                            <input type="text" appNumbersOnly class="form-control" id="basic-default-company"
+                                placeholder="Basic Packege" formControlName="basicPackage" />
+                        </div>
+                        <div class="col-lg-4 col-md-6 mb-3">
+                            <!-- <h5>Discount <span>&nbsp; :&nbsp;
+                                    {{fbookingConfirmData.discount.value}}</span></h5> -->
+                            <label class="form-label" for="basic-default-company">Discount</label>
+        
+                            <input type="text" appNumbersOnly class="form-control" id="basic-default-company" value="0"
+                                placeholder="Enter Discount" formControlName="discount" />
+                        </div>
+                    </div>
                 </div>
             </form>
+            
         </div>
     </div>
     <div class="card mb-4" *ngIf="!!fbookingConfirmData.packageId.value">
@@ -213,7 +233,7 @@
                             <th class="qty-width required">Qty/Size</th>
                             <th class="qty-width">Action</th>
                         </tr>
-                        <tr class="" [formGroupName]="y" 
+                        <tr class="" [formGroupName]="y"
                             *ngFor="let citem of bookingDataForm.get('extradecoration')['controls']; let y = index;">
                             <td class="text-center w-5">{{y + 1}}</td>
                             <td class="w-30">
