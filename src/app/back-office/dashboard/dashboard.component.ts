@@ -117,6 +117,7 @@ export class DashboardComponent implements OnInit {
         businessHours: false, // display business hours
         events: this.inquiryEvent,
         expandRows: true,
+        contentHeight:"auto",
         customButtons: {
           // myCustomButton: {
           //   text: 'List',
