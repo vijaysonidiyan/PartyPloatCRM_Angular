@@ -97,7 +97,7 @@
                 <h5 class="mb-0">Package</h5>
             </div>
             <div>
-                <button type="submit" class="btn-bg" *ngIf="isEditPackageItem === false"
+                <button type="submit" class="btn-bg" *ngIf="isEditPackageItem === false && isUpdated === true"
                     (click)="editPackageItemFormArray()"><i class="bx bx-edit-alt" tooltip="Edit" placement="bottom"
                         showDelay="100"></i></button>
                 <div class="d-flex">
@@ -174,7 +174,7 @@
             <div>
                 <h5 class="mb-0">Extra Decoration</h5>
             </div>
-            <div>
+            <div *ngIf="isUpdated === true">
                 <button type="submit" class="btn-bg " *ngIf="isEditExtraItem === false && eventList.length != 0"
                     (click)="editExtraItemFormArray()"><i class="bx bx-edit-alt" tooltip="Edit" placement="bottom"
                         showDelay="100"></i></button>
@@ -256,7 +256,7 @@
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Client Selected Decor</h5>
-            <button type="submit" class="bg-label-success btn-bg bg-label-success ml-10"
+            <button type="submit" class="bg-label-success btn-bg bg-label-success ml-10" *ngIf="isUpdated === true"
                 (click)="uploadDecorationModal()"><i class="bx bx-plus" tooltip="Add" placement="bottom"
                     showDelay="100"></i></button>
             <!-- <button type="button" class="btn btn-primary">Edit</button> -->

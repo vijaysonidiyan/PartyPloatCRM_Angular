@@ -17,18 +17,37 @@ export class DashboardComponent implements OnInit {
   date = new Date();
   searchedMonth = (this.date.getMonth() + 1).toString();
   searchedYear = this.date.getFullYear();
- calendarOptions: CalendarOptions;
+  calendarOptions: CalendarOptions;
 
-// calender view
-@ViewChild('calendar') calendarComponent: FullCalendarComponent;
-inquiryEvent = [];
-eventActiveList: any[] = [];
-
+  // calender view
+  @ViewChild('calendar') calendarComponent: FullCalendarComponent;
+  inquiryEvent = [];
+  eventActiveList: any[] = [];
+  isView: boolean;
+  isCreated: boolean;
+  isUpdated: boolean;
+  isDeleted: boolean;
 
   constructor(private adminLayoutService: AdminLayoutService, private commonService: CommonService, private fb: FormBuilder, private router: Router) {
+    // let pagePermission = { module: "dashboard" }
+    // this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
+    //   debugger
+    //   if (Response.meta.code == 200) {
+
+    //     this.isView = Response.data.isView;
+    //     this.isCreated = Response.data.isCreated;
+    //     this.isUpdated = Response.data.isUpdated;
+    //     this.isDeleted = Response.data.isDeleted;
+    //     if (this.isView === false) {
+    //       this.router.navigate(['admin/dashboard']);
+    //     }
+    //   }
+    // }, (error) => {
+    //   console.log(error.error.Message);
+    // });
     this.getActivePartyplotList();
-   }
-  
+  }
+
   ngOnInit() {
     this.getEventActiveList();
   }
@@ -49,14 +68,14 @@ eventActiveList: any[] = [];
   partyplotChange() {
     this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear, partyplot_ID: this.searchedPartyplot })
   }
-  
+
   getActivePartyplotList() {
     this.adminLayoutService.getPartyplotActiveList().subscribe((Response: any) => {
       if (Response.meta.code == 200) {
         this.activepartyplotList = Response.data;
         this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
         this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear, partyplot_ID: this.searchedPartyplot })
-        
+
       }
       //for select sub industry step
     },

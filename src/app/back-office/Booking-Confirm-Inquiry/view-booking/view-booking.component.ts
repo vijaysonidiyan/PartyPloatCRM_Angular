@@ -32,8 +32,28 @@ export class ViewBookingComponent implements OnInit {
     return this.viewBookingForm.controls;
   }
   eventList: any;
+  isView: boolean;
+  isCreated: boolean;
+  isUpdated: boolean;
+  isDeleted: boolean;
 
   constructor(private route: ActivatedRoute, private commonService: CommonService, private router: Router, private fb: FormBuilder, private adminLayoutService: AdminLayoutService) {
+    let pagePermission = { module: "bookingConfirm" }
+    this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
+      debugger
+      if (Response.meta.code == 200) {
+
+        this.isView = Response.data.isView;
+        this.isCreated = Response.data.isCreated;
+        this.isUpdated = Response.data.isUpdated;
+        this.isDeleted = Response.data.isDeleted;
+        if (this.isView === false) {
+          this.router.navigate(['admin/booking-confirm-list']);
+        }
+      }
+    }, (error) => {
+      console.log(error.error.Message);
+    });
     this.route.params.subscribe((x: Params) => {
       this.bookingConfirmId = x.id
     })

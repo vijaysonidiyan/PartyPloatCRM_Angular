@@ -50,7 +50,14 @@ export class InquiryComponent implements OnInit {
   isInquiryTab: boolean = false;
   isBookedOrNot = {};
   invaildSearchList: boolean = false;
-
+  isView: boolean;
+  isCreated: boolean;
+  isUpdated: boolean;
+  isDeleted: boolean;
+  isViewbookingConfirm: boolean;
+  isCreatedbookingConfirm: boolean;
+  isUpdatedbookingConfirm: boolean;
+  isDeletedbookingConfirm: boolean;
   // tabClick(tab) {
   //   this.activeTab = tab;
   //   if (this.activeTab == 1) {
@@ -67,6 +74,32 @@ export class InquiryComponent implements OnInit {
   // }
 
   constructor(private adminLayoutService: AdminLayoutService, private commonService: CommonService, private fb: FormBuilder, private router: Router) {
+    let pagePermission = { module: "inquiry" }
+    this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
+      debugger
+      if (Response.meta.code == 200) {
+
+        this.isView = Response.data.isView;
+        this.isCreated = Response.data.isCreated;
+        this.isUpdated = Response.data.isUpdated;
+        this.isDeleted = Response.data.isDeleted;
+        if (this.isView === false) {
+          this.router.navigate(['admin/dashboard']);
+        }
+      }
+    }, (error) => {
+      console.log(error.error.Message);
+    });
+    this.adminLayoutService.getpagePermission({ module: "bookingConfirm" }).subscribe((Response: any) => {
+      debugger
+      if (Response.meta.code == 200) {
+
+        this.isViewbookingConfirm = Response.data.isView;
+        this.isCreatedbookingConfirm = Response.data.isCreated;
+        this.isUpdatedbookingConfirm = Response.data.isUpdated;
+        this.isDeletedbookingConfirm = Response.data.isDeleted;
+      }
+    })
     this.getAssignPartyplotList();
   }
 
@@ -77,7 +110,7 @@ export class InquiryComponent implements OnInit {
     this.getEventActiveList();
     this.getYear();
     this.minEndDate = new Date();
-
+    
 
   }
 
@@ -218,6 +251,7 @@ export class InquiryComponent implements OnInit {
   viewInquiry(id: any, status: any, bookingId: any) {
     $('#inquiry-details-by-date-modal').modal('hide');
     if (status == 2) {
+
       this.router.navigate(['admin/view-booking-confirm/' + bookingId]);
     }
     else {
@@ -276,16 +310,18 @@ export class InquiryComponent implements OnInit {
     this.adminLayoutService.getCheckInquiryListData(obj).subscribe((Response: any) => {
       if (Response.meta.code == 2010) {
         // not inquiry
-        let todayDate = moment(new Date()).format('yyyy-MM-DD');
-        let argDate = moment(arg.date).format('yyyy-MM-DD');
-        if (todayDate <= argDate) {
-          this.router.navigate(["/admin/inquiry/add-inquiry"], {
-            queryParams: {
-              partyplotId: this.searchedPartyplot,
-              startDate: arg.date,
-              // endDate: this.endDateObj
-            }
-          })
+        if (this.isCreated === true) {
+          let todayDate = moment(new Date()).format('yyyy-MM-DD');
+          let argDate = moment(arg.date).format('yyyy-MM-DD');
+          if (todayDate <= argDate) {
+            this.router.navigate(["/admin/inquiry/add-inquiry"], {
+              queryParams: {
+                partyplotId: this.searchedPartyplot,
+                startDate: arg.date,
+                // endDate: this.endDateObj
+              }
+            })
+          }
         }
       }
       else if (Response.meta.code == 2011) {
@@ -301,21 +337,7 @@ export class InquiryComponent implements OnInit {
 
     })
 
-    // if (new Date() < arg.date) {
-    //   this.router.navigate(["/admin/inquiry/add-inquiry"], {
-    //     queryParams: {
-    //       startDate: arg.date,
-    //       // endDate: this.endDateObj
-    //     }
-    //   })
-    // }
 
-
-
-
-    // this.startDateObj = arg.date
-
-    // $('#add-inquiry-modal').modal('show');
   }
 
   // For Next Month Click
@@ -510,7 +532,7 @@ export class InquiryComponent implements OnInit {
   searchFilterInquiryList() {
     this.currentYear = this.searchedYear;
     this.currentMonth = this.searchedMonth;
-    if(this.searchedMonth != null && this.searchedYear == null) {
+    if (this.searchedMonth != null && this.searchedYear == null) {
       this.invaildSearchList = true;
       return
     } else {

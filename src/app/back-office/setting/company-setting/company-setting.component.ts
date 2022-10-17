@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { AdminLayoutService } from "app/layouts/admin-layout/admin-layout.service";
 import { CommonService } from "app/shared/common.service";
 import { StorageKey, StorageService } from "app/shared/storage.service";
@@ -26,10 +27,31 @@ export class CompanySettingComponent implements OnInit {
     return this.comapnyForm.controls;
   }
   submittedCompanyData = false;
+  isView: boolean;
+    isCreated: boolean;
+    isUpdated: boolean;
+    isDeleted: boolean;
 
 
 
-  constructor(private fb: FormBuilder, public adminLayoutService: AdminLayoutService, public storageService: StorageService, public commonService: CommonService) { }
+  constructor(private fb: FormBuilder, public adminLayoutService: AdminLayoutService, public storageService: StorageService, public commonService: CommonService, private router: Router) {
+    let pagePermission = { module: "companySetting" }
+        this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
+            debugger
+            if (Response.meta.code == 200) {
+
+                this.isView = Response.data.isView;
+                this.isCreated = Response.data.isCreated;
+                this.isUpdated = Response.data.isUpdated;
+                this.isDeleted = Response.data.isDeleted;
+                if (this.isView === false) {
+                    this.router.navigate(['admin/dashboard']);
+                }
+            }
+        }, (error) => {
+            console.log(error.error.Message);
+        });
+   }
 
   ngOnInit(): void {
     this.defaultForm();

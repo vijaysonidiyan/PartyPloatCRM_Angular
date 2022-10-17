@@ -20,6 +20,10 @@ export class AddPackageMasterComponent implements OnInit {
   PackageId: any;
   assignpartyplotList: any[] = [];
   submittedPackageData: boolean = false;
+  isView: boolean;
+  isCreated: boolean;
+  isUpdated: boolean;
+  isDeleted: boolean;
 
   get fclientinquiryData() {
     return this.packageDataForm.controls;
@@ -28,16 +32,36 @@ export class AddPackageMasterComponent implements OnInit {
   constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, private router: Router, public route: ActivatedRoute) {
     let currentUrl = this.router.url;
 
-    if (currentUrl.includes('edit-package-master')) {
-      this.packageData = true;
-      this.route.params.subscribe((x: Params) => {
-        this.PackageId = x.id
-      })
-      this.getPackageMasterById();
-    }
-    else {
-      this.packageData = false
-    }
+    let pagePermission = { module: "packageMaster" }
+    this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
+      debugger
+      if (Response.meta.code == 200) {
+
+        this.isView = Response.data.isView;
+        this.isCreated = Response.data.isCreated;
+        this.isUpdated = Response.data.isUpdated;
+        this.isDeleted = Response.data.isDeleted;
+        
+        if (currentUrl.includes('edit-package-master')) {
+          if (this.isUpdated === false) {
+            this.router.navigate(['admin/package-master']);
+          }
+          this.packageData = true;
+          this.route.params.subscribe((x: Params) => {
+            this.PackageId = x.id
+          })
+          this.getPackageMasterById();
+        }
+        else {
+          if (this.isView === false) {
+            this.router.navigate(['admin/package-master']);
+          }
+          this.packageData = false
+        }
+      }
+    }, (error) => {
+      console.log(error.error.Message);
+    });
   }
 
   ngOnInit(): void {

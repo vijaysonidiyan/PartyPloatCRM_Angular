@@ -18,7 +18,7 @@
                         aria-label="Search..." (input)="search($event.target.value)" />
                 </div>
                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Vendor Details</h4> -->
-                <div class="btn-cus">
+                <div class="btn-cus" *ngIf="this.isCreated === true">
                     <button type="button" class="btn btn-primary" (click)="addMenu()">
                         Add New
                     </button>
@@ -49,17 +49,17 @@
                             <td>
                                 <div class="d-flex">
                                     <button class="btn-bg"
-                                        (click)="editMenumaster({id : menuData._id, index:menuIndex})"><i
+                                        (click)="editMenumaster({id : menuData._id, index:menuIndex})" *ngIf="this.isUpdated === true"><i
                                             class="bx bx-edit-alt" tooltip="Edit" placement="bottom"
                                             showDelay="100"></i>
                                     </button>
-                                    <button *ngIf="menuData.status == 2" class="btn-bg bg-label-success" tooltip="Add"
+                                    <button *ngIf="menuData.status == 2 && this.isDeleted === true" class="btn-bg bg-label-success" tooltip="Add"
                                         placement="bottom" showDelay="100"
                                         (confirm-click)="statusMenu({id :menuData._id,index:menuIndex, status:1})"
                                         appConfirm [confirmTitle]="'Active'"
                                         [confirmContent]="'Are you sure to Active this Menu Master?'">
                                         <i class="bx bx-plus"></i></button>
-                                    <button *ngIf="menuData.status == 1" class="btn-bg bg-label-danger" tooltip="Delete"
+                                    <button *ngIf="menuData.status == 1 && this.isDeleted === true" class="btn-bg bg-label-danger" tooltip="Delete"
                                         placement="bottom" showDelay="100"
                                         (confirm-click)="statusMenu({id :menuData._id,index:menuIndex, status:2})"
                                         appConfirm [confirmTitle]="'Deactive'"

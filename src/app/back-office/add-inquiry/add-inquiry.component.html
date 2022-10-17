@@ -14,7 +14,7 @@
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Inquiry</h5>
-            <div *ngIf="fclientinquiryData._id.value != '0'">
+            <div *ngIf="fclientinquiryData._id.value != '0' && isUpdated === true">
                 <button type="button" class="btn btn-primary" *ngIf="viewInquiry === true"
                     (click)="enableOnlyClientInquiryInput()">Edit</button>
                 <button type="button" class="btn btn-primary me-3" *ngIf="viewInquiry === false"
@@ -244,7 +244,7 @@
                                 </div>
                             </div>
                             <div class="mb-3"
-                                *ngIf="fclientinquiryData._id.value != '0' && item.controls.approvestatus.value == 1">
+                                *ngIf="fclientinquiryData._id.value != '0' && item.controls.approvestatus.value == 1 && isUpdated === true">
                                 <button type="button" class="btn btn-primary me-3"
                                     *ngIf="viewInquiryFormArray[i] == true"
                                     (click)="enableClientInquiryEventIndexWise(i)">Edit</button>
@@ -271,7 +271,7 @@
                     </div>
 
                 </div>
-                <div>
+                <div *ngIf="isCreated === true">
                     <button type="button" class="btn btn-primary" (click)="addEventList()">Add</button>
                 </div>
                 <div class="float-end" *ngIf="fclientinquiryData._id.value == '0'">

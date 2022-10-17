@@ -74,19 +74,24 @@
                                     <td>{{ l * (p - 1) + inquiryIndex + 1 }}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <button class="btn-bg"
+                                            <button class="btn-bg" *ngIf="inquiryData.approvestatus == 2 && isViewbookingConfirm === true"
                                                 (click)="viewInquiryBooking(inquiryData.clientInquiryId,inquiryData.approvestatus,inquiryData.inquirybooking_id)">
-                                                <i class="bx bxs-show" tooltip="Booking View" placement="bottom"
+                                                <i class="bx bxs-show" tooltip="View Booking" placement="bottom"
+                                                    showDelay="100"></i>
+                                            </button>
+                                            <button class="btn-bg" *ngIf="inquiryData.approvestatus != 2 && isView === true"
+                                                (click)="viewInquiryBooking(inquiryData.clientInquiryId,inquiryData.approvestatus,inquiryData.inquirybooking_id)">
+                                                <i class="bx bxs-show" tooltip="View Inquiry" placement="bottom"
                                                     showDelay="100"></i>
                                             </button>
                                             <button class="btn-bg badge bg-label-success"
-                                                *ngIf="inquiryData.approvestatus == 1 && isBookedOrNotForListView[inquiryIndex] === true"
+                                                *ngIf="inquiryData.approvestatus == 1 && isBookedOrNotForListView[inquiryIndex] === true  && isUpdatedbookingConfirm === true"
                                                 tooltip="Booking Confirm" placement="bottom" showDelay="100"
                                                 (click)="bookingConfirmNavigation(inquiryData.eventinquiry_id)">
                                                 <i class="bx bx-check"></i>
                                             </button>
                                             <button class="btn-bg badge bg-label-danger" tooltip="Booking Cancel"
-                                                *ngIf="inquiryData.approvestatus != 3" placement="bottom"
+                                                *ngIf="inquiryData.approvestatus != 3  && isUpdatedbookingConfirm === true" placement="bottom"
                                                 showDelay="100" (confirm-click)="cancelBooking(inquiryData.eventinquiry_id)"
                                                 appConfirm [confirmTitle]="'Cancel Booking'"
                                         [confirmContent]="'Are you sure to Cancel Booking?'">
@@ -238,16 +243,20 @@
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-end"
                                                                 aria-labelledby="cardOpt6">
-                                                                <a class="dropdown-item"
-                                                                    (click)="viewInquiry(inquiryDataByDate.clientInquiryId,inquiryDataByDate.approvestatus,inquiryDataByDate.inquirybooking_id)">
-                                                                    View More
+                                                                <a class="dropdown-item" *ngIf="inquiryDataByDate.approvestatus == 2 && isViewbookingConfirm === true"
+                                                                    (click)="viewInquiry(inquiryDataByDate.clientInquiryId, inquiryDataByDate.approvestatus, inquiryDataByDate.inquirybooking_id)">
+                                                                    View Booking
+                                                                </a>
+                                                                <a class="dropdown-item" *ngIf="inquiryDataByDate.approvestatus != 2 && isView === true"
+                                                                    (click)="viewInquiry(inquiryDataByDate.clientInquiryId, inquiryDataByDate.approvestatus, inquiryDataByDate.inquirybooking_id)">
+                                                                    View Inquiry
                                                                 </a>
                                                                 <a class="dropdown-item"
-                                                                    *ngIf="inquiryDataByDate.approvestatus == 1 && isBookedOrNot[inquiryIndex] == true"
+                                                                    *ngIf="inquiryDataByDate.approvestatus == 1 && isBookedOrNot[inquiryIndex] == true && isUpdatedbookingConfirm === true"
                                                                     (click)="bookingConfirmNavigation(inquiryDataByDate._id)">Booking
                                                                     Confirm</a>
                                                                 <a class=" dropdown-item"
-                                                                    *ngIf="inquiryDataByDate.approvestatus != 3"
+                                                                    *ngIf="inquiryDataByDate.approvestatus != 3 && isUpdatedbookingConfirm === true"
                                                                     (click)="cancelBooking(inquiryDataByDate._id)">Booking
                                                                     Cancel</a>
                                                             </div>

@@ -28,6 +28,11 @@ export class BookingConfirmComponent implements OnInit {
     return this.bookingDataForm.controls;
   }
   submittedPackageSelectedData: boolean = false;
+  isView: boolean;
+  isCreated: boolean;
+  isUpdated: boolean;
+  isDeleted: boolean;
+
   constructor(
     public adminLayoutService: AdminLayoutService,
     private fb: FormBuilder,
@@ -35,6 +40,22 @@ export class BookingConfirmComponent implements OnInit {
     private router: Router,
     public route: ActivatedRoute
   ) {
+    let pagePermission = { module: "bookingConfirm" }
+    this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
+      debugger
+      if (Response.meta.code == 200) {
+
+        this.isView = Response.data.isView;
+        this.isCreated = Response.data.isCreated;
+        this.isUpdated = Response.data.isUpdated;
+        this.isDeleted = Response.data.isDeleted;
+        if (this.isCreated === false && this.isView === false) {
+          this.router.navigate(['admin/inquiry/calender-view']);
+        }
+      }
+    }, (error) => {
+      console.log(error.error.Message);
+    });
     this.route.params.subscribe((data: Params) => {
       this.inquiryEventId = data.id
     })

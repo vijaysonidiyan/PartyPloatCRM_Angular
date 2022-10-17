@@ -168,7 +168,7 @@
                 </div>
             </div>
             <div class="card-footer float-end" *ngIf="!!selectedRole">
-                <button class="btn btn-primary" (click)="saveRolewisemenu()">
+                <button class="btn btn-primary" (click)="saveRolewisemenu()"  *ngIf="this.isUpdatedPage === true">
                     Save
                 </button>
             </div>

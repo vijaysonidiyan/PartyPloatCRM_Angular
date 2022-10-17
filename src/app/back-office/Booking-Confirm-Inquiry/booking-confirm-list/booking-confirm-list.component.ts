@@ -20,10 +20,31 @@ export class BookingConfirmListComponent implements OnInit {
   p: number = 1;
   assignpartyplotList: any[] = [];
   searchedPartyplot = null;
+  isView: boolean;
+  isCreated: boolean;
+  isUpdated: boolean;
+  isDeleted: boolean;
 
   constructor(public adminLayoutService: AdminLayoutService,
     private fb: FormBuilder,
-    public commonService: CommonService, private router: Router) { }
+    public commonService: CommonService, private router: Router) {
+    let pagePermission = { module: "bookingConfirm" }
+    this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
+      debugger
+      if (Response.meta.code == 200) {
+
+        this.isView = Response.data.isView;
+        this.isCreated = Response.data.isCreated;
+        this.isUpdated = Response.data.isUpdated;
+        this.isDeleted = Response.data.isDeleted;
+        if (this.isView === false) {
+          this.router.navigate(['admin/dashboard']);
+        }
+      }
+    }, (error) => {
+      console.log(error.error.Message);
+    });
+  }
 
   ngOnInit(): void {
     this.l = 10;

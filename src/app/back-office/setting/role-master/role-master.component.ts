@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { AdminLayoutService } from "app/layouts/admin-layout/admin-layout.service";
 import { CommonService } from "app/shared/common.service";
 declare const $: any;
@@ -22,8 +23,29 @@ export class RoleMasterComponent implements OnInit {
     rolemasterListlength: any;
     get fRolenameData() { return this.rolemasterForm.controls; }
     submittedroleMasterData = false;
+    isView: boolean;
+    isCreated: boolean;
+    isUpdated: boolean;
+    isDeleted: boolean;
 
-    constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService) { }
+    constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, private router: Router) {
+        let pagePermission = { module: "roleMaster" }
+        this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
+            debugger
+            if (Response.meta.code == 200) {
+
+                this.isView = Response.data.isView;
+                this.isCreated = Response.data.isCreated;
+                this.isUpdated = Response.data.isUpdated;
+                this.isDeleted = Response.data.isDeleted;
+                if (this.isView === false) {
+                    this.router.navigate(['admin/dashboard']);
+                }
+            }
+        }, (error) => {
+            console.log(error.error.Message);
+        });
+     }
 
     ngOnInit(): void {
         this.noData = false;

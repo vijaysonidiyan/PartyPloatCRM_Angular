@@ -72,70 +72,112 @@ export class AddInquiryComponent implements OnInit {
     return this.clientinquiryDataForm.controls;
   }
   submittedclientInquiryData = false;
+  isView: boolean;
+  isCreated: boolean;
+  isUpdated: boolean;
+  isDeleted: boolean;
+  
 
   constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, private router: Router, public route: ActivatedRoute) {
+    this.defaultForm();
+    this.defaultEventForm();
+    this.eventList = this.eventInquiryDataForm.get("events") as FormArray;
+    let pagePermission = { module: "inquiry" }
+    this.getAssignPartyplotList();
+    this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
+      debugger
+      if (Response.meta.code == 200) {
 
-    const currentUrl = this.router.url
-    if (currentUrl.includes('view-inquiry')) {
-      this.route.params.subscribe((params: Params) => {
-        this.inquiryId = params.id;
+        this.isView = Response.data.isView;
+        this.isCreated = Response.data.isCreated;
+        this.isUpdated = Response.data.isUpdated;
+        this.isDeleted = Response.data.isDeleted;
 
-      });
-      this.updateInquiry = true;
-      this.viewInquiry = true;
-    } else if (currentUrl.includes('add-inquiry')) {
-      this.route.queryParams.subscribe((queryParams) => {
-        this.updateInquiry = false;
-        this.selectedPartyplot = queryParams.partyplotId;
+        const currentUrl = this.router.url
+        if (currentUrl.includes('view-inquiry')) {
+          this.route.params.subscribe((params: Params) => {
+            this.inquiryId = params.id;
+            if (this.isView === false) {
+              this.router.navigate(['admin/inquiry/calender-view']);
+            }
+          });
+          this.updateInquiry = true;
+          this.viewInquiry = true;
+          this.editClientInquiry();
+        } else if (currentUrl.includes('add-inquiry')) {
+          if (this.isCreated === false) {
+            this.router.navigate(['admin/inquiry/calender-view']);
+          }
+          this.route.queryParams.subscribe((queryParams) => {
+            this.updateInquiry = false;
+            this.selectedPartyplot = queryParams.partyplotId;
 
-        if (!!queryParams.startDate) {
-          // if (!!queryParams.startDate && !!queryParams.endDate) {
-          this.selectedDate = queryParams.startDate;
-          this.minDate = new Date(queryParams.startDate);
-          let maxDate = new Date(this.selectedDate).getFullYear() + '-' + (new Date(this.selectedDate).getMonth() + 1) + '-' + new Date(this.selectedDate).getDate();
-          this.maxDate = new Date(maxDate + ' ' + '23:59');
-          // this.startDateObj = queryParams.startDate;
-          // this.endDateObj = queryParams.endDate;
+            if (!!queryParams.startDate) {
+              // if (!!queryParams.startDate && !!queryParams.endDate) {
+              this.selectedDate = queryParams.startDate;
+              this.minDate = new Date(queryParams.startDate);
+              let maxDate = new Date(this.selectedDate).getFullYear() + '-' + (new Date(this.selectedDate).getMonth() + 1) + '-' + new Date(this.selectedDate).getDate();
+              this.maxDate = new Date(maxDate + ' ' + '23:59');
+              // this.startDateObj = queryParams.startDate;
+              // this.endDateObj = queryParams.endDate;
+            }
+            else {
+              this.selectedDate = '';
+              // this.startDateObj = '';
+              // this.endDateObj = '';
+            }
+            this.eventList.push(this.createeventItem({}));
+            (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[0] as FormGroup).controls['fullday_event'].setValue(true));
+            (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[0] as FormGroup).controls['startTimeObj'].disable());
+            (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[0] as FormGroup).controls['endTimeObj'].disable());
+            this.eventList.value.forEach((x: any, index: any) => {
+              let validation = (this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup;
+              validation.get('Date').setValidators([Validators.required]);
+              validation.get('eventType').setValidators([Validators.required]);
+              validation.get('guest').setValidators([Validators.required]);
+              validation.get('startTimeObj').setValidators([Validators.required]);
+              validation.get('endTimeObj').setValidators([Validators.required]);
+              validation.get('offer_budget').setValidators([Validators.required]);
+              validation.get('client_budget').setValidators([Validators.required]);
+              validation.get('Date').disable();
+
+            })
+          });
         }
-        else {
-          this.selectedDate = '';
-          // this.startDateObj = '';
-          // this.endDateObj = '';
-        }
-      });
-    }
+      } else {
+        this.router.navigate(['admin/dashboard']);
+      }
+    }, (error) => {
+      console.log(error.error.Message);
+    });
   }
 
   ngOnInit(): void {
-    this.defaultForm();
-    this.defaultEventForm();
     this.getTimeRanges();
-    this.getAssignPartyplotList();
     this.activeReferenceList();
+    
     this.minEndDate[0] = new Date();
-    this.eventList = this.eventInquiryDataForm.get("events") as FormArray;
-    if (this.viewInquiry !== true) {
-      this.eventList.push(this.createeventItem({}));
-      (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[0] as FormGroup).controls['fullday_event'].setValue(true));
-      (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[0] as FormGroup).controls['startTimeObj'].disable());
-      (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[0] as FormGroup).controls['endTimeObj'].disable());
-      this.eventList.value.forEach((x: any, index: any) => {
-        let validation = (this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup;
-        validation.get('Date').setValidators([Validators.required]);
-        validation.get('eventType').setValidators([Validators.required]);
-        validation.get('guest').setValidators([Validators.required]);
-        validation.get('startTimeObj').setValidators([Validators.required]);
-        validation.get('endTimeObj').setValidators([Validators.required]);
-        validation.get('offer_budget').setValidators([Validators.required]);
-        validation.get('client_budget').setValidators([Validators.required]);
-        validation.get('Date').disable();
-        
-      })
-    } else if (this.viewInquiry === true) {
-      this.editClientInquiry();
-    }
+    // if (this.viewInquiry !== true) {
+    //   this.eventList.push(this.createeventItem({}));
+    //   (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[0] as FormGroup).controls['fullday_event'].setValue(true));
+    //   (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[0] as FormGroup).controls['startTimeObj'].disable());
+    //   (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[0] as FormGroup).controls['endTimeObj'].disable());
+    //   this.eventList.value.forEach((x: any, index: any) => {
+    //     let validation = (this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup;
+    //     validation.get('Date').setValidators([Validators.required]);
+    //     validation.get('eventType').setValidators([Validators.required]);
+    //     validation.get('guest').setValidators([Validators.required]);
+    //     validation.get('startTimeObj').setValidators([Validators.required]);
+    //     validation.get('endTimeObj').setValidators([Validators.required]);
+    //     validation.get('offer_budget').setValidators([Validators.required]);
+    //     validation.get('client_budget').setValidators([Validators.required]);
+    //     validation.get('Date').disable();
 
-
+    //   })
+    // } else if (this.viewInquiry === true) {
+    //   this.editClientInquiry();
+    // }
+    
   }
 
   defaultForm() {
@@ -210,9 +252,9 @@ export class AddInquiryComponent implements OnInit {
     );
   }
 
-  dayTypeEvent({checked,index}) {
+  dayTypeEvent({ checked, index }) {
     let eventInquiryFormGroup = (this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup
-    if(checked === true) {
+    if (checked === true) {
       eventInquiryFormGroup.controls['startTimeObj'].setValue('06:00');
       eventInquiryFormGroup.controls['endTimeObj'].setValue('22:00');
       eventInquiryFormGroup.controls['startTimeObj'].disable();
@@ -265,7 +307,7 @@ export class AddInquiryComponent implements OnInit {
     (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['eventType'].enable());
     (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['guest'].enable());
     (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['fullday_event'].enable());
-    if(((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['fullday_event'].value === true) {
+    if (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['fullday_event'].value === true) {
       (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['startTimeObj'].disable());
       (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[index] as FormGroup).controls['endTimeObj'].disable());
     } else {
@@ -393,7 +435,7 @@ export class AddInquiryComponent implements OnInit {
     (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[this.eventList.length - 1] as FormGroup).controls['fullday_event'].setValue(true));
     (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[this.eventList.length - 1] as FormGroup).controls['startTimeObj'].disable());
     (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[this.eventList.length - 1] as FormGroup).controls['endTimeObj'].disable());
-    
+
     if (this.viewInquiry == true) {
       (((this.eventInquiryDataForm.controls['events'] as FormArray).controls[this.eventList.length - 1] as FormGroup).controls['Date'].setValue(this.selectedDate));
     }

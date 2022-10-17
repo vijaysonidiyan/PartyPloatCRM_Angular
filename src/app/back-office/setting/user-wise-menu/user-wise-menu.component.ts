@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
 import { AdminLayoutService } from "app/layouts/admin-layout/admin-layout.service";
 import { CommonService } from "app/shared/common.service";
 import { StorageService } from "app/shared/storage.service";
@@ -22,7 +23,33 @@ export class UserWiseMenuComponent implements OnInit {
   isCreated: boolean;
   isUpdated: boolean;
   isDeleted: boolean;
-  constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, public storageService: StorageService) { }
+  isViewPage: boolean;
+  isCreatedPage: boolean;
+  isUpdatedPage: boolean;
+  isDeletedPage: boolean;
+
+  constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, public storageService: StorageService, private router: Router) {
+    let pagePermission = { module: "userWiseMenu" }
+    this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
+      debugger
+      if (Response.meta.code == 200) {
+
+        this.isViewPage = Response.data.isView;
+        this.isCreatedPage = Response.data.isCreated;
+        this.isUpdatedPage = Response.data.isUpdated;
+        this.isDeletedPage = Response.data.isDeleted;
+        if (this.isViewPage === false && this.isCreatedPage === false && this.isUpdatedPage === false) {
+          this.router.navigate(['admin/dashboard']);
+        }
+      }
+      else {
+        this.router.navigate(['admin/dashboard']);
+      }
+    }, (error) => {
+      this.router.navigate(['admin/dashboard']);
+      console.log(error.error.Message);
+    });
+  }
 
   ngOnInit(): void {
     this.getRoleActiveList();

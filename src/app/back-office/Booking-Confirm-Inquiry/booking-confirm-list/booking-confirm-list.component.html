@@ -43,12 +43,12 @@
                             <td>{{ l * (p - 1) + bookingConfirmIndex + 1 }}</td>
                             <td>
                                 <div class="d-flex">
-                                    <button class="btn-bg"
+                                    <button class="btn-bg" 
                                         (click)="viewBookingConfirm({id : bookingConfirmData._id, index : bookingConfirmIndex})"><i
                                             class="bx bxs-show" tooltip="Booking View" placement="bottom"
                                             showDelay="100"></i>
                                     </button>
-                                    <button class="btn-bg bg-label-danger"
+                                    <button class="btn-bg bg-label-danger" *ngIf="isUpdated === true"
                                         (confirm-click)="cancelBookingConfirm({id : bookingConfirmData._id, index : bookingConfirmIndex})"
                                         appConfirm [confirmTitle]="'Cancel Booking'"
                                         [confirmContent]="'Are you sure to Cancel Booking?'"><i

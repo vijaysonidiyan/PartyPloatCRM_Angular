@@ -10,7 +10,7 @@
                         aria-label="Search..." (input)="search($event.target.value)" />
                 </div>
                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Staff</h4> -->
-                <div class="btn-cus">
+                <div class="btn-cus" *ngIf="this.isCreated === true">
                     <button type="button" class="btn btn-primary" (click)="addStaff()">
                         Add New
                     </button>
@@ -48,7 +48,7 @@
                                         <i class="bx bxs-show" tooltip="View" placement="bottom" showDelay="100"></i>
                                     </button>
                                     <button class="btn-bg"
-                                        (click)="editStaff({id : staffData._id, index : staffIndex, action: 'edit'})">
+                                        (click)="editStaff({id : staffData._id, index : staffIndex, action: 'edit'})" *ngIf="this.isUpdated === true">
                                         <i class="bx bx-edit-alt " tooltip="Edit" placement="bottom"
                                             showDelay="100"></i>
                                     </button>
@@ -56,13 +56,13 @@
                                             class="bx bx-trash "></i>
                                     </button> -->
 
-                                    <button *ngIf="staffData.status == 2" class="dtl-btn btn bg-gradient-dark"
+                                    <button *ngIf="staffData.status == 2 && this.isDeleted === true" class="dtl-btn btn bg-gradient-dark"
                                         (confirm-click)="statusStaffmaster({id :staffData._id, index : staffIndex, status:1})"
                                         appConfirm [confirmTitle]="'Active'"
                                         [confirmContent]="'Are you sure to Active this Staff?'"
                                         class="btn-bg bg-label-success" tooltip="Active" placement="bottom"
                                         showDelay="100"><i class="bx bx-plus"></i></button>
-                                    <button *ngIf="staffData.status == 1" class="dtl-btn btn bg-gradient-dark"
+                                    <button *ngIf="staffData.status == 1 && this.isDeleted === true" class="dtl-btn btn bg-gradient-dark"
                                         (confirm-click)="statusStaffmaster({id :staffData._id, index : staffIndex, status:2})"
                                         appConfirm [confirmTitle]="'Deactive'"
                                         [confirmContent]="'Are you sure to Deactive this Staff?'"

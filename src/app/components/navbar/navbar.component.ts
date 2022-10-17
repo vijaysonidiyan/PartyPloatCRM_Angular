@@ -425,18 +425,7 @@ export class NavbarComponent implements OnInit {
         currentPageName: 'View Inquiry'
       };
     }
-    else if (titlee.includes('booking-confirm')) {
-      return {
-        pastPage: [{
-          pastUrl: 'dashboard',
-          pastLinkName: 'Dashboard',
-        }, {
-          pastUrl: 'inquiry/calender-view',
-          pastLinkName: 'Inquiry',
-        }],
-        currentPageName: 'Booking Confirm'
-      };
-    }
+    
     else if (titlee.includes('list-view')) {
       return {
         pastPage: [{
@@ -474,6 +463,18 @@ export class NavbarComponent implements OnInit {
           pastLinkName: 'Booking Confirm',
         }],
         currentPageName: 'View Booking Confirm'
+      };
+    }
+    else if (titlee.includes('booking-confirm')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }, {
+          pastUrl: 'inquiry/calender-view',
+          pastLinkName: 'Inquiry',
+        }],
+        currentPageName: 'Booking Confirm'
       };
     }
     else if (titlee.includes('menu-master')) {

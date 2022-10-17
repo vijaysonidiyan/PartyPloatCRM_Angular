@@ -135,6 +135,12 @@ export class AdminLayoutService {
     return this.http.post(this.commonService.rootData.rootUrl + 'menuMaster/menuStatusupdate', updatestatusmenuData, { headers: headers });
   }
 
+  getpagePermission(params: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'menuMaster/pagePermission', { params: params, headers: headers });
+}
   // ============== Role Wise Menu =========== //
 
   getRoleActiveList() {

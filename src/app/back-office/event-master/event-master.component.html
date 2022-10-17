@@ -10,7 +10,7 @@
                         aria-label="Search..." (input)="search($event.target.value)" />
                 </div>
                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Event Master</h4> -->
-                <div class="btn-cus">
+                <div class="btn-cus" *ngIf="this.isCreated === true">
                     <button type="button" class="btn btn-primary" (click)="addEventmaster()">
                         Add New
                     </button>
@@ -38,12 +38,12 @@
                             </td>
                             <td>
                                 <div class=" d-flex">
-                                    <button class="btn-bg"
+                                    <button class="btn-bg" *ngIf="this.isUpdated === true"
                                         (click)="editEventmaster({id : eventmasterData._id, index : eventMasterIndex})"><i
                                             class="bx bx-edit-alt" tooltip="Edit" placement="bottom"
                                             showDelay="100"></i>
                                     </button>
-                                    <button *ngIf="eventmasterData.status == 2"
+                                    <button *ngIf="eventmasterData.status == 2 && this.isDeleted === true"
                                         (confirm-click)="statusEventmaster({id :eventmasterData._id,index:eventMasterIndex, status:1})"
                                         appConfirm [confirmTitle]="'Active'"
                                         [confirmContent]="'Are you sure to Active this Event Master?'"
@@ -51,7 +51,7 @@
                                         placement="bottom" showDelay="100">
                                         <i class="bx bx-plus"></i>
                                     </button>
-                                    <button *ngIf="eventmasterData.status == 1"
+                                    <button *ngIf="eventmasterData.status == 1 && this.isDeleted === true"
                                         (confirm-click)="statusEventmaster({id :eventmasterData._id,index:eventMasterIndex, status:2})"
                                         appConfirm [confirmTitle]="'Deactive'"
                                         [confirmContent]="'Are you sure to Deactive this Event Master?'"

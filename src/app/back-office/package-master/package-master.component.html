@@ -10,7 +10,7 @@
                         aria-label="Search..." (input)="search($event.target.value)" />
                 </div>
                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Party Plot Master</h4> -->
-                <div class="btn-cus">
+                <div class="btn-cus" *ngIf="this.isCreated === true">
                     <!-- <button type="button" class="btn btn-primary" (click)="addPartyplot()"> -->
                     <button type="button" class="btn btn-primary" (click)="addPackageMaster()">
                         Add New
@@ -39,17 +39,17 @@
                             </td>
                             <td>
                                 <div class="d-flex">
-                                    <button class="btn-bg" (click)="editPackageMaster(packageMasterData._id)"><i
+                                    <button class="btn-bg" (click)="editPackageMaster(packageMasterData._id)" *ngIf="this.isUpdated === true"><i
                                             class="bx bx-edit-alt" tooltip="Edit" placement="bottom" showDelay="100"></i>
                                     </button>
-                                    <button *ngIf="packageMasterData.status == 2"
+                                    <button *ngIf="packageMasterData.status == 2 && this.isDeleted === true"
                                         (confirm-click)="statusPackage({id :packageMasterData._id, status:1})"
                                         appConfirm [confirmTitle]="'Active'"
                                         [confirmContent]="'Are you sure to Active this Package Master?'"
                                         class="bg-label-success btn-bg bg-label-success" tooltip="Active" placement="bottom" showDelay="100">
                                         <i class="bx bx-plus"></i>
                                     </button>
-                                    <button *ngIf="packageMasterData.status == 1"
+                                    <button *ngIf="packageMasterData.status == 1 && this.isDeleted === true"
                                         (confirm-click)="statusPackage({id :packageMasterData._id, status:2})"
                                         appConfirm [confirmTitle]="'Deactive'"
                                         [confirmContent]="'Are you sure to Deactive this Package Master?'"

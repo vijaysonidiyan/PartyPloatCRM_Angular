@@ -18,7 +18,7 @@
                         aria-label="Search..." (input)="search($event.target.value)" />
                 </div>
                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Vendor Details</h4> -->
-                <div class="btn-cus">
+                <div class="btn-cus" *ngIf="this.isCreated === true">
                     <button type="button" class="btn btn-primary" (click)="addRole()">
                         Add New
                     </button>
@@ -47,18 +47,18 @@
                             <td>
                                 <div class="d-flex" *ngIf="rolemasterData.isEditable === true">
                                     <button class="btn-bg"
-                                        (click)="editRolemaster({id : rolemasterData._id, index : roleMasterIndex})"><i
+                                        (click)="editRolemaster({id : rolemasterData._id, index : roleMasterIndex})" *ngIf="this.isUpdated === true"><i
                                             class="bx bx-edit-alt " tooltip="Edit" placement="bottom" showDelay="100"
                                             tooltip="Edit" placement="bottom" showDelay="100"></i>
                                     </button>
-                                    <button *ngIf="rolemasterData.status == 2" class="dtl-btn btn bg-gradient-dark"
+                                    <button *ngIf="rolemasterData.status == 2 && this.isDeleted === true" class="dtl-btn btn bg-gradient-dark"
                                         title="Active Role"
                                         (confirm-click)="statusRolemaster({id :rolemasterData._id,index:roleMasterIndex, status:1})"
                                         appConfirm [confirmTitle]="'Active'"
                                         [confirmContent]="'Are you sure to Active this Role Master?'"
                                         class="btn-bg bg-label-success" tooltip="Add" placement="bottom"
                                         showDelay="100"><i class="bx bx-plus"></i></button>
-                                    <button *ngIf="rolemasterData.status == 1" class="dtl-btn btn bg-gradient-dark"
+                                    <button *ngIf="rolemasterData.status == 1 && this.isDeleted === true" class="dtl-btn btn bg-gradient-dark"
                                         title="Deactive Role"
                                         (confirm-click)="statusRolemaster({id :rolemasterData._id,index:roleMasterIndex, status:2})"
                                         appConfirm [confirmTitle]="'Deactive'"
