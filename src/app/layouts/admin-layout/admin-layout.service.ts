@@ -642,6 +642,13 @@ export class AdminLayoutService {
   }
 
   // bookging confirm list 
+  UpdateBookingConfirmClientDetails(data: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'inquirybooking/bookingConformClientdetailsUpdate', data, { headers: headers });
+  }
+
   getBookingConfirmListDetails(id: any) {
     let headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`

@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { CommonModule } from "@angular/common";
+import { CommonModule, DatePipe } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AdminLayoutRoutes } from "./admin-layout.routing";
 import { DashboardComponent } from "../../back-office/dashboard/dashboard.component";
@@ -99,6 +99,6 @@ import { ViewBookingComponent } from "app/back-office/Booking-Confirm-Inquiry/vi
     BookingConfirmListComponent,
     ViewBookingComponent
   ],
-  providers: [MatDatepickerModule],
+  providers: [MatDatepickerModule,DatePipe],
 })
 export class AdminLayoutModule { }

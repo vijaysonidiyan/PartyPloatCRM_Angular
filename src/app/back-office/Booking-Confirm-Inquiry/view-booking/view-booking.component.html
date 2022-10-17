@@ -5,7 +5,7 @@
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Booking Confirm</h5>
-            <!-- <button type="button" class="btn btn-primary">Edit</button> -->
+            <button type="button" class="btn btn-primary" (click)="clientDetailsUpdate()">Edit</button>
         </div>
         <div class="card-body" [formGroup]="viewBookingForm">
             <div class="row p-sm-3 p-0">
@@ -103,7 +103,7 @@
                 <div class="d-flex">
                     <button type="submit" class="bg-label-success btn-bg bg-label-success"
                         *ngIf="isEditPackageItem === true" (click)="updatePackageDecorationItem()"><i
-                            class="bx bx-check" tooltip="Save" placement="bottom" showDelay="100"></i></button>
+                            class="bx bx-check" tooltip="Update" placement="bottom" showDelay="100"></i></button>
                     <button type="submit" class="bg-label-danger btn-bg bg-label-danger ml-10"
                         *ngIf="isEditPackageItem === true" (click)="canclePackageItemIsEdit()"><i class="bx bx-x"
                             tooltip="Cancle" placement="bottom" showDelay="100"></i></button>
@@ -111,62 +111,75 @@
             </div>
             <!-- <button type="button" class="btn btn-primary">Edit</button> -->
         </div>
-        <div class="card-body" [formGroup]="viewBookingForm">
-            <div class="row p-sm-3 p-0">
+        <div class="card-body">
+            <form [formGroup]="viewBookingForm">
+                <div class="row p-sm-3 p-0">
 
-                <table class=" table-responsive" formArrayName="package">
-                    <thead>
-                        <tr class="boader-bottom-1">
-                            <th class="text-center w-5">Sr. No.</th>
-                            <th class="w-80">Particular</th>
-                            <th class="qty-width">Qty/Size</th>
+                    <table class=" table-responsive" formArrayName="package">
+                        <thead>
+                            <tr class="boader-bottom-1">
+                                <th class="text-center w-5">Sr. No.</th>
+                                <th class="w-80">Particular</th>
+                                <th class="qty-width">Qty/Size</th>
+                            </tr>
+                        </thead>
+                        <tr [formGroupName]="i"
+                            *ngFor=" let item of viewBookingForm.get('package')['controls']; let i = index">
+                            <td colspan="3" style="text-align:center;">
+                                <div style="padding: 7px 0;">
+                                    <h5><strong>{{item.controls.categoryName.value}}</strong></h5>
+                                </div>
+                                <table class="w-100 table-border" formArrayName="packageCategoryList">
+                                    <tr [formGroupName]="x" class="boader-top-1"
+                                        *ngFor="let citem of item.get('packageCategoryList')['controls']; let x = index;">
+                                        <td class="text-center w-5">{{x+1}}</td>
+                                        <td class="text-start w-80">{{citem.controls.item.value}}</td>
+                                        <td class="qty-width text-start">
+                                            <span
+                                                *ngIf="isEditPackageItem === false">{{citem.controls.quantity.value}}</span>
+                                            <input type="text" *ngIf="isEditPackageItem === true" class="form-control"
+                                                id="basic-default-company" formControlName="quantity"
+                                                placeholder="Enter Quantity" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
                         </tr>
-                    </thead>
-                    <tr [formGroupName]="i"
-                        *ngFor=" let item of viewBookingForm.get('package')['controls']; let i = index">
-                        <td colspan="3" style="text-align:center;">
-                            <div style="padding: 7px 0;">
-                                <h5><strong>{{item.controls.categoryName.value}}</strong></h5>
-                            </div>
-                            <table class="w-100 table-border" formArrayName="packageCategoryList">
-                                <tr [formGroupName]="x" class="boader-top-1"
-                                    *ngFor="let citem of item.get('packageCategoryList')['controls']; let x = index;">
-                                    <td class="text-center w-5">{{x+1}}</td>
-                                    <td class="text-start w-80">{{citem.controls.item.value}}</td>
-                                    <td class="qty-width text-start">
-                                        <span
-                                            *ngIf="isEditPackageItem === false">{{citem.controls.quantity.value}}</span>
-                                        <input type="text" *ngIf="isEditPackageItem === true" class="form-control"
-                                            id="basic-default-company" formControlName="quantity"
-                                            placeholder="Enter Quantity" />
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="row">
-                <hr class="mb-3" *ngIf="isEditPackageItem === false">
-                <div class="col-lg-4 col-md-6 mb-3">
-                    <h5 *ngIf="isEditPackageItem === false">Basic Package <span>&nbsp; :&nbsp;
-                            {{fbookingConfirmData.basicPackage.value}}</span></h5>
-                    <label *ngIf="isEditPackageItem === true" class="form-label" for="basic-default-company">Basic Packege</label>
-
-                    <input type="text" *ngIf="isEditPackageItem === true" appNumbersOnly class="form-control"
-                        id="basic-default-company" placeholder="Basic Packege"
-                        formControlName="basicPackage" />
+                    </table>
                 </div>
-                <div class="col-lg-4 col-md-6 mb-3">
-                    <h5 *ngIf="isEditPackageItem === false">Discount <span>&nbsp; :&nbsp;
-                        {{fbookingConfirmData.discount.value}}</span></h5>
-                    <label *ngIf="isEditPackageItem === true" class="form-label" for="basic-default-company">Discount</label>
+                <div class="row">
+                    <hr class="mb-3" *ngIf="isEditPackageItem === false">
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <h5 *ngIf="isEditPackageItem === false">Basic Package <span>&nbsp; :&nbsp;
+                                {{fbookingConfirmData.basicPackage.value}}</span></h5>
+                        <label *ngIf="isEditPackageItem === true" class="form-label" for="basic-default-company">Basic
+                            Packege</label>
 
-                    <input type="text" *ngIf="isEditPackageItem === true" appNumbersOnly class="form-control"
-                        id="basic-default-company" value="0" placeholder="Enter Discount"
-                        formControlName="discount" />
+                        <input type="text" *ngIf="isEditPackageItem === true" appNumbersOnly class="form-control"
+                            id="basic-default-company" placeholder="Basic Packege" formControlName="basicPackage" />
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <h5 *ngIf="isEditPackageItem === false">Discount <span>&nbsp; :&nbsp;
+                                {{fbookingConfirmData.discount.value}}</span></h5>
+                        <label *ngIf="isEditPackageItem === true" class="form-label"
+                            for="basic-default-company">Discount</label>
+
+                        <input type="text" *ngIf="isEditPackageItem === true" appNumbersOnly class="form-control"
+                            id="basic-default-company" value="0" placeholder="Enter Discount"
+                            formControlName="discount" />
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <h5 *ngIf="isEditPackageItem === false">Final Amount<span>&nbsp; :&nbsp;
+                                {{fbookingConfirmData.finalbudget.value}}</span></h5>
+                        <label *ngIf="isEditPackageItem === true" class="form-label" for="basic-default-company">Final
+                            Amount</label>
+
+                        <input type="text" *ngIf="isEditPackageItem === true" appNumbersOnly class="form-control"
+                            id="basic-default-company" value="0" placeholder="Enter Final Amount"
+                            formControlName="finalbudget" />
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     <div class="card mb-4">
@@ -243,11 +256,11 @@
                 <div class="col-lg-4 col-md-6 mb-3">
                     <h5 *ngIf="isEditExtraItem === false">Extra Cost <span>&nbsp; :&nbsp;
                             {{fbookingConfirmData.extraDecorBudget.value}}</span></h5>
-                    <label *ngIf="isEditExtraItem === true" class="form-label" for="basic-default-company">Extra Cost</label>
+                    <label *ngIf="isEditExtraItem === true" class="form-label" for="basic-default-company">Extra
+                        Cost</label>
 
                     <input type="text" *ngIf="isEditExtraItem === true" appNumbersOnly class="form-control"
-                        id="basic-default-company" placeholder="Extra Cost"
-                        formControlName="extraDecorBudget" />
+                        id="basic-default-company" placeholder="Extra Cost" formControlName="extraDecorBudget" />
                 </div>
             </div>
         </div>
@@ -357,8 +370,8 @@
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label for="nameBasic" class="form-label required">Upload Decoration</label>
-                        <input type="file" #imageDecoration accept="image/*" id="nameBasic" class="form-control" placeholder="Enter Decoration"
-                            (change)="onImageDecorationChange($event)" />
+                        <input type="file" #imageDecoration accept="image/*" id="nameBasic" class="form-control"
+                            placeholder="Enter Decoration" (change)="onImageDecorationChange($event)" />
                         <div *ngIf="imageDecorationURLFile" class="imgUpload">
                             <img [src]="imageDecorationURLFile" alt="" width="100">
                             <button type="button" class="btn-close ml-10" aria-label="Close"
@@ -375,6 +388,171 @@
                     (click)="createImageDecoration()">Save</button>
                 <button type="button" class="btn btn-primary" (click)="updateImageDecoration()"
                     *ngIf="isEditDecorationImage === true">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="add-client-details" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1"><strong>Edit Client</strong></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="cancleClientDetails()"></button>
+            </div>
+            <div class="modal-body">
+                <form role="form" class="add-employee-form" autocomplete="off" [formGroup]="clientdetailsDataForm">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 mb-3">
+                            <label for="nameBasic" class="form-label required">Name</label>
+                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
+                                formControlName="name" />
+                            <div *ngIf="submittedClientData && fclientDataForm.name.errors">
+                                <div *ngIf="fclientDataForm.name.errors.required">
+                                    <span class="error_msg">Name is Required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 mb-3">
+                            <label class="form-label required" for="basic-default-email">Email</label>
+                            <div class="input-group input-group-merge">
+                                <input type="text" id="basic-default-email" class="form-control"
+                                    placeholder="Enter Email" aria-label="john.doe"
+                                    aria-describedby="basic-default-email2" formControlName="email" />
+                                <span class="input-group-text" id="basic-default-email2">@example.com</span>
+                            </div>
+                            <div *ngIf="submittedClientData && fclientDataForm.email.errors">
+                                <div *ngIf="fclientDataForm.email.errors.required">
+                                    <span class="error_msg">Email is Required.</span>
+                                </div>
+                                <div *ngIf="fclientDataForm.email.errors.pattern">
+                                    <span class="error_msg">Please Enter Valid Email ID.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 mb-3">
+                            <label class="form-label required" for="basic-default-phone">Contact</label>
+                            <input type="text" id="basic-default-phone" class="form-control phone-mask"
+                                placeholder="658 799 8941" appNumbersOnly maxlength="10"
+                                formControlName="primaryContact" />
+                            <div *ngIf="submittedClientData && fclientDataForm.primaryContact.errors">
+                                <div *ngIf="fclientDataForm.primaryContact.errors.required">
+                                    <span class="error_msg">Contact is Required.</span>
+                                </div>
+                                <div *ngIf="fclientDataForm.primaryContact.errors.minlength">
+                                    <span class="error_msg">Contact length is 10.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 mb-3">
+                            <label class="form-label" for="basic-default-phone">Contact-2</label>
+                            <input type="text" id="basic-default-phone" appNumbersOnly maxlength="10"
+                                class="form-control phone-mask" placeholder="658 799 8941"
+                                formControlName="secondryContact" />
+                        </div>
+                        <div class="col-lg-4 col-md-4 mb-3">
+                            <label for="nameBasic" class="form-label required">Address</label>
+                            <textarea style="height:38px;" id="basic-default-message" class="form-control"
+                                placeholder="Address" formControlName="address"></textarea>
+                            <div *ngIf="submittedClientData && fclientDataForm.address.errors">
+                                <div *ngIf="fclientDataForm.address.errors.required">
+                                    <span class="error_msg">Address is Required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 mb-3">
+                            <label for="nameBasic" class="form-label required">Select Party Plot</label>
+                            <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0 me-3"
+                                bindLabel="name" bindValue="_id" [clearable]="false" [searchable]="false"
+                                (change)="getEventList()" formControlName="partyplot_ID"
+                                placeholder="Select Party Plot">
+                            </ng-select>
+                            <div *ngIf="submittedClientData && fclientDataForm.partyplot_ID.errors">
+                                <div *ngIf="fclientDataForm.partyplot_ID.errors.required">
+                                    <span class="error_msg">Please Select Party Plot.</span>
+                                </div>
+                            </div>
+                            <!-- <div *ngIf="submittedStaffData && partyplotInvalid === true">
+                                <span class="error_msg text-danger">Party plot is Required.</span>
+                            </div> -->
+                        </div>
+                        <div class="col-lg-4 col-md-4 mb-3">
+                            <label for="nameBasic" class="form-label required">Select Reference Type</label>
+                            <ng-select [items]="referenceActiveList" [multiple]="false" class="form-control p-0"
+                                bindLabel="referenceName" bindValue="_id" [searchable]="false"
+                                formControlName="reference_ID" placeholder="Select Reference Type">
+                            </ng-select>
+                            <div *ngIf="submittedClientData && fclientDataForm.reference_ID.errors">
+                                <div *ngIf="fclientDataForm.reference_ID.errors.required">
+                                    <span class="error_msg">Reference Type is Required.</span>
+                                </div>
+                            </div>
+                            <!-- <div *ngIf="submittedStaffData && partyplotInvalid === true">
+                                <span class="error_msg text-danger">Party plot is Required.</span>
+                            </div> -->
+                        </div>
+                        <div class="col-lg-4 col-md-4 mb-3">
+                            <label for="nameBasic" class="form-label">Reference Details</label>
+                            <textarea style="height:38px;" id="basic-default-message" class="form-control"
+                                placeholder="Reference Details" formControlName="reference_detail"></textarea>
+                        </div>
+                        <div class="col-lg-4 col-md-4 mb-3">
+                            <label for="nameBasic" class="form-label required">Select Event Type</label>
+                            <ng-select [items]="eventListbyPartyplot" [multiple]="false" class="form-control p-0"
+                                bindLabel="name" bindValue="_id" [searchable]="false" formControlName="eventType"
+                                placeholder="Select Reference Type">
+                            </ng-select>
+                            <div *ngIf="submittedClientData && fclientDataForm.eventType.errors">
+                                <div *ngIf="fclientDataForm.eventType.errors.required">
+                                    <span class="error_msg">Reference Type is Required.</span>
+                                </div>
+                            </div>
+                            <!-- <div *ngIf="submittedStaffData && partyplotInvalid === true">
+                                <span class="error_msg text-danger">Party plot is Required.</span>
+                            </div> -->
+                        </div>
+                        <div class="col-lg-4 col-md-4 mb-3">
+                            <label class="form-label" for="basic-default-phone">Guest</label>
+                            <input type="text" id="basic-default-phone" appNumbersOnly maxlength="10"
+                                class="form-control phone-mask" placeholder="Enter Guest Count"
+                                formControlName="guest" />
+                            <div *ngIf="submittedClientData && fclientDataForm.guest.errors">
+                                <div *ngIf="fclientDataForm.guest.errors.required">
+                                    <span class="error_msg">Guest is Required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 mb-3">
+                            <label class="form-label" for="basic-default-phone">Client Budget</label>
+                            <input type="text" id="basic-default-phone" appNumbersOnly class="form-control phone-mask"
+                                placeholder="Enter Client Budget" formControlName="client_budget" />
+                            <div *ngIf="submittedClientData && fclientDataForm.client_budget.errors">
+                                <div *ngIf="fclientDataForm.client_budget.errors.required">
+                                    <span class="error_msg">Client Budget is Required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 mb-3">
+                            <label class="form-label" for="basic-default-phone">Offer Budget</label>
+                            <input type="text" id="basic-default-phone" appNumbersOnly class="form-control phone-mask"
+                                placeholder="Enter Offer Budget" formControlName="offer_budget" />
+                            <div *ngIf="submittedClientData && fclientDataForm.offer_budget.errors">
+                                <div *ngIf="fclientDataForm.offer_budget.errors.required">
+                                    <span class="error_msg">Offer Budget is Required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 mb-3">
+                            <label for="nameBasic" class="form-label">Remark</label>
+                            <textarea style="height:38px;" id="basic-default-message" class="form-control"
+                                placeholder="Remark" formControlName="remark"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="updateClientDetails()">Update</button>
             </div>
         </div>
     </div>

@@ -190,7 +190,6 @@
                             <label for="nameBasic" class="form-label">Is Login?</label>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" formControlName="isLogin"
-                                    [readonly]="ISviewStaff === true"
                                     (change)="isloginOnchange({checked: $event.target.checked})" />
                             </div>
                         </div>

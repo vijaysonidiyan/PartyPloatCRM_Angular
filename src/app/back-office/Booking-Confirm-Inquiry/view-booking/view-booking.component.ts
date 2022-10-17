@@ -16,6 +16,7 @@ export class ViewBookingComponent implements OnInit {
   bookingConfirmId: any;
   bookingConfirmList: any;
   submittedUploadDecorationData: boolean = false;
+  submittedClientData: boolean = false;
   imageDecorationFile: any;
   fileImageDecoration: any;
   imageDecorationURLFile: any;
@@ -23,11 +24,20 @@ export class ViewBookingComponent implements OnInit {
   imageName = "";
   imageDescription = "";
   @ViewChild('imageDecoration') myInputVariableImageDecoration: ElementRef;
+  assignpartyplotList: any[] = [];
+  selectedPartyplot: any;
+  eventListbyPartyplot: any;
+  referenceActiveList: any[] = [];
   imageDecorationList: any[] = [];
   imageDecorationError: boolean = false;
   decorationURLPath = environment.uploadedUrl;
   isEditDecorationImage: boolean = false;
   viewBookingForm: FormGroup;
+  clientdetailsDataForm: FormGroup;
+  
+  get fclientDataForm() {
+    return this.clientdetailsDataForm.controls;
+  }
   get fbookingConfirmData() {
     return this.viewBookingForm.controls;
   }
@@ -63,6 +73,9 @@ export class ViewBookingComponent implements OnInit {
     this.defaultForm();
     this.eventList = this.viewBookingForm.get("extradecoration") as FormArray;
     this.getClientDetailsByEventId();
+    this.defaultClientDetailsForm();
+    this.getAssignPartyplotList();
+    this.activeReferenceList();
   }
 
   defaultForm() {
@@ -89,10 +102,72 @@ export class ViewBookingComponent implements OnInit {
       offer_budget: [''],
       basicPackage: [''],
       discount: [''],
+      finalbudget: [''],
       extraDecorBudget: ["0"],
       package: this.fb.array([]),
       extradecoration: this.fb.array([])
     })
+  }
+  defaultClientDetailsForm() {
+    this.clientdetailsDataForm = this.fb.group({
+      name: [''],
+      email: [''],
+      primaryContact: [''],
+      secondryContact: [''],
+      address: [''],
+      eventType: [''],
+      guest: [''],
+      reference_ID: [''],
+      reference_detail: [''],
+      partyplot_ID: [''],
+      remark: [''],
+      client_budget: [''],
+      offer_budget: [''],
+    })
+  }
+  activeReferenceList() {
+    this.adminLayoutService.getReferenceActiveList().subscribe(
+      (Response: any) => {
+        if (Response.meta.code == 200) {
+          this.referenceActiveList = Response.data
+        }
+      });
+  }
+  getEventList() {
+    let obj = {
+      _id: this.clientdetailsDataForm.controls.partyplot_ID.value
+    }
+    this.adminLayoutService.geteventListbyPartyplot(obj).subscribe(
+      (Response: any) => {
+        if (Response.meta.code == 200) {
+          this.eventListbyPartyplot = Response.data.eventsData;
+        } else {
+        }
+        //for select sub industry step
+      },
+      (error) => {
+        console.log(error.error.Message);
+      }
+    );
+  }
+  getAssignPartyplotList() {
+    this.adminLayoutService.assignpartyplotUserWiseList().subscribe((Response: any) => {
+      if (Response.meta.code == 200) {
+        this.assignpartyplotList = Response.data;
+        if (!!this.selectedPartyplot) {
+          this.clientdetailsDataForm.controls.partyplot_ID.setValue(this.selectedPartyplot);
+        } else {
+          this.clientdetailsDataForm.controls.partyplot_ID.setValue(Response.data[0]._id);
+        }
+        this.getEventList();
+
+      }
+      //for select sub industry step
+    },
+      (error) => {
+        console.log(error.error.Message);
+      }
+    );
   }
 
   addPackageItem(oItem?: any) {
@@ -159,6 +234,7 @@ export class ViewBookingComponent implements OnInit {
         this.viewBookingForm.controls.offer_budget.setValue(Response.data.offer_budget);
         this.viewBookingForm.controls.basicPackage.setValue(Response.data.basicPackage ? Response.data.basicPackage : Response.data.offer_budget);
         this.viewBookingForm.controls.discount.setValue(Response.data.discount ? Response.data.discount : 0);
+        this.viewBookingForm.controls.finalbudget.setValue(Response.data.finalbudget ? Response.data.finalbudget : 0);
         this.viewBookingForm.controls.extraDecorBudget.setValue(Response.data.extraDecorBudget ? Response.data.extraDecorBudget : '0');
         Response.data.package.forEach((x: any) => {
           this.addPackageItem(x)
@@ -175,7 +251,67 @@ export class ViewBookingComponent implements OnInit {
   removeExtraDecoration(index: any) {
     this.eventList.removeAt(index)
   }
+  clientDetailsUpdate() {
+    let eventIDObj = {
+      _id: this.bookingConfirmId
+    }
+    this.adminLayoutService.getBookingConfirmListByBookingID(eventIDObj).subscribe((Response: any) => {
+      if (Response.meta.code == 200) {
+        $("#add-client-details").modal("show");
+        this.bookingConfirmList = Response.data;
+        this.clientdetailsDataForm.controls.name.setValue(Response.data.name);
+        this.clientdetailsDataForm.controls.email.setValue(Response.data.email);
+        this.clientdetailsDataForm.controls.primaryContact.setValue(Response.data.primaryContact);
+        this.clientdetailsDataForm.controls.secondryContact.setValue(Response.data.secondryContact);
+        this.clientdetailsDataForm.controls.address.setValue(Response.data.address);
+        this.clientdetailsDataForm.controls.guest.setValue(Response.data.guest);
+        this.clientdetailsDataForm.controls.reference_ID.setValue(Response.data.reference_ID);
+        this.clientdetailsDataForm.controls.reference_detail.setValue(Response.data.reference_detail);
+        this.clientdetailsDataForm.controls.remark.setValue(Response.data.remark);
+        this.clientdetailsDataForm.controls.client_budget.setValue(Response.data.client_budget);
+        this.clientdetailsDataForm.controls.eventType.setValue(Response.data.eventType);
+        this.clientdetailsDataForm.controls.partyplot_ID.setValue(Response.data.partyplot_ID);
+        this.clientdetailsDataForm.controls.clientname.setValue(Response.data.clientname);
+        this.clientdetailsDataForm.controls.offer_budget.setValue(Response.data.offer_budget);
+      }
+    })
+  
+  }
+  updateClientDetails() {
+    debugger
+    if (this.clientdetailsDataForm.invalid) {
+      this.submittedClientData = true;
+      return;
+    }
+    let obj = {
+      _id: this.bookingConfirmId,
+      name: this.clientdetailsDataForm.value.name,
+      email: this.clientdetailsDataForm.value.email,
+      primaryContact: this.clientdetailsDataForm.value.primaryContact,
+      secondryContact: this.clientdetailsDataForm.value.secondryContact,
+      address: this.clientdetailsDataForm.value.address,
+      guest:this.clientdetailsDataForm.value.guest,
+      reference_ID:this.clientdetailsDataForm.value.reference_ID,
+      reference_detail:this.clientdetailsDataForm.value.reference_detail,
+      client_budget: this.clientdetailsDataForm.value.client_budget,
+      eventType: this.clientdetailsDataForm.value.eventType,
+      partyplot_ID: this.clientdetailsDataForm.value.SMTP,
+      clientname: this.clientdetailsDataForm.value.clientname,
+      offer_budget: this.clientdetailsDataForm.value.offer_budget,
+    };
+    this.adminLayoutService.UpdateBookingConfirmClientDetails(obj).subscribe((Response: any) => {
+        if (Response.meta.code == 200) {
+          this.defaultClientDetailsForm();
+          this.getClientDetailsByEventId();
+          $("#add-client-details").modal("hide");
+        }
+      });
 
+  }
+  cancleClientDetails() {
+    $("#add-client-details").modal("hide");
+    this.imageDescription = "";
+  }
 
   cancleUploadImage() {
     $("#add-upload-decoration").modal("hide");
@@ -413,6 +549,9 @@ export class ViewBookingComponent implements OnInit {
     this.adminLayoutService.getBookingConfirmListByBookingID(eventIDObj).subscribe((Response: any) => {
       if (Response.meta.code == 200) {
         (this.viewBookingForm.get("package") as FormArray).clear()
+        this.viewBookingForm.controls.basicPackage.setValue(Response.data.basicPackage);
+        this.viewBookingForm.controls.discount.setValue(Response.data.discount);
+        this.viewBookingForm.controls.finalbudget.setValue(Response.data.finalbudget);
         Response.data.package.forEach((x: any) => {
           this.addPackageItem(x)
         })
@@ -426,7 +565,8 @@ export class ViewBookingComponent implements OnInit {
       _id: this.bookingConfirmId,
       package: this.viewBookingForm.controls.package.value,
       basicPackage: this.viewBookingForm.controls.basicPackage.value,
-      discount: this.viewBookingForm.controls.discount.value
+      discount: this.viewBookingForm.controls.discount.value,
+      finalbudget: this.viewBookingForm.controls.finalbudget.value
     }
     this.adminLayoutService.updatePackageItemDataList(updatePackageDecorationItemObj).subscribe((Response: any) => {
       if (Response.meta.code == 200) {

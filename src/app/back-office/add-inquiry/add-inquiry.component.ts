@@ -6,6 +6,7 @@ import { CommonService } from "app/shared/common.service";
 import * as moment from 'moment';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, ThemePalette, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DatePipe } from '@angular/common';
 
 
 export const MY_FORMATS = {
@@ -76,9 +77,9 @@ export class AddInquiryComponent implements OnInit {
   isCreated: boolean;
   isUpdated: boolean;
   isDeleted: boolean;
+  myDate = this.datePipe.transform(new Date(),'dd/MM/yyyy');
   
-
-  constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, private router: Router, public route: ActivatedRoute) {
+  constructor(private datePipe: DatePipe,public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, private router: Router, public route: ActivatedRoute) {
     this.defaultForm();
     this.defaultEventForm();
     this.eventList = this.eventInquiryDataForm.get("events") as FormArray;
@@ -185,7 +186,7 @@ export class AddInquiryComponent implements OnInit {
       _id: ["0"],
       name: ["", [Validators.required]],
       email: ["", [Validators.required, Validators.pattern(/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/)]],
-      primaryContact: ["", [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+      primaryContact: ["", [Validators.required]],
       secondryContact: [""],
       address: ["", [Validators.required]],
       reference_ID: [null, [Validators.required]],

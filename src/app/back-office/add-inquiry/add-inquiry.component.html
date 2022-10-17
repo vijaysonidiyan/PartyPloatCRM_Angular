@@ -14,7 +14,9 @@
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Inquiry</h5>
-            <div *ngIf="fclientinquiryData._id.value != '0' && isUpdated === true">
+           <div class="d-flex align-items-center">
+            <h5 class="mb-0">Inquiry Date - {{myDate}}</h5>
+            <div *ngIf="fclientinquiryData._id.value != '0' && isUpdated === true" class="ms-3">
                 <button type="button" class="btn btn-primary" *ngIf="viewInquiry === true"
                     (click)="enableOnlyClientInquiryInput()">Edit</button>
                 <button type="button" class="btn btn-primary me-3" *ngIf="viewInquiry === false"
@@ -22,6 +24,7 @@
                 <button type="button" class="btn btn-primary" *ngIf="viewInquiry === false"
                     (click)="diableOnlyClientInquiryInput()">Cancel</button>
             </div>
+           </div>
         </div>
         <div class="card-body">
             <form role="form" class="add-employee-form" autocomplete="off" [formGroup]="clientinquiryDataForm">
@@ -56,7 +59,7 @@
                     <div class="col-lg-6 col-md-6 mb-3">
                         <label class="form-label required" for="basic-default-phone">Contact</label>
                         <input type="text" [readonly]="viewInquiry === true" id="basic-default-phone"
-                            class="form-control phone-mask" placeholder="658 799 8941" appNumbersOnly maxlength="10"
+                            class="form-control phone-mask" placeholder="658 799 8941" appNumbersOnly
                             formControlName="primaryContact" />
                         <div *ngIf="submittedclientInquiryData && fclientinquiryData.primaryContact.errors">
                             <div *ngIf="fclientinquiryData.primaryContact.errors.required">
@@ -70,7 +73,7 @@
                     <div class="col-lg-6 col-md-6 mb-3">
                         <label class="form-label" for="basic-default-phone">Contact-2</label>
                         <input type="text" [readonly]="viewInquiry === true" id="basic-default-phone" appNumbersOnly
-                            maxlength="10" class="form-control phone-mask" placeholder="658 799 8941"
+                            class="form-control phone-mask" placeholder="658 799 8941"
                             formControlName="secondryContact" />
                     </div>
                     <div class="col-lg-6 col-md-6 mb-3">

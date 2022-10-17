@@ -59,6 +59,7 @@
                                     <th class="w-10">Action</th>
                                     <th class="w-15">Status</th>
                                     <th>Date</th>
+                                    <th>Inquiry Date</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Contact</th>
@@ -108,6 +109,7 @@
                                             class="badge bg-label-danger me-1">Cancel</span>
                                     </td>
                                     <td>{{inquiryData.startDateObj | date:'dd/MM/yyyy':'+0000' }}</td>
+                                    <td>{{inquiryData.createdAt | date:'dd/MM/yyyy':'+0000'}}</td>
                                     <td><strong>{{inquiryData.name}}</strong></td>
                                     <td>{{inquiryData.email}}</td>
                                     <td>{{inquiryData.primaryContact}}</td>
@@ -221,15 +223,15 @@
                                                                 <div>
                                                                     <span>From Date:</span>
                                                                     <span>{{inquiryDataByDate.startDateObj |
-                                                                        date:'dd/MM/yyyy, hh:mm a':'+0000'}}</span>
+                                                                        date:'dd/MM/yyyy, hh:mm a':'+0000'}} To {{inquiryDataByDate.endDateObj |
+                                                                            date:'hh:mm a':'+0000'}}</span>
                                                                 </div>
                                                             </li>
                                                             <li class="mb-2 accordion-data">
                                                                 <i class="bx bxs-calendar"></i>
                                                                 <div>
-                                                                    <span>To Date:</span>
-                                                                    <span>{{inquiryDataByDate.endDateObj |
-                                                                        date:'dd/MM/yyyy, hh:mm a':'+0000'}}</span>
+                                                                    <span>Inquiry Date:</span>
+                                                                    <span>{{inquiryDataByDate.createdAt | date:'dd/MM/yyyy, hh:mm a':'+0000'}}</span>
                                                                 </div>
                                                             </li>
                                                         </ul>

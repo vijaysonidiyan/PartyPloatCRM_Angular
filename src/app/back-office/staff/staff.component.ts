@@ -127,6 +127,7 @@ export class StaffComponent implements OnInit {
     this.ISeditStaff = false;
     this.ISviewStaff = false;
     this.submittedStaffData = false;
+    this.staffForm.enable()
   }
 
   cancelStaff() {
@@ -136,6 +137,7 @@ export class StaffComponent implements OnInit {
     this.ISviewStaff = false;
     this.submittedStaffData = false;
     this.StaffDocumentList = [];
+    this.staffForm.enable()
   }
   addDoc() {
     this.documentError = false;
@@ -273,8 +275,10 @@ export class StaffComponent implements OnInit {
   editStaff(paramsObj) {
     if (paramsObj.action == 'edit') {
       this.ISeditStaff = true;
+      this.staffForm.enable()
     } else if (paramsObj.action == 'view') {
       this.ISviewStaff = true;
+      this.staffForm.disable()
     }
     let Id: any = { staffId: paramsObj.id };
     this.StaffDocumentList = [];
