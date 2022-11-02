@@ -15,7 +15,8 @@
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Inquiry</h5>
            <div class="d-flex align-items-center">
-            <h5 class="mb-0">Inquiry Date - {{myDate}}</h5>
+            <h5 class="mb-0" *ngIf="updateInquiry === false">Inquiry Date - {{toDate}}</h5>
+            <h5 class="mb-0" *ngIf="updateInquiry === true">Inquiry Date - {{inquiryDate}}</h5>
             <div *ngIf="fclientinquiryData._id.value != '0' && isUpdated === true" class="ms-3">
                 <button type="button" class="btn btn-primary" *ngIf="viewInquiry === true"
                     (click)="enableOnlyClientInquiryInput()">Edit</button>

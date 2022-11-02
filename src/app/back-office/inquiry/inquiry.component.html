@@ -7,9 +7,9 @@
                         <div class="row">
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3">
                                 <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Inquiry</h4> -->
-                                <ng-select [items]="assignpartyplotList" [multiple]="false"  [searchable]="false"
+                                <ng-select [items]="assignpartyplotList" [multiple]="false" [searchable]="false"
                                     class="form-control p-0 me-3" bindLabel="name" bindValue="_id"
-                                    [(ngModel)]="searchedPartyplot"  placeholder="Select Party Plot">
+                                    [(ngModel)]="searchedPartyplot" placeholder="Select Party Plot">
                                 </ng-select>
                             </div>
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3">
@@ -33,16 +33,15 @@
                             </div>
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <ng-select [items]="yearArray" [multiple]="false" class="form-control p-0 me-3"
-                                    bindLabel="yearArray" bindValue="yearArray" [(ngModel)]="searchedYear" [searchable]="false"
-                                    placeholder="Select Year">
+                                    bindLabel="yearArray" bindValue="yearArray" [(ngModel)]="searchedYear"
+                                    [searchable]="false" placeholder="Select Year">
                                 </ng-select>
                                 <div *ngIf="invaildSearchList === true" class="error_msg">Please select Year.</div>
                             </div>
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12"></div>
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <div class="text-end">
-                                    <button type="button" (click)="searchFilterInquiryList()"
-                                        class="btn btn-primary ">
+                                    <button type="button" (click)="searchFilterInquiryList()" class="btn btn-primary ">
                                         Search
                                     </button>
                                 </div>
@@ -71,18 +70,20 @@
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
-                                <tr *ngFor="let inquiryData of inquiryList | paginate: { itemsPerPage: l, currentPage: p }; let inquiryIndex = index">
+                                <tr
+                                    *ngFor="let inquiryData of inquiryList | paginate: { itemsPerPage: l, currentPage: p }; let inquiryIndex = index">
                                     <td>{{ l * (p - 1) + inquiryIndex + 1 }}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <button class="btn-bg" *ngIf="inquiryData.approvestatus == 2 && isViewbookingConfirm === true"
-                                                (click)="viewInquiryBooking(inquiryData.clientInquiryId,inquiryData.approvestatus,inquiryData.inquirybooking_id)">
-                                                <i class="bx bxs-show" tooltip="View Booking" placement="bottom"
+                                            <button class="btn-bg" *ngIf="isView === true"
+                                                (click)="viewInquiryBooking(inquiryData.clientInquiryId,1,inquiryData.inquirybooking_id)">
+                                                <i class="bx bxs-show" tooltip="View Inquiry" placement="bottom"
                                                     showDelay="100"></i>
                                             </button>
-                                            <button class="btn-bg" *ngIf="inquiryData.approvestatus != 2 && isView === true"
-                                                (click)="viewInquiryBooking(inquiryData.clientInquiryId,inquiryData.approvestatus,inquiryData.inquirybooking_id)">
-                                                <i class="bx bxs-show" tooltip="View Inquiry" placement="bottom"
+                                            <button class="btn-bg badge bg-label-success"
+                                                *ngIf="inquiryData.approvestatus == 2 && isViewbookingConfirm === true"
+                                                (click)="viewInquiryBooking(inquiryData.clientInquiryId,2,inquiryData.inquirybooking_id)">
+                                                <i class="bx bxs-show" tooltip="View Booking" placement="bottom"
                                                     showDelay="100"></i>
                                             </button>
                                             <button class="btn-bg badge bg-label-success"
@@ -92,10 +93,11 @@
                                                 <i class="bx bx-check"></i>
                                             </button>
                                             <button class="btn-bg badge bg-label-danger" tooltip="Booking Cancel"
-                                                *ngIf="inquiryData.approvestatus != 3  && isUpdatedbookingConfirm === true" placement="bottom"
-                                                showDelay="100" (confirm-click)="cancelBooking(inquiryData.eventinquiry_id)"
-                                                appConfirm [confirmTitle]="'Cancel Booking'"
-                                        [confirmContent]="'Are you sure to Cancel Booking?'">
+                                                *ngIf="inquiryData.approvestatus != 3  && isUpdatedbookingConfirm === true"
+                                                placement="bottom" showDelay="100"
+                                                (confirm-click)="cancelBooking(inquiryData.eventinquiry_id)" appConfirm
+                                                [confirmTitle]="'Cancel Booking'"
+                                                [confirmContent]="'Are you sure to Cancel Booking?'">
                                                 <i class="bx bx-x"></i>
                                             </button>
                                         </div>
@@ -109,7 +111,7 @@
                                             class="badge bg-label-danger me-1">Cancel</span>
                                     </td>
                                     <td>{{inquiryData.startDateObj | date:'dd/MM/yyyy':'+0000' }}</td>
-                                    <td>{{inquiryData.createdAt | date:'dd/MM/yyyy':'+0000'}}</td>
+                                    <td>{{inquiryData.createdAt | date:'dd/MM/yyyy, hh:mm a'}}</td>
                                     <td><strong>{{inquiryData.name}}</strong></td>
                                     <td>{{inquiryData.email}}</td>
                                     <td>{{inquiryData.primaryContact}}</td>
@@ -132,12 +134,36 @@
                     </div>
                 </div>
                 <div class="" [ngClass]="isInquiryTab == false ? 'd-block' : 'd-none'">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="d-flex align-items-start p-4 pb-0">
+                                <div class="report-list-item rounded-2 me-3 shadow-sm">
+                                    <div class="d-flex justify-content-around align-items-center w-100 flex-wrap gap-2">
+                                        <span>Inquiry Pendding &nbsp; : </span>
+                                        <h5 class="mb-0 text-primary">{{inquiryPending}}</h5>
+                                    </div>
+                                </div>
+                                <div class="report-list-item rounded-2 me-3 shadow-sm">
+                                    <div class="d-flex justify-content-around align-items-center w-100 flex-wrap gap-2">
+                                        <span>Inquiry Confirm &nbsp; : </span>
+                                        <h5 class="mb-0 text-success">{{inquiryConfirm}}</h5>
+                                    </div>
+                                </div>
+                                <div class="report-list-item rounded-2 me-3 shadow-sm">
+                                    <div class="d-flex justify-content-around align-items-center w-100 flex-wrap gap-2">
+                                        <span>Inquiry Cancle &nbsp; : </span>
+                                        <h5 class="mb-0 text-danger">{{inquiryCancle}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="p-4 btn-cus position-relative">
                         <div class="dropdown-search">
 
                             <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0 me-3"
-                                bindLabel="name" bindValue="_id"  [(ngModel)]="searchedPartyplot" [clearable]="false" [searchable]="false"
-                                (change)="partyplotChange()" placeholder="Select Party Plot">
+                                bindLabel="name" bindValue="_id" [(ngModel)]="searchedPartyplot" [clearable]="false"
+                                [searchable]="false" (change)="partyplotChange()" placeholder="Select Party Plot">
                             </ng-select>
 
                         </div>
@@ -223,15 +249,17 @@
                                                                 <div>
                                                                     <span>From Date:</span>
                                                                     <span>{{inquiryDataByDate.startDateObj |
-                                                                        date:'dd/MM/yyyy, hh:mm a':'+0000'}} To {{inquiryDataByDate.endDateObj |
-                                                                            date:'hh:mm a':'+0000'}}</span>
+                                                                        date:'dd/MM/yyyy, hh:mm a':'+0000'}} To
+                                                                        {{inquiryDataByDate.endDateObj |
+                                                                        date:'hh:mm a':'+0000'}}</span>
                                                                 </div>
                                                             </li>
                                                             <li class="mb-2 accordion-data">
                                                                 <i class="bx bxs-calendar"></i>
                                                                 <div>
                                                                     <span>Inquiry Date:</span>
-                                                                    <span>{{inquiryDataByDate.createdAt | date:'dd/MM/yyyy, hh:mm a':'+0000'}}</span>
+                                                                    <span>{{inquiryDataByDate.createdAt |
+                                                                        date:'dd/MM/yyyy, hh:mm a':'+0000'}}</span>
                                                                 </div>
                                                             </li>
                                                         </ul>
@@ -245,12 +273,13 @@
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-end"
                                                                 aria-labelledby="cardOpt6">
-                                                                <a class="dropdown-item" *ngIf="inquiryDataByDate.approvestatus == 2 && isViewbookingConfirm === true"
-                                                                    (click)="viewInquiry(inquiryDataByDate.clientInquiryId, inquiryDataByDate.approvestatus, inquiryDataByDate.inquirybooking_id)">
+                                                                <a class="dropdown-item"
+                                                                    *ngIf="inquiryDataByDate.approvestatus == 2 && isViewbookingConfirm === true"
+                                                                    (click)="viewInquiry(inquiryDataByDate.clientInquiryId, 2, inquiryDataByDate.inquirybooking_id)">
                                                                     View Booking
                                                                 </a>
-                                                                <a class="dropdown-item" *ngIf="inquiryDataByDate.approvestatus != 2 && isView === true"
-                                                                    (click)="viewInquiry(inquiryDataByDate.clientInquiryId, inquiryDataByDate.approvestatus, inquiryDataByDate.inquirybooking_id)">
+                                                                <a class="dropdown-item" *ngIf="isView === true"
+                                                                    (click)="viewInquiry(inquiryDataByDate.clientInquiryId, 1, inquiryDataByDate.inquirybooking_id)">
                                                                     View Inquiry
                                                                 </a>
                                                                 <a class="dropdown-item"
@@ -448,8 +477,8 @@
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label for="nameBasic" class="form-label">Event Type</label>
                             <ng-select [items]="eventActiveList" [readonly]="isEditViewInquiryDetails == false"
-                                class="form-control p-0" bindLabel="name" bindValue="_id" placeholder="Select Event" [searchable]="false"
-                                formControlName="eventType">
+                                class="form-control p-0" bindLabel="name" bindValue="_id" placeholder="Select Event"
+                                [searchable]="false" formControlName="eventType">
                             </ng-select>
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">

@@ -17596,3 +17596,9 @@ a.fc-event, a.fc-event:hover,.fc td.fc-daygrid-day:not(.fc-day-disabled) .fc-day
   cursor: pointer;
 }
 
+.report-list-item {
+  background-color: #f5f5f9;
+}
+.report-list-item {
+  padding: 0.75rem;
+}

@@ -31,7 +31,7 @@ export class AddPackageMasterComponent implements OnInit {
 
   constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, private router: Router, public route: ActivatedRoute) {
     let currentUrl = this.router.url;
-
+    this.defaultForm();
     let pagePermission = { module: "packageMaster" }
     this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
       debugger
@@ -56,6 +56,7 @@ export class AddPackageMasterComponent implements OnInit {
           if (this.isView === false) {
             this.router.navigate(['admin/package-master']);
           }
+          this.addPackageItem();
           this.packageData = false
         }
       }
@@ -65,11 +66,8 @@ export class AddPackageMasterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.defaultForm();
     this.getAssignPartyplotList();
-    if (this.packageData !== true) {
-      this.addPackageItem();
-    }
+    
   }
   defaultForm() {
     this.packageDataForm = this.fb.group({

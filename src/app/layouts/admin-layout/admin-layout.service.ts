@@ -445,7 +445,14 @@ export class AdminLayoutService {
     let headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
-    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/EvetListgetByMothWise', data, { headers: headers });
+    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/EventListgetByMonthWise', data, { headers: headers });
+  }
+  
+  getInquiryListForCalenderViewForDashboard(data: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/EventListgetByMonthWiseForDashboard', data, { headers: headers });
   }
 
   getInquiryListByDate(data: any) {

@@ -103,7 +103,7 @@ export class UserWiseMenuComponent implements OnInit {
   onUserChange() {
 
     this.menuList.clear();
-    let userIdObj = { userId: this.selectedUser }
+    let userIdObj = { userId: this.selectedUser,roleId : this.selectedRole }
     this.adminLayoutService.getUserwisemenuList(userIdObj).subscribe((Response: any) => {
 
       if (Response.meta.code == 200) {
@@ -659,6 +659,7 @@ export class UserWiseMenuComponent implements OnInit {
     });
     let rolewisemenuModelObj = {
       "userId": this.selectedUser,
+      "roleId": this.selectedRole,
       "userwisemenu": savemenuList
     };
 
