@@ -1,0 +1,57 @@
+.inquiry-bydate-list-item .dropdown-menu {
+    min-width: 5rem !important;
+    text-align: center;
+  }
+  .accordion-data {
+    display: flex;
+    align-items: center;
+  }
+  .accordion-data span {
+    margin: 0 0.5rem;
+    font-weight: 600;
+  }
+  .dropdown-search {
+    position: absolute;
+    top: 1.5rem;
+    right: 23px;
+    max-width: 300px;
+    width: 100%;
+  }
+  @media (max-width: 576px) {
+    .accordion-body {
+      padding: 0.79rem;
+    }
+    .accordion-body ul {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+    .accordion-data {
+      display: flex;
+      align-items: start;
+    }
+    .accordion-data i {
+      margin-right: 5px;
+    }
+    .accordion-data span {
+      margin: 0;
+      display: block;
+    }
+    .my-3 {
+      margin-top: 0rem !important;
+      margin-bottom: 0rem !important;
+    }
+    .dropdown-search {
+      max-width: 100%;
+    }
+  }
+  @media (max-width: 800px) {
+    .dropdown-search {
+      position: unset !important;
+      top: 0;
+      right: 0;
+    }
+  }
+  .multi-img-cus {
+    margin:20px;
+}
+  

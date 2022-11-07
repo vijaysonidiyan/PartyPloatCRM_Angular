@@ -48,6 +48,7 @@ import { BookingConfirmComponent } from "app/back-office/booking-confirm-inquiry
 import { TooltipModule } from "ng2-tooltip-directive";
 import { BookingConfirmListComponent } from "app/back-office/Booking-Confirm-Inquiry/booking-confirm-list/booking-confirm-list.component";
 import { ViewBookingComponent } from "app/back-office/Booking-Confirm-Inquiry/view-booking/view-booking.component";
+import { CricketBookingComponent } from "app/back-office/cricket-booking/cricket-booking.component";
 
 @NgModule({
   imports: [
@@ -97,7 +98,8 @@ import { ViewBookingComponent } from "app/back-office/Booking-Confirm-Inquiry/vi
     AddPackageMasterComponent,
     BookingConfirmComponent,
     BookingConfirmListComponent,
-    ViewBookingComponent
+    ViewBookingComponent,
+    CricketBookingComponent
   ],
   providers: [MatDatepickerModule,DatePipe],
 })

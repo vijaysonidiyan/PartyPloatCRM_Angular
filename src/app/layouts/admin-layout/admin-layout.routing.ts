@@ -3,6 +3,7 @@ import { AddInquiryComponent } from "app/back-office/add-inquiry/add-inquiry.com
 import { BookingConfirmListComponent } from "app/back-office/Booking-Confirm-Inquiry/booking-confirm-list/booking-confirm-list.component";
 import { BookingConfirmComponent } from "app/back-office/booking-confirm-inquiry/booking-confirm/booking-confirm.component";
 import { ViewBookingComponent } from "app/back-office/Booking-Confirm-Inquiry/view-booking/view-booking.component";
+import { CricketBookingComponent } from "app/back-office/cricket-booking/cricket-booking.component";
 import { EventMasterComponent } from "app/back-office/event-master/event-master.component";
 import { InquiryComponent } from "app/back-office/inquiry/inquiry.component";
 import { AddPackageMasterComponent } from "app/back-office/package-master/add-package-master/add-package-master.component";
@@ -22,34 +23,35 @@ import { VendorDetailsComponent } from "app/back-office/vendor-details/vendor-de
 import { DashboardComponent } from "../../back-office/dashboard/dashboard.component";
 
 export const AdminLayoutRoutes: Routes = [
-  { path: "dashboard", component: DashboardComponent, data: { breadcrumb: 'Dashboard' } },
-  { path: "setting/menu-master", component: MenuMasterComponent, data: { breadcrumb: 'Menu Master' } },
-  { path: "setting/module-master", component: ModuleMasterComponent, data: { breadcrumb: 'Module Master' } },
-  { path: "setting/reference-master", component: ReferenceMasterComponent, data: { breadcrumb: 'Reference Master' } },
-  { path: "setting/role-master", component: RoleMasterComponent, data: { breadcrumb: 'Role Master' } },
-  { path: "setting/role-wise-menu", component: RoleWiseMenuComponent, data: { breadcrumb: 'Role Wise Menu' } },
-  { path: "setting/user-wise-menu", component: UserWiseMenuComponent, data: { breadcrumb: 'User Wise Menu' } },
-  { path: "setting/company-setting", component: CompanySettingComponent, data: { breadcrumb: 'Company Setting' } },
-  { path: "party-plot-master", component: PartyPlotMasterComponent, data: { breadcrumb: 'Party Plot Master' } },
-  { path: "package-master", component: PackageMasterComponent, data: { breadcrumb: 'Package Master' } },
-  { path: "package-master/add-package-master", component: AddPackageMasterComponent, data: { breadcrumb: 'Add Package Master' } },
-  { path: "package-master/edit-package-master/:id", component: AddPackageMasterComponent, data: { breadcrumb: 'Edit Package Master' } },
-  { path: "staff", component: StaffComponent, data: { breadcrumb: 'Staff' } },
-  { path: "event-master", component: EventMasterComponent, data: { breadcrumb: 'Event Master' } },
-  { path: "product-master", component: ProductMasterComponent, data: { breadcrumb: 'Product Master' } },
-  { path: "vendor-details", component: VendorDetailsComponent, data: { breadcrumb: 'Vendor Details' } },
-  { path: "booking-confirm/:id", component: BookingConfirmComponent, data: { breadcrumb: 'Booking Confirm' } },
-  { path: "booking-confirm-list", component: BookingConfirmListComponent, data: { breadcrumb: 'Booking Confirm List' } },
-  { path: "view-booking-confirm/:id", component: ViewBookingComponent, data: { breadcrumb: 'View Booking Confirm' } },
+  { path: "dashboard", component: DashboardComponent},
+  { path: "setting/menu-master", component: MenuMasterComponent},
+  { path: "setting/module-master", component: ModuleMasterComponent },
+  { path: "setting/reference-master", component: ReferenceMasterComponent},
+  { path: "setting/role-master", component: RoleMasterComponent},
+  { path: "setting/role-wise-menu", component: RoleWiseMenuComponent },
+  { path: "setting/user-wise-menu", component: UserWiseMenuComponent },
+  { path: "setting/company-setting", component: CompanySettingComponent},
+  { path: "party-plot-master", component: PartyPlotMasterComponent},
+  { path: "package-master", component: PackageMasterComponent },
+  { path: "package-master/add-package-master", component: AddPackageMasterComponent},
+  { path: "package-master/edit-package-master/:id", component: AddPackageMasterComponent },
+  { path: "staff", component: StaffComponent},
+  { path: "event-master", component: EventMasterComponent },
+  { path: "product-master", component: ProductMasterComponent},
+  { path: "vendor-details", component: VendorDetailsComponent},
+  { path: "booking-confirm/:id", component: BookingConfirmComponent},
+  { path: "booking-confirm-list", component: BookingConfirmListComponent },
+  { path: "view-booking-confirm/:id", component: ViewBookingComponent},
+  { path: "cricket-booking", component: CricketBookingComponent },
   {
-    path: "inquiry/list-view", component: InquiryComponent, data: { breadcrumb: 'Inquiry' },
+    path: "inquiry/list-view", component: InquiryComponent
     // children: [
     //   { path: 'add-inquiry', component: AddInquiryComponent, data: { breadcrumb: "Add Inquiry" } }
     // ]
   },
   {
-    path: "inquiry/calender-view", component: InquiryComponent, data: { breadcrumb: 'Inquiry' },
+    path: "inquiry/calender-view", component: InquiryComponent
   },
-  { path: "inquiry/add-inquiry", component: AddInquiryComponent, data: { breadcrumb: 'Add Inquiry' } },
-  { path: "inquiry/view-inquiry/:id", component: AddInquiryComponent, data: { breadcrumb: 'View Inquiry' } },
+  { path: "inquiry/add-inquiry", component: AddInquiryComponent },
+  { path: "inquiry/view-inquiry/:id", component: AddInquiryComponent},
 ];

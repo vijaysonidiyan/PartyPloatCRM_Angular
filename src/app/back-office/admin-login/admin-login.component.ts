@@ -204,7 +204,8 @@ export class AdminLoginComponent implements OnInit {
   resendOtp() {
 
     let otpFormObj = {
-      "_id": this.otpForm.controls._id.value,
+      "userId": this.otpForm.controls.userId.value,
+      "activity": this.otpForm.controls.activity.value,
     }
     this.adminLayoutService.reSendOtp(otpFormObj).subscribe((Response: any) => {
 

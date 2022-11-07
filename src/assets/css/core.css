@@ -17596,3 +17596,67 @@ a.fc-event, a.fc-event:hover,.fc td.fc-daygrid-day:not(.fc-day-disabled) .fc-day
   cursor: pointer;
 }
 
+.custom-option-content {
+  position: relative;
+}
+.custom-option-content .btn-close{
+  background-color: #fff;
+  border-radius: 0.5rem;
+  opacity: 1;
+  padding: 0.635rem;
+  box-shadow: 0 0.125rem 0.25rem rgb(161 172 184 / 40%);
+  transition: all 0.23s ease 0.1s;
+  transform: translate(23px, -25px);
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.custom-option-image.custom-option-image-check {
+  position: relative;
+}
+.custom-option.custom-option-image,.custom-option-booked.custom-option-image {
+  border-width: 2px !important;
+}
+.custom-option-image {
+  border-width: 2px;
+}
+.custom-option,.custom-option-booked {
+  padding:5px;
+  border: 1px solid #d9dee3;
+  border-radius: 0.5rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.custom-option-image.custom-option-image-check .form-check-input:checked {
+  opacity: 1;
+}
+.custom-option-image.custom-option-image-check .form-check-input {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin: 0;
+  border: 0;
+  opacity: 0;
+}
+.custom-option.checked {
+  color: #ffffff;
+  background-color: #00adef;
+  border: 1px solid #00adef;
+}
+.custom-option-booked.checked {
+  background-color: #47cb00;
+  color: #ffffff;
+  border: 1px solid #47cb00;
+}
+.custom-option .custom-option-content,.custom-option-booked .custom-option-content {
+  cursor: pointer;
+  width: 100%;
+  padding: 0;
+}
+.custom-option.custom-option-image .custom-option-body img , .custom-option-booked.custom-option-image .custom-option-body img {
+  border-radius: 0.375rem;
+}
+.custom-option-image .custom-option-body img {
+  height: 100%;
+  width: 100%;
+}
