@@ -166,8 +166,8 @@ export class BookingConfirmComponent implements OnInit {
         this.bookingDataForm.controls.extraDecorBudget.setValue(Response.data[0].extraDecorBudget ? Response.data[0].extraDecorBudget : '0');
         this.bookingDataForm.controls.offer_budget.setValue(Response.data[0].offer_budget);
         this.bookingDataForm.controls.basicPackage.setValue(Response.data[0].offer_budget);
-        this.bookingDataForm.controls.discount.setValue(0);
-        this.bookingDataForm.controls.finalbudget.setValue(0);
+        this.bookingDataForm.controls.discount.setValue("0");
+        this.bookingDataForm.controls.finalbudget.setValue("0");
         this.bookingDataForm.controls.remark.setValue(Response.data[0].remark);
         this.getPackageActiveList();
       }

@@ -113,7 +113,7 @@ export class AddInquiryComponent implements OnInit {
           this.route.queryParams.subscribe((queryParams) => {
             this.updateInquiry = false;
             this.selectedPartyplot = queryParams.partyplotId;
-
+            this.clientinquiryDataForm.controls.partyplot_ID.setValue(this.selectedPartyplot);
             if (!!queryParams.startDate) {
               // if (!!queryParams.startDate && !!queryParams.endDate) {
               this.selectedDate = queryParams.startDate;

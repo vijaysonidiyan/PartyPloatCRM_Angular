@@ -459,10 +459,10 @@ export class InquiryComponent implements OnInit {
     let d = new Date();
     let nowYear = 2022;
 
-    for (let index = 0; index < 50; index++) {
+    for (let index = 0; index < 5; index++) {
       let prYear = d.getFullYear();
       // let prYear = 2024;
-      let arr = prYear - index;
+      let arr = prYear + index;
       if (arr >= nowYear) {
         this.yearArray.push(arr)
       }
