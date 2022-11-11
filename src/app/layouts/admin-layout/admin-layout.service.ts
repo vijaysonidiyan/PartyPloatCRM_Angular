@@ -140,7 +140,7 @@ export class AdminLayoutService {
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
     return this.http.get(this.commonService.rootData.rootUrl + 'menuMaster/pagePermission', { params: params, headers: headers });
-}
+  }
   // ============== Role Wise Menu =========== //
 
   getRoleActiveList() {
@@ -228,7 +228,7 @@ export class AdminLayoutService {
     let headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
-    return this.http.get(this.commonService.rootData.rootUrl + 'partyplot/eventListbypartyplotID', {params: params, headers: headers });
+    return this.http.get(this.commonService.rootData.rootUrl + 'partyplot/eventListbypartyplotID', { params: params, headers: headers });
   }
 
   // ============== Party Plot Master =========== //
@@ -724,6 +724,26 @@ export class AdminLayoutService {
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
     return this.http.get(this.commonService.rootData.rootUrl + 'decoration/decorationDelete', { params: id, headers: headers });
+  }
+
+  //cricket api
+  SavecricketData(createcricketData: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'cricket/cricketbookingSave', createcricketData, { headers: headers });
+  }
+  slotListByDatewise(params) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'cricket/slotlistdatevise', params, { headers: headers });
+  }
+  getpartyplotListforcricket(params) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.get(this.commonService.rootData.rootUrl + 'cricket/partyplotlistforcricket', { params: params, headers: headers });
   }
 }
 
