@@ -17614,13 +17614,13 @@ a.fc-event, a.fc-event:hover,.fc td.fc-daygrid-day:not(.fc-day-disabled) .fc-day
 .custom-option-image.custom-option-image-check {
   position: relative;
 }
-.custom-option.custom-option-image,.custom-option-booked.custom-option-image {
+.custom-option.custom-option-image {
   border-width: 2px !important;
 }
 .custom-option-image {
   border-width: 2px;
 }
-.custom-option,.custom-option-booked {
+.custom-option{
   padding:5px;
   border: 1px solid #d9dee3;
   border-radius: 0.5rem;
@@ -17628,7 +17628,7 @@ a.fc-event, a.fc-event:hover,.fc td.fc-daygrid-day:not(.fc-day-disabled) .fc-day
   margin-bottom: 20px;
 }
 .custom-option-image.custom-option-image-check .form-check-input:checked {
-  opacity: 1;
+  opacity: 0;
 }
 .custom-option-image.custom-option-image-check .form-check-input {
   position: absolute;
@@ -17638,17 +17638,17 @@ a.fc-event, a.fc-event:hover,.fc td.fc-daygrid-day:not(.fc-day-disabled) .fc-day
   border: 0;
   opacity: 0;
 }
-.custom-option.checked {
+.custom-option-pending {
   color: #ffffff;
   background-color: #00adef;
   border: 1px solid #00adef;
 }
-.custom-option-booked.checked {
+.custom-option-booked {
   background-color: #47cb00;
   color: #ffffff;
   border: 1px solid #47cb00;
 }
-.custom-option .custom-option-content,.custom-option-booked .custom-option-content {
+.custom-option .custom-option-content {
   cursor: pointer;
   width: 100%;
   padding: 0;
