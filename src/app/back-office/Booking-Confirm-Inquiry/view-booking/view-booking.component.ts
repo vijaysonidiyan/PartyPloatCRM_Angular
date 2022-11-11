@@ -233,8 +233,8 @@ export class ViewBookingComponent implements OnInit {
         this.viewBookingForm.controls.clientname.setValue(Response.data.clientname);
         this.viewBookingForm.controls.offer_budget.setValue(Response.data.offer_budget);
         this.viewBookingForm.controls.basicPackage.setValue(Response.data.basicPackage ? Response.data.basicPackage : Response.data.offer_budget);
-        this.viewBookingForm.controls.discount.setValue(Response.data.discount ? Response.data.discount : 0);
-        this.viewBookingForm.controls.finalbudget.setValue(Response.data.finalbudget ? Response.data.finalbudget : 0);
+        this.viewBookingForm.controls.discount.setValue(Response.data.discount ? Response.data.discount : "0");
+        this.viewBookingForm.controls.finalbudget.setValue(Response.data.finalbudget ? Response.data.finalbudget : "0");
         this.viewBookingForm.controls.extraDecorBudget.setValue(Response.data.extraDecorBudget ? Response.data.extraDecorBudget : '0');
         Response.data.package.forEach((x: any) => {
           this.addPackageItem(x)

@@ -67,6 +67,7 @@ export class AddInquiryComponent implements OnInit {
   assignpartyplotList: any[] = [];
   selectedPartyplot: any;
   eventListbyPartyplot: any;
+  inquiryDate: string;
   //calender done
 
   get fclientinquiryData() {
@@ -77,7 +78,7 @@ export class AddInquiryComponent implements OnInit {
   isCreated: boolean;
   isUpdated: boolean;
   isDeleted: boolean;
-  myDate = this.datePipe.transform(new Date(),'dd/MM/yyyy');
+  toDate = this.datePipe.transform(new Date(),'dd/MM/yyyy');
   
   constructor(private datePipe: DatePipe,public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, private router: Router, public route: ActivatedRoute) {
     this.defaultForm();
@@ -112,7 +113,7 @@ export class AddInquiryComponent implements OnInit {
           this.route.queryParams.subscribe((queryParams) => {
             this.updateInquiry = false;
             this.selectedPartyplot = queryParams.partyplotId;
-
+            this.clientinquiryDataForm.controls.partyplot_ID.setValue(this.selectedPartyplot);
             if (!!queryParams.startDate) {
               // if (!!queryParams.startDate && !!queryParams.endDate) {
               this.selectedDate = queryParams.startDate;
@@ -604,6 +605,7 @@ export class AddInquiryComponent implements OnInit {
         this.clientinquiryDataForm.controls.partyplot_ID.setValue(Response.data.partyplot_ID);
         this.clientinquiryDataForm.controls.reference_detail.setValue(Response.data.reference_detail);
 
+        this.inquiryDate = this.datePipe.transform(new Date(Response.data.createdAt),'dd/MM/yyyy, hh:mm a')
         Response.data.EventInquiryData.forEach((x: any, index: any) => {
           let Dates = new Date(x.startDateObj);
           let startDateTime = new Date(x.startDateObj);

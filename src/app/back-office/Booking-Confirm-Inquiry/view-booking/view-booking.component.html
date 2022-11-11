@@ -5,7 +5,8 @@
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Booking Confirm</h5>
-            <button type="button" class="btn btn-primary" (click)="clientDetailsUpdate()">Edit</button>
+            <button type="button" class="btn-bg" (click)="clientDetailsUpdate()"><i class="bx bx-edit-alt" tooltip="Edit" placement="bottom"
+                showDelay="100"></i></button>
         </div>
         <div class="card-body" [formGroup]="viewBookingForm">
             <div class="row p-sm-3 p-0">
@@ -169,13 +170,13 @@
                             formControlName="discount" />
                     </div>
                     <div class="col-lg-4 col-md-6 mb-3">
-                        <h5 *ngIf="isEditPackageItem === false">Final Amount<span>&nbsp; :&nbsp;
+                        <h5 *ngIf="isEditPackageItem === false">Final Packege<span>&nbsp; :&nbsp;
                                 {{fbookingConfirmData.finalbudget.value}}</span></h5>
                         <label *ngIf="isEditPackageItem === true" class="form-label" for="basic-default-company">Final
-                            Amount</label>
+                            Packege</label>
 
                         <input type="text" *ngIf="isEditPackageItem === true" appNumbersOnly class="form-control"
-                            id="basic-default-company" value="0" placeholder="Enter Final Amount"
+                            id="basic-default-company" value="0" placeholder="Enter Final Packege"
                             formControlName="finalbudget" />
                     </div>
                 </div>

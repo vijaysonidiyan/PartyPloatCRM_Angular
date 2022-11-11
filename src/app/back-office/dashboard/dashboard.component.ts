@@ -73,7 +73,17 @@ export class DashboardComponent implements OnInit {
     this.adminLayoutService.getPartyplotActiveList().subscribe((Response: any) => {
       if (Response.meta.code == 200) {
         this.activepartyplotList = Response.data;
-        this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
+        let partyPlotId = localStorage.getItem("partyPlotId")
+        if (!!partyPlotId && partyPlotId != null && partyPlotId != "" && partyPlotId != "null") {
+          let data = this.activepartyplotList.filter((x: any) => x._id == partyPlotId)
+          if (data) {
+            this.searchedPartyplot = partyPlotId;
+          } else {
+            this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
+          }
+        } else {
+          this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
+        }
         this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear, partyplot_ID: this.searchedPartyplot })
 
       }
@@ -95,11 +105,11 @@ export class DashboardComponent implements OnInit {
       partyplot_ID: data.partyplot_ID ? data.partyplot_ID : null,
     }
 
-    this.adminLayoutService.getInquiryListForCalenderView(inquiryObj).subscribe((response: any) => {
+    this.adminLayoutService.getInquiryListForCalenderViewForDashboard(inquiryObj).subscribe((response: any) => {
 
       if (response.meta.code == 200) {
         this.inquiryEvent = [];
-        this.inquiryEvent = response.data;
+        this.inquiryEvent = response.data.list;
       }
       else {
         this.inquiryEvent = [];

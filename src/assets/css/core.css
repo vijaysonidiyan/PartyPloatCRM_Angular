@@ -17659,4 +17659,10 @@ a.fc-event, a.fc-event:hover,.fc td.fc-daygrid-day:not(.fc-day-disabled) .fc-day
 .custom-option-image .custom-option-body img {
   height: 100%;
   width: 100%;
+  }
+.report-list-item {
+  background-color: #f5f5f9;
+}
+.report-list-item {
+  padding: 0.75rem;
 }

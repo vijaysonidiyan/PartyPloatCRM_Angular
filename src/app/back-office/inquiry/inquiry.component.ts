@@ -58,6 +58,9 @@ export class InquiryComponent implements OnInit {
   isCreatedbookingConfirm: boolean;
   isUpdatedbookingConfirm: boolean;
   isDeletedbookingConfirm: boolean;
+  inquiryCancle: any;
+  inquiryConfirm: any;
+  inquiryPending: any;
   // tabClick(tab) {
   //   this.activeTab = tab;
   //   if (this.activeTab == 1) {
@@ -110,7 +113,7 @@ export class InquiryComponent implements OnInit {
     this.getEventActiveList();
     this.getYear();
     this.minEndDate = new Date();
-    
+
 
   }
 
@@ -163,11 +166,14 @@ export class InquiryComponent implements OnInit {
 
   partyplotChange() {
     this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear, partyplot_ID: this.searchedPartyplot })
+    localStorage.setItem('partyPlotId',this.searchedPartyplot)
   }
 
   // calender view list data
   getInquiryListForCalenderView(data: any) {
-
+    this.inquiryCancle = "0";
+    this.inquiryConfirm = "0";
+    this.inquiryPending = "0";
 
     let inquiryObj = {
       month: data.month ? data.month : null,
@@ -179,7 +185,11 @@ export class InquiryComponent implements OnInit {
 
       if (response.meta.code == 200) {
         this.inquiryEvent = [];
-        this.inquiryEvent = response.data;
+        this.inquiryEvent = response.data.list;
+        this.inquiryCancle = response.data.inquiry_cancle
+        this.inquiryConfirm = response.data.inquiry_conform
+        this.inquiryPending = response.data.inquiry_pending
+        
       }
       else {
         this.inquiryEvent = [];
@@ -199,7 +209,7 @@ export class InquiryComponent implements OnInit {
         events: this.inquiryEvent,
         expandRows: true,
         eventClick: this.eventClickFunction.bind(this),
-        contentHeight:"auto",
+        contentHeight: "auto",
         customButtons: {
           // myCustomButton: {
           //   text: 'List',
@@ -231,6 +241,7 @@ export class InquiryComponent implements OnInit {
       dateClick: this.handleDateClick.bind(this),
       events: this.inquiryEvent,
       eventClick: this.eventClickFunction.bind(this),
+      contentHeight: "auto",
       customButtons: {
         // myCustomButton: {
         //   text: 'List',
@@ -249,13 +260,13 @@ export class InquiryComponent implements OnInit {
     // calendarApi.gotoDate(new Date(this.currentMonth + '-01-' + this.currentYear));
   }
 
-  viewInquiry(id: any, status: any, bookingId: any) {
+  viewInquiry(id: any, type: any, bookingId: any) {
     $('#inquiry-details-by-date-modal').modal('hide');
-    if (status == 2) {
+    if (type == 2) {
 
       this.router.navigate(['admin/view-booking-confirm/' + bookingId]);
     }
-    else {
+    else if (type == 1) {
       this.router.navigate(["admin/inquiry/view-inquiry/" + id])
     }
   }
@@ -448,10 +459,10 @@ export class InquiryComponent implements OnInit {
     let d = new Date();
     let nowYear = 2022;
 
-    for (let index = 0; index < 50; index++) {
+    for (let index = 0; index < 5; index++) {
       let prYear = d.getFullYear();
       // let prYear = 2024;
-      let arr = prYear - index;
+      let arr = prYear + index;
       if (arr >= nowYear) {
         this.yearArray.push(arr)
       }
@@ -481,8 +492,8 @@ export class InquiryComponent implements OnInit {
           this.inquiryList.filter((x: any, index: any) => {
             bookingConfirmData.filter((y: any, yIndex: any) => {
 
-              let xDate = moment(x.startDateObj).format("yyyy-mm-dd");
-              let yDate = moment(y.startDateObj).format("yyyy-mm-dd")
+              let xDate = moment(x.startDateObj).format("yyyy-MM-DD");
+              let yDate = moment(y.startDateObj).format("yyyy-MM-DD")
 
               if (xDate == yDate) {
                 if (x.partyplot_ID == y.partyplot_ID) {
@@ -503,12 +514,12 @@ export class InquiryComponent implements OnInit {
 
 
 
-              if (x.clientInquiryId == y.clientInquiryId && x.partyplot_ID == y.partyplot_ID) {
-                this.isBookedOrNotForListView[index] = true
-              }
-              else {
-                this.isBookedOrNotForListView[index] = false
-              }
+              // if (x.clientInquiryId == y.clientInquiryId && x.partyplot_ID == y.partyplot_ID) {
+              //   this.isBookedOrNotForListView[index] = true
+              // }
+              // else {
+              //   this.isBookedOrNotForListView[index] = false
+              // }
             })
           })
         }
@@ -518,6 +529,7 @@ export class InquiryComponent implements OnInit {
           })
         }
 
+console.log("isBookedOrNotForListView",this.isBookedOrNotForListView);
 
         this.noData = false;
       }
@@ -540,6 +552,7 @@ export class InquiryComponent implements OnInit {
       this.invaildSearchList = false;
     }
     this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName, partyplot_ID: this.searchedPartyplot })
+    localStorage.setItem('partyPlotId',this.searchedPartyplot)
   }
 
 
@@ -603,8 +616,19 @@ export class InquiryComponent implements OnInit {
     this.adminLayoutService.assignpartyplotUserWiseList().subscribe((Response: any) => {
       if (Response.meta.code == 200) {
         this.assignpartyplotList = Response.data;
-        this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
-
+        let partyPlotId = localStorage.getItem("partyPlotId")
+        if (!!partyPlotId && partyPlotId != null && partyPlotId != "" && partyPlotId != "null") {
+          let data = this.assignpartyplotList.filter((x: any) => x._id == partyPlotId)
+          if (data) {
+            this.searchedPartyplot = partyPlotId;
+          } else {
+            this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
+            localStorage.setItem('partyPlotId',this.searchedPartyplot)
+          }
+        } else {
+          this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
+          localStorage.setItem('partyPlotId',this.searchedPartyplot)
+        }
         const url = this.router.url;
         if (url.includes('inquiry/list-view')) {
           this.isInquiryTab = true;

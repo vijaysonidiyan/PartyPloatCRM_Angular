@@ -56,7 +56,19 @@ export class BookingConfirmListComponent implements OnInit {
     this.adminLayoutService.assignpartyplotUserWiseList().subscribe((Response: any) => {
       if (Response.meta.code == 200) {
         this.assignpartyplotList = Response.data;
-        this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
+        let partyPlotId = localStorage.getItem("partyPlotId")
+        if (!!partyPlotId && partyPlotId != null && partyPlotId != "" && partyPlotId != "null") {
+          let data = this.assignpartyplotList.filter((x: any) => x._id == partyPlotId)
+          if (data) {
+            this.searchedPartyplot = partyPlotId;
+          } else {
+            this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
+            localStorage.setItem('partyPlotId',this.searchedPartyplot)
+          }
+        } else {
+          this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
+          localStorage.setItem('partyPlotId',this.searchedPartyplot)
+        }
         this.partyplotChange();
       }
     },
@@ -70,6 +82,7 @@ export class BookingConfirmListComponent implements OnInit {
     let Obj = {
       partyplot_ID: this.searchedPartyplot
     }
+    localStorage.setItem('partyPlotId',this.searchedPartyplot)
     this.bookingConfirmList = []
     this.bookingconfirmList = []
     this.allbookingconfirmList = []
