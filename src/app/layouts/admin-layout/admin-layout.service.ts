@@ -734,7 +734,7 @@ export class AdminLayoutService {
   }
 
   //cricket api
-  SavecricketData(createcricketData: any) {
+  savecricketBookingData(createcricketData: any) {
     let headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
@@ -746,11 +746,11 @@ export class AdminLayoutService {
     })
     return this.http.post(this.commonService.rootData.rootUrl + 'cricket/slotlistdatevise', params, { headers: headers });
   }
-  getpartyplotListforcricket(params) {
+  getpartyplotListforcricket() {
     let headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('myToken')}`
     })
-    return this.http.get(this.commonService.rootData.rootUrl + 'cricket/partyplotlistforcricket', { params: params, headers: headers });
+    return this.http.get(this.commonService.rootData.rootUrl + 'cricket/partyplotlistforcricket', {headers: headers });
   }
 }
 

@@ -1,141 +1,8 @@
 <div class="container-fluid flex-grow-1 container-p-y">
     <div>
-        <div class="btn-cus" *ngIf="this.isCreated === true">
-            <button type="button" class="btn btn-primary" (click)="addStaff()">
-                Add New
-            </button>
-        </div>
         <div class="card">
             <div class="card-body p-0">
-                <div class="row mb-3 p-4 btn-cus" *ngIf="isInquiryTab === true">
-                    <div class="col-lg-12">
-                        <div class="row">
-                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3">
-                                <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Inquiry</h4> -->
-                                <ng-select [items]="assignpartyplotList" [multiple]="false" [searchable]="false"
-                                    class="form-control p-0 me-3" bindLabel="name" bindValue="_id"
-                                    [(ngModel)]="searchedPartyplot" placeholder="Select Party Plot">
-                                </ng-select>
-                            </div>
-                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3">
-                                <!-- <div class=" d-flex align-items-center">
-                                    <label class="me-3">Search:</label>
-                                    <input type="search" class="form-control" placeholder=""
-                                        aria-controls="DataTables_Table_0">
-                                </div> -->
-                                <div class="card border-solid-primary flex-row align-items-center ps-2">
-                                    <i class="bx bx-search fs-4 lh-0"></i>
-                                    <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
-                                        aria-label="Search..." [(ngModel)]="searchedName" />
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3">
-                                <!-- <h4 class="fw-bold py-3 m-0"><span class="text-muted fw-light"></span> Inquiry</h4> -->
-                                <ng-select [items]="monthArray" [multiple]="false" class="form-control p-0 me-3"
-                                    bindLabel="month" bindValue="value" [(ngModel)]="searchedMonth" [searchable]="false"
-                                    placeholder="Select Month">
-                                </ng-select>
-                            </div>
-                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                                <ng-select [items]="yearArray" [multiple]="false" class="form-control p-0 me-3"
-                                    bindLabel="yearArray" bindValue="yearArray" [(ngModel)]="searchedYear"
-                                    [searchable]="false" placeholder="Select Year">
-                                </ng-select>
-                                <div *ngIf="invaildSearchList === true" class="error_msg">Please select Year.</div>
-                            </div>
-                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12"></div>
-                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                                <div class="text-end">
-                                    <button type="button" (click)="searchFilterInquiryList()" class="btn btn-primary ">
-                                        Search
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- <div class="py-3" [ngClass]="isInquiryTab == true ? 'd-block' : 'd-none'">
-                    <div class="table-responsive text-nowrap">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="w-5">No</th>
-                                    <th class="w-10">Action</th>
-                                    <th class="w-15">Status</th>
-                                    <th>Date</th>
-                                    <th>Inquiry Date</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Contact</th>
-                                    <th>Contact-2</th>
-                                    <th>Event Type</th>
-                                    <th>Guest</th>
-                                    <th>Party Plot</th>
-                                    <th>Address</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-border-bottom-0">
-                                <tr *ngFor="let inquiryData of inquiryList | paginate: { itemsPerPage: l, currentPage: p }; let inquiryIndex = index">
-                                    <td>{{ l * (p - 1) + inquiryIndex + 1 }}</td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <button class="btn-bg" *ngIf="inquiryData.approvestatus == 2 && isViewbookingConfirm === true"
-                                                (click)="viewInquiryBooking(inquiryData.clientInquiryId,inquiryData.approvestatus,inquiryData.inquirybooking_id)">
-                                                <i class="bx bxs-show" tooltip="View Booking" placement="bottom"
-                                                    showDelay="100"></i>
-                                            </button>
-                                            <button class="btn-bg" *ngIf="inquiryData.approvestatus != 2 && isView === true"
-                                                (click)="viewInquiryBooking(inquiryData.clientInquiryId,inquiryData.approvestatus,inquiryData.inquirybooking_id)">
-                                                <i class="bx bxs-show" tooltip="View Inquiry" placement="bottom"
-                                                    showDelay="100"></i>
-                                            </button>
-                                            <button class="btn-bg badge bg-label-success"
-                                                *ngIf="inquiryData.approvestatus == 1 && isBookedOrNotForListView[inquiryIndex] === true  && isUpdatedbookingConfirm === true"
-                                                tooltip="Booking Confirm" placement="bottom" showDelay="100"
-                                                (click)="bookingConfirmNavigation(inquiryData.eventinquiry_id)">
-                                                <i class="bx bx-check"></i>
-                                            </button>
-                                            <button class="btn-bg badge bg-label-danger" tooltip="Booking Cancel"
-                                                *ngIf="inquiryData.approvestatus != 3  && isUpdatedbookingConfirm === true" placement="bottom"
-                                                showDelay="100" (confirm-click)="cancelBooking(inquiryData.eventinquiry_id)"
-                                                appConfirm [confirmTitle]="'Cancel Booking'"
-                                        [confirmContent]="'Are you sure to Cancel Booking?'">
-                                                <i class="bx bx-x"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span *ngIf="inquiryData.approvestatus == 1"
-                                            class="badge bg-label-primary me-1">Pending</span>
-                                        <span *ngIf="inquiryData.approvestatus == 2"
-                                            class="badge bg-label-success me-1">Confirm</span>
-                                        <span *ngIf="inquiryData.approvestatus == 3"
-                                            class="badge bg-label-danger me-1">Cancel</span>
-                                    </td>
-                                    <td>{{inquiryData.startDateObj | date:'dd/MM/yyyy':'+0000' }}</td>
-                                    <td>{{inquiryData.createdAt | date:'dd/MM/yyyy':'+0000'}}</td>
-                                    <td><strong>{{inquiryData.name}}</strong></td>
-                                    <td>{{inquiryData.email}}</td>
-                                    <td>{{inquiryData.primaryContact}}</td>
-                                    <td>{{inquiryData.secondryContact}}</td>
-                                    <td>{{inquiryData.eventName}}</td>
-                                    <td>{{inquiryData.guest}}</td>
-                                    <td>{{inquiryData.partyplot_name}}</td>
-                                    <td>{{inquiryData.address}}</td>
-                                </tr>
-                                <tr *ngIf="noData">
-                                    <td colspan="12">
-                                        <h4 class="text-center mt-3">No Data Found</h4>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="footer-pagination float-end mt-3 p-4" *ngIf="inquiryList?.length > l">
-                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-                    </div>
-                </div> -->
-                <div class="" [ngClass]="isInquiryTab == false ? 'd-block' : 'd-none'">
+                <div class="">
                     <div class="p-4 btn-cus position-relative">
                         <div class="dropdown-search">
 
@@ -160,103 +27,104 @@
         <div class="modal-content modal-height-calc">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel1"><strong>Cricket Booking Slot</strong></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closeBookSlot()"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body modal-scroll inquiry-bydate">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-3 mb-md-0 mb-2">
-                                <div
-                                    class="form-check custom-option custom-option-image custom-option-image-check checked">
-                                    <input class="form-check-input" type="checkbox" value="" id="customCheckboxImg1"
-                                        checked="">
-                                    <label class="form-check-label custom-option-content" for="customCheckboxImg1">
+                            <h5 class="float-end">Date -{{slotDate | date:'dd/MM/yyyy' }}</h5>
+                            <div class="col-md-4 mb-md-0 mb-2"
+                                *ngFor="let slotListByDateData of slotListByDate;let slotListByDateIndex = index">
+                                <div class="form-check custom-option custom-option-image custom-option-image-check"
+                                    [ngClass]="isCheck[slotListByDateIndex] == 5 ? 'custom-option-pending' : slotListByDateData.isbooked == 0 ? 'custom-option' :slotListByDateData.isbooked == 1 ? 'custom-option-booked': ''">
+                                    <input class="form-check-input" type="checkbox" [(ngModal)]="slotData"
+                                        (change)="getSlotIdOnChecked(slotListByDateData._id,$event,slotListByDateIndex,slotListByDateData.time,slotListByDateData.isbooked,slotListByDateData.cricket_bookingData[0])"
+                                        value="" id="{{slotListByDateData._id}}">
+                                    <label class="form-check-label custom-option-content"
+                                        for="{{slotListByDateData._id}}">
                                         <span class="custom-option-body">
-                                            7AM TO 10AM
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-3 mb-md-0 mb-2">
-                                <div
-                                    class="form-check custom-option-booked custom-option-image custom-option-image-check checked ">
-                                    <input class="form-check-input " type="checkbox" value="" id="customCheckboxImg2">
-                                    <label class="form-check-label custom-option-content" for="customCheckboxImg2">
-                                        <span class="custom-option-body">
-                                            7AM TO 10AM
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-check custom-option custom-option-image custom-option-image-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="customCheckboxImg3">
-                                    <label class="form-check-label custom-option-content" for="customCheckboxImg3">
-                                        <span class="custom-option-body">
-                                            7AM TO 10AM
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-check custom-option custom-option-image custom-option-image-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="customCheckboxImg4">
-                                    <label class="form-check-label custom-option-content" for="customCheckboxImg4">
-                                        <span class="custom-option-body">
-                                            7AM TO 10AM
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-3 mb-md-0 mb-2">
-                                <div class="form-check custom-option custom-option-image custom-option-image-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="customCheckboxImg5">
-                                    <label class="form-check-label custom-option-content" for="customCheckboxImg5">
-                                        <span class="custom-option-body">
-                                            7AM TO 10AM
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-3 mb-md-0 mb-2">
-                                <div class="form-check custom-option custom-option-image custom-option-image-check">
-                                    <input class="form-check-input " type="checkbox" value="" id="customCheckboxImg6">
-                                    <label class="form-check-label custom-option-content" for="customCheckboxImg6">
-                                        <span class="custom-option-body">
-                                            7AM TO 10AM
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-check custom-option custom-option-image custom-option-image-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="customCheckboxImg7">
-                                    <label class="form-check-label custom-option-content" for="customCheckboxImg7">
-                                        <span class="custom-option-body">
-                                            7AM TO 10AM
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-check custom-option custom-option-image custom-option-image-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="customCheckboxImg8">
-                                    <label class="form-check-label custom-option-content" for="customCheckboxImg8">
-                                        <span class="custom-option-body">
-                                            7AM TO 10AM
+                                            <!-- 7:00 AM TO 10:00 AM -->
+                                            {{slotListByDateData.time}}
                                         </span>
                                     </label>
                                 </div>
                             </div>
                         </div>
+                        <div class="row" *ngIf="bookingDataFlag">
+                            <div class="col-lg-12">
+                                <hr>
+                                <div class="accordion-collapse collapse show">
+                                    <div class="">
+                                        <div class="inquiry-bydate-list-item">
+                                            <div class="d-flex align-items-center justify-content-end">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-11">
+                                                    <ul class="list-unstyled mt-3">
+                                                        <li class="mb-2 accordion-data">
+                                                            <i class="bx bx-user"></i>
+                                                            <div>
+                                                                <span>Name:</span>
+                                                                <span>{{bookingData?.name}}</span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="mb-2 accordion-data">
+                                                            <i class="bx bx-envelope"></i>
+                                                            <div>
+                                                                <span>Email:</span>
+                                                                <span>{{bookingData?.email}}</span>
+                                                            </div>
+                                                        </li>
+
+                                                        <li class="mb-2 accordion-data">
+                                                            <i class="bx bx-phone"></i>
+                                                            <div>
+                                                                <span>Conatact:</span>
+                                                                <span>{{bookingData?.primaryContact}}
+                                                                    <span *ngIf="!!bookingData?.secondaryContact">,</span>
+                                                                    {{bookingData?.secondaryContact}}</span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="mb-2 accordion-data" *ngIf="!!bookingData?.address">
+                                                            <i class="bx bx-map"></i>
+                                                            <div>
+                                                                <span>Address:</span>
+                                                                <span>{{bookingData?.address}}</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-lg-1 col-md-3 col-sm-3 col-3">
+                                                    <div class="dropdown mt-3">
+                                                        <button class="btn p-0" type="button" id="cardOpt6"
+                                                            data-bs-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false">
+                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu dropdown-menu-end"
+                                                            aria-labelledby="cardOpt6">
+                                                            <a class=" dropdown-item">Booking
+                                                                Cancel</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
             </div>
             <div class="modal-footer">
                 <div>
-                    <button type="button" class="btn btn-primary" (click)="slotBook()">Book</button>
+                    <button type="button" class="btn btn-primary" *ngIf="isSlotBooked == true"
+                        (click)="slotBook()">Book</button>
                 </div>
             </div>
         </div>
@@ -267,77 +135,88 @@
         <div class="modal-content modal-height-calc">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel1"><strong>Cricket Booking Details</strong></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="closeBookDetails()"></button>
             </div>
             <div class="modal-body modal-scroll inquiry-bydate">
-                <form [formGroup]="inquiryForm">
+                <form [formGroup]="cricketBookingForm">
                     <div class="row">
                         <input type="hidden" formControlName="_id">
                         <div class="col-lg-6 col-md-6 mb-3">
-                            <label for="nameBasic" class="form-label">Name</label>
-                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name"
-                                formControlName="name" [readonly]="isEditViewInquiryDetails == false" />
-                            <div *ngIf="submittedclientInquiryData && fclientinquiryData.name.errors">
-                                <div *ngIf="fclientinquiryData.name.errors.required">
+                            <label class="form-label">Name</label>
+                            <input type="text" id="name" class="form-control" placeholder="Enter Name"
+                                formControlName="name" />
+                            <div *ngIf="submittedcricketBookingData && fcricketBookingData.name.errors">
+                                <div *ngIf="fcricketBookingData.name.errors.required">
                                     <span class="error_msg">Name is Required.</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
-                            <label class="form-label" for="basic-default-email">Email</label>
+                            <label class="form-label">Email</label>
                             <div class="input-group input-group-merge">
-                                <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
+                                <input type="text" id="email" class="form-control" placeholder="john.doe"
                                     aria-label="john.doe" aria-describedby="basic-default-email2"
-                                    formControlName="email" [readonly]="isEditViewInquiryDetails == false" />
+                                    formControlName="email" />
                                 <span class="input-group-text" id="basic-default-email2">@example.com</span>
                             </div>
-                            <div *ngIf="submittedclientInquiryData && fclientinquiryData.email.errors">
-                                <div *ngIf="fclientinquiryData.email.errors.required">
+                            <div *ngIf="submittedcricketBookingData && fcricketBookingData.email.errors">
+                                <div *ngIf="fcricketBookingData.email.errors.required">
                                     <span class="error_msg">Email is Required.</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
-                            <label class="form-label" for="basic-default-phone">Contact</label>
-                            <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                                placeholder="658 799 8941" appNumbersOnly maxlength="10"
-                                [readonly]="isEditViewInquiryDetails == false" formControlName="primaryContact" />
-                            <div *ngIf="submittedclientInquiryData && fclientinquiryData.primaryContact.errors">
-                                <div *ngIf="fclientinquiryData.primaryContact.errors.required">
+                            <label class="form-label">Contact</label>
+                            <input type="text" id="conatct1" class="form-control phone-mask" placeholder="658 799 8941"
+                                appNumbersOnly maxlength="10" formControlName="primaryContact" />
+                            <div *ngIf="submittedcricketBookingData && fcricketBookingData.primaryContact.errors">
+                                <div *ngIf="fcricketBookingData.primaryContact.errors.required">
                                     <span class="error_msg">Contact is Required.</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
-                            <label class="form-label" for="basic-default-phone">Contact-2</label>
-                            <input type="text" id="basic-default-phone" appNumbersOnly maxlength="10"
+                            <label class="form-label">Contact-2</label>
+                            <input type="text" id="contact2" appNumbersOnly maxlength="10"
                                 class="form-control phone-mask" placeholder="658 799 8941"
-                                [readonly]="isEditViewInquiryDetails == false" formControlName="secondryContact" />
+                                formControlName="secondaryContact" />
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label for="nameBasic" class="form-label">Address</label>
-                            <textarea id="basic-default-message" class="form-control" placeholder=""
-                                formControlName="address" [readonly]="isEditViewInquiryDetails == false"
+                            <textarea id="address" class="form-control" placeholder="" formControlName="address"
                                 formControlName="address"></textarea>
-                            <div *ngIf="submittedclientInquiryData && fclientinquiryData.address.errors">
-                                <div *ngIf="fclientinquiryData.address.errors.required">
+                            <div *ngIf="submittedcricketBookingData && fcricketBookingData.address.errors">
+                                <div *ngIf="fcricketBookingData.address.errors.required">
                                     <span class="error_msg">Address is Required.</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
-                            <label for="nameBasic" class="form-label">Select Party Plot</label>
-                            <ng-select [items]="assignpartyplotList" [multiple]="false" [searchable]="false"
-                                class="form-control p-0 me-3" bindLabel="name" bindValue="_id"
-                                [(ngModel)]="searchedPartyplot" placeholder="Select Party Plot">
-                            </ng-select>
+                            <label for="html5-date-input" class="form-label required">Date</label>
+                            <div class="position-relative mat-date-picker">
+                                <input matInput disabled="" [matDatepicker]="picker1" class="form-control"
+                                    formControlName="date">
+                                <div class="mat-dat-picker-icon">
+                                    <div class="calendar-icon"><i class="bx bxs-calendar"></i></div>
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
+                            <label for="nameBasic" class="form-label">Select Party Plot</label>
+                            <ng-select readonly="true" [items]="assignpartyplotList" [multiple]="false"
+                                [searchable]="false" class="form-control p-0 me-3" bindLabel="name" bindValue="_id"
+                                formControlName="partyplotId" placeholder="Select Party Plot">
+                            </ng-select>
+                        </div>
+                        <!-- <div class="col-lg-6 col-md-6 mb-3">
                             <label for="html5-date-input" class="form-label">Date</label>
                             <div class="position-relative mat-date-picker">
                                 <input type="text" class="form-control" matInput
                                     (ngModelChange)="onStartDateChange($event)"
-                                    [readonly]="isEditViewInquiryDetails == false" [ngxMatDatetimePicker]="startDate"
+                                 [ngxMatDatetimePicker]="startDate"
                                     placeholder="Choose a start date" formControlName="startDateObj" [min]="minDate"
                                     [max]="maxDate">
                                 <div class="mat-dat-picker-icon">
@@ -351,14 +230,14 @@
                                     </ngx-mat-datetime-picker>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </form>
 
             </div>
             <div class="modal-footer">
                 <div>
-                    <button type="button" class="btn btn-primary" (click)="slotBook()">Book</button>
+                    <button type="button" class="btn btn-primary" (click)="savecricketData()">Book</button>
                 </div>
             </div>
         </div>
