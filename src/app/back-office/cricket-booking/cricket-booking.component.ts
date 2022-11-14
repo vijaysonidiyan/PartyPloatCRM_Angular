@@ -51,12 +51,10 @@ export class CricketBookingComponent implements OnInit {
   cricketBookingForm: FormGroup;
   partyplotListforcricket: any[] = [];
   noData: boolean;
-  startDateObj = "";
-  endDateObj: any;
-  gotoDate: any;
+  
   isSlotBooked: boolean = false;
   bookingDataFlag: boolean = false;
-  submittedCricketData = false;
+  //submittedCricketData = false;
   selectedPartyplot: any;
   slotListByDate: any[] = [];
   slot: any[] = [];
@@ -67,6 +65,12 @@ export class CricketBookingComponent implements OnInit {
   cricketBookingListforCalendar: any[] = [];
   isFullDaySlot : boolean = false;
   isFullDayShow : boolean = false;
+  isCheck = {};
+  yearArray = new Array<number>();
+  submittedcricketBookingData: boolean = false;
+  get fcricketBookingData() {
+    return this.cricketBookingForm.controls;
+  }
 
   constructor(
     private adminLayoutService: AdminLayoutService,
@@ -75,7 +79,7 @@ export class CricketBookingComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe
   ) {
-    this.getAssignPartyplotList();
+    this.getPartyplotListforcricket();
   }
 
   ngOnInit(): void {
@@ -96,10 +100,64 @@ export class CricketBookingComponent implements OnInit {
     });
   }
 
+  // get month and year wise api call and get data
+
+  monthArray = [
+    { value: "1", month: "January" },
+    { value: "2", month: "February" },
+    { value: "3", month: "March" },
+    { value: "4", month: "April" },
+    { value: "5", month: "May" },
+    { value: "6", month: "June" },
+    { value: "7", month: "July" },
+    { value: "8", month: "August" },
+    { value: "9", month: "September" },
+    { value: "10", month: "October" },
+    { value: "11", month: "November" },
+    { value: "12", month: "December" },
+  ];
+
+  getYear() {
+    this.yearArray = new Array<number>();
+    let d = new Date();
+    let nowYear = 2022;
+
+    for (let index = 0; index < 50; index++) {
+      let prYear = d.getFullYear();
+      // let prYear = 2024;
+      let arr = prYear - index;
+      if (arr >= nowYear) {
+        this.yearArray.push(arr);
+      }
+    }
+    return this.yearArray;
+  }
+
+  getPartyplotListforcricket() {
+    this.adminLayoutService.getpartyplotListforcricket().subscribe(
+      (Response: any) => {
+        if (Response.meta.code == 200) {
+          this.partyplotListforcricket = Response.data;
+
+          this.searchedPartyplot = Response.data[0]._id;
+          this.getInquiryListForCalenderView({
+            month: this.currentMonth,
+            year: this.currentYear,
+            partyplotId: this.searchedPartyplot,
+          });
+        }
+        //for select sub industry step
+      },
+      (error) => {
+        console.log(error.error.Message);
+      }
+    );
+  }
+
   savecricketData() {
     
     if (this.cricketBookingForm.invalid) {
-      this.submittedCricketData = true;
+      this.submittedcricketBookingData = true;
       return;
     }
     let date = moment(this.slotDate).format("yyyy-MM-DD");
@@ -122,7 +180,7 @@ export class CricketBookingComponent implements OnInit {
     this.adminLayoutService.savecricketBookingData(cricketModelObj).subscribe(
       (Response: any) => {
         if (Response.meta.code == 200) {
-          this.submittedCricketData = false;
+          this.submittedcricketBookingData = false;
           this.slotData = [];
           this.isCheck = {};
           this.slot = [];
@@ -147,26 +205,6 @@ export class CricketBookingComponent implements OnInit {
     );
   }
 
-  getAssignPartyplotList() {
-    this.adminLayoutService.getpartyplotListforcricket().subscribe(
-      (Response: any) => {
-        if (Response.meta.code == 200) {
-          this.partyplotListforcricket = Response.data;
-
-          this.searchedPartyplot = Response.data[0]._id;
-          this.getInquiryListForCalenderView({
-            month: this.currentMonth,
-            year: this.currentYear,
-            partyplotId: this.searchedPartyplot,
-          });
-        }
-        //for select sub industry step
-      },
-      (error) => {
-        console.log(error.error.Message);
-      }
-    );
-  }
 
   // calender view
   @ViewChild("calendar") calendarComponent: FullCalendarComponent;
@@ -212,10 +250,6 @@ export class CricketBookingComponent implements OnInit {
           eventClick: this.handleDateClick.bind(this),
           contentHeight: "auto",
           customButtons: {
-            // myCustomButton: {
-            //   text: 'List',
-            //   click: this.customeButton.bind(this)
-            // },
             next: {
               click: this.nextMonth.bind(this)
             },
@@ -224,8 +258,7 @@ export class CricketBookingComponent implements OnInit {
             }
           },
         }
-        //   let calendarApi = this.calendarComponent.getApi();
-        // calendarApi.gotoDate(new Date(this.currentMonth + '-01-' + this.currentYear));
+        
       });
 
       this.calendarOptions = {
@@ -236,9 +269,11 @@ export class CricketBookingComponent implements OnInit {
           right: ''
         },
         showNonCurrentDates: false,
+        initialDate: new Date(this.currentYear + '-' + this.currentMonth),
         businessHours: false, // display business hours
         dateClick: this.handleDateClick.bind(this),
         events: this.cricketBookingListforCalendar,
+        expandRows: true,
         eventClick: this.handleDateClick.bind(this),
         contentHeight: "auto",
         customButtons: {
@@ -251,8 +286,6 @@ export class CricketBookingComponent implements OnInit {
         },
       }
 
-    // let calendarApi = this.calendarComponent.getApi();
-    // calendarApi.gotoDate(new Date(this.currentMonth + '-01-' + this.currentYear));
   }
 
  
@@ -313,17 +346,20 @@ export class CricketBookingComponent implements OnInit {
     this.getInquiryListForCalenderView({ month: this.currentMonth, year: this.currentYear, partyplotId: this.searchedPartyplot });
   }
 
-  isCheck = {};
+
 
   dayTypeEvent(checked) {
 
     if(checked.checked == true) {
+      this.slotTime = [];
+      this.slot = [];
       this.slotListByDate.forEach((slotListByDateData: any,index:number) => {
         //this.getSlotIdOnChecked(slotListByDateData._id,true,index,slotListByDateData.time,slotListByDateData.isbooked,slotListByDateData.cricket_bookingData[0])
         this.slotData[index] = true;
         this.isCheck[index] = 5;
         this.slot.push(slotListByDateData._id);
         this.slotTime.push(slotListByDateData.time);
+        this.isSlotBooked = true;
       })
     } else {
       this.slotData = [];
@@ -378,59 +414,24 @@ export class CricketBookingComponent implements OnInit {
     }
   }
 
-  // get month and year wise api call and get data
-
-  yearArray = new Array<number>();
-  monthArray = [
-    { value: "1", month: "January" },
-    { value: "2", month: "February" },
-    { value: "3", month: "March" },
-    { value: "4", month: "April" },
-    { value: "5", month: "May" },
-    { value: "6", month: "June" },
-    { value: "7", month: "July" },
-    { value: "8", month: "August" },
-    { value: "9", month: "September" },
-    { value: "10", month: "October" },
-    { value: "11", month: "November" },
-    { value: "12", month: "December" },
-  ];
-
-  getYear() {
-    this.yearArray = new Array<number>();
-    let d = new Date();
-    let nowYear = 2022;
-
-    for (let index = 0; index < 50; index++) {
-      let prYear = d.getFullYear();
-      // let prYear = 2024;
-      let arr = prYear - index;
-      if (arr >= nowYear) {
-        this.yearArray.push(arr);
-      }
-    }
-    return this.yearArray;
-  }
+  
 
   // update inquiry
-  submittedcricketBookingData: boolean = false;
-  get fcricketBookingData() {
-    return this.cricketBookingForm.controls;
-  }
-  // calender
-  // public date: moment.Moment;
-  public disabled = false;
-  public showSpinners = true;
-  public showSeconds = false;
-  public touchUi = false;
-  public enableMeridian = false;
-  public minDate = new Date();
-  public minEndDate = {};
-  public maxDate: moment.Moment;
-  public stepHour = 1;
-  public stepMinute = 1;
-  public stepSecond = 1;
-  public color: ThemePalette = "primary";
+  
+  // // calender
+  // // public date: moment.Moment;
+  // public disabled = false;
+  // public showSpinners = true;
+  // public showSeconds = false;
+  // public touchUi = false;
+  // public enableMeridian = false;
+  // public minDate = new Date();
+  // public minEndDate = {};
+  // public maxDate: moment.Moment;
+  // public stepHour = 1;
+  // public stepMinute = 1;
+  // public stepSecond = 1;
+  // public color: ThemePalette = "primary";
 
 
 
