@@ -447,6 +447,13 @@ export class AdminLayoutService {
     })
     return this.http.post(this.commonService.rootData.rootUrl + 'clientinquiry/EventListgetByMonthWise', data, { headers: headers });
   }
+
+  getCricketbookinglistmonthwise(data: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'cricket/cricketbookinglistmonthwise', data, { headers: headers });
+  }
   
   getInquiryListForCalenderViewForDashboard(data: any) {
     let headers = new HttpHeaders({

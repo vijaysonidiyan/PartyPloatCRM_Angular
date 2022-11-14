@@ -63,6 +63,15 @@
                             appNumbersOnly />
                     </div>
                     <div class="col-lg-6 mb-3">
+                        <label class="form-label" for="basic-default-phone">Party Plot</label>
+                        <ng-select [items]="activepartyplotList" [multiple]="true" [searchable]="false"
+                                    class="form-control p-0 me-3" bindLabel="name" bindValue="_id"
+                                    formControlName="cricketPartyPlot" placeholder="Select Party Plot">
+                                </ng-select>
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                    </div>
+                    <div class="col-lg-6 mb-3">
                         <label for="formFile" class="form-label">Logo</label>
                         <input class="form-control" type="file" [multiple]=false accept="image/*" formControlName="logo"
                             #filelogo (change)="onLogoChange($event)">

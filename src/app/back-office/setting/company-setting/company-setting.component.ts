@@ -23,6 +23,7 @@ export class CompanySettingComponent implements OnInit {
   @ViewChild('filelogo') myInputVariablelogo: ElementRef | any;
   @ViewChild('filesignature') myInputVariablesignature: ElementRef;
   hide1 = false;
+  activepartyplotList: any;
   get fnameData() {
     return this.comapnyForm.controls;
   }
@@ -55,6 +56,7 @@ export class CompanySettingComponent implements OnInit {
 
   ngOnInit(): void {
     this.defaultForm();
+    this.getActivePartyplotList();
     this.comapnyForm.disable();
     this.getcomapnySetting();
   }
@@ -67,12 +69,27 @@ export class CompanySettingComponent implements OnInit {
       Telephone2: [""],
       logo: [""],
       signature: [""],
+      cricketPartyPlot: [null],
       SMTP_email: ["", [Validators.required, Validators.email]],
       SMTP_password: ["", [Validators.required]],
       service: ["", [Validators.required]],
       port: ["", [Validators.required]],
       SMTP: ["", [Validators.required]],
     });
+  }
+
+  getActivePartyplotList() {
+    this.adminLayoutService.getPartyplotActiveList().subscribe((Response: any) => {
+      if (Response.meta.code == 200) {
+        this.activepartyplotList = Response.data;
+        
+      }
+      //for select sub industry step
+    },
+      (error) => {
+        console.log(error.error.Message);
+      }
+    );
   }
 
   getcomapnySetting() {
@@ -87,6 +104,7 @@ export class CompanySettingComponent implements OnInit {
       this.comapnyForm.controls.service.setValue(Response.data.service);
       this.comapnyForm.controls.port.setValue(Response.data.port);
       this.comapnyForm.controls.SMTP.setValue(Response.data.SMTP);
+      this.comapnyForm.controls.cricketPartyPlot.setValue(Response.data.cricketPartyPlot);
 
       if (Response.data.logo != "") {
         this.imgURLlogo = environment.uploadsUrl + "photos/" + Response.data.logo;
@@ -139,6 +157,7 @@ export class CompanySettingComponent implements OnInit {
     loginModelObj.append('service', this.comapnyForm.value.service);
     loginModelObj.append('port', this.comapnyForm.value.port);
     loginModelObj.append('SMTP', this.comapnyForm.value.SMTP);
+    loginModelObj.append('cricketPartyPlot', JSON.stringify(this.comapnyForm.value.cricketPartyPlot));
 
     this.adminLayoutService.UpdateCompanySetting(loginModelObj).subscribe((Response: any) => {
       if (Response.meta.code == 200) {

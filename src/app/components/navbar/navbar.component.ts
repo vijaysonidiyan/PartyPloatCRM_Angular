@@ -539,6 +539,15 @@ export class NavbarComponent implements OnInit {
         currentPageName: 'Reference Master'
       };
     }
+    else if (titlee.includes('cricket-booking')) {
+      return {
+        pastPage: [{
+          pastUrl: 'dashboard',
+          pastLinkName: 'Dashboard',
+        }],
+        currentPageName: 'Cricket Booking'
+      };
+    }
   }
 }
 

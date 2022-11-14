@@ -6,7 +6,7 @@
                     <div class="p-4 btn-cus position-relative">
                         <div class="dropdown-search">
 
-                            <ng-select [items]="assignpartyplotList" [multiple]="false" class="form-control p-0 me-3"
+                            <ng-select [items]="partyplotListforcricket" [multiple]="false" class="form-control p-0 me-3"
                                 bindLabel="name" bindValue="_id" [(ngModel)]="searchedPartyplot" [clearable]="false"
                                 [searchable]="false" (change)="partyplotChange()" placeholder="Select Party Plot">
                             </ng-select>
@@ -34,13 +34,15 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <h5 class="float-end">Date -{{slotDate | date:'dd/MM/yyyy' }}</h5>
+                            <h5 class="float-end">Date - {{slotDate | date:'dd/MM/yyyy' }}</h5>
+                            <div *ngIf="isFullDayShow === true"><input type="checkbox" class="form-check-input mb-3" [(ngModel)]="isFullDaySlot"
+                                (change)="dayTypeEvent({checked: $event.target.checked})" />  Full Day</div>
                             <div class="col-md-4 mb-md-0 mb-2"
                                 *ngFor="let slotListByDateData of slotListByDate;let slotListByDateIndex = index">
                                 <div class="form-check custom-option custom-option-image custom-option-image-check"
                                     [ngClass]="isCheck[slotListByDateIndex] == 5 ? 'custom-option-pending' : slotListByDateData.isbooked == 0 ? 'custom-option' :slotListByDateData.isbooked == 1 ? 'custom-option-booked': ''">
                                     <input class="form-check-input" type="checkbox" [(ngModal)]="slotData"
-                                        (change)="getSlotIdOnChecked(slotListByDateData._id,$event,slotListByDateIndex,slotListByDateData.time,slotListByDateData.isbooked,slotListByDateData.cricket_bookingData[0])"
+                                        (change)="getSlotIdOnChecked(slotListByDateData._id,$event.target.checked,slotListByDateIndex,slotListByDateData.time,slotListByDateData.isbooked,slotListByDateData.cricket_bookingData[0])"
                                         value="" id="{{slotListByDateData._id}}">
                                     <label class="form-check-label custom-option-content"
                                         for="{{slotListByDateData._id}}">
@@ -141,7 +143,7 @@
             <div class="modal-body modal-scroll inquiry-bydate">
                 <form [formGroup]="cricketBookingForm">
                     <div class="row">
-                        <input type="hidden" formControlName="_id">
+                        
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label class="form-label">Name</label>
                             <input type="text" id="name" class="form-control" placeholder="Enter Name"
@@ -206,7 +208,7 @@
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label for="nameBasic" class="form-label">Select Party Plot</label>
-                            <ng-select readonly="true" [items]="assignpartyplotList" [multiple]="false"
+                            <ng-select readonly="true" [items]="partyplotListforcricket" [multiple]="false"
                                 [searchable]="false" class="form-control p-0 me-3" bindLabel="name" bindValue="_id"
                                 formControlName="partyplotId" placeholder="Select Party Plot">
                             </ng-select>
