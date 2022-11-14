@@ -6,9 +6,10 @@
                     <div class="p-4 btn-cus position-relative">
                         <div class="dropdown-search">
 
-                            <ng-select [items]="partyplotListforcricket" [multiple]="false" class="form-control p-0 me-3"
-                                bindLabel="name" bindValue="_id" [(ngModel)]="searchedPartyplot" [clearable]="false"
-                                [searchable]="false" (change)="partyplotChange()" placeholder="Select Party Plot">
+                            <ng-select [items]="partyplotListforcricket" [multiple]="false"
+                                class="form-control p-0 me-3" bindLabel="name" bindValue="_id"
+                                [(ngModel)]="searchedPartyplot" [clearable]="false" [searchable]="false"
+                                (change)="partyplotChange()" placeholder="Select Party Plot">
                             </ng-select>
 
                         </div>
@@ -35,8 +36,9 @@
                     <div class="card-body">
                         <div class="row">
                             <h5 class="float-end">Date - {{slotDate | date:'dd/MM/yyyy' }}</h5>
-                            <div *ngIf="isFullDayShow === true"><input type="checkbox" class="form-check-input mb-3" [(ngModel)]="isFullDaySlot"
-                                (change)="dayTypeEvent({checked: $event.target.checked})" />  Full Day</div>
+                            <div *ngIf="isFullDayShow === true"><input type="checkbox" class="form-check-input mb-3"
+                                    [(ngModel)]="isFullDaySlot"
+                                    (change)="dayTypeEvent({checked: $event.target.checked})" /> Full Day</div>
                             <div class="col-md-4 mb-md-0 mb-2"
                                 *ngFor="let slotListByDateData of slotListByDate;let slotListByDateIndex = index">
                                 <div class="form-check custom-option custom-option-image custom-option-image-check"
@@ -84,7 +86,8 @@
                                                             <div>
                                                                 <span>Conatact:</span>
                                                                 <span>{{bookingData?.primaryContact}}
-                                                                    <span *ngIf="!!bookingData?.secondaryContact">,</span>
+                                                                    <span
+                                                                        *ngIf="!!bookingData?.secondaryContact">,</span>
                                                                     {{bookingData?.secondaryContact}}</span>
                                                             </div>
                                                         </li>
@@ -142,7 +145,19 @@
             <div class="modal-body modal-scroll inquiry-bydate">
                 <form [formGroup]="cricketBookingForm">
                     <div class="row">
-                        
+                        <div class="col-md-4 mb-md-0 mb-2" *ngFor="let slotData of slotTime;let slotTime = index">
+                            <div
+                                class="form-check custom-option custom-option-pending custom-option-image custom-option-image-check">
+                                <label class="form-check-label custom-option-content">
+                                    <span class="custom-option-body">
+                                        <!-- 7:00 AM TO 10:00 AM -->
+                                        {{slotData}}
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label class="form-label">Name</label>
                             <input type="text" id="name" class="form-control" placeholder="Enter Name"
@@ -212,26 +227,6 @@
                                 formControlName="partyplotId" placeholder="Select Party Plot">
                             </ng-select>
                         </div>
-                        <!-- <div class="col-lg-6 col-md-6 mb-3">
-                            <label for="html5-date-input" class="form-label">Date</label>
-                            <div class="position-relative mat-date-picker">
-                                <input type="text" class="form-control" matInput
-                                    (ngModelChange)="onStartDateChange($event)"
-                                 [ngxMatDatetimePicker]="startDate"
-                                    placeholder="Choose a start date" formControlName="startDateObj" [min]="minDate"
-                                    [max]="maxDate">
-                                <div class="mat-dat-picker-icon">
-                                    <div class="calendar-icon"><i class="bx bxs-calendar"></i></div>
-                                    <mat-datepicker-toggle matSuffix [for]="startDate"
-                                        [disabled]="isEditViewInquiryDetails == false"></mat-datepicker-toggle>
-                                    <ngx-mat-datetime-picker #startDate [showSpinners]="showSpinners"
-                                        [showSeconds]="showSeconds" [stepHour]="stepHour" [stepMinute]="stepMinute"
-                                        [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
-                                        [enableMeridian]="enableMeridian">
-                                    </ngx-mat-datetime-picker>
-                                </div>
-                            </div>
-                        </div> -->
                     </div>
                 </form>
 
