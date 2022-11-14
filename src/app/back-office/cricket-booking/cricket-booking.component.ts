@@ -62,7 +62,7 @@ export class CricketBookingComponent implements OnInit {
   slot: any[] = [];
   slotTime: any[] = [];
   slotDate: string;
-  slotData = "";
+  slotData = [];
   bookingData: any = {};
   cricketBookingListforCalendar: any[] = [];
   isFullDaySlot : boolean = false;
@@ -97,7 +97,7 @@ export class CricketBookingComponent implements OnInit {
   }
 
   savecricketData() {
-    debugger;
+    
     if (this.cricketBookingForm.invalid) {
       this.submittedCricketData = true;
       return;
@@ -123,7 +123,7 @@ export class CricketBookingComponent implements OnInit {
       (Response: any) => {
         if (Response.meta.code == 200) {
           this.submittedCricketData = false;
-          this.slotData = "";
+          this.slotData = [];
           this.isCheck = {};
           this.slot = [];
           this.slotTime = [];
@@ -259,7 +259,11 @@ export class CricketBookingComponent implements OnInit {
 
   // date selction through open popup
   handleDateClick(arg) {
-    debugger;
+    this.slotListByDate = [];
+    this.bookingData = {};
+    this.slot = [];
+    this.isFullDaySlot = false;
+    this.slotDate = arg.date;
     let obj = {
       date: moment(arg.date).format("DD/MM/yyyy"),
       partyplotId: this.searchedPartyplot,
@@ -268,17 +272,22 @@ export class CricketBookingComponent implements OnInit {
     this.adminLayoutService
       .slotListByDatewise(obj)
       .subscribe((Response: any) => {
-        this.slotListByDate = Response.data;
-        let bookedSlotList = this.slotListByDate.filter((x:any) => x.isbooked == 1)
-        if(bookedSlotList?.length > 0) {
-          this.isFullDayShow = false
+        if(Response.meta.code == 200) {
+          this.slotListByDate = Response.data;
+          for (let index = 0; index < this.slotListByDate.length; index++) {
+            this.slotData.push(false)
+          }
+          let bookedSlotList = [];
+          bookedSlotList = this.slotListByDate.filter((x:any) => x.isbooked == 1)
+          if(bookedSlotList?.length > 0) {
+            this.isFullDayShow = false
+          } else {
+            this.isFullDayShow = true
+          }
+          $("#cricket-slotbook-by-date-modal").modal("show");
         } else {
-          this.isFullDayShow = true
+          this.commonService.notifier.notify("error", Response.meta.message);
         }
-        this.bookingData = {}
-        this.slot = [];
-        $("#cricket-slotbook-by-date-modal").modal("show");
-        this.slotDate = arg.date;
       });
   }
 
@@ -310,12 +319,14 @@ export class CricketBookingComponent implements OnInit {
 
     if(checked.checked == true) {
       this.slotListByDate.forEach((slotListByDateData: any,index:number) => {
-        this.getSlotIdOnChecked(slotListByDateData._id,true,index,slotListByDateData.time,slotListByDateData.isbooked,slotListByDateData.cricket_bookingData[0])
-        // this.isCheck[index] = 5;
-        // this.slot.push(x._id);
-        // this.slotTime.push(x.time);
+        //this.getSlotIdOnChecked(slotListByDateData._id,true,index,slotListByDateData.time,slotListByDateData.isbooked,slotListByDateData.cricket_bookingData[0])
+        this.slotData[index] = true;
+        this.isCheck[index] = 5;
+        this.slot.push(slotListByDateData._id);
+        this.slotTime.push(slotListByDateData.time);
       })
     } else {
+      this.slotData = [];
       this.isCheck = {};
       this.slot = []
       this.slotTime = []
@@ -325,16 +336,16 @@ export class CricketBookingComponent implements OnInit {
 
   getSlotIdOnChecked(
     slotId: any,
-    event: any,
     index: any,
     slotTime: any,
     isBooked: any,
     bookingData: any
   ) {
-    debugger;
+    debugger
     this.bookingData = {}
+    this.slotData[index] = !this.slotData[index]
     if (isBooked == 1) {
-      if (event === true) {
+      if (this.slotData[index] === true) {
         this.bookingDataFlag = true;
       }
       else {
@@ -342,7 +353,7 @@ export class CricketBookingComponent implements OnInit {
       }
       this.bookingData = bookingData;
     } else if (isBooked == 0) {
-      if (event == true) {
+      if (this.slotData[index] == true) {
         this.isCheck[index] = 5;
         this.slot.push(slotId);
         this.slotTime.push(slotTime);
@@ -358,6 +369,12 @@ export class CricketBookingComponent implements OnInit {
       } else {
         this.isSlotBooked = false;
       }
+    }
+    let abc = this.slotData.filter((x:any) => x == false)
+    if(abc?.length > 0) {
+      this.isFullDaySlot = false;
+    } else {
+      this.isFullDaySlot = true;
     }
   }
 
@@ -417,26 +434,20 @@ export class CricketBookingComponent implements OnInit {
 
 
 
-  onStartDateChange(data: any) {
-    this.minEndDate = data._d;
-
-    localStorage.setItem("startDateObj", data._d);
-    this.cricketBookingForm.controls.endDateObj.setValue("");
-  }
 
   addcricketDetails() {
     $("#cricket-slotbook-by-date-modal").modal("show");
   }
   closeBookDetails() {
     this.defaultForm();
-    this.slotData = "";
+    //this.slotData = [];
     this.bookingData = {}
     this.bookingDataFlag = false;
     $("#cricket-slotbook-by-date-modal").modal("show");
   }
   closeBookSlot() {
     this.defaultForm();
-    this.slotData = "";
+    this.slotData = [];
     this.isCheck = {};
     this.slotTime = [];
     this.slot = [];
