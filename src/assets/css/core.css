@@ -17457,6 +17457,10 @@ html:not(.layout-footer-fixed) .content-wrapper {
   width: 20px;
   margin: 0 20px 0 12px;
 }
+li:nth-child(6) .icon-png {
+  width: 15px !important;
+  margin: 0 20px 0 12px;
+}
 
 .menu-vertical .menu-item .active-icon {
   display: none;
@@ -17665,4 +17669,7 @@ a.fc-event, a.fc-event:hover,.fc td.fc-daygrid-day:not(.fc-day-disabled) .fc-day
 }
 .report-list-item {
   padding: 0.75rem;
+}
+.card-style-1 .ng-select-container , .card-style-1 .form-control  {
+  background-color: transparent !important;
 }

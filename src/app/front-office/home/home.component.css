@@ -1,0 +1,44 @@
+  .dropdown-search {
+    position: absolute;
+    top: 1.5rem;
+    right: 23px;
+    max-width: 300px;
+    width: 100%;
+  }
+  @media (max-width: 576px) {
+
+    .dropdown-search {
+      max-width: 100%;
+    }
+  }
+  @media (max-width: 800px) {
+    .dropdown-search {
+      position: unset !important;
+      top: 0;
+      right: 0;
+    }
+  }
+.cricket-modal .custom-option-booked-1 {
+  width: 20px;
+  height: 20px;
+  display: block;
+  background-color: #ff3e1d;
+  border-radius: 3px;
+  border: 1px solid #ff3e1d
+}
+.cricket-modal .custom-option-available {
+  width: 20px;
+  height: 20px;
+  display: block;
+  border: 1px solid #d9dee3;
+  background-color: transparent;
+  border-radius: 3px;
+}
+.card-style-1  {
+  background-color: #ffffffe6 !important;
+}
+.custom-option-booked {
+  background-color: #ff3e1d;
+  color: #ffffff;
+  border: 1px solid #ff3e1d;
+}

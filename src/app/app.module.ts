@@ -14,6 +14,8 @@ import { BreadcrumbModule } from "angular-crumbs";
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { InterceptorService } from './Providers/core-interceptor/core-interceptor.service';
 import { CoreModule } from './Providers/core.module';
+import { HomeComponent } from './front-office/home/home.component';
+import { FrontLayoutComponent } from "./layouts/front-layout/front-layout.component";
 
 @NgModule({
   imports: [
@@ -46,7 +48,7 @@ import { CoreModule } from './Providers/core.module';
       //}
     }),
   ],
-  declarations: [AppComponent, AdminLayoutComponent, LoginLayoutComponent],
+  declarations: [AppComponent, AdminLayoutComponent, LoginLayoutComponent,FrontLayoutComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true

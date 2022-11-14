@@ -759,6 +759,11 @@ export class AdminLayoutService {
     })
     return this.http.get(this.commonService.rootData.rootUrl + 'cricket/partyplotlistforcricket', {headers: headers });
   }
+  cancleCricketBookingConfirm(data: any) {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+    })
+    return this.http.post(this.commonService.rootData.rootUrl + 'cricket/bookingstatusupdate', data, { headers: headers });
+  }
 }
-
 

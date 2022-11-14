@@ -51,7 +51,7 @@ export class CricketBookingComponent implements OnInit {
   cricketBookingForm: FormGroup;
   partyplotListforcricket: any[] = [];
   noData: boolean;
-  
+
   isSlotBooked: boolean = false;
   bookingDataFlag: boolean = false;
   //submittedCricketData = false;
@@ -63,8 +63,8 @@ export class CricketBookingComponent implements OnInit {
   slotData = [];
   bookingData: any = {};
   cricketBookingListforCalendar: any[] = [];
-  isFullDaySlot : boolean = false;
-  isFullDayShow : boolean = false;
+  isFullDaySlot: boolean = false;
+  isFullDayShow: boolean = false;
   isCheck = {};
   yearArray = new Array<number>();
   submittedcricketBookingData: boolean = false;
@@ -155,7 +155,7 @@ export class CricketBookingComponent implements OnInit {
   }
 
   savecricketData() {
-    
+
     if (this.cricketBookingForm.invalid) {
       this.submittedcricketBookingData = true;
       return;
@@ -218,7 +218,20 @@ export class CricketBookingComponent implements OnInit {
       partyplotId: this.searchedPartyplot,
     });
   }
-
+  cancelcricketBookingConfirm(id: any) {
+    let Obj = {
+      _id: id,
+      "iscancle": true
+    }
+    this.adminLayoutService.cancleCricketBookingConfirm(Obj).subscribe(
+      (Response: any) => {
+        if (Response.meta.code == 200) {
+          this.handleDateClick({ date: this.slotDate })
+          this.commonService.notifier.notify('success', Response.meta.message)
+        }
+      }
+    )
+  }
   // calender view list data
   getInquiryListForCalenderView(data: any) {
     let obj = {
@@ -232,7 +245,7 @@ export class CricketBookingComponent implements OnInit {
       .subscribe((response: any) => {
         this.cricketBookingListforCalendar = [];
         if (response.meta.code == 200) {
-        this.cricketBookingListforCalendar = response.data;
+          this.cricketBookingListforCalendar = response.data;
         }
         this.calendarOptions = {
           initialView: 'dayGridMonth',
@@ -258,37 +271,37 @@ export class CricketBookingComponent implements OnInit {
             }
           },
         }
-        
+
       });
 
-      this.calendarOptions = {
-        initialView: 'dayGridMonth',
-        headerToolbar: {
-          left: 'prev,next title',
-          center: '',
-          right: ''
+    this.calendarOptions = {
+      initialView: 'dayGridMonth',
+      headerToolbar: {
+        left: 'prev,next title',
+        center: '',
+        right: ''
+      },
+      showNonCurrentDates: false,
+      initialDate: new Date(this.currentYear + '-' + this.currentMonth),
+      businessHours: false, // display business hours
+      dateClick: this.handleDateClick.bind(this),
+      events: this.cricketBookingListforCalendar,
+      expandRows: true,
+      eventClick: this.handleDateClick.bind(this),
+      contentHeight: "auto",
+      customButtons: {
+        next: {
+          click: this.nextMonth.bind(this)
         },
-        showNonCurrentDates: false,
-        initialDate: new Date(this.currentYear + '-' + this.currentMonth),
-        businessHours: false, // display business hours
-        dateClick: this.handleDateClick.bind(this),
-        events: this.cricketBookingListforCalendar,
-        expandRows: true,
-        eventClick: this.handleDateClick.bind(this),
-        contentHeight: "auto",
-        customButtons: {
-          next: {
-            click: this.nextMonth.bind(this)
-          },
-          prev: {
-            click: this.prevMonth.bind(this)
-          }
-        },
-      }
+        prev: {
+          click: this.prevMonth.bind(this)
+        }
+      },
+    }
 
   }
 
- 
+
 
   // date selction through open popup
   handleDateClick(arg) {
@@ -305,14 +318,16 @@ export class CricketBookingComponent implements OnInit {
     this.adminLayoutService
       .slotListByDatewise(obj)
       .subscribe((Response: any) => {
-        if(Response.meta.code == 200) {
+        let todayDate = moment(new Date()).format('yyyy-MM-DD');
+        let argDate = moment(arg.date).format('yyyy-MM-DD');
+        if (Response.meta.code == 200) {
           this.slotListByDate = Response.data;
           for (let index = 0; index < this.slotListByDate.length; index++) {
             this.slotData.push(false)
           }
           let bookedSlotList = [];
-          bookedSlotList = this.slotListByDate.filter((x:any) => x.isbooked == 1)
-          if(bookedSlotList?.length > 0) {
+          bookedSlotList = this.slotListByDate.filter((x: any) => x.isbooked == 1)
+          if (bookedSlotList?.length > 0) {
             this.isFullDayShow = false
           } else {
             this.isFullDayShow = true
@@ -350,10 +365,10 @@ export class CricketBookingComponent implements OnInit {
 
   dayTypeEvent(checked) {
 
-    if(checked.checked == true) {
+    if (checked.checked == true) {
       this.slotTime = [];
       this.slot = [];
-      this.slotListByDate.forEach((slotListByDateData: any,index:number) => {
+      this.slotListByDate.forEach((slotListByDateData: any, index: number) => {
         //this.getSlotIdOnChecked(slotListByDateData._id,true,index,slotListByDateData.time,slotListByDateData.isbooked,slotListByDateData.cricket_bookingData[0])
         this.slotData[index] = true;
         this.isCheck[index] = 5;
@@ -385,10 +400,11 @@ export class CricketBookingComponent implements OnInit {
         this.bookingDataFlag = true;
       }
       else {
-        this.bookingDataFlag = false;
+        this.bookingDataFlag = true;
       }
       this.bookingData = bookingData;
     } else if (isBooked == 0) {
+      this.bookingDataFlag = false;
       if (this.slotData[index] == true) {
         this.isCheck[index] = 5;
         this.slot.push(slotId);
@@ -406,18 +422,18 @@ export class CricketBookingComponent implements OnInit {
         this.isSlotBooked = false;
       }
     }
-    let abc = this.slotData.filter((x:any) => x == false)
-    if(abc?.length > 0) {
+    let abc = this.slotData.filter((x: any) => x == false)
+    if (abc?.length > 0) {
       this.isFullDaySlot = false;
     } else {
       this.isFullDaySlot = true;
     }
   }
 
-  
+
 
   // update inquiry
-  
+
   // // calender
   // // public date: moment.Moment;
   // public disabled = false;
