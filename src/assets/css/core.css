@@ -17672,4 +17672,9 @@ a.fc-event, a.fc-event:hover,.fc td.fc-daygrid-day:not(.fc-day-disabled) .fc-day
 }
 .card-style-1 .ng-select-container , .card-style-1 .form-control  {
   background-color: transparent !important;
+}.loading-text {
+    position: absolute;
+    top: 50% !important;
+    left: 50%;
+    transform: translate(-50%,-50%) !important;
 }

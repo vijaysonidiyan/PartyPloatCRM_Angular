@@ -31,7 +31,11 @@ export class InterceptorService implements HttpInterceptor {
 
         this.count--;
 
-        if (this.count == 0) this.spinner.hide()
+        if (this.count == 0) {
+          setTimeout( ()=> {
+            this.spinner.hide()
+        }, 1000);
+        }
       })
       );
   }

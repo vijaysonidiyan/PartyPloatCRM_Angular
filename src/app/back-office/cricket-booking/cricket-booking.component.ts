@@ -68,6 +68,7 @@ export class CricketBookingComponent implements OnInit {
   isCheck = {};
   yearArray = new Array<number>();
   submittedcricketBookingData: boolean = false;
+  isPastDate: boolean = false;
   get fcricketBookingData() {
     return this.cricketBookingForm.controls;
   }
@@ -318,19 +319,25 @@ export class CricketBookingComponent implements OnInit {
     this.adminLayoutService
       .slotListByDatewise(obj)
       .subscribe((Response: any) => {
-        let todayDate = moment(new Date()).format('yyyy-MM-DD');
-        let argDate = moment(arg.date).format('yyyy-MM-DD');
         if (Response.meta.code == 200) {
           this.slotListByDate = Response.data;
           for (let index = 0; index < this.slotListByDate.length; index++) {
             this.slotData.push(false)
           }
-          let bookedSlotList = [];
-          bookedSlotList = this.slotListByDate.filter((x: any) => x.isbooked == 1)
-          if (bookedSlotList?.length > 0) {
-            this.isFullDayShow = false
+          let todayDate = moment(new Date()).format('yyyy-MM-DD');
+          let argDate = moment(arg.date).format('yyyy-MM-DD');
+          if (argDate < todayDate) {
+            this.isPastDate = true;
+            this.isFullDayShow = false;
           } else {
-            this.isFullDayShow = true
+            this.isPastDate = false;
+            let bookedSlotList = [];
+            bookedSlotList = this.slotListByDate.filter((x: any) => x.isbooked == 1)
+            if (bookedSlotList?.length > 0) {
+              this.isFullDayShow = false
+            } else {
+              this.isFullDayShow = true
+            }
           }
           $("#cricket-slotbook-by-date-modal").modal("show");
         } else {
@@ -385,48 +392,45 @@ export class CricketBookingComponent implements OnInit {
     }
   }
 
-  getSlotIdOnChecked(
-    slotId: any,
-    index: any,
-    slotTime: any,
-    isBooked: any,
-    bookingData: any
-  ) {
+  getSlotIdOnChecked(slotId: any, index: any, slotTime: any, isBooked: any, bookingData: any) {
     debugger
-    this.bookingData = {}
-    this.slotData[index] = !this.slotData[index]
-    if (isBooked == 1) {
-      if (this.slotData[index] === true) {
-        this.bookingDataFlag = true;
+    if (this.isPastDate == false) {
+      this.bookingData = {}
+      this.slotData[index] = !this.slotData[index]
+      if (isBooked == 1) {
+        if (this.slotData[index] === true) {
+          this.bookingDataFlag = true;
+        }
+        else {
+          this.bookingDataFlag = true;
+        }
+        this.bookingData = bookingData;
+      } else if (isBooked == 0) {
+        this.bookingDataFlag = false;
+        if (this.slotData[index] == true) {
+          this.isCheck[index] = 5;
+          this.slot.push(slotId);
+          this.slotTime.push(slotTime);
+        } else {
+          this.isCheck[index] = 0;
+          let getindex = this.slot.indexOf(slotId);
+          let getTimeindex = this.slotTime.indexOf(slotTime);
+          this.slot.splice(getindex, 1);
+          this.slotTime.splice(getTimeindex, 1);
+        }
+        if (this.slot.length > 0) {
+          this.isSlotBooked = true;
+        } else {
+          this.isSlotBooked = false;
+        }
       }
-      else {
-        this.bookingDataFlag = true;
-      }
-      this.bookingData = bookingData;
-    } else if (isBooked == 0) {
-      this.bookingDataFlag = false;
-      if (this.slotData[index] == true) {
-        this.isCheck[index] = 5;
-        this.slot.push(slotId);
-        this.slotTime.push(slotTime);
+
+      let abc = this.slotData.filter((x: any) => x == false)
+      if (abc?.length > 0) {
+        this.isFullDaySlot = false;
       } else {
-        this.isCheck[index] = 0;
-        let getindex = this.slot.indexOf(slotId);
-        let getTimeindex = this.slotTime.indexOf(slotTime);
-        this.slot.splice(getindex, 1);
-        this.slotTime.splice(getTimeindex, 1);
+        this.isFullDaySlot = true;
       }
-      if (this.slot.length > 0) {
-        this.isSlotBooked = true;
-      } else {
-        this.isSlotBooked = false;
-      }
-    }
-    let abc = this.slotData.filter((x: any) => x == false)
-    if (abc?.length > 0) {
-      this.isFullDaySlot = false;
-    } else {
-      this.isFullDaySlot = true;
     }
   }
 
