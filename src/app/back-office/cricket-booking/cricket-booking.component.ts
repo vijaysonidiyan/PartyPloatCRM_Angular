@@ -405,6 +405,7 @@ export class CricketBookingComponent implements OnInit {
           this.bookingDataFlag = true;
         }
         this.bookingData = bookingData;
+        this.bookingData.time = slotTime
       } else if (isBooked == 0) {
         this.bookingDataFlag = false;
         if (this.slotData[index] == true) {
