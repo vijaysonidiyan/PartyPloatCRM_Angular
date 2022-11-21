@@ -86,7 +86,7 @@ export class CricketBookingComponent implements OnInit {
   ngOnInit(): void {
     this.l = 10;
     this.defaultForm();
-    this.getYear();
+
   }
 
   defaultForm() {
@@ -102,37 +102,6 @@ export class CricketBookingComponent implements OnInit {
   }
 
   // get month and year wise api call and get data
-
-  monthArray = [
-    { value: "1", month: "January" },
-    { value: "2", month: "February" },
-    { value: "3", month: "March" },
-    { value: "4", month: "April" },
-    { value: "5", month: "May" },
-    { value: "6", month: "June" },
-    { value: "7", month: "July" },
-    { value: "8", month: "August" },
-    { value: "9", month: "September" },
-    { value: "10", month: "October" },
-    { value: "11", month: "November" },
-    { value: "12", month: "December" },
-  ];
-
-  getYear() {
-    this.yearArray = new Array<number>();
-    let d = new Date();
-    let nowYear = 2022;
-
-    for (let index = 0; index < 50; index++) {
-      let prYear = d.getFullYear();
-      // let prYear = 2024;
-      let arr = prYear - index;
-      if (arr >= nowYear) {
-        this.yearArray.push(arr);
-      }
-    }
-    return this.yearArray;
-  }
 
   getPartyplotListforcricket() {
     this.adminLayoutService.getpartyplotListforcricket().subscribe(
@@ -165,7 +134,7 @@ export class CricketBookingComponent implements OnInit {
     let time = "00:00";
     let newSlotDate =
       moment(new Date(date + " " + time)).format("yyyy-MM-DDTHH:mm:ss") +
-      ".000+00:00";
+      ".000Z";
 
     let cricketModelObj = {
       name: this.cricketBookingForm.controls.name.value,
