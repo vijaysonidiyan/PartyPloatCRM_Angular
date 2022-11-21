@@ -194,7 +194,11 @@ export class CricketBookingComponent implements OnInit {
             "success",
             "Booking Details Saved Successfully."
           );
-
+          this.getInquiryListForCalenderView({
+            month: this.currentMonth,
+            year: this.currentYear,
+            partyplotId: this.searchedPartyplot,
+          });
           this.handleDateClick({ date: this.slotDate });
         } else {
           this.commonService.notifier.notify("error", Response.meta.message);
@@ -227,7 +231,12 @@ export class CricketBookingComponent implements OnInit {
     this.adminLayoutService.cancleCricketBookingConfirm(Obj).subscribe(
       (Response: any) => {
         if (Response.meta.code == 200) {
-          this.handleDateClick({ date: this.slotDate })
+          this.handleDateClick({ date: this.slotDate });
+          this.getInquiryListForCalenderView({
+            month: this.currentMonth,
+            year: this.currentYear,
+            partyplotId: this.searchedPartyplot,
+          });
           this.commonService.notifier.notify('success', Response.meta.message)
         }
       }
