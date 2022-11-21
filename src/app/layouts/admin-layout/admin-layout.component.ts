@@ -21,7 +21,7 @@ export class AdminLayoutComponent implements OnInit {
   private _router: Subscription;
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
-  navbarNativeElement : any;
+  navbarNativeElement: any;
   constructor(
     public location: Location,
     private router: Router,
@@ -37,10 +37,11 @@ export class AdminLayoutComponent implements OnInit {
       }
     })
   }
-  navbarEvent(Element : any) {
+  navbarEvent(Element: any) {
     this.navbarNativeElement = Element;
   }
   ngOnInit() {
+    this.getRolemasterList();
     const isWindows = navigator.platform.indexOf("Win") > -1 ? true : false;
 
     if (
@@ -194,5 +195,30 @@ export class AdminLayoutComponent implements OnInit {
       bool = true;
     }
     return bool;
+  }
+  getRolemasterList() {
+    this.adminLayoutService.getroleMaster().subscribe((Response: any) => {
+
+      if (Response.meta.code == 200) {
+      } else {
+        this.logout();
+      }
+      //for select sub industry step
+    }, (error) => {
+      this.logout();
+      console.log(error.error.Message);
+    });
+  }
+  logout() {
+    this.storageService.removeValue(StorageKey.myToken);
+    this.storageService.removeValue(StorageKey.roleId);
+    this.storageService.removeValue(StorageKey.contact);
+    this.storageService.removeValue(StorageKey.reference);
+    this.storageService.removeValue(StorageKey.aadharcardNo);
+    this.storageService.removeValue(StorageKey.lastName);
+    this.storageService.removeValue(StorageKey.email);
+    this.storageService.removeValue(StorageKey.full_name);
+    this.storageService.removeValue(StorageKey.isUtsavDecoreLogin);
+    this.router.navigate(["/admin-login/login"]);
   }
 }

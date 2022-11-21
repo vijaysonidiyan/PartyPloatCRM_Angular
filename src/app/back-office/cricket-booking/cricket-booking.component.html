@@ -70,42 +70,42 @@
                                                 <div class="col-lg-11">
                                                     <ul class="list-unstyled mt-3">
                                                         <li class="mb-2 accordion-data">
-                                                            <i class="bx bx-time"></i>
-                                                            <div>
-                                                                <span>Slot Time:</span>
-                                                                <span>{{bookingData?.time}}</span>
-                                                            </div>
-                                                        </li>
-                                                        <li class="mb-2 accordion-data">
                                                             <i class="bx bx-user"></i>
                                                             <div>
                                                                 <span>Name:</span>
-                                                                <span>{{bookingData?.name}}</span>
+                                                                <span class="mx-0">{{bookingData?.name}}</span>
                                                             </div>
                                                         </li>
                                                         <li class="mb-2 accordion-data">
                                                             <i class="bx bx-envelope"></i>
                                                             <div>
                                                                 <span>Email:</span>
-                                                                <span>{{bookingData?.email}}</span>
+                                                                <span class="mx-0">{{bookingData?.email}}</span>
                                                             </div>
                                                         </li>
-
+                                                        
                                                         <li class="mb-2 accordion-data">
                                                             <i class="bx bx-phone"></i>
                                                             <div>
                                                                 <span>Conatact:</span>
-                                                                <span>{{bookingData?.primaryContact}}
+                                                                <span class="mx-0">{{bookingData?.primaryContact}}
                                                                     <span
-                                                                        *ngIf="!!bookingData?.secondaryContact">,</span>
+                                                                    *ngIf="!!bookingData?.secondaryContact">,</span>
                                                                     {{bookingData?.secondaryContact}}</span>
-                                                            </div>
-                                                        </li>
+                                                                </div>
+                                                            </li>
+                                                            <li class="mb-2 accordion-data">
+                                                                <i class="bx bx-time"></i>
+                                                                <div>
+                                                                    <span>Slot Time:</span>
+                                                                    <span class="mx-0">{{bookingData?.time}}</span>
+                                                                </div>
+                                                            </li>
                                                         <li class="mb-2 accordion-data" *ngIf="!!bookingData?.address">
                                                             <i class="bx bx-map"></i>
                                                             <div>
                                                                 <span>Address:</span>
-                                                                <span>{{bookingData?.address}}</span>
+                                                                <span class="mx-0">{{bookingData?.address}}</span>
                                                             </div>
                                                         </li>
                                                     </ul>
