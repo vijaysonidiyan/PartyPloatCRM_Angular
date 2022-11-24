@@ -4,7 +4,6 @@ import { CommonModule, DatePipe } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AdminLayoutRoutes } from "./admin-layout.routing";
 import { DashboardComponent } from "../../back-office/dashboard/dashboard.component";
-import { TableListComponent } from "../../back-office/table-list/table-list.component";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 import { MatNativeDateModule, MatRippleModule } from "@angular/material/core";
@@ -79,7 +78,6 @@ import { CricketBookingComponent } from "app/back-office/cricket-booking/cricket
   ],
   declarations: [
     DashboardComponent,
-    TableListComponent,
     MenuMasterComponent,
     RoleMasterComponent,
     RoleWiseMenuComponent,

@@ -239,7 +239,7 @@ export class CricketBookingComponent implements OnInit {
           dateClick: this.handleDateClick.bind(this),
           events: this.cricketBookingListforCalendar,
           expandRows: true,
-          eventClick: this.handleDateClick.bind(this),
+          // eventClick: this.handleDateClick.bind(this),
           contentHeight: "auto",
           customButtons: {
             next: {
@@ -266,7 +266,7 @@ export class CricketBookingComponent implements OnInit {
       dateClick: this.handleDateClick.bind(this),
       events: this.cricketBookingListforCalendar,
       expandRows: true,
-      eventClick: this.handleDateClick.bind(this),
+      // eventClick: this.handleDateClick.bind(this),
       contentHeight: "auto",
       customButtons: {
         next: {
