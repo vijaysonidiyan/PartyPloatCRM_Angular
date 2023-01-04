@@ -92,7 +92,7 @@ export class CricketBookingComponent implements OnInit {
   defaultForm() {
     this.cricketBookingForm = this.fb.group({
       name: ["", Validators.required],
-      email: ["", Validators.required],
+      email: [""],
       primaryContact: ["", Validators.required],
       secondaryContact: [""],
       address: [""],
