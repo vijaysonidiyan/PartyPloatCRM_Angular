@@ -96,6 +96,7 @@ export class CricketBookingComponent implements OnInit {
       primaryContact: ["", Validators.required],
       secondaryContact: [""],
       address: [""],
+      remark: [""],
       partyplotId: [null, Validators.required],
       date: [""],
     });
@@ -142,6 +143,7 @@ export class CricketBookingComponent implements OnInit {
       primaryContact: this.cricketBookingForm.controls.primaryContact.value,
       secondaryContact: this.cricketBookingForm.controls.secondaryContact.value,
       address: this.cricketBookingForm.controls.address.value,
+      remark: this.cricketBookingForm.controls.remark.value,
       partyplotId: this.cricketBookingForm.controls.partyplotId.value,
       slot: this.slot,
       date: newSlotDate,
@@ -200,6 +202,7 @@ export class CricketBookingComponent implements OnInit {
     this.adminLayoutService.cancleCricketBookingConfirm(Obj).subscribe(
       (Response: any) => {
         if (Response.meta.code == 200) {
+          this.bookingDataFlag = false;
           this.handleDateClick({ date: this.slotDate });
           this.getInquiryListForCalenderView({
             month: this.currentMonth,
