@@ -1,81 +1,98 @@
 <div
     style="height: calc(100vh); background: url(../../../assets/img/cricket-bg.jpg);background-size: cover; background-position: center;background-repeat: no-repeat;">
-   <div style="background-color: #0000003f; height: 100%;">
-    <div class="container container-p-y">
-        <div class="row">
-            <div class="col-lg-1"></div>
-            <div class="col-lg-10">
-                <div class="card card-style-1">
-                    <div class="card-body p-0">
-                        <div class="">
-                            <div class="p-4 btn-cus position-relative">
-                                <div class="dropdown-search">
+    <div style="background-color: #0000003f; height: 100%;">
+        <div class="container container-p-y">
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-10">
+                    <div class="card card-style-1">
+                        <div class="card-body p-0">
+                            <div class="">
+                                <div class="p-4 btn-cus position-relative">
+                                    <div class="dropdown-search">
 
-                                    <ng-select [items]="partyplotListforcricket" [multiple]="false"
-                                        class="form-control p-0 me-3" bindLabel="name" bindValue="_id"
-                                        [(ngModel)]="searchedPartyplot" [clearable]="false" [searchable]="false"
-                                        (change)="partyplotChange()" placeholder="Select Party Plot">
-                                    </ng-select>
+                                        <ng-select [items]="partyplotListforcricket" [multiple]="false"
+                                            class="form-control p-0 me-3" bindLabel="name" bindValue="_id"
+                                            [(ngModel)]="searchedPartyplot" [clearable]="false" [searchable]="false"
+                                            (change)="partyplotChange()" placeholder="Select Party Plot">
+                                        </ng-select>
 
+                                    </div>
+                                    <full-calendar #calendar [options]="calendarOptions">
+                                    </full-calendar>
                                 </div>
-                                <full-calendar #calendar [options]="calendarOptions">
-                                </full-calendar>
                             </div>
                         </div>
+
                     </div>
-
                 </div>
+                <div class="col-lg-1"></div>
+
             </div>
-            <div class="col-lg-1"></div>
-
         </div>
-    </div>
-    <div class="modal fade" id="cricket-slotbook-by-date-modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content modal-height-calc">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1"><strong>Cricket Booking Slot</strong></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closeBookSlot()"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body modal-scroll cricket-modal">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h5 class="float-end mb-0">Date - {{slotDate | date:'dd/MM/yyyy' }}</h5>
-                                    <div class="d-flex">
-                                        <div class="d-flex me-3">
-                                            <span class="me-2 custom-option-booked-1"></span>
-                                            <span>Booked</span>
-                                        </div>
+        <div class="modal fade" id="cricket-slotbook-by-date-modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-height-calc">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel1"><strong>Cricket Booking Slot</strong></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closeBookSlot()"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body modal-scroll cricket-modal">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h5 class="float-end mb-0">Date - {{slotDate | date:'dd/MM/yyyy' }}</h5>
                                         <div class="d-flex">
-                                            <span class="me-2 custom-option-available"></span>
-                                            <span>Available</span>
+                                            <div class="d-flex me-3">
+                                                <span class="me-2 custom-option-booked-1"></span>
+                                                <span>Booked</span>
+                                            </div>
+                                            <div class="d-flex me-3">
+                                                <span class="me-2 custom-option-available"></span>
+                                                <span>Available</span>
+                                            </div>
+                                            <div class="d-flex">
+                                                <span class="me-2 custom-option-not-available"></span>
+                                                <span>Not Available</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-md-4 mb-md-0 mb-2"
-                                    *ngFor="let slotListByDateData of slotListByDate;let slotListByDateIndex = index">
-                                    <div class="form-check custom-option custom-option-image custom-option-image-check"
-                                        [ngClass]="{'custom-option-booked' : slotListByDateData.isbooked == 1}">
-                                        <label class="form-check-label custom-option-content"
-                                            for="{{slotListByDateData._id}}">
-                                            <span class="custom-option-body">
-                                                <!-- 7:00 AM TO 10:00 AM -->
-                                                {{slotListByDateData.time}}
-                                            </span>
-                                        </label>
+                                <div class="row" *ngIf="isFullDaySlot == false">
+                                    <div class="col-md-4 mb-md-0 mb-2"
+                                        *ngFor="let slotListByDateData of slotListByDate;let slotListByDateIndex = index">
+                                        <div class="form-check custom-option custom-option-image custom-option-image-check "
+                                            [ngClass]="{'custom-option-booked' : slotListByDateData.isbooked == 1,
+                                            'custom-option-disabled' : isDisabled[slotListByDateIndex] == true}">
+                                            <label class="form-check-label custom-option-content"
+                                                for="{{slotListByDateData._id}}">
+                                                <span class="custom-option-body">
+                                                    <!-- 7:00 AM TO 10:00 AM -->
+                                                    {{slotListByDateData.time}}
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="isFullDaySlot == true">
+                                    <div class="col-md-4 mb-md-0 mb-2">
+                                        <div class="form-check custom-option custom-option-image custom-option-image-check custom-option-booked">
+                                            <label class="form-check-label custom-option-content">
+                                                <span class="custom-option-body">
+                                                    7:00 AM TO 12:00 AM
+                                                </span>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-   </div>
 </div>

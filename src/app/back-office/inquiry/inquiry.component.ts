@@ -457,15 +457,12 @@ export class InquiryComponent implements OnInit {
   getYear() {
     this.yearArray = new Array<number>();
     let d = new Date();
-    let nowYear = 2022;
+    let toYear = d.getFullYear();
+    let endYear = toYear + 5
+    let startYear = 2022;
 
-    for (let index = 0; index < 5; index++) {
-      let prYear = d.getFullYear();
-      // let prYear = 2024;
-      let arr = prYear + index;
-      if (arr >= nowYear) {
-        this.yearArray.push(arr)
-      }
+    for (let index = startYear; index <= endYear; index++) {
+      this.yearArray.push(index)
     }
     return this.yearArray;
   }

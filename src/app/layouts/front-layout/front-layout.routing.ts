@@ -4,5 +4,5 @@ import { HomeComponent } from 'app/front-office/home/home.component';
 
 
 export const FrontLayoutRoutes: Routes = [
-     { path: 'home',      component: HomeComponent },
+     { path: 'cricket-booking',      component: HomeComponent },
 ];

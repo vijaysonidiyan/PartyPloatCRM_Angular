@@ -29,17 +29,13 @@ export class HomeComponent implements OnInit {
   currentYear = this.date.getFullYear();
   cricketBookingListforCalendar: any[] = [];
   slotListByDate: any[] = [];
-  slot: any[] = [];
-  slotTime: any[] = [];
   slotDate: string;
-  slotData = [];
-  bookingData: any = {};
-  isFullDaySlot : boolean = false;
-  isFullDayShow : boolean = false;
+  isFullDaySlot: boolean = false;
+  isDisabled = {}
   constructor(private frontLayoutService: FrontLayoutService,
-    private commonService: CommonService,) { 
-      this.getPartyplotListforcricket();
-    }
+    private commonService: CommonService,) {
+    this.getPartyplotListforcricket();
+  }
 
   ngOnInit(): void {
   }
@@ -64,62 +60,35 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  
-    // calender view
-    @ViewChild("calendar") calendarComponent: FullCalendarComponent;
 
-    calendarOptions: CalendarOptions;
-  
-    partyplotChange() {
-      this.getInquiryListForCalenderView({
-        month: this.currentMonth,
-        year: this.currentYear,
-        partyplotId: this.searchedPartyplot,
-      });
-    }
-  
-    // calender view list data
-    getInquiryListForCalenderView(data: any) {
-      let obj = {
-        month: data.month ? data.month : null,
-        year: data.year ? data.year : null,
-        partyplotId: data.partyplotId ? data.partyplotId : null,
-      };
-  
-      this.frontLayoutService
-        .getCricketbookinglistmonthwise(obj)
-        .subscribe((response: any) => {
-          this.cricketBookingListforCalendar = [];
-          if (response.meta.code == 200) {
+  // calender view
+  @ViewChild("calendar") calendarComponent: FullCalendarComponent;
+
+  calendarOptions: CalendarOptions;
+
+  partyplotChange() {
+    this.getInquiryListForCalenderView({
+      month: this.currentMonth,
+      year: this.currentYear,
+      partyplotId: this.searchedPartyplot,
+    });
+  }
+
+  // calender view list data
+  getInquiryListForCalenderView(data: any) {
+    let obj = {
+      month: data.month ? data.month : null,
+      year: data.year ? data.year : null,
+      partyplotId: data.partyplotId ? data.partyplotId : null,
+    };
+
+    this.frontLayoutService
+      .getCricketbookinglistmonthwise(obj)
+      .subscribe((response: any) => {
+        this.cricketBookingListforCalendar = [];
+        if (response.meta.code == 200) {
           this.cricketBookingListforCalendar = response.data;
-          }
-          this.calendarOptions = {
-            initialView: 'dayGridMonth',
-            headerToolbar: {
-              left: 'prev,next title',
-              center: '',
-              right: ''
-            },
-            showNonCurrentDates: false,
-            initialDate: new Date(this.currentYear + '-' + this.currentMonth),
-            businessHours: false, // display business hours
-            dateClick: this.handleDateClick.bind(this),
-            events: this.cricketBookingListforCalendar,
-            expandRows: true,
-            eventClick: this.handleDateClick.bind(this),
-            contentHeight: "auto",
-            customButtons: {
-              next: {
-                click: this.nextMonth.bind(this)
-              },
-              prev: {
-                click: this.prevMonth.bind(this)
-              }
-            },
-          }
-          
-        });
-  
+        }
         this.calendarOptions = {
           initialView: 'dayGridMonth',
           headerToolbar: {
@@ -133,7 +102,7 @@ export class HomeComponent implements OnInit {
           dateClick: this.handleDateClick.bind(this),
           events: this.cricketBookingListforCalendar,
           expandRows: true,
-          eventClick: this.handleDateClick.bind(this),
+          // eventClick: this.handleDateClick.bind(this),
           contentHeight: "auto",
           customButtons: {
             next: {
@@ -144,14 +113,40 @@ export class HomeComponent implements OnInit {
             }
           },
         }
-  
+
+      });
+
+    this.calendarOptions = {
+      initialView: 'dayGridMonth',
+      headerToolbar: {
+        left: 'prev,next title',
+        center: '',
+        right: ''
+      },
+      showNonCurrentDates: false,
+      initialDate: new Date(this.currentYear + '-' + this.currentMonth),
+      businessHours: false, // display business hours
+      dateClick: this.handleDateClick.bind(this),
+      events: this.cricketBookingListforCalendar,
+      expandRows: true,
+      // eventClick: this.handleDateClick.bind(this),
+      contentHeight: "auto",
+      customButtons: {
+        next: {
+          click: this.nextMonth.bind(this)
+        },
+        prev: {
+          click: this.prevMonth.bind(this)
+        }
+      },
     }
 
-      // date selction through open popup
+  }
+
+  // date selction through open popup
   handleDateClick(arg) {
+    debugger
     this.slotListByDate = [];
-    this.bookingData = {};
-    this.slot = [];
     this.isFullDaySlot = false;
     this.slotDate = arg.date;
     let obj = {
@@ -162,25 +157,53 @@ export class HomeComponent implements OnInit {
     this.frontLayoutService
       .slotListByDatewise(obj)
       .subscribe((Response: any) => {
-        if(Response.meta.code == 200) {
-          this.slotListByDate = Response.data;
-          for (let index = 0; index < this.slotListByDate.length; index++) {
-            this.slotData.push(false)
-          }
-          let bookedSlotList = [];
-          bookedSlotList = this.slotListByDate.filter((x:any) => x.isbooked == 1)
-          if(bookedSlotList?.length > 0) {
-            this.isFullDayShow = false
+        debugger
+        if (Response.meta.code == 200) {
+          this.isFullDaySlot = Response.data.isFullDay
+          if (Response.data.isFullDay === false) {
+            let bookedData = Response.data.slotData.filter((x: any) => x.isbooked == 1)
+            //console.log("bookedData", bookedData);
+
+            Response.data.slotData.filter((x: any, i: number) => {
+              if (x.isbooked == 1) {
+                this.isDisabled[i] = false
+              } else if (x.isbooked == 0) {
+
+                let date = moment(this.slotDate).format('yyyy-MM-DD')
+                let startDate = new Date(date + ' ' + x.startTime)
+                let endDate = new Date(date + ' ' + x.endTime)
+                let invalidCount = 0
+                bookedData.filter((y: any, j: number) => {
+                  if (y.isbooked == 1) {
+                    let xStartDate = new Date(date + ' ' + y.startTime)
+                    let xEndDate = new Date(date + ' ' + y.endTime)
+                    if (y._id != x._id && (((startDate < xStartDate) && (xStartDate < endDate)) || ((endDate > xEndDate) && xEndDate > startDate) || (xStartDate < startDate) && (startDate < xEndDate)) || ((xEndDate > endDate) && endDate > xStartDate)) {
+                      invalidCount++
+                    }
+                  }
+                })
+
+                if(invalidCount > 0) {
+                  this.isDisabled[i] = true
+                } else {
+                  this.isDisabled[i] = false
+                }
+              }
+            })
+            this.slotListByDate = Response.data.slotData;
+
           } else {
-            this.isFullDayShow = true
+            this.slotListByDate = []
+            //this.slotListByDate = Response.data.slotData
           }
+
           $("#cricket-slotbook-by-date-modal").modal("show");
         } else {
           this.commonService.notifier.notify("error", Response.meta.message);
         }
       });
   }
-      // For Next Month Click
+  // For Next Month Click
   nextMonth(): void {
     let calendarApi = this.calendarComponent.getApi();
     calendarApi.next();

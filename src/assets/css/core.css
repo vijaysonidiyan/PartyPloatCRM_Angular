@@ -17630,6 +17630,7 @@ a.fc-event, a.fc-event:hover,.fc td.fc-daygrid-day:not(.fc-day-disabled) .fc-day
   border-radius: 0.5rem;
   text-align: center;
   margin-bottom: 20px;
+  width: 100%;
 }
 .custom-option-image.custom-option-image-check .form-check-input:checked {
   opacity: 0;
@@ -17677,4 +17678,8 @@ a.fc-event, a.fc-event:hover,.fc td.fc-daygrid-day:not(.fc-day-disabled) .fc-day
     top: 50% !important;
     left: 50%;
     transform: translate(-50%,-50%) !important;
+}
+.custom-option-disabled,.custom-option-not-available {
+  background-color:rgb(239, 239, 239);
+    color: rgba(16, 16, 16, 0.3);
 }

@@ -22,9 +22,9 @@
   width: 20px;
   height: 20px;
   display: block;
-  background-color: #ff3e1d;
+  background-color: #47cb00;
   border-radius: 3px;
-  border: 1px solid #ff3e1d
+  border: 1px solid #47cb00
 }
 .cricket-modal .custom-option-available {
   width: 20px;
@@ -34,11 +34,18 @@
   background-color: transparent;
   border-radius: 3px;
 }
+.cricket-modal .custom-option-not-available {
+  width: 20px;
+  height: 20px;
+  display: block;
+  border: 1px solid #d9dee3;
+  border-radius: 3px;
+}
 .card-style-1  {
   background-color: #ffffffe6 !important;
 }
 .custom-option-booked {
-  background-color: #ff3e1d;
+  /* background-color: #ff3e1d; */
   color: #ffffff;
-  border: 1px solid #ff3e1d;
+  /* border: 1px solid #ff3e1d; */
 }

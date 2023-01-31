@@ -10,7 +10,7 @@ import { FrontLayoutComponent } from './layouts/front-layout/front-layout.compon
 const routes: Routes =[
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'cricket-booking',
     // redirectTo: 'admin-login/login',
     pathMatch: 'full',
   }, {

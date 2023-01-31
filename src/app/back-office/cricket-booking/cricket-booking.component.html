@@ -28,8 +28,7 @@
         <div class="modal-content modal-height-calc">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel1"><strong>Cricket Booking Slot</strong></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closeBookSlot()"
-                    aria-label="Close"></button>
+                <button type="button" class="btn-close" (click)="closeBookSlot()"></button>
             </div>
             <div class="modal-body modal-scroll inquiry-bydate">
                 <div class="card">
@@ -37,14 +36,16 @@
                         <div class="row">
                             <h5 class="float-end">Date - {{slotDate | date:'dd/MM/yyyy' }}</h5>
                             <div *ngIf="isFullDayShow === true"><input type="checkbox" class="form-check-input mb-3"
-                                    [(ngModel)]="isFullDaySlot"
+                                    [(ngModel)]="isFullDaySlot" [disabled]="isFullDayBooked == true"
                                     (change)="dayTypeEvent({checked: $event.target.checked})" /> Full Day</div>
                             <div class="col-md-4 mb-md-0 mb-2"
                                 *ngFor="let slotListByDateData of slotListByDate;let slotListByDateIndex = index">
-                                <div class="form-check custom-option custom-option-image custom-option-image-check"
+                                <button class="form-check custom-option custom-option-image custom-option-image-check"
                                     [ngClass]="{'custom-option-booked' : slotListByDateData.isbooked == 1 ,
-                                    'custom-option-pending' : isCheck[slotListByDateIndex] == 5 && slotListByDateData.isbooked == 0}"
-                                    (click)="getSlotIdOnChecked(slotListByDateData._id,slotListByDateIndex,slotListByDateData.time,slotListByDateData.isbooked,slotListByDateData.cricket_bookingData[0])">
+                                    'custom-option-pending' : isCheck[slotListByDateIndex] == true && slotListByDateData.isbooked == 0,
+                                'disabled' : slotDisable[slotListByDateIndex] == true}"
+                                    (click)="getSlotIdOnChecked({slotData:slotListByDateData, index:slotListByDateIndex})" 
+                                    [disabled]="slotDisable[slotListByDateIndex] == true">
                                     <label class="form-check-label custom-option-content"
                                         for="{{slotListByDateData._id}}">
                                         <span class="custom-option-body">
@@ -52,13 +53,13 @@
                                             {{slotListByDateData.time}}
                                         </span>
                                     </label>
-                                </div>
+                                </button>
                             </div>
                         </div>
-                        <div class="row" *ngIf="bookingDataFlag">
+                        <div class="row" *ngIf="bookingDataFlag === true">
                             <div class="col-lg-12">
                                 <hr>
-                                <div class="text-end">
+                                <div class="text-end" *ngIf="isFullDaySlot === false">
                                     <button class="btn event-btn-close" (click)="bookingDataFlag = false"></button>
                                 </div>
                                 <div class="accordion-collapse collapse show">
@@ -118,7 +119,7 @@
                                                     </ul>
                                                 </div>
                                                 <div class="col-lg-1 col-md-3 col-sm-3 col-3">
-                                                    <div class="d-flex">
+                                                    <div class="d-flex" *ngIf="isPastDate == false">
                                                         <div class="dropdown mt-3">
                                                             <button class="btn p-0" type="button" id="cardOpt6"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
