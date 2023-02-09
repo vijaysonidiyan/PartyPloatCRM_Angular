@@ -42,7 +42,7 @@ export class BookingConfirmComponent implements OnInit {
   ) {
     let pagePermission = { module: "bookingConfirm" }
     this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
-      debugger
+
       if (Response.meta.code == 200) {
 
         this.isView = Response.data.isView;
@@ -123,6 +123,35 @@ export class BookingConfirmComponent implements OnInit {
     }
   }
 
+  basicpackeageChanges() {
+    if (this.bookingDataForm.value.discount) {
+      let finalBudget = this.bookingDataForm.value.basicPackage - this.bookingDataForm.value.discount
+      this.bookingDataForm.controls.finalbudget.setValue(finalBudget.toString());
+    }
+    else {
+      let finalBudget = this.bookingDataForm.value.basicPackage
+      this.bookingDataForm.controls.finalbudget.setValue(finalBudget.toString());
+    }
+  }
+  discountChanges() {
+    if (this.bookingDataForm.value.basicPackage && this.bookingDataForm.value.finalbudget) {
+      let finalBudget = this.bookingDataForm.value.basicPackage - this.bookingDataForm.value.discount
+      this.bookingDataForm.controls.finalbudget.setValue(finalBudget.toString());
+    }
+    else {
+      let finalBudget = this.bookingDataForm.value.basicPackage
+      this.bookingDataForm.controls.finalbudget.setValue(finalBudget.toString());
+    }
+  }
+  finalBudgetChanges() {
+
+    if (this.bookingDataForm.value.basicPackage && this.bookingDataForm.value.discount) {
+      let discount = this.bookingDataForm.value.basicPackage - this.bookingDataForm.value.finalbudget
+      this.bookingDataForm.controls.discount.setValue(discount.toString());
+    }
+
+  }
+
   createCategoryItem(oItem: number, cItem?: any) {
     let cd = this.fb.group({
       item: [(cItem ? cItem['item'] : '')],
@@ -137,7 +166,8 @@ export class BookingConfirmComponent implements OnInit {
     return this.fb.group({
       item: [oItem["item"] ? oItem["item"] : "", [Validators.required]],
       description: [oItem["description"] ? oItem["description"] : ""],
-      quantity: [oItem["quantity"] ? oItem["quantity"] : "", [Validators.required]],
+      quantity: [oItem["quantity"] ? oItem["quantity"] : ""],
+      amount: [oItem["amount"] ? oItem["amount"] : "", [Validators.required]],
     });
   }
 
@@ -167,7 +197,7 @@ export class BookingConfirmComponent implements OnInit {
         this.bookingDataForm.controls.offer_budget.setValue(Response.data[0].offer_budget);
         this.bookingDataForm.controls.basicPackage.setValue(Response.data[0].offer_budget);
         this.bookingDataForm.controls.discount.setValue("0");
-        this.bookingDataForm.controls.finalbudget.setValue("0");
+        this.bookingDataForm.controls.finalbudget.setValue(Response.data[0].offer_budget);
         this.bookingDataForm.controls.remark.setValue(Response.data[0].remark);
         this.getPackageActiveList();
       }
@@ -226,6 +256,15 @@ export class BookingConfirmComponent implements OnInit {
     })
     const remove = this.eventList;
     remove.removeAt(index);
+  }
+
+  calculateExdecorBudget() {
+    let amount = 0;
+    (this.bookingDataForm.controls['extradecoration'] as FormArray).controls.map((x: any, index: any) => {
+      let newamount = x.value.amount ? parseInt(x.value.amount) : 0;
+      amount = newamount + amount;
+      this.bookingDataForm.controls.extraDecorBudget.setValue(amount.toString());
+    });
   }
 
   saveBookingConfirmInquiryEvent() {

@@ -78,16 +78,16 @@ export class AddInquiryComponent implements OnInit {
   isCreated: boolean;
   isUpdated: boolean;
   isDeleted: boolean;
-  toDate = this.datePipe.transform(new Date(),'dd/MM/yyyy');
-  
-  constructor(private datePipe: DatePipe,public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, private router: Router, public route: ActivatedRoute) {
+  toDate = this.datePipe.transform(new Date(), 'dd/MM/yyyy');
+
+  constructor(private datePipe: DatePipe, public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, private router: Router, public route: ActivatedRoute) {
     this.defaultForm();
     this.defaultEventForm();
     this.eventList = this.eventInquiryDataForm.get("events") as FormArray;
     let pagePermission = { module: "inquiry" }
     this.getAssignPartyplotList();
     this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
-      debugger
+
       if (Response.meta.code == 200) {
 
         this.isView = Response.data.isView;
@@ -157,7 +157,7 @@ export class AddInquiryComponent implements OnInit {
   ngOnInit(): void {
     this.getTimeRanges();
     this.activeReferenceList();
-    
+
     this.minEndDate[0] = new Date();
     // if (this.viewInquiry !== true) {
     //   this.eventList.push(this.createeventItem({}));
@@ -179,7 +179,7 @@ export class AddInquiryComponent implements OnInit {
     // } else if (this.viewInquiry === true) {
     //   this.editClientInquiry();
     // }
-    
+
   }
 
   defaultForm() {
@@ -605,7 +605,7 @@ export class AddInquiryComponent implements OnInit {
         this.clientinquiryDataForm.controls.partyplot_ID.setValue(Response.data.partyplot_ID);
         this.clientinquiryDataForm.controls.reference_detail.setValue(Response.data.reference_detail);
 
-        this.inquiryDate = this.datePipe.transform(new Date(Response.data.createdAt),'dd/MM/yyyy, hh:mm a')
+        this.inquiryDate = this.datePipe.transform(new Date(Response.data.createdAt), 'dd/MM/yyyy, hh:mm a')
         Response.data.EventInquiryData.forEach((x: any, index: any) => {
           let Dates = new Date(x.startDateObj);
           let startDateTime = new Date(x.startDateObj);

@@ -25,10 +25,10 @@ export class RoleWiseMenuComponent implements OnInit {
     isCreatedPage: boolean;
     isUpdatedPage: boolean;
     isDeletedPage: boolean;
-    constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, public storageService: StorageService, private router: Router) { 
+    constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, public storageService: StorageService, private router: Router) {
         let pagePermission = { module: "roleWiseMenu" }
         this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
-            debugger
+
             if (Response.meta.code == 200) {
 
                 this.isViewPage = Response.data.isView;

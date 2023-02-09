@@ -32,10 +32,10 @@ export class EventMasterComponent implements OnInit {
     public adminLayoutService: AdminLayoutService,
     private fb: FormBuilder,
     public commonService: CommonService, private router: Router
-  ) { 
+  ) {
     let pagePermission = { module: "eventMaster" }
     this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
-      debugger
+
       if (Response.meta.code == 200) {
 
         this.isView = Response.data.isView;

@@ -25,28 +25,28 @@ export class ModuleMasterComponent implements OnInit {
   get fModuleMasterData() { return this.modulemasterForm.controls; }
   submittedModuleMasterData = false;
   isView: boolean;
-    isCreated: boolean;
-    isUpdated: boolean;
-    isDeleted: boolean;
+  isCreated: boolean;
+  isUpdated: boolean;
+  isDeleted: boolean;
 
   constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, private router: Router) {
     let pagePermission = { module: "moduleMaster" }
-        this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
-            debugger
-            if (Response.meta.code == 200) {
+    this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
 
-                this.isView = Response.data.isView;
-                this.isCreated = Response.data.isCreated;
-                this.isUpdated = Response.data.isUpdated;
-                this.isDeleted = Response.data.isDeleted;
-                if (this.isView === false) {
-                    this.router.navigate(['admin/dashboard']);
-                }
-            }
-        }, (error) => {
-            console.log(error.error.Message);
-        });
-   }
+      if (Response.meta.code == 200) {
+
+        this.isView = Response.data.isView;
+        this.isCreated = Response.data.isCreated;
+        this.isUpdated = Response.data.isUpdated;
+        this.isDeleted = Response.data.isDeleted;
+        if (this.isView === false) {
+          this.router.navigate(['admin/dashboard']);
+        }
+      }
+    }, (error) => {
+      console.log(error.error.Message);
+    });
+  }
 
   ngOnInit(): void {
     this.noData = false;

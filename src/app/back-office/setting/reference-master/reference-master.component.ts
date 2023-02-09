@@ -29,7 +29,7 @@ export class ReferenceMasterComponent implements OnInit {
     constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, private router: Router) {
         let pagePermission = { module: "referenceMaster" }
         this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
-            debugger
+
             if (Response.meta.code == 200) {
 
                 this.isView = Response.data.isView;

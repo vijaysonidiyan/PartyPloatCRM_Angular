@@ -26,7 +26,7 @@ export class StaffComponent implements OnInit {
   noData;
   filedocument: any;
   imgURLlogo: any;
-  userFile: any = null;
+  userFile: any[] = [];
   attactDocument: any = {};
 
   @ViewChild('filedocument') fileDocument: ElementRef;
@@ -44,6 +44,11 @@ export class StaffComponent implements OnInit {
   isUpdated: boolean;
   isDeleted: boolean;
 
+  profileImageIconFile: any;
+  profileImageIcon: any;
+  profileImageIconUrl: string | ArrayBuffer;
+  @ViewChild('profileImageIcon') profileImageIconVariable: ElementRef;
+
   constructor(
     public commonService: CommonService,
     public adminLayoutService: AdminLayoutService,
@@ -51,7 +56,7 @@ export class StaffComponent implements OnInit {
   ) {
     let pagePermission = { module: "staff" }
     this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
-      debugger
+
       if (Response.meta.code == 200) {
 
         this.isView = Response.data.isView;
@@ -65,7 +70,7 @@ export class StaffComponent implements OnInit {
     }, (error) => {
       console.log(error.error.Message);
     });
-   }
+  }
 
   ngOnInit(): void {
     this.noData = false;
@@ -77,27 +82,35 @@ export class StaffComponent implements OnInit {
     this.getRoleActiveList();
     this.defaultForm();
   }
-  removeDocument() {
-    this.userFile = null;
+  removeDocument(index) {
+    this.userFile.splice(index, 1);
   }
 
   onDocumentChange(event) {
+    debugger
 
-    this.userFile = event.target.files[0];
-    if (!!this.userFile) {
-      this.documentError = false;
+    var selectedFiles = event.target.files;
+    for (var i = 0; i < selectedFiles.length; i++) {
+      this.userFile.push(selectedFiles[i]);
+      // this.resultName.push(selectedFiles[i].name);
     }
-    else {
-      this.documentError = true
-    }
-    this.filedocument = this.userFile.name;
-    if (event.target.files && event.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imgURLlogo = e.target.result;
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
+    event.target.value = '';
+
+    // this.userFile = event.target.files[0];
+    // if (!!this.userFile) {
+    //   this.documentError = false;
+    // }
+    // else {
+    //   this.documentError = true
+    // }
+    // this.filedocument = this.userFile.name;
+    // if (event.target.files && event.target.files[0]) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e: any) => {
+    //     this.imgURLlogo = e.target.result;
+    //   };
+    //   reader.readAsDataURL(event.target.files[0]);
+    // }
     this.fileDocument.nativeElement.value = "";
 
     // this.userFile = event.target.files;
@@ -122,17 +135,49 @@ export class StaffComponent implements OnInit {
     });
   }
 
+  onProfileIconChange(event: any) {
+
+    this.profileImageIconFile = event.target.files[0];
+    this.profileImageIcon = this.profileImageIconFile.name;
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.profileImageIconUrl = e.target.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+    this.profileImageIconVariable.nativeElement.value = this.profileImageIcon;
+  }
+  removeProfileIcon() {
+    console.log('nativeeletment', this.profileImageIconVariable.nativeElement)
+    console.log('value', this.profileImageIconVariable.nativeElement.value)
+    this.profileImageIconUrl = '';
+    this.profileImageIconFile = '';
+    this.profileImageIcon = '';
+    // this.menuForm.controls.profileImageIcon.setValue('');
+    this.profileImageIconVariable.nativeElement.value = "";
+  }
+
   addStaff() {
     $("#add-staff-modal").modal("show");
     this.ISeditStaff = false;
     this.ISviewStaff = false;
     this.submittedStaffData = false;
+    this.profileImageIconFile = '';
+    this.profileImageIconUrl = '';
+    this.profileImageIcon = '';
+    this.profileImageIconVariable.nativeElement.value = "";
     this.staffForm.enable()
   }
 
   cancelStaff() {
     $("#add-staff-modal").modal("hide");
     this.defaultForm();
+    this.profileImageIconFile = '';
+    this.profileImageIconUrl = '';
+    this.profileImageIcon = '';
+    this.profileImageIconVariable.nativeElement.value = "";
+
     this.ISeditStaff = false;
     this.ISviewStaff = false;
     this.submittedStaffData = false;
@@ -217,7 +262,13 @@ export class StaffComponent implements OnInit {
     let staffDocumentModelObj: FormData = new FormData();
 
     staffDocumentModelObj.append('staffId', this.staffForm.value._id);
-    staffDocumentModelObj.append('documents', this.userFile);
+
+    this.userFile.map((obj: any) => {
+
+      staffDocumentModelObj.append('documents', obj);
+      console.log(obj);
+    });
+
 
     this.adminLayoutService.saveDocumentbystaffId(staffDocumentModelObj).subscribe(
       (Response: any) => {
@@ -240,16 +291,16 @@ export class StaffComponent implements OnInit {
       return;
     }
 
-    let staffModelObj = {
-      name: this.staffForm.controls.name.value,
-      email: this.staffForm.controls.email.value,
-      contact: this.staffForm.controls.contact.value,
-      roleId: this.staffForm.controls.roleId.value,
-      reference: this.staffForm.controls.reference.value,
-      //aadharcardNo: this.staffForm.controls.aadharcardNo.value,
-      assignPartyPlot: this.staffForm.controls.partyplotData.value,
-      isLogin: this.staffForm.controls.isLogin.value,
-    };
+    let staffModelObj: FormData = new FormData();
+
+    staffModelObj.append('name', this.staffForm.value.name);
+    staffModelObj.append('email', this.staffForm.value.email);
+    staffModelObj.append('contact', this.staffForm.value.contact);
+    staffModelObj.append('roleId', this.staffForm.value.roleId);
+    staffModelObj.append('reference', this.staffForm.value.reference);
+    staffModelObj.append('assignPartyPlot', JSON.stringify(this.staffForm.value.partyplotData));
+    staffModelObj.append('isLogin', this.staffForm.value.isLogin);
+    staffModelObj.append('profile_image', this.profileImageIconFile);
 
     this.adminLayoutService.saveStaff(staffModelObj).subscribe(
       (Response: any) => {
@@ -291,9 +342,15 @@ export class StaffComponent implements OnInit {
         this.staffForm.controls.roleId.setValue(Response.data.roleId);
         this.staffForm.controls.reference.setValue(Response.data.reference);
         //this.staffForm.controls.aadharcardNo.setValue(Response.data.aadharcardNo);
-        this.staffForm.controls.partyplotData.setValue(Response.data.partyplotData);
+        this.staffForm.controls.partyplotData.setValue(Response.data.assignPartyPlot);
         this.staffForm.controls.isLogin.setValue(Response.data.isLogin);
         this.StaffDocumentList = Response.data.Staff_documentData;
+        if (Response.data.profile_image) {
+          this.profileImageIconFile = Response.data.profile_image
+          this.profileImageIconUrl = this.commonService.rootData.uploadsUrl + 'photos/' + Response.data.profile_image
+        }
+        this.getStaffDocument()
+
         $("#add-staff-modal").modal("show");
       },
       (error) => { }
@@ -318,17 +375,17 @@ export class StaffComponent implements OnInit {
       return;
     }
 
-    let staffModelObj = {
-      _id: this.staffForm.controls._id.value,
-      name: this.staffForm.controls.name.value,
-      email: this.staffForm.controls.email.value,
-      contact: this.staffForm.controls.contact.value,
-      roleId: this.staffForm.controls.roleId.value,
-      reference: this.staffForm.controls.reference.value,
-      //aadharcardNo: this.staffForm.controls.aadharcardNo.value,
-      assignPartyPlot: this.staffForm.controls.partyplotData.value,
-      isLogin: this.staffForm.controls.isLogin.value,
-    };
+    let staffModelObj: FormData = new FormData();
+
+    staffModelObj.append('_id', this.staffForm.value._id);
+    staffModelObj.append('name', this.staffForm.value.name);
+    staffModelObj.append('email', this.staffForm.value.email);
+    staffModelObj.append('contact', this.staffForm.value.contact);
+    staffModelObj.append('roleId', this.staffForm.value.roleId);
+    staffModelObj.append('reference', this.staffForm.value.reference);
+    staffModelObj.append('assignPartyPlot', JSON.stringify(this.staffForm.value.partyplotData));
+    staffModelObj.append('isLogin', this.staffForm.value.isLogin);
+    staffModelObj.append('profile_image', this.profileImageIconFile);
 
     this.adminLayoutService.updateStaff(staffModelObj).subscribe(
       (Response: any) => {

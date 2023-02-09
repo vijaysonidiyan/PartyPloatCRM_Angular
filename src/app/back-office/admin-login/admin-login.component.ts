@@ -135,6 +135,7 @@ export class AdminLoginComponent implements OnInit {
             Response.data.roleName
           );
           this.storageService.setValue(StorageKey.email, Response.data.email);
+          this.storageService.setValue(StorageKey.profileImage, Response.data.profile_image);
           this.storageService.setValue(
             StorageKey.full_name,
             Response.data.name

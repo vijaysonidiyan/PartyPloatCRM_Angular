@@ -7,17 +7,17 @@ export class StorageService {
 
   constructor() { }
 
-    getValue(key: any): any {
-        return localStorage.getItem(key);
-    }
+  getValue(key: any): any {
+    return localStorage.getItem(key);
+  }
 
-    setValue(key: any, value: any): void {
-        localStorage.setItem(key, value);
-    }
+  setValue(key: any, value: any): void {
+    localStorage.setItem(key, value);
+  }
 
-    removeValue(key: any): void {
-        localStorage.removeItem(key);
-    }
+  removeValue(key: any): void {
+    localStorage.removeItem(key);
+  }
 }
 
 export class StorageKey {
@@ -29,6 +29,7 @@ export class StorageKey {
   public static aadharcardNo = 'aadharcardNo';
   public static lastName = 'lastName';
   public static email = 'email';
+  public static profileImage = 'profileImage';
   public static full_name = 'name';
   public static roleName = 'roleName';
   public static utsav_decor_logo = 'utsav_decor_logo';

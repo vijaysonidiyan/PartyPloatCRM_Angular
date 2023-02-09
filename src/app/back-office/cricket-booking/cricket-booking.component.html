@@ -35,16 +35,16 @@
                     <div class="card-body">
                         <div class="row">
                             <h5 class="float-end">Date - {{slotDate | date:'dd/MM/yyyy' }}</h5>
-                            <div *ngIf="isFullDayShow === true"><input type="checkbox" class="form-check-input mb-3"
+                            <!-- <div *ngIf="isFullDayShow === true"><input type="checkbox" class="form-check-input mb-3"
                                     [(ngModel)]="isFullDaySlot" [disabled]="isFullDayBooked == true"
-                                    (change)="dayTypeEvent({checked: $event.target.checked})" /> Full Day</div>
+                                    (change)="dayTypeEvent({checked: $event.target.checked})" /> Full Day</div> -->
                             <div class="col-md-4 mb-md-0 mb-2"
                                 *ngFor="let slotListByDateData of slotListByDate;let slotListByDateIndex = index">
                                 <button class="form-check custom-option custom-option-image custom-option-image-check"
                                     [ngClass]="{'custom-option-booked' : slotListByDateData.isbooked == 1 ,
                                     'custom-option-pending' : isCheck[slotListByDateIndex] == true && slotListByDateData.isbooked == 0,
                                 'disabled' : slotDisable[slotListByDateIndex] == true}"
-                                    (click)="getSlotIdOnChecked({slotData:slotListByDateData, index:slotListByDateIndex})" 
+                                    (click)="getSlotIdOnChecked({slotData:slotListByDateData, index:slotListByDateIndex})"
                                     [disabled]="slotDisable[slotListByDateIndex] == true">
                                     <label class="form-check-label custom-option-content"
                                         for="{{slotListByDateData._id}}">
@@ -85,7 +85,8 @@
                                                             </div>
                                                         </li>
 
-                                                        <li class="mb-2 accordion-data" *ngIf="!!bookingData?.primaryContact">
+                                                        <li class="mb-2 accordion-data"
+                                                            *ngIf="!!bookingData?.primaryContact">
                                                             <i class="bx bx-phone"></i>
                                                             <div>
                                                                 <span>Conatact:</span>

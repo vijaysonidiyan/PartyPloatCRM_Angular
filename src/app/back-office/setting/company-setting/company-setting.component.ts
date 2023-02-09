@@ -29,30 +29,30 @@ export class CompanySettingComponent implements OnInit {
   }
   submittedCompanyData = false;
   isView: boolean;
-    isCreated: boolean;
-    isUpdated: boolean;
-    isDeleted: boolean;
+  isCreated: boolean;
+  isUpdated: boolean;
+  isDeleted: boolean;
 
 
 
   constructor(private fb: FormBuilder, public adminLayoutService: AdminLayoutService, public storageService: StorageService, public commonService: CommonService, private router: Router) {
     let pagePermission = { module: "companySetting" }
-        this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
-            debugger
-            if (Response.meta.code == 200) {
+    this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
 
-                this.isView = Response.data.isView;
-                this.isCreated = Response.data.isCreated;
-                this.isUpdated = Response.data.isUpdated;
-                this.isDeleted = Response.data.isDeleted;
-                if (this.isView === false) {
-                    this.router.navigate(['admin/dashboard']);
-                }
-            }
-        }, (error) => {
-            console.log(error.error.Message);
-        });
-   }
+      if (Response.meta.code == 200) {
+
+        this.isView = Response.data.isView;
+        this.isCreated = Response.data.isCreated;
+        this.isUpdated = Response.data.isUpdated;
+        this.isDeleted = Response.data.isDeleted;
+        if (this.isView === false) {
+          this.router.navigate(['admin/dashboard']);
+        }
+      }
+    }, (error) => {
+      console.log(error.error.Message);
+    });
+  }
 
   ngOnInit(): void {
     this.defaultForm();
@@ -82,7 +82,7 @@ export class CompanySettingComponent implements OnInit {
     this.adminLayoutService.getPartyplotActiveList().subscribe((Response: any) => {
       if (Response.meta.code == 200) {
         this.activepartyplotList = Response.data;
-        
+
       }
       //for select sub industry step
     },

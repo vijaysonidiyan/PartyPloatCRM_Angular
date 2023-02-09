@@ -31,7 +31,7 @@ export class UserWiseMenuComponent implements OnInit {
   constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, public storageService: StorageService, private router: Router) {
     let pagePermission = { module: "userWiseMenu" }
     this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
-      debugger
+
       if (Response.meta.code == 200) {
 
         this.isViewPage = Response.data.isView;
@@ -103,7 +103,7 @@ export class UserWiseMenuComponent implements OnInit {
   onUserChange() {
 
     this.menuList.clear();
-    let userIdObj = { userId: this.selectedUser,roleId : this.selectedRole }
+    let userIdObj = { userId: this.selectedUser, roleId: this.selectedRole }
     this.adminLayoutService.getUserwisemenuList(userIdObj).subscribe((Response: any) => {
 
       if (Response.meta.code == 200) {

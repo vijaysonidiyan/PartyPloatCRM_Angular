@@ -34,14 +34,14 @@ export class AddPackageMasterComponent implements OnInit {
     this.defaultForm();
     let pagePermission = { module: "packageMaster" }
     this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
-      debugger
+
       if (Response.meta.code == 200) {
 
         this.isView = Response.data.isView;
         this.isCreated = Response.data.isCreated;
         this.isUpdated = Response.data.isUpdated;
         this.isDeleted = Response.data.isDeleted;
-        
+
         if (currentUrl.includes('edit-package-master')) {
           if (this.isUpdated === false) {
             this.router.navigate(['admin/package-master']);
@@ -67,7 +67,7 @@ export class AddPackageMasterComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAssignPartyplotList();
-    
+
   }
   defaultForm() {
     this.packageDataForm = this.fb.group({

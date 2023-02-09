@@ -151,8 +151,9 @@
                         <div class="col-lg-6 col-md-6 mb-3">
                             <label for="nameBasic" class="form-label required">Package Select</label>
                             <ng-select [items]="packageList" [multiple]="false" class="form-control p-0 me-3"
-                                bindLabel="packageName" bindValue="_id" [clearable]="false" formControlName="packageId" [searchable]="false"
-                                (change)="onActivePackageChange($event)" placeholder="Select Package">
+                                bindLabel="packageName" bindValue="_id" [clearable]="false" formControlName="packageId"
+                                [searchable]="false" (change)="onActivePackageChange($event)"
+                                placeholder="Select Package">
                             </ng-select>
                             <div *ngIf="submittedPackageSelectedData && fbookingConfirmData.packageId.errors">
                                 <div *ngIf="fbookingConfirmData.packageId.errors.required">
@@ -199,30 +200,33 @@
                             <!-- <h5>Basic Package <span>&nbsp; :&nbsp;
                                     {{fbookingConfirmData.basicPackage.value}}</span></h5> -->
                             <label class="form-label" for="basic-default-company">Basic Packege</label>
-        
+
                             <input type="text" appNumbersOnly class="form-control" id="basic-default-company"
-                                placeholder="Basic Packege" formControlName="basicPackage" />
+                                placeholder="Basic Packege" formControlName="basicPackage"
+                                (input)="basicpackeageChanges()" />
                         </div>
                         <div class="col-lg-4 col-md-6 mb-3">
                             <!-- <h5>Discount <span>&nbsp; :&nbsp;
                                     {{fbookingConfirmData.discount.value}}</span></h5> -->
                             <label class="form-label" for="basic-default-company">Discount</label>
-        
-                            <input type="text" appNumbersOnly class="form-control" id="basic-default-company" value="0"
-                                placeholder="Enter Discount" formControlName="discount" />
+
+                            <input type="text" appNumbersOnly class="form-control" (input)="discountChanges()"
+                                id="basic-default-company" value="0" placeholder="Enter Discount"
+                                formControlName="discount" />
                         </div>
                         <div class="col-lg-4 col-md-6 mb-3">
                             <!-- <h5>Discount <span>&nbsp; :&nbsp;
                                     {{fbookingConfirmData.discount.value}}</span></h5> -->
                             <label class="form-label" for="basic-default-company">Final Packege</label>
-        
-                            <input type="text" appNumbersOnly class="form-control" id="basic-default-company" value="0"
-                                placeholder="Enter Final Packege" formControlName="finalbudget" />
+
+                            <input type="text" appNumbersOnly class="form-control" (input)="finalBudgetChanges()"
+                                id="basic-default-company" value="0" placeholder="Enter Final Packege"
+                                formControlName="finalbudget" />
                         </div>
                     </div>
                 </div>
             </form>
-            
+
         </div>
     </div>
     <div class="card mb-4" *ngIf="!!fbookingConfirmData.packageId.value">
@@ -238,7 +242,8 @@
                             <th class="text-center w-5">Sr. No.</th>
                             <th class=" w-30 required">Item</th>
                             <!-- <th class=" w-50 ">Description</th> -->
-                            <th class="qty-width required">Qty/Size</th>
+                            <th class="qty-width">Qty/Size</th>
+                            <th class="qty-width required">Amount</th>
                             <th class="qty-width">Action</th>
                         </tr>
                         <tr class="" [formGroupName]="y"
@@ -266,6 +271,16 @@
                                     </div>
                                 </div>
                             </td>
+                            <td class="qty-width">
+                                <input type="text" class="form-control" id="basic-default-company"
+                                    (input)="calculateExdecorBudget()" appNumbersOnly formControlName="amount"
+                                    placeholder="Enter Amount" />
+                                <div *ngIf="submittedExtraItemData[y] && citem.controls.amount.errors">
+                                    <div *ngIf="citem.controls.amount.errors.required">
+                                        <span class="error_msg">Amount is Required.</span>
+                                    </div>
+                                </div>
+                            </td>
                             <td>
                                 <button (click)="deletCategoryList(y)" class="bg-label-danger btn-bg bg-label-danger"
                                     tooltip="Delete" placement="bottom" showDelay="100">
@@ -288,7 +303,7 @@
                             Budget</label>
 
                         <input type="text" appNumbersOnly class="form-control" id="basic-default-company"
-                            placeholder="Extra Decor Budget" formControlName="extraDecorBudget" />
+                            placeholder="Extra Decor Budget" disabled formControlName="extraDecorBudget" />
                     </div>
                 </div>
             </form>

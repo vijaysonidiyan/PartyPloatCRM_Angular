@@ -79,7 +79,7 @@ export class InquiryComponent implements OnInit {
   constructor(private adminLayoutService: AdminLayoutService, private commonService: CommonService, private fb: FormBuilder, private router: Router) {
     let pagePermission = { module: "inquiry" }
     this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
-      debugger
+
       if (Response.meta.code == 200) {
 
         this.isView = Response.data.isView;
@@ -94,7 +94,7 @@ export class InquiryComponent implements OnInit {
       console.log(error.error.Message);
     });
     this.adminLayoutService.getpagePermission({ module: "bookingConfirm" }).subscribe((Response: any) => {
-      debugger
+
       if (Response.meta.code == 200) {
 
         this.isViewbookingConfirm = Response.data.isView;
@@ -166,7 +166,7 @@ export class InquiryComponent implements OnInit {
 
   partyplotChange() {
     this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear, partyplot_ID: this.searchedPartyplot })
-    localStorage.setItem('partyPlotId',this.searchedPartyplot)
+    localStorage.setItem('partyPlotId', this.searchedPartyplot)
   }
 
   // calender view list data
@@ -189,7 +189,7 @@ export class InquiryComponent implements OnInit {
         this.inquiryCancle = response.data.inquiry_cancle
         this.inquiryConfirm = response.data.inquiry_conform
         this.inquiryPending = response.data.inquiry_pending
-        
+
       }
       else {
         this.inquiryEvent = [];
@@ -526,7 +526,7 @@ export class InquiryComponent implements OnInit {
           })
         }
 
-console.log("isBookedOrNotForListView",this.isBookedOrNotForListView);
+        console.log("isBookedOrNotForListView", this.isBookedOrNotForListView);
 
         this.noData = false;
       }
@@ -549,7 +549,7 @@ console.log("isBookedOrNotForListView",this.isBookedOrNotForListView);
       this.invaildSearchList = false;
     }
     this.getInquiryList({ month: this.searchedMonth, year: this.searchedYear, name: this.searchedName, partyplot_ID: this.searchedPartyplot })
-    localStorage.setItem('partyPlotId',this.searchedPartyplot)
+    localStorage.setItem('partyPlotId', this.searchedPartyplot)
   }
 
 
@@ -620,11 +620,11 @@ console.log("isBookedOrNotForListView",this.isBookedOrNotForListView);
             this.searchedPartyplot = partyPlotId;
           } else {
             this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
-            localStorage.setItem('partyPlotId',this.searchedPartyplot)
+            localStorage.setItem('partyPlotId', this.searchedPartyplot)
           }
         } else {
           this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
-          localStorage.setItem('partyPlotId',this.searchedPartyplot)
+          localStorage.setItem('partyPlotId', this.searchedPartyplot)
         }
         const url = this.router.url;
         if (url.includes('inquiry/list-view')) {

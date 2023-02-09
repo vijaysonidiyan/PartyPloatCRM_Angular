@@ -36,10 +36,10 @@ export class PartyPlotMasterComponent implements OnInit {
     public commonService: CommonService,
     public adminLayoutService: AdminLayoutService,
     private fb: FormBuilder, private router: Router
-  ) { 
+  ) {
     let pagePermission = { module: "partyPlotMaster" }
     this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
-      debugger
+
       if (Response.meta.code == 200) {
 
         this.isView = Response.data.isView;

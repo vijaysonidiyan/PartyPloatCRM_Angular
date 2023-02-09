@@ -31,7 +31,7 @@ export class RoleMasterComponent implements OnInit {
     constructor(public adminLayoutService: AdminLayoutService, private fb: FormBuilder, public commonService: CommonService, private router: Router) {
         let pagePermission = { module: "roleMaster" }
         this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
-            debugger
+
             if (Response.meta.code == 200) {
 
                 this.isView = Response.data.isView;
@@ -45,7 +45,7 @@ export class RoleMasterComponent implements OnInit {
         }, (error) => {
             console.log(error.error.Message);
         });
-     }
+    }
 
     ngOnInit(): void {
         this.noData = false;

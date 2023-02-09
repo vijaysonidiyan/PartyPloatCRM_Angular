@@ -150,11 +150,17 @@
                     <div class="card-body p-0">
                         <div class="">
                             <div class="p-4 btn-cus position-relative">
+                                <div class="mb-4 text-center">
+                                    <h4>
+                                        Inquiry Calender
+                                    </h4>
+                                </div>
                                 <div class="dropdown-search mb-3">
 
                                     <ng-select [items]="activepartyplotList" [multiple]="false"
-                                        class="form-control p-0 me-3" bindLabel="name" bindValue="_id" [searchable]="false" [searchable]="false"
-                                        [(ngModel)]="searchedPartyplot"  [clearable]="false" (change)="partyplotChange()"
+                                        class="form-control p-0 me-3" bindLabel="name" bindValue="_id"
+                                        [searchable]="false" [searchable]="false" [(ngModel)]="searchedPartyplot"
+                                        [clearable]="false" (change)="partyplotChange()"
                                         placeholder="Select Party Plot">
                                     </ng-select>
 
@@ -165,6 +171,100 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
+                <div class="card">
+                    <div class="card-body p-0">
+                        <div class="">
+                            <div class="p-4 btn-cus position-relative">
+                                <div class="mb-4 text-center">
+                                    <h4>
+                                        Cricket Booking Calender
+                                    </h4>
+                                </div>
+                                <div class="dropdown-search mb-3">
+
+                                    <ng-select [items]="partyplotListforcricket" [multiple]="false"
+                                        class="form-control p-0 me-3" bindLabel="name" bindValue="_id"
+                                        [searchable]="false" [searchable]="false"
+                                        [(ngModel)]="searchedPartyplotForCricketBooking" [clearable]="false"
+                                        (change)="partyplotChangeForCricketBooking()" placeholder="Select Party Plot">
+                                    </ng-select>
+
+                                </div>
+                                <full-calendar #calendarCricket [options]="calendarOptionsForCricketBooking">
+                                </full-calendar>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="cricket-slotbook-by-date-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content modal-height-calc">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1"><strong>Cricket Booking Slot</strong></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closeBookSlot()"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body modal-scroll cricket-modal">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="float-end mb-0">Date - {{slotDate | date:'dd/MM/yyyy' }}</h5>
+                                <div class="d-flex">
+                                    <div class="d-flex me-3">
+                                        <span class="me-2 custom-option-booked-1"></span>
+                                        <span>Booked</span>
+                                    </div>
+                                    <div class="d-flex me-3">
+                                        <span class="me-2 custom-option-available"></span>
+                                        <span>Available</span>
+                                    </div>
+                                    <div class="d-flex">
+                                        <span class="me-2 custom-option-not-available"></span>
+                                        <span>Not Available</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="isFullDaySlot == false">
+                            <div class="col-md-4 mb-md-0 mb-2"
+                                *ngFor="let slotListByDateData of slotListByDate;let slotListByDateIndex = index">
+                                <div class="form-check custom-option custom-option-image custom-option-image-check "
+                                    [ngClass]="{'custom-option-booked' : slotListByDateData.isbooked == 1,
+                                    'custom-option-disabled' : isDisabled[slotListByDateIndex] == true}">
+                                    <label class="form-check-label custom-option-content"
+                                        for="{{slotListByDateData._id}}">
+                                        <span class="custom-option-body">
+                                            <!-- 7:00 AM TO 10:00 AM -->
+                                            {{slotListByDateData.time}}
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="isFullDaySlot == true">
+                            <div class="col-md-4 mb-md-0 mb-2">
+                                <div
+                                    class="form-check custom-option custom-option-image custom-option-image-check custom-option-booked">
+                                    <label class="form-check-label custom-option-content">
+                                        <span class="custom-option-body">
+                                            7:00 AM TO 12:00 AM
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

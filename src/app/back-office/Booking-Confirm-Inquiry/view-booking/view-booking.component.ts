@@ -34,7 +34,7 @@ export class ViewBookingComponent implements OnInit {
   isEditDecorationImage: boolean = false;
   viewBookingForm: FormGroup;
   clientdetailsDataForm: FormGroup;
-  
+
   get fclientDataForm() {
     return this.clientdetailsDataForm.controls;
   }
@@ -50,7 +50,7 @@ export class ViewBookingComponent implements OnInit {
   constructor(private route: ActivatedRoute, private commonService: CommonService, private router: Router, private fb: FormBuilder, private adminLayoutService: AdminLayoutService) {
     let pagePermission = { module: "bookingConfirm" }
     this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
-      debugger
+
       if (Response.meta.code == 200) {
 
         this.isView = Response.data.isView;
@@ -133,6 +133,38 @@ export class ViewBookingComponent implements OnInit {
         }
       });
   }
+
+  basicpackeageChanges() {
+    if (this.viewBookingForm.value.discount) {
+      let finalBudget = this.viewBookingForm.value.basicPackage - this.viewBookingForm.value.discount
+      this.viewBookingForm.controls.finalbudget.setValue(finalBudget.toString());
+    }
+    else {
+      let finalBudget = this.viewBookingForm.value.basicPackage
+      this.viewBookingForm.controls.finalbudget.setValue(finalBudget.toString());
+    }
+  }
+  discountChanges() {
+    if (this.viewBookingForm.value.basicPackage && this.viewBookingForm.value.finalbudget) {
+      let finalBudget = this.viewBookingForm.value.basicPackage - this.viewBookingForm.value.discount
+      this.viewBookingForm.controls.finalbudget.setValue(finalBudget.toString());
+    }
+    else {
+      let finalBudget = this.viewBookingForm.value.basicPackage
+      this.viewBookingForm.controls.finalbudget.setValue(finalBudget.toString());
+    }
+  }
+  finalBudgetChanges() {
+
+    if (this.viewBookingForm.value.basicPackage && this.viewBookingForm.value.discount) {
+      let discount = this.viewBookingForm.value.basicPackage - this.viewBookingForm.value.finalbudget
+      this.viewBookingForm.controls.discount.setValue(discount.toString());
+    }
+    // else {
+    //   let basicPackage = this.viewBookingForm.value.finalbudget
+    //   this.viewBookingForm.controls.basicPackage.setValue(basicPackage.toString());
+    // }
+  }
   getEventList() {
     let obj = {
       _id: this.clientdetailsDataForm.controls.partyplot_ID.value
@@ -203,10 +235,19 @@ export class ViewBookingComponent implements OnInit {
     return this.fb.group({
       item: [oItem["item"] ? oItem["item"] : "", [Validators.required]],
       description: [oItem["description"] ? oItem["description"] : ""],
-      quantity: [oItem["quantity"] ? oItem["quantity"] : "", [Validators.required]],
+      quantity: [oItem["quantity"] ? oItem["quantity"] : ""],
+      amount: [oItem["amount"] ? oItem["amount"] : "", [Validators.required]],
     });
   }
 
+  calculateExdecorBudget() {
+    let amount = 0;
+    (this.viewBookingForm.controls['extradecoration'] as FormArray).controls.map((x: any, index: any) => {
+      let newamount = x.value.amount ? parseInt(x.value.amount) : 0;
+      amount = newamount + amount;
+      this.viewBookingForm.controls.extraDecorBudget.setValue(amount.toString());
+    });
+  }
 
   getClientDetailsByEventId() {
     let eventIDObj = {
@@ -249,6 +290,7 @@ export class ViewBookingComponent implements OnInit {
   }
 
   removeExtraDecoration(index: any) {
+    this.submittedExtraItemData[index] = false
     this.eventList.removeAt(index)
   }
   clientDetailsUpdate() {
@@ -275,10 +317,10 @@ export class ViewBookingComponent implements OnInit {
         this.clientdetailsDataForm.controls.offer_budget.setValue(Response.data.offer_budget);
       }
     })
-  
+
   }
   updateClientDetails() {
-    debugger
+
     if (this.clientdetailsDataForm.invalid) {
       this.submittedClientData = true;
       return;
@@ -290,9 +332,9 @@ export class ViewBookingComponent implements OnInit {
       primaryContact: this.clientdetailsDataForm.value.primaryContact,
       secondryContact: this.clientdetailsDataForm.value.secondryContact,
       address: this.clientdetailsDataForm.value.address,
-      guest:this.clientdetailsDataForm.value.guest,
-      reference_ID:this.clientdetailsDataForm.value.reference_ID,
-      reference_detail:this.clientdetailsDataForm.value.reference_detail,
+      guest: this.clientdetailsDataForm.value.guest,
+      reference_ID: this.clientdetailsDataForm.value.reference_ID,
+      reference_detail: this.clientdetailsDataForm.value.reference_detail,
       client_budget: this.clientdetailsDataForm.value.client_budget,
       eventType: this.clientdetailsDataForm.value.eventType,
       partyplot_ID: this.clientdetailsDataForm.value.SMTP,
@@ -300,12 +342,12 @@ export class ViewBookingComponent implements OnInit {
       offer_budget: this.clientdetailsDataForm.value.offer_budget,
     };
     this.adminLayoutService.UpdateBookingConfirmClientDetails(obj).subscribe((Response: any) => {
-        if (Response.meta.code == 200) {
-          this.defaultClientDetailsForm();
-          this.getClientDetailsByEventId();
-          $("#add-client-details").modal("hide");
-        }
-      });
+      if (Response.meta.code == 200) {
+        this.defaultClientDetailsForm();
+        this.getClientDetailsByEventId();
+        $("#add-client-details").modal("hide");
+      }
+    });
 
   }
   cancleClientDetails() {
@@ -337,7 +379,7 @@ export class ViewBookingComponent implements OnInit {
     $("#add-upload-decoration").modal("show");
   }
   onImageDecorationChange(event: any) {
-    debugger
+
     this.imageDecorationFile = event.target.files[0];
     let mimeType = this.imageDecorationFile.type
     if (!this.imageDecorationFile) {
@@ -495,7 +537,8 @@ export class ViewBookingComponent implements OnInit {
         validation.map((x: any, index: any) => {
           x.controls.item.clearValidators();
           x.controls.quantity.clearValidators();
-          this.submittedExtraItemData[index] = false;
+          x.controls.amount.clearValidators();
+          this.submittedExtraItemData[index + 1] = false;
         })
 
       }
@@ -560,7 +603,7 @@ export class ViewBookingComponent implements OnInit {
     })
   }
   updatePackageDecorationItem() {
-    debugger
+
     let updatePackageDecorationItemObj = {
       _id: this.bookingConfirmId,
       package: this.viewBookingForm.controls.package.value,

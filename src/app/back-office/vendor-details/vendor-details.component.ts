@@ -36,7 +36,7 @@ export class VendorDetailsComponent implements OnInit {
   ) {
     let pagePermission = { module: "vendorDetails" }
     this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
-      debugger
+
       if (Response.meta.code == 200) {
 
         this.isView = Response.data.isView;

@@ -30,7 +30,7 @@ export class BookingConfirmListComponent implements OnInit {
     public commonService: CommonService, private router: Router) {
     let pagePermission = { module: "bookingConfirm" }
     this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
-      debugger
+
       if (Response.meta.code == 200) {
 
         this.isView = Response.data.isView;
@@ -63,11 +63,11 @@ export class BookingConfirmListComponent implements OnInit {
             this.searchedPartyplot = partyPlotId;
           } else {
             this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
-            localStorage.setItem('partyPlotId',this.searchedPartyplot)
+            localStorage.setItem('partyPlotId', this.searchedPartyplot)
           }
         } else {
           this.searchedPartyplot = Response.data[0]._id ? Response.data[0]._id : null;
-          localStorage.setItem('partyPlotId',this.searchedPartyplot)
+          localStorage.setItem('partyPlotId', this.searchedPartyplot)
         }
         this.partyplotChange();
       }
@@ -82,7 +82,7 @@ export class BookingConfirmListComponent implements OnInit {
     let Obj = {
       partyplot_ID: this.searchedPartyplot
     }
-    localStorage.setItem('partyPlotId',this.searchedPartyplot)
+    localStorage.setItem('partyPlotId', this.searchedPartyplot)
     this.bookingConfirmList = []
     this.bookingconfirmList = []
     this.allbookingconfirmList = []

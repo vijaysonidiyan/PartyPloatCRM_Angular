@@ -32,7 +32,8 @@
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                        <img src="../../../assets/img/user.png" alt class="w-px-40 h-auto rounded-circle" />
+                        <img [src]="profieImage" onerror="this.src ='../../../assets/img/user.png'" alt
+                            class="w-px-40 h-auto rounded-circle" />
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end p-2">
@@ -41,8 +42,10 @@
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                        <img src="../../../assets/img/user.png" alt
+                                        <img [src]="profieImage" onerror="this.src ='../../../assets/img/user.png'" alt
                                             class="w-px-40 h-auto rounded-circle" />
+                                        <!-- <img src="../../../assets/img/user.png" alt
+                                            class="w-px-40 h-auto rounded-circle" /> -->
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
@@ -104,28 +107,44 @@
                 <form role="form" class="add-employee-form" [formGroup]="staffForm" autocomplete="off">
                     <div class="row">
                         <div class="col-lg-4 mb-3">
-                            <label for="nameBasic" class="form-label">Name</label>
-                            <input type="text" id="nameBasic" class="form-control" formControlName="name" readonly placeholder="Enter Name" />
+                            <label for="nameBasic" class="form-label">Profile Image</label><br>
+                            <img [src]="profileImageIconUrl" onerror="this.src ='../../../assets/img/user.png'" alt=""
+                                width="100">
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label for="nameBasic" class="form-label mb-1">Name</label>
+                            <input type="text" id="nameBasic" class="form-control" formControlName="name" readonly
+                                placeholder="Enter Name" />
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label class="form-label" for="basic-default-phone">Phone No</label>
-                            <input type="text" id="basic-default-phone" class="form-control phone-mask" formControlName="contact" readonly
-                                placeholder="658 799 8941">
+                            <input type="text" id="basic-default-phone" class="form-control phone-mask"
+                                formControlName="contact" readonly placeholder="658 799 8941">
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label class="form-label" for="basic-default-company">Reference</label>
-                            <input type="text" class="form-control" id="basic-default-company" formControlName="reference" readonly placeholder="Reference">
+                            <input type="text" class="form-control" id="basic-default-company"
+                                formControlName="reference" readonly placeholder="Reference">
                         </div>
 
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Email</label>
-                            <input type="text" id="basic-default-email" class="form-control" placeholder="Enter Email" formControlName="email" readonly
-                                aria-label="john.doe" aria-describedby="basic-default-email2">
+                            <input type="text" id="basic-default-email" class="form-control" placeholder="Enter Email"
+                                formControlName="email" readonly aria-label="john.doe"
+                                aria-describedby="basic-default-email2">
                         </div>
                         <div class="col-lg-4 mb-3">
                             <label for="nameBasic" class="form-label">Designation</label>
-                            <ng-select [items]="activeroleList" class="form-control p-0" bindLabel="roleName" bindValue="_id" formControlName="roleId" [readonly]="true"
+                            <ng-select [items]="activeroleList" class="form-control p-0" bindLabel="roleName"
+                                bindValue="_id" formControlName="roleId" [readonly]="true"
                                 placeholder="Select Designation">
+                            </ng-select>
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label for="nameBasic" class="form-label">Select Party plot</label>
+                            <ng-select [items]="partyplotList" [multiple]="true" [closeOnSelect]="false"
+                                [readonly]="true" class="form-control p-0" bindLabel="name" [searchable]="false"
+                                bindValue="_id" formControlName="partyplotData" placeholder="Select Party plot">
                             </ng-select>
                         </div>
                         <div class="col-lg-4 mb-3">
@@ -138,7 +157,6 @@
                     </div>
                 </form>
             </div>
-            
         </div>
     </div>
 </div>

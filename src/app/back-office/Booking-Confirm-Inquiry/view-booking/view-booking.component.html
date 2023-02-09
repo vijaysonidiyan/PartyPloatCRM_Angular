@@ -5,8 +5,8 @@
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Booking Confirm</h5>
-            <button type="button" class="btn-bg" (click)="clientDetailsUpdate()"><i class="bx bx-edit-alt" tooltip="Edit" placement="bottom"
-                showDelay="100"></i></button>
+            <button type="button" class="btn-bg" (click)="clientDetailsUpdate()"><i class="bx bx-edit-alt"
+                    tooltip="Edit" placement="bottom" showDelay="100"></i></button>
         </div>
         <div class="card-body" [formGroup]="viewBookingForm">
             <div class="row p-sm-3 p-0">
@@ -156,8 +156,9 @@
                         <label *ngIf="isEditPackageItem === true" class="form-label" for="basic-default-company">Basic
                             Packege</label>
 
-                        <input type="text" *ngIf="isEditPackageItem === true" appNumbersOnly class="form-control"
-                            id="basic-default-company" placeholder="Basic Packege" formControlName="basicPackage" />
+                        <input type="text" *ngIf="isEditPackageItem === true" (input)="basicpackeageChanges()"
+                            appNumbersOnly class="form-control" id="basic-default-company" placeholder="Basic Packege"
+                            formControlName="basicPackage" />
                     </div>
                     <div class="col-lg-4 col-md-6 mb-3">
                         <h5 *ngIf="isEditPackageItem === false">Discount <span>&nbsp; :&nbsp;
@@ -165,8 +166,8 @@
                         <label *ngIf="isEditPackageItem === true" class="form-label"
                             for="basic-default-company">Discount</label>
 
-                        <input type="text" *ngIf="isEditPackageItem === true" appNumbersOnly class="form-control"
-                            id="basic-default-company" value="0" placeholder="Enter Discount"
+                        <input type="text" *ngIf="isEditPackageItem === true" (input)="discountChanges()" appNumbersOnly
+                            class="form-control" id="basic-default-company" value="0" placeholder="Enter Discount"
                             formControlName="discount" />
                     </div>
                     <div class="col-lg-4 col-md-6 mb-3">
@@ -175,9 +176,9 @@
                         <label *ngIf="isEditPackageItem === true" class="form-label" for="basic-default-company">Final
                             Packege</label>
 
-                        <input type="text" *ngIf="isEditPackageItem === true" appNumbersOnly class="form-control"
-                            id="basic-default-company" value="0" placeholder="Enter Final Packege"
-                            formControlName="finalbudget" />
+                        <input type="text" *ngIf="isEditPackageItem === true" (input)="finalBudgetChanges()"
+                            appNumbersOnly class="form-control" id="basic-default-company" value="0"
+                            placeholder="Enter Final Packege" formControlName="finalbudget" />
                     </div>
                 </div>
             </form>
@@ -211,14 +212,15 @@
                 <table class="table-border" formArrayName="extradecoration">
                     <tr class="boader-bottom-1" *ngIf="eventList.length != 0">
                         <th class="text-center w-5">Sr. No.</th>
-                        <th class=" w-80 required">Item</th>
-                        <th class="qty-width required">Qty/Size</th>
+                        <th class=" w-70 required">Item</th>
+                        <th class="qty-width">Qty/Size</th>
+                        <th class="qty-width required">Amount</th>
                         <th class="qty-width" *ngIf="isEditExtraItem === true">Action</th>
                     </tr>
                     <tr [formGroupName]="y" class="boader-bottom-1"
                         *ngFor="let citem of viewBookingForm.get('extradecoration')['controls']; let y = index;">
                         <td class="text-center w-5">{{y + 1}}</td>
-                        <td class=" w-80">
+                        <td class=" w-70">
                             <span *ngIf="isEditExtraItem === false">{{citem.controls.item.value}}</span>
                             <input type="text" *ngIf="isEditExtraItem === true" class="form-control"
                                 id="basic-default-company" formControlName="item" placeholder="Enter Item Name" />
@@ -235,6 +237,17 @@
                             <div *ngIf="submittedExtraItemData[y] && citem.controls.quantity.errors">
                                 <div *ngIf="citem.controls.quantity.errors.required">
                                     <span class="error_msg">Quantity is Required.</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="qty-width">
+                            <span *ngIf="isEditExtraItem === false">{{citem.controls.amount.value}}</span>
+                            <input type="text" *ngIf="isEditExtraItem === true" class="form-control"
+                                id="basic-default-company" appNumbersOnly (input)="calculateExdecorBudget()"
+                                formControlName="amount" placeholder="Enter Amount" />
+                            <div *ngIf="submittedExtraItemData[y] && citem.controls.amount.errors">
+                                <div *ngIf="citem.controls.amount.errors.required">
+                                    <span class="error_msg">Amount is Required.</span>
                                 </div>
                             </div>
                         </td>
@@ -261,7 +274,8 @@
                         Cost</label>
 
                     <input type="text" *ngIf="isEditExtraItem === true" appNumbersOnly class="form-control"
-                        id="basic-default-company" placeholder="Extra Cost" formControlName="extraDecorBudget" />
+                        id="basic-default-company" placeholder="Extra Cost" disabled
+                        formControlName="extraDecorBudget" />
                 </div>
             </div>
         </div>

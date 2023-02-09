@@ -39,6 +39,8 @@ export class NavbarComponent implements OnInit {
   StaffDocumentList: any[];
   staffForm: FormGroup;
   activeroleList: any;
+  profieImage: any
+  profileImageIconUrl: any;
   get fLoginData() { return this.changePasswordForm.controls; }
 
   constructor(public location: Location, private element: ElementRef, public storageService: StorageService, private router: Router, private fb: FormBuilder, private coreHelper: CoreHelperService, public commonService: CommonService, public adminLayoutService: AdminLayoutService, private titleService: Title) {
@@ -59,6 +61,8 @@ export class NavbarComponent implements OnInit {
     // this.breadcrumbService.breadcrumbChanged.subscribe((crumbs: any) => {
     //   this.titleService.setTitle(this.createTitle(crumbs));
     // })
+    let localstorage = JSON.parse(localStorage.getItem('LoginUserData'))
+    this.profieImage = this.commonService.rootData.uploadsUrl + 'photos/' + localstorage.profile_image
     this.userName = this.storageService.getValue(StorageKey.full_name) ? this.storageService.getValue(StorageKey.full_name) : this.storageService.getValue(StorageKey.email);
     this.listTitles = ROUTES.filter((listTitle) => listTitle);
 
@@ -159,10 +163,10 @@ export class NavbarComponent implements OnInit {
   cancelmyProfile() {
     $("#add-myprofile-modal").modal("hide");
   }
- 
+
   myProfile() {
     let id = parseJSON(localStorage.getItem('LoginUserData'))._id
-    
+
     let Id: any = { staffId: id };
     this.StaffDocumentList = [];
     this.adminLayoutService.getstaffId(Id).subscribe(
@@ -177,6 +181,7 @@ export class NavbarComponent implements OnInit {
         this.staffForm.controls.partyplotData.setValue(Response.data.partyplotData);
         this.staffForm.controls.isLogin.setValue(Response.data.isLogin);
         this.StaffDocumentList = Response.data.Staff_documentData;
+        this.profileImageIconUrl = this.commonService.rootData.uploadsUrl + 'photos/' + Response.data.profile_image
         $("#add-myprofile-modal").modal("show");
       },
       (error) => { }
@@ -424,7 +429,7 @@ export class NavbarComponent implements OnInit {
         currentPageName: 'View Inquiry'
       };
     }
-    
+
     else if (titlee.includes('list-view')) {
       return {
         pastPage: [{

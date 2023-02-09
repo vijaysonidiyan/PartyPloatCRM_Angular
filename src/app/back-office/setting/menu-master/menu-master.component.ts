@@ -42,7 +42,7 @@ export class MenuMasterComponent implements OnInit {
   constructor(public commonService: CommonService, public adminLayoutService: AdminLayoutService, private fb: FormBuilder, private router: Router) {
     let pagePermission = { module: "menuMaster" }
     this.adminLayoutService.getpagePermission(pagePermission).subscribe((Response: any) => {
-      debugger
+
       if (Response.meta.code == 200) {
 
         this.isView = Response.data.isView;
