@@ -88,7 +88,7 @@ export class NavbarComponent implements OnInit {
       roleId: [null, [Validators.required]],
       reference: [""],
       // aadharcardNo: [""],
-      partyplotData: ["", [Validators.required]],
+      partyplotData: [, [Validators.required]],
       roleName: [""],
       isLogin: false
     });
@@ -176,9 +176,9 @@ export class NavbarComponent implements OnInit {
         this.staffForm.controls.email.setValue(Response.data.email);
         this.staffForm.controls.contact.setValue(Response.data.contact);
         this.staffForm.controls.roleId.setValue(Response.data.roleId);
+        this.staffForm.controls.partyplotData.setValue(Response.data.assignPartyPlot);
         this.staffForm.controls.reference.setValue(Response.data.reference);
         //this.staffForm.controls.aadharcardNo.setValue(Response.data.aadharcardNo);
-        this.staffForm.controls.partyplotData.setValue(Response.data.partyplotData);
         this.staffForm.controls.isLogin.setValue(Response.data.isLogin);
         this.StaffDocumentList = Response.data.Staff_documentData;
         this.profileImageIconUrl = this.commonService.rootData.uploadsUrl + 'photos/' + Response.data.profile_image

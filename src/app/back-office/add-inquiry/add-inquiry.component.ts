@@ -589,9 +589,11 @@ export class AddInquiryComponent implements OnInit {
     let inquiryId = { '_id': this.inquiryId }
     this.adminLayoutService.getInquiryById(inquiryId).subscribe((Response: any) => {
       if (Response.meta.code == 200) {
-
+        
         this.defaultForm();
         this.defaultEventForm();
+        this.clientinquiryDataForm.controls.partyplot_ID.setValue(Response.data.partyplot_ID);
+        this.getEventList();
         this.eventList = '';
         this.eventList = this.eventInquiryDataForm.get("events") as FormArray;
 
@@ -602,7 +604,6 @@ export class AddInquiryComponent implements OnInit {
         this.clientinquiryDataForm.controls.secondryContact.setValue(Response.data.secondryContact);
         this.clientinquiryDataForm.controls.address.setValue(Response.data.address);
         this.clientinquiryDataForm.controls.reference_ID.setValue(Response.data.reference_ID);
-        this.clientinquiryDataForm.controls.partyplot_ID.setValue(Response.data.partyplot_ID);
         this.clientinquiryDataForm.controls.reference_detail.setValue(Response.data.reference_detail);
 
         this.inquiryDate = this.datePipe.transform(new Date(Response.data.createdAt), 'dd/MM/yyyy, hh:mm a')

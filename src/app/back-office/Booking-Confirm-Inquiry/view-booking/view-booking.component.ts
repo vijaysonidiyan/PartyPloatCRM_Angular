@@ -167,7 +167,7 @@ export class ViewBookingComponent implements OnInit {
   }
   getEventList() {
     let obj = {
-      _id: this.clientdetailsDataForm.controls.partyplot_ID.value
+      _id: this.viewBookingForm.controls.partyplot_ID.value
     }
     this.adminLayoutService.geteventListbyPartyplot(obj).subscribe(
       (Response: any) => {
@@ -191,7 +191,7 @@ export class ViewBookingComponent implements OnInit {
         } else {
           this.clientdetailsDataForm.controls.partyplot_ID.setValue(Response.data[0]._id);
         }
-        this.getEventList();
+        //this.getEventList();
 
       }
       //for select sub industry step
@@ -269,6 +269,7 @@ export class ViewBookingComponent implements OnInit {
         this.viewBookingForm.controls.remark.setValue(Response.data.remark);
         this.viewBookingForm.controls.client_budget.setValue(Response.data.client_budget);
         this.viewBookingForm.controls.partyPlotName.setValue(Response.data.partyPlotName);
+        this.viewBookingForm.controls.partyplot_ID.setValue(Response.data.partyplot_ID);
         this.viewBookingForm.controls.eventName.setValue(Response.data.eventName);
         this.viewBookingForm.controls.referenceName.setValue(Response.data.referenceName);
         this.viewBookingForm.controls.clientname.setValue(Response.data.clientname);
@@ -284,7 +285,8 @@ export class ViewBookingComponent implements OnInit {
           this.eventList.push(this.createExtraItem(x))
         })
 
-        this.getImageDecorationList()
+        this.getImageDecorationList();
+        this.getEventList();
       }
     })
   }
@@ -313,8 +315,8 @@ export class ViewBookingComponent implements OnInit {
         this.clientdetailsDataForm.controls.client_budget.setValue(Response.data.client_budget);
         this.clientdetailsDataForm.controls.eventType.setValue(Response.data.eventType);
         this.clientdetailsDataForm.controls.partyplot_ID.setValue(Response.data.partyplot_ID);
-        this.clientdetailsDataForm.controls.clientname.setValue(Response.data.clientname);
         this.clientdetailsDataForm.controls.offer_budget.setValue(Response.data.offer_budget);
+        //this.clientdetailsDataForm.controls.clientname.setValue(Response.data.clientname);
       }
     })
 
@@ -338,7 +340,7 @@ export class ViewBookingComponent implements OnInit {
       client_budget: this.clientdetailsDataForm.value.client_budget,
       eventType: this.clientdetailsDataForm.value.eventType,
       partyplot_ID: this.clientdetailsDataForm.value.SMTP,
-      clientname: this.clientdetailsDataForm.value.clientname,
+      //clientname: this.clientdetailsDataForm.value.clientname,
       offer_budget: this.clientdetailsDataForm.value.offer_budget,
     };
     this.adminLayoutService.UpdateBookingConfirmClientDetails(obj).subscribe((Response: any) => {
