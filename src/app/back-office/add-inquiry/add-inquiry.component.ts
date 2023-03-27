@@ -188,7 +188,7 @@ export class AddInquiryComponent implements OnInit {
       name: ["", [Validators.required]],
       email: ["", [Validators.required, Validators.pattern(/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/)]],
       primaryContact: ["", [Validators.required]],
-      secondryContact: [""],
+      secondryContact: ["91"],
       address: ["", [Validators.required]],
       reference_ID: [null, [Validators.required]],
       reference_detail: [""],

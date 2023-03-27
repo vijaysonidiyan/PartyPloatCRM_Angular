@@ -337,19 +337,38 @@
         <div class="card-body">
             <div class="row p-sm-3 p-0">
                 <div class="p-0">
-                    <button class="dt-button buttons-collection btn btn-label-danger me-2 mb-3" (click)="downloadPdf()">
+                    <button class="dt-button buttons-collection btn btn-label-danger me-2 mb-3" tooltip="Download Booking Details" (click)="downloadPdf()">
                         <span>
-                            <i class="bx bxs-file-pdf me-sm-2" tooltip="Download PDF" placement="bottom"
+                            <i class="bx bxs-file-pdf me-sm-2" placement="bottom"
                                 showDelay="100"></i>
                             <span>Download Booking Details</span>
                         </span>
                     </button>
-                    <button class="dt-button buttons-collection btn btn-label-danger me-2 mb-3"
+                    <button class="dt-button buttons-collection btn btn-label-danger me-2 mb-3" tooltip="Download Client Selected Decor"
                         *ngIf="imageDecorationList.length > 0" (click)="downloadDecorationPdf()">
                         <span>
-                            <i class="bx bxs-file-pdf me-sm-2" tooltip="Download PDF" placement="bottom"
+                            <i class="bx bxs-file-pdf me-sm-2" placement="bottom"
                                 showDelay="100"></i>
                             <span>Download Client Selected Decor</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="row p-sm-3 p-0">
+                <div class="p-0">
+                    <button class="dt-button buttons-collection btn btn-label-success me-2 mb-3" tooltip="Whats App Booking Details" (click)="whatsAppPdf()">
+                        <span>
+                            <i class="bx bxs-file-pdf me-sm-2"  placement="bottom"
+                                showDelay="100"></i>
+                            <span>Whats App Booking Details</span>
+                        </span>
+                    </button>
+                    <button class="dt-button buttons-collection btn btn-label-success me-2 mb-3" tooltip="Whats App Client Selected Decor"
+                        *ngIf="imageDecorationList.length > 0" (click)="whatsAppDecorationPdf()">
+                        <span>
+                            <i class="bx bxs-file-pdf me-sm-2" placement="bottom"
+                                showDelay="100"></i>
+                            <span>Whats App Client Selected Decor</span>
                         </span>
                     </button>
                 </div>

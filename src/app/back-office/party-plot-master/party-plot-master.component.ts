@@ -70,6 +70,7 @@ export class PartyPlotMasterComponent implements OnInit {
       name: ["", [Validators.required]],
       address: ["", [Validators.required]],
       events: ["", [Validators.required]],
+      mobileNumber: ["", [Validators.required]],
     });
   }
 
@@ -134,6 +135,7 @@ export class PartyPlotMasterComponent implements OnInit {
       name: this.partyplotForm.controls.name.value,
       address: this.partyplotForm.controls.address.value,
       events: this.partyplotForm.controls.events.value,
+      mobileNumber: this.partyplotForm.controls.mobileNumber.value,
     };
 
     this.adminLayoutService.SavepartyplotMaster(partyplotModelObj).subscribe(
@@ -165,6 +167,7 @@ export class PartyPlotMasterComponent implements OnInit {
         this.partyplotForm.controls.name.setValue(Response.data.name);
         this.partyplotForm.controls.address.setValue(Response.data.address);
         this.partyplotForm.controls.events.setValue(Response.data.events);
+        this.partyplotForm.controls.mobileNumber.setValue(Response.data.mobileNumber);
         $("#add-menu-modal").modal("show");
       },
       (error) => { }
@@ -183,6 +186,7 @@ export class PartyPlotMasterComponent implements OnInit {
       name: this.partyplotForm.controls.name.value,
       address: this.partyplotForm.controls.address.value,
       events: this.partyplotForm.controls.events.value,
+      mobileNumber: this.partyplotForm.controls.mobileNumber.value,
     };
 
     this.adminLayoutService

@@ -708,6 +708,57 @@ export class ViewBookingComponent implements OnInit {
     });
   }
 
+  whatsAppPdf() {
+
+
+    let downloadInvoiceObj = {
+      "_id": this.bookingConfirmId,
+    };
+
+
+    this.adminLayoutService.whatsAppBookingPdf(downloadInvoiceObj).subscribe((Response: any) => {
+
+      if (Response.meta.code == 200) {
+        if(Response.data.ErrorCode == '000') {
+
+          this.commonService.notifier.notify('success', "Booking Details PDF Successfully Send in Whats App.");
+        } else {
+          this.commonService.notifier.notify('error', Response.data.ErrorMessage);
+        }
+      }
+      else {
+        this.commonService.notifier.notify('error', Response.meta.message);
+      }
+    }, (error) => {
+      console.log(error);
+    });
+  }
+  whatsAppDecorationPdf() {
+
+
+    let downloadInvoiceObj = {
+      "inquirybookingID": this.bookingConfirmId,
+    };
+
+
+    this.adminLayoutService.whatsAppBookingDecorationPdf(downloadInvoiceObj).subscribe((Response: any) => {
+
+      if (Response.meta.code == 200) {
+        if(Response.data.ErrorCode == '000') {
+
+          this.commonService.notifier.notify('success', "Booking Decoration PDF Successfully Send in Whats App.");
+        } else {
+          this.commonService.notifier.notify('error', Response.data.ErrorMessage);
+        }
+      }
+      else {
+        this.commonService.notifier.notify('error', Response.meta.message);
+      }
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
 
 
 }

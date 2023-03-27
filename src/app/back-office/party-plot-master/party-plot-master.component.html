@@ -24,6 +24,7 @@
                             <th class="w-10">Status</th>
                             <th class="w-15">Action</th>
                             <th>Name</th>
+                            <th>Mobile No.</th>
                             <!-- <th>Event</th>/ -->
                             <th>Address</th>
                         </tr>
@@ -66,6 +67,7 @@
                             <td><strong>{{ partyplotmasterData.name }}</strong></td>
                             <!-- <td><span *ngFor="let eventsData of partyplotmasterData.events; let eventIndex = index"><span
                                         *ngIf="eventIndex > 0">,&nbsp;</span>{{eventsData.name}}</span></td> -->
+                            <td>{{ partyplotmasterData.mobileNumber }}</td>
                             <td>{{ partyplotmasterData.address }}</td>
 
                         </tr>
@@ -78,7 +80,7 @@
                 </table>
             </div>
             <div class="footer-pagination float-end mt-3 p-4" *ngIf="!noData">
-                <pagination-controls (pageChange)="p = $event" *ngIf="partyplotList.length > l"></pagination-controls>
+                <pagination-controls (pageChange)="p = $event" *ngIf="partyplotList?.length > l"></pagination-controls>
             </div>
         </div>
 
@@ -105,6 +107,16 @@
                             <div *ngIf="submittedPartyplotData && fnameData.name.errors">
                                 <div *ngIf="fnameData.name.errors.required">
                                     <span class="error_msg text-danger">Name is Required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mb-3">
+                            <label for="nameBasic" class="form-label required">Mobile No.</label>
+                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Mobile No."
+                                formControlName="mobileNumber" />
+                            <div *ngIf="submittedPartyplotData && fnameData.mobileNumber.errors">
+                                <div *ngIf="fnameData.mobileNumber.errors.required">
+                                    <span class="error_msg text-danger">Mobile No. is Required.</span>
                                 </div>
                             </div>
                         </div>
