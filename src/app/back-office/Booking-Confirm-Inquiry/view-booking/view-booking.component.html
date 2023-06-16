@@ -468,7 +468,7 @@
                         <div class="col-lg-4 col-md-4 mb-3">
                             <label class="form-label required" for="basic-default-phone">Contact</label>
                             <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                                placeholder="658 799 8941" appNumbersOnly maxlength="10"
+                                placeholder="658 799 8941" appNumbersOnly 
                                 formControlName="primaryContact" />
                             <div *ngIf="submittedClientData && fclientDataForm.primaryContact.errors">
                                 <div *ngIf="fclientDataForm.primaryContact.errors.required">
@@ -481,7 +481,7 @@
                         </div>
                         <div class="col-lg-4 col-md-4 mb-3">
                             <label class="form-label" for="basic-default-phone">Whats App No.</label>
-                            <input type="text" id="basic-default-phone" appNumbersOnly maxlength="10"
+                            <input type="text" id="basic-default-phone" appNumbersOnly 
                                 class="form-control phone-mask" placeholder="658 799 8941"
                                 formControlName="secondryContact" />
                         </div>

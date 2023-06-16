@@ -72,7 +72,7 @@
                 </table>
             </div>
             <div class="footer-pagination float-end mt-3 p-4" *ngIf="!noData">
-                <pagination-controls (pageChange)="p = $event" *ngIf="eventmasterList.length > l"></pagination-controls>
+                <pagination-controls (pageChange)="p = $event" *ngIf="eventmasterList?.length > l"></pagination-controls>
             </div>
         </div>
     </div>

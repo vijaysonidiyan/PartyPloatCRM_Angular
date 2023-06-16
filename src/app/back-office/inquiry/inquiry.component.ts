@@ -7,12 +7,43 @@ import { ThemePalette } from "@angular/material/core";
 import * as moment from 'moment';
 import { Router } from "@angular/router";
 
+import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MatDatepicker, MatDatepickerModule} from '@angular/material/datepicker';
+// import * as _moment from 'moment';
+import { Moment} from 'moment';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
+// const moment = _rollupMoment || _moment;
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'MM/YYYY',
+  },
+  display: {
+    dateInput: 'MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 declare const $: any;
 @Component({
   selector: "app-inquiry",
   templateUrl: "./inquiry.component.html",
   styleUrls: ["./inquiry.component.css"],
+  providers: [
+    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ],
 })
 export class InquiryComponent implements OnInit {
   activeTab = 2;
@@ -169,6 +200,26 @@ export class InquiryComponent implements OnInit {
     localStorage.setItem('partyPlotId', this.searchedPartyplot)
   }
 
+  // setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
+  //   const ctrlValue = this.date.value!;
+  //   ctrlValue.month(normalizedMonthAndYear.month());
+  //   ctrlValue.year(normalizedMonthAndYear.year());
+  //   this.date.setValue(ctrlValue);
+  //   datepicker.close();
+  // }
+
+  goto(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
+    this.searchedMonth = normalizedMonthAndYear.month() +1 < 10 ? '0' + (normalizedMonthAndYear.month() + 1) : (normalizedMonthAndYear.month() + 1).toString();
+    this.searchedYear = normalizedMonthAndYear.year();
+    datepicker.close();
+    let calendarApi = this.calendarComponent.getApi();
+    calendarApi.gotoDate(this.searchedYear +'-'+ this.searchedMonth +'-01');
+    this.currentYear = this.searchedYear;
+    this.currentMonth = this.searchedMonth;
+
+    this.getInquiryListForCalenderView({ month: this.searchedMonth, year: this.searchedYear, partyplot_ID: this.searchedPartyplot });
+     // call a method on the Calendar object
+  }
   // calender view list data
   getInquiryListForCalenderView(data: any) {
     this.inquiryCancle = "0";
